@@ -1,0 +1,15 @@
+<div class="main-panel">
+  <div
+    infinite-scroll
+    [infiniteScrollDistance]="1"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
+    [infiniteScrollContainer]="selector"
+    [fromRoot]="true"
+  >
+    <ng-content></ng-content>
+    <div class="loader-row">
+      <app-lazy-loader *ngIf="showLoading"></app-lazy-loader>
+    </div>
+  </div>
+</div>

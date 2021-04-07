@@ -1,0 +1,62 @@
+@import 'index';
+.container {
+  display: flex;
+  width: 100%;
+}
+
+main {
+  padding-right: 20px;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  width: 100%;
+  h2 {
+    font: bold 26px/1 $uap-roboto-condensed;
+  }
+}
+
+.main-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.search-field {
+  width: 33.3%;
+  text-align: left;
+  .mat-form-field {
+    width: 300px;
+  }
+}
+
+.filter-field {
+  width: 33.3%;
+  text-align: center;
+}
+
+button {
+  color: $uap-white;
+  border-radius: 0;
+  height: 40px;
+  width: 150px;
+  font-weight: 600;
+  font: bold 18px/1 $uap-roboto-condensed;
+}
+
+button.mat-menu-item {
+  color: $uap-cod-gray;
+}
+
+.create-action {
+  width: 33.3%;
+  text-align: right;
+  button {
+    background-color: $uap-la-palma;
+    width: 180px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    font: bold 20px/1 $uap-roboto-condensed;
+  }
+}
+.candidates-content {
+  background-color: $uap-pampas1;
+}

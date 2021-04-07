@@ -1,0 +1,23 @@
+@import 'index';
+.mat-snack-bar-container {
+  border-radius: 4px;
+  box-sizing: border-box;
+  display: block;
+  margin: 4px;
+  min-width: 674px;
+  padding: 10px;
+  min-height: 36px;
+  margin-right: 54px;
+}
+.error-code__align,
+.error-message__align {
+  color: $uap-monza;
+  position: relative;
+  top: -8px;
+}
+.custom-material-icons {
+  color: $uap-monza;
+  position: relative;
+  top: -3px;
+  right: 16px;
+}

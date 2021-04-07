@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "kodepro-ui"
+  },
+  "targets": {
+    "kodepro-ui": {
+      "hosting": {
+        "dev-uap": [
+          "dev-uap"
+        ]
+      }
+    }
+  }
+}

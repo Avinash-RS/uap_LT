@@ -1,0 +1,115 @@
+@import 'index';
+.main-panel-schedule {
+  height: calc(100vh - 500px);
+  overflow-y: scroll;
+  padding-top: 10px;
+}
+.candidates-info-container {
+  .header {
+    display: flex;
+    width: 100%;
+    border-bottom: 2px solid $uap-venus;
+    padding-bottom: 10px;
+    .email {
+      font: bold 18px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 50%;
+      text-align: left;
+    }
+    .action {
+      font: bold 18px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 25%;
+      text-align: left;
+    }
+    .invite-status {
+      font: bold 18px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 25%;
+      text-align: left;
+    }
+  }
+  .details {
+    display: flex;
+    width: 100%;
+    padding-top: 10px;
+    align-items: center;
+    .personal-details {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      .email {
+        font: normal 18px / normal $uap-roboto-condensed;
+        color: $uap-venus;
+      }
+      .name {
+        font: normal 16px / normal $uap-roboto-condensed;
+        color: $uap-venus;
+      }
+    }
+    .action {
+      font: normal 16px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 25%;
+      text-align: left;
+      button {
+        background-color: $uap-boulder;
+        width: 64px;
+        border-radius: 20px;
+        cursor: pointer;
+        outline: none;
+        border: none;
+        height: 34px;
+        color: $uap-white;
+        padding: 0px;
+        font: 400 12px / normal $uap-roboto-condensed;
+      }
+    }
+    .status {
+      font: normal 16px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 25%;
+      text-align: left;
+    }
+  }
+}
+.main-actions {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+  align-items: center;
+}
+
+.search-field {
+  width: 33.3%;
+  text-align: left;
+  .mat-form-field {
+    width: 300px;
+  }
+}
+
+.filter-field {
+  width: 33.3%;
+  text-align: center;
+}
+.export-action {
+  width: 33.3%;
+  text-align: left;
+  button {
+    background-color: $uap-buddha-gold-1;
+    width: 86px;
+    border-radius: 20px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    font: bold 16px / normal $uap-roboto-condensed;
+  }
+}
+button {
+  color: $uap-white;
+  border-radius: 0;
+  height: 34px;
+  width: 150px;
+  font-weight: 600;
+  font: bold 18px/1 $uap-roboto-condensed;
+}

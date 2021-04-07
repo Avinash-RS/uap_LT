@@ -1,0 +1,146 @@
+<div class="header-block">
+  <span class="header-block__title-font-size">Assessment/Create</span>
+  <div class="header-block__buttons-align">
+    <span>
+      <button
+        class="header-block__button"
+        (click)="saveAssessmentPackage()"
+        [disabled]="isAssessmentPackageInvalid()"
+      >
+        Save
+      </button></span
+    >
+    <span
+      ><button
+        class="header-block__button"
+        (click)="saveAssessmentPackageAndExit()"
+        [disabled]="isAssessmentPackageInvalid()"
+      >
+        Save & Exit
+      </button></span
+    >
+    <span
+      ><button class="header-block__exit-button" routerLink="/admin/assessments">Exit</button></span
+    >
+  </div>
+</div>
+<form [formGroup]="assessmentPackageForm">
+  <div class="create-form__overflow">
+    <div class="create-assessment-block">
+      <div class="create-assessment-block__align">
+        <label class="custom-label__font">
+          Assessment Name
+          <input
+            formControlName="assessmentName"
+            type="text"
+            required
+            class="create-assessment-block__custom-input-field"
+          />
+          <div
+            *ngIf="validateFormField('assessmentName')"
+            class="create-assessment-block__custom-input-field__error"
+          >
+            Required
+          </div>
+        </label>
+        <label class="custom-label__font">
+          Description
+          <textarea
+            formControlName="assessmentDescription"
+            cols="62"
+            rows="4"
+            required
+            class="create-assessment-block__text-area-width"
+          ></textarea>
+          <div
+            *ngIf="validateFormField('assessmentDescription')"
+            class="create-assessment-block__custom-input-field__error"
+          >
+            Required
+          </div>
+        </label>
+        <label class="custom-label__font">
+          Level
+          <select
+            class="create-assessment-block__select-field__width"
+            formControlName="assessmentLevelSelectOption"
+          >
+            <option
+              *ngFor="let assessmentLevelOption of assessmentLevels"
+              [ngValue]="assessmentLevelOption"
+            >
+              {{assessmentLevelOption}}
+            </option>
+          </select>
+        </label>
+        <h1 class="test-title__align">Tests</h1>
+        <div formArrayName="testItems">
+          <ng-container *ngFor="let item of getTestItems.controls; let i=index" [formGroupName]="i">
+            <div class="tests-block__align" (keydown)="getSpecificTaskIndex(i)">
+              <div class="test-block__count">
+                <div class="test-block__currentcount-outline-circle">
+                  <span class="test-block__current-count">{{ i + 1}}</span>
+                </div>
+              </div>
+              <div class="test-items-block">
+                <label class="test-items-block__heading-font"> Type </label>
+                <span>
+                  <button class="delete-button__align" (click)="deleteTest(i)">Delete</button>
+                </span>
+                <!-- TODO: Use material UI select -->
+                <select
+                  class="test-items-block__select-field__width"
+                  formControlName="testTypeSelectOption"
+                  (change)="onSelectChange(i, $event)"
+                >
+                  <option *ngFor="let testTypeOption of testTypes" [ngValue]="testTypeOption">
+                    {{testTypeOption}}
+                  </option>
+                </select>
+                <div class="auto-complete-custom-input-block__align">
+                  <form (submit)="onEnter($event)">
+                    <mat-form-field class="input-field__width">
+                      <mat-label>Test Name</mat-label>
+                      <input
+                        type="text"
+                        placeholder="Test Name"
+                        matInput
+                        id="auto-complete-input-field-{{i}}"
+                        name="auto-complete-input-field-{{i}}"
+                        aria-label="Number"
+                        formControlName="testName"
+                        [matAutocomplete]="auto"
+                      />
+                      <mat-autocomplete #auto="matAutocomplete">
+                        <mat-option
+                          *ngFor="let option of listOfAutoCompleteFilteredOptions[i]"
+                          [value]="option.attributes.name"
+                        >
+                          {{option.attributes.name}}
+                          <span
+                            class="level"
+                            *ngIf="option.attributes.hasOwnProperty('level') && option.attributes.level.length"
+                            >[{{option.attributes.level}}]</span
+                          >
+                        </mat-option>
+                      </mat-autocomplete>
+                    </mat-form-field>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <button class="add-button__color" (click)="addTest()">Add Test</button>
+        <div
+          class="test-sequence-block__align"
+          *ngIf="listOfAutoCompleteFilteredOptions.length > 1"
+        >
+          <mat-checkbox class="example-margin" [disabled]="true"
+            >Enforce Test Sequence</mat-checkbox
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

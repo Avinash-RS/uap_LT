@@ -1,0 +1,46 @@
+@import 'index';
+.tnc_overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    @include center_content;
+    .tnc_body {
+        background: $white;
+        width: 80%;
+        height: 80%;
+        max-width: 1000px;
+        position: relative;
+        border-radius: 5px;
+        box-shadow: 0px 12px 42px rgba($color: $uap-black, $alpha: 0.5);
+        @include center_content;
+    }
+}
+
+.tnc_title {
+    font: bold 20px/1.2 $uap-roboto-condensed;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    .material_icon {
+        cursor: pointer;
+    }
+}
+
+.tnc_container {
+    overflow-y: scroll;
+    height: calc(100% - 100px);
+    padding: 24px;
+    padding-top: 0;
+    font: normal 16px/1.5 $uap-roboto-condensed;
+    ul {
+        padding-left: 20px;
+    }
+}
+
+.tnc_header {
+    font-weight: 600;
+    font-size: 18px;
+    &:not(:first-child) {
+        padding-top: 1rem;
+    }
+}

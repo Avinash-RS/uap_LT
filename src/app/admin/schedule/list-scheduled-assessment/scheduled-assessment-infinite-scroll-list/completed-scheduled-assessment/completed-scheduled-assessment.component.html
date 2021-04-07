@@ -1,0 +1,73 @@
+<section class="main-actions">
+  <div class="search-field">
+    <app-search [searchPlaceHolder]="'Search'" (searchEvent)="onSearch($event)"></app-search>
+  </div>
+  <div class="export-action">
+    <button mat-flat-button (click)="downloadCSV()">Export</button>
+  </div>
+</section>
+<div class="candidates-info-container">
+  <div class="header">
+    <div class="email">Email Id</div>
+    <div class="status">Status</div>
+    <div class="test-complition">Test Completion</div>
+    <div class="score">Score(%)</div>
+    <div class="action">Actions</div>
+  </div>
+  <div>
+    <div class="main-panel-schedule">
+      <div
+        infinite-scroll
+        [infiniteScrollDistance]="1"
+        [infiniteScrollThrottle]="50"
+        (scrolled)="onScroll()"
+        [infiniteScrollContainer]="selector"
+        [fromRoot]="true"
+      >
+        <div
+          *ngFor="let candidateAssessment of candidatesAssessment.data; let index = index"
+          class="details"
+        >
+          <div class="personal-details">
+            <div class="email">{{ candidateAssessment.attributes.emailId }}</div>
+            <div class="name">
+              {{ candidateAssessment.attributes.firstName }}
+              {{ candidateAssessment.attributes.lastName }}
+            </div>
+          </div>
+          <div class="status">
+            {{ candidateAssessment.attributes.assessmentStatus }}
+          </div>
+          <div class="test-complition">
+            {{ candidateAssessment.attributes.completedTaskCount }} /
+            {{ candidateAssessment.attributes.totalTaskCount }}
+          </div>
+          <div
+            class="score"
+            [ngStyle]="{
+              visibility:
+                candidateAssessment.attributes.averageScore === null
+                  ? 'hidden'
+                  : 'unset'
+            }"
+          >
+            {{ candidateAssessment.attributes.averageScore | number: '1.2-2'}}
+          </div>
+          <div class="hide-report">
+            <app-report-dialog
+              [assessmentId]="candidateAssessment.id"
+              (selectedIndexEvent)="selectedIndexEvent($event)"
+              *ngIf="selectedIndex === index"
+            >
+            </app-report-dialog>
+          </div>
+          <div class="action">
+            <button (click)="printReport(index)" mat-flat-button>
+              Report
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

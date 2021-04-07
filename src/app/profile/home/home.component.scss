@@ -1,0 +1,51 @@
+@import 'index';
+.profile_container {
+  box-sizing: border-box;
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: $uap-black;
+  background: $white;
+  min-height: calc(100vh);
+}
+
+.back-button_container {
+  font: normal 26px $uap-roboto-condensed;
+  display: flex;
+  margin-top: 60px;
+  align-items: center;
+  padding-bottom: 10px;
+  .material-icons {
+    font-size: 28px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+}
+
+.form-container {
+  padding-left: 37px;
+  .form-title {
+    font: 500 24px/1 $uap-roboto-condensed;
+    padding-bottom: 20px;
+  }
+  .form-field-wrapper {
+    width: 100%;
+    .mat-form-field {
+      width: 100%;
+      max-width: 500px;
+      label {
+        font-size: 18px;
+        color: $uap-boulder;
+        font-weight: 500;
+      }
+      input {
+        font-size: 16px;
+        color: $uap-boulder;
+        font-weight: 500;
+        margin-top: 8px;
+        height: 30px;
+        background-color: $uap-alabaster;
+      }
+    }
+  }
+}

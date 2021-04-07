@@ -1,0 +1,6 @@
+<span> {{ data.displayMessage }} </span>
+<ng-container *ngIf="data.displayMessage.length === 0">
+  <span class="material-icons custom-material-icons"> info </span>
+  <span class="error-code__align">Error Code: {{ data.errorCode }} | </span>
+  <span class="error-message__align">Error Message: {{ data.errorMessage }} </span>
+</ng-container>

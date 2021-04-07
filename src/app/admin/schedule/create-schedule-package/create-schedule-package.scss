@@ -1,0 +1,384 @@
+@import 'index';
+
+%header-block__common-styles {
+  font-weight: 700;
+  font-style: normal;
+  font-family: $uap-roboto-condensed;
+}
+
+%no-outline {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  outline: none;
+}
+.header-block {
+  max-width: 645px;
+  height: 10px;
+  &__title-font-size {
+    @extend %header-block__common-styles;
+    color: $uap-black;
+    font-size: 26px;
+    position: relative;
+    top: 6px;
+    left: 18px;
+  }
+  &__buttons-align {
+    float: right;
+    position: relative;
+    left: 136px;
+  }
+  &__button {
+    @extend %header-block__common-styles;
+    width: 112px;
+    height: 34px;
+    border: none;
+    color: $white;
+    cursor: pointer;
+    outline: none;
+    font-size: 18px;
+    background-color: $uap-lapalma;
+    margin-right: 6px;
+  }
+  &__exit-button {
+    @extend %header-block__common-styles;
+    width: 112px;
+    height: 34px;
+    border: none;
+    color: $white;
+    cursor: pointer;
+    outline: none;
+    font-size: 18px;
+    background-color: $uap-monza;
+    margin-right: 6px;
+  }
+}
+
+%custom-input-field-placeholder__text {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  letter-spacing: normal;
+  color: $uap-boulder;
+  font-family: $uap-roboto-condensed;
+}
+
+%no-outline {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  outline: none;
+  border-bottom: 1px solid;
+}
+
+.custom-label__font {
+  display: block;
+  width: 192px;
+  color: $uap-boulder;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+  margin-top: 20px;
+  font-family: $uap-roboto-condensed;
+  position: relative;
+}
+
+.schedule-assessment-block {
+  &__align {
+    padding: 30px;
+  }
+  &__text-area-width {
+    @extend %custom-input-field-placeholder__text;
+    margin-top: 16px;
+    width: 740px;
+    outline: none;
+  }
+  &__custom-input-field {
+    @extend %custom-input-field-placeholder__text;
+    @extend %no-outline;
+    height: 30px;
+    width: 740px;
+  }
+  &__select-field__width {
+    @extend %custom-input-field-placeholder__text;
+    margin-top: 16px;
+    width: 651px;
+    height: 45px;
+  }
+}
+
+.datetime-block {
+  display: inline-block;
+}
+
+.date-time-block__align {
+  margin-top: 14px;
+}
+
+.date-block {
+  display: inline-block;
+  width: 394px;
+}
+
+.time-block {
+  display: inline-block;
+  margin-left: 55px;
+}
+
+.mat-form-field-appearance-fill.mat-form-field-disabled .mat-form-field-flex {
+  background-color: $white;
+}
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  border-radius: 4px 4px 0 0;
+  padding: 0.75em 0.75em 0 0.75em;
+  border-bottom: 1px solid $uap-boulder;
+  width: 295px;
+}
+.ngx-timepicker-field-example {
+  width: 295px;
+}
+
+.period-control__button {
+  margin-left: 25px;
+}
+
+.ngx-material-timepicker-toggle {
+  margin-left: 15px;
+}
+
+.ngx-timepicker-control {
+  margin-left: 12px;
+  width: 66px !important;
+}
+.ngx-timepicker-control__input {
+  margin-right: 24px;
+}
+
+.example-form {
+  min-width: 450px;
+  max-width: 600px;
+}
+
+.example-full-width {
+  width: 538px;
+  margin-right: 58px;
+}
+
+.auto-complete-block__align {
+  display: inline-block;
+  position: relative;
+}
+
+.schedule-block__align {
+  display: inline-block;
+}
+
+.schedule-table,
+.schedule-table-th,
+.schedule-table-tr {
+  width: 745px;
+  border-bottom: 1px solid $uap-boulder;
+  color: $uap-boulder;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: $uap-roboto-condensed;
+}
+
+.schedule-table-data {
+  font-family: $uap-roboto-condensed;
+  font-weight: 400 !important;
+  font-style: normal;
+  font-size: 16px;
+  color: $uap-venus;
+  border-bottom-style: hidden;
+  position: relative;
+  top: 8px;
+}
+
+.package-details-block {
+  &__add-candidate-button-align {
+    width: 120px;
+    height: 30px;
+    background-color: $uap-buddha-gold;
+    border: none;
+    border-radius: 20px;
+    font-family: $uap-roboto-condensed;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 14px;
+    color: $white;
+    margin-top: 18px;
+    cursor: pointer;
+    outline: none;
+  }
+}
+
+.schedule-table-body {
+  margin-top: 12px;
+}
+
+%add-delete-button__common-style {
+  border: none;
+  border-radius: 15px;
+  color: $white;
+  cursor: pointer;
+  outline: none;
+  width: 87px;
+  height: 29px;
+  outline: none;
+}
+
+.delete-candidate-button__align {
+  @extend %add-delete-button__common-style;
+  background-color: $uap-lapalma;
+}
+
+.custom-candidate-input {
+  width: 191px;
+  height: 32px;
+  margin-right: 18px;
+}
+
+.custom-date-time-input__border {
+  @extend %no-outline;
+  width: 184px;
+  height: 32px;
+  margin-bottom: 8px;
+}
+
+.drag-drop-zone__align {
+  margin-top: 25px;
+}
+
+.ngx-file-drop__drop-zone {
+  border: none !important;
+  border-radius: 0px !important;
+  width: 156px;
+  height: 92px;
+  margin: initial !important;
+  background-color: $uap-alto;
+}
+
+.ngx-file-drop {
+  font-weight: 500;
+  font-style: normal;
+  font-size: 14px;
+  color: $uap-venus;
+  text-align: center;
+  position: relative;
+  top: 40px;
+}
+
+.add-candidate-heading__align {
+  font-family: $uap-roboto-condensed;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+  color: $uap-boulder;
+  position: relative;
+  top: 16px;
+}
+
+.upload-csv-button__align {
+  width: 94px;
+  height: 28px;
+  outline: none;
+  cursor: pointer;
+  background-color: $uap-nando;
+  border: none;
+  border-radius: 20px;
+  font-family: $uap-roboto-condensed;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 14px;
+  color: $white;
+  margin-left: 12px;
+}
+
+.exit-upload-mode__align {
+  position: relative;
+  top: -60px;
+  left: 175px;
+  cursor: pointer;
+  background: $uap-nando;
+  padding: 4px;
+  color: $white;
+}
+
+.uploaded-heading {
+  font-family: $uap-roboto-condensed;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  color: $uap-venus;
+  position: relative;
+  top: 14px;
+}
+
+.candidate-info-block {
+  font-family: $uap-roboto-condensed;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  color: $uap-nando;
+  position: relative;
+  top: 12px;
+}
+
+.delete-file-button__style {
+  @extend .delete-candidate-button__align;
+  width: 58px;
+  height: 24px;
+  margin-left: 8px;
+}
+
+.total-invalid-email-count {
+  color: $uap-sunglo;
+}
+
+.total-valid-email-count {
+  color: $uap-sunglo;
+}
+
+.total-valid-email-count {
+  color: $uap-sunglo;
+}
+
+.total-duplicate-email-count {
+  color: $uap-sunglo;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+  background-color: transparent;
+  border-bottom: none;
+}
+.ngx-timepicker {
+  border-bottom: 1px solid $uap-boulder !important;
+}
+
+.input-field__error,
+.mat-input-field__error {
+  color: $uap-red;
+  font-size: 14px;
+  position: absolute;
+}
+
+.mat-input-field__error {
+  top: 40px;
+}
+
+button:disabled {
+  background-color: $uap-grey;
+  cursor: default;
+}
+
+.level {
+  color: $silver-chalice;
+}
+.schedule-table-duration {
+  width: 120px;
+}
+.schedule-table-type {
+  width: 200px;
+  padding-right: 25px;
+}

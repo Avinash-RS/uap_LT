@@ -1,0 +1,73 @@
+<section class="main-actions">
+  <div class="search-field">
+    <app-search [searchPlaceHolder]="'Search'" (searchEvent)="onSearch($event)"></app-search>
+  </div>
+  <div class="filter-field">
+    <mat-form-field>
+      <mat-select
+        [(value)]="selectedFilterValue"
+        (selectionChange)="onFilterValueChange(selectedFilterValue)"
+      >
+        <mat-option *ngFor="let filterValue of filterValues" [value]="filterValue.value">
+          {{ filterValue.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="export-action">
+    <button mat-flat-button (click)="downloadCSV()">Export</button>
+  </div>
+</section>
+<div class="candidates-info-container">
+  <div>
+    <ngx-spinner
+      bdColor="rgba(240,235,235,0.8)"
+      size="default"
+      color="#149110"
+      type="line-scale"
+      [fullScreen]="true"
+    ></ngx-spinner>
+  </div>
+  <ng-container *ngIf="showSnackBar">
+    <app-snack-bar
+      [snackBarSuccessMessage]="snackBarSuccessMessage"
+      [snackBarFailureMessage]="snackBarFailureMessage"
+      [duration]="2000"
+      (clearReinviteState)="clearReinviteState()"
+    ></app-snack-bar>
+  </ng-container>
+  <div class="header">
+    <div class="email">Email Id</div>
+    <div class="invite-status">Invite Status</div>
+    <div class="action">Actions</div>
+  </div>
+  <div>
+    <div class="main-panel-schedule">
+      <div
+        infinite-scroll
+        [infiniteScrollDistance]="1"
+        [infiniteScrollThrottle]="50"
+        (scrolled)="onScroll()"
+        [infiniteScrollContainer]="selector"
+        [fromRoot]="true"
+      >
+        <div
+          *ngFor="let candidateAssessment of candidatesAssessment.data; let i = index"
+          class="details"
+        >
+          <div class="personal-details">
+            <div class="email">{{ candidateAssessment.attributes.emailId }}</div>
+            <div class="name">
+              {{ candidateAssessment.attributes.firstName }}
+              {{ candidateAssessment.attributes.lastName }}
+            </div>
+          </div>
+          <div class="status">{{ candidateAssessment.attributes.inviteStatus }}</div>
+          <div class="action">
+            <button mat-flat-button (click)="reInviteCandidate(i)">Re-Invite</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

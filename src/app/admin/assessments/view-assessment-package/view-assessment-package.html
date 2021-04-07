@@ -1,0 +1,140 @@
+<ng-container *ngIf="!toogleView">
+  <div class="header-block">
+    <span class="header-block__title-font-size">Assessment/View</span>
+    <div class="header-block__buttons-align">
+      <div
+        *ngIf="packageDetails.attributes.status.toLowerCase() === 'draft'; then showPublishModeButtonsBlock else showArchiveModeButtonBlock"
+      ></div>
+      <ng-template #showPublishModeButtonsBlock>
+        <span
+          ><button
+            class="header-block__button"
+            (click)="editAssessmentPackage()"
+            [disabled]="!canEditPackage"
+          >
+            Edit
+          </button></span
+        >
+        <span
+          ><button
+            class="header-block__button"
+            (click)="publishAssessmentPackage()"
+            [disabled]="!canPublishPackage"
+          >
+            Publish
+          </button></span
+        >
+      </ng-template>
+      <ng-template #showArchiveModeButtonBlock
+        ><button class="header-block__archive-button" (click)="archiveAssessmentPackage()">
+          Archive
+        </button></ng-template
+      >
+      <span
+        ><button class="header-block__exit-button" routerLink="/admin/assessments">
+          Exit
+        </button></span
+      >
+    </div>
+    <p class="header-block__status-align">
+      {{packageDetails.attributes.status}}, {{ assesmentsUtil.getUpdateTime(
+      packageDetails.attributes.updatedTime, packageDetails.attributes.status ) }}
+    </p>
+  </div>
+  <form [formGroup]="assessmentPackageForm" novalidate>
+    <div class="create-assessment-block">
+      <div class="create-assessment-block__align">
+        <label class="custom-label__font">
+          Assessment Name
+          <input
+            formControlName="assessmentName"
+            type="text"
+            class="create-assessment-block__custom-input-field"
+            placeholder="assessmentPackageForm.value.assessmentName"
+          />
+        </label>
+        <label class="custom-label__font">
+          Description
+          <textarea
+            formControlName="assessmentDescription"
+            cols="62"
+            rows="4"
+            class="create-assessment-block__text-area-width"
+            placeholder="assessmentPackageForm.value.assessmentDescription"
+          ></textarea>
+        </label>
+        <label class="custom-label__font">
+          Level
+          <select
+            class="create-assessment-block__select-field__width"
+            formControlName="assessmentLevelSelectOption"
+          >
+            <option
+              *ngFor="let assessmentLevelOption of assessmentLevels"
+              [ngValue]="assessmentLevelOption"
+            >
+              {{assessmentLevelOption}}
+            </option>
+          </select>
+        </label>
+        <h1 class="test-title__align">Tests</h1>
+        <div formArrayName="testItems">
+          <ng-container *ngFor="let item of getTestItems.controls; let i=index" [formGroupName]="i">
+            <div class="tests-block__align">
+              <div class="test-block__count">
+                <div class="test-block__currentcount-outline-circle">
+                  <span class="test-block__current-count">{{ i + 1}}</span>
+                </div>
+              </div>
+              <div class="test-items-block">
+                <label class="test-items-block__heading-font"> Type </label>
+                <select
+                  class="test-items-block__select-field__width"
+                  formControlName="testTypeSelectOption"
+                >
+                  <option *ngFor="let testTypeOption of testTypes" [ngValue]="testTypeOption">
+                    {{testTypeOption}}
+                  </option>
+                </select>
+                <div class="auto-complete-custom-input-block__align">
+                  <form>
+                    <mat-form-field class="input-field__width">
+                      <mat-label>Test Name</mat-label>
+                      <input
+                        type="text"
+                        placeholder="Test Name"
+                        matInput
+                        aria-label="Number"
+                        formControlName="testName"
+                      />
+                    </mat-form-field>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <div
+          class="test-sequence-block__align"
+          *ngIf="assessmentPackageForm.value.testItems.length > 1"
+        >
+          <mat-checkbox class="example-margin" [disabled]="true"
+            >Enforce Test Sequence</mat-checkbox
+          >
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>
+<ng-container *ngIf="toogleView">
+  <app-create-or-edit-assessment-package
+    [packageDetailsData]="packageDetails"
+  ></app-create-or-edit-assessment-package>
+</ng-container>
+<ng-container *ngIf="showSnackBar">
+  <app-snack-bar
+    [snackBarSuccessMessage]="snackBarSuccessMessage"
+    [snackBarFailureMessage]="snackBarFailureMessage"
+    [duration]="2000"
+  ></app-snack-bar>
+</ng-container>

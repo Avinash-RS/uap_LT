@@ -1,0 +1,39 @@
+<div class="container">
+  <main>
+    <h2>Scheduled Assessments</h2>
+    <section class="main-actions">
+      <div class="search-field">
+        <app-search [searchPlaceHolder]="'Search'" (searchEvent)="onSearch($event)"></app-search>
+      </div>
+      <div class="filter-field">
+        <mat-form-field>
+          <mat-select
+            [(value)]="selectedFilterValue"
+            (selectionChange)="onFilterValueChange(selectedFilterValue)"
+          >
+            <mat-option *ngFor="let filterValue of filterValues" [value]="filterValue.value">
+              {{ filterValue.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="create-action">
+        <button mat-flat-button routerLink="/admin/schedule/create">New</button>
+      </div>
+    </section>
+    <section>
+      <div>
+        <app-scheduled-infinite-scroll-list
+          [scheduledTemplates]="scheduleAssessmentContent.data"
+          [pageMetadata]="scheduleAssessmentContent.meta"
+          [searchString]="searchString"
+          [status]="selectedFilterValue"
+          [showLazyLoading]="showLazyLoading"
+          (selectedIndexEvent)="selectedIndexEvent($event)"
+          [selectedIndex]="selectedIndex"
+        >
+        </app-scheduled-infinite-scroll-list>
+      </div>
+    </section>
+  </main>
+</div>

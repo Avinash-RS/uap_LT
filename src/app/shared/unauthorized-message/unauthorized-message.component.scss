@@ -1,0 +1,45 @@
+@import 'index';
+
+.unauth-block__align {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  text-align: center;
+  background-color: white;
+  border-radius: 8px;
+  margin-top: 300px;
+}
+
+.icon-color {
+  color: $uap-yellow;
+}
+
+.not-authorized-icon__align {
+  color: $uap-yellow;
+  margin-top: 5px;
+  height: 30px;
+  width: 30px;
+}
+
+.email-message {
+  margin-left: 10px;
+  position: relative;
+  top: -7px;
+  font-weight: normal;
+  text-decoration: underline;
+}
+
+button {
+  width: 111px;
+  font: normal 12px / normal$uap-roboto-condensed;
+  background-color: $uap-red;
+  padding: 0px;
+  outline: none;
+  border: none;
+  color: $uap-white;
+  border-radius: 20px;
+  height: 34px;
+  cursor: pointer;
+  margin-bottom: 4px;
+}

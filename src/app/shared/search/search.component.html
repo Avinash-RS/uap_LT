@@ -1,0 +1,24 @@
+<form [formGroup]="searchForm" novalidate>
+  <div class="no-wrap form-group">
+    <mat-form-field class="pull-left input-width" flex>
+      <input
+        formControlName="search"
+        class="input-transparent inputBgOpaque"
+        type="text"
+        [placeholder]="searchPlaceHolder"
+        matInput
+      />
+      <button
+        type="button"
+        mat-button
+        *ngIf="search.value"
+        matSuffix
+        mat-icon-button
+        aria-label="Clear"
+        (click)="search.reset()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+</form>

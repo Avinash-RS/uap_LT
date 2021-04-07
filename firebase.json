@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "target": "dev-uap",
+    "public": "dist/uap",
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ],
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

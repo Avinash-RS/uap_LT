@@ -1,0 +1,180 @@
+@import 'index';
+
+%header-block__common-styles {
+  font-weight: 700;
+  font-style: normal;
+  font-family: $uap-roboto-condensed;
+}
+
+.header-block {
+  max-width: 645px;
+  height: 10px;
+  &__title-font-size {
+    @extend %header-block__common-styles;
+    color: $uap-black;
+    font-size: 26px;
+    position: relative;
+    top: 6px;
+    left: 18px;
+  }
+  &__buttons-align {
+    float: right;
+    position: relative;
+    left: 40px;
+  }
+  &__button {
+    @extend %header-block__common-styles;
+    width: 112px;
+    height: 34px;
+    border: none;
+    color: $white;
+    cursor: pointer;
+    outline: none;
+    font-size: 18px;
+    background-color: $uap-lapalma;
+    margin-right: 6px;
+  }
+  &__status-align {
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    color: $uap-nando;
+    margin-left: 20px;
+    margin-top: 5px;
+    font-family: $uap-roboto-condensed;
+  }
+  &__exit-button {
+    @extend %header-block__common-styles;
+    width: 112px;
+    height: 34px;
+    border: none;
+    color: $white;
+    cursor: pointer;
+    outline: none;
+    font-size: 18px;
+    background-color: $uap-monza;
+    margin-right: 6px;
+  }
+  &__archive-button {
+    @extend %header-block__common-styles;
+    width: 112px;
+    height: 34px;
+    border: none;
+    color: $white;
+    cursor: pointer;
+    outline: none;
+    font-size: 18px;
+    background-color: $uap-boulder;
+    margin-right: 6px;
+  }
+}
+
+%custom-input-field-placeholder__text {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+  letter-spacing: normal;
+  color: $uap-boulder;
+  margin-top: 8px;
+  font-family: $uap-roboto-condensed;
+}
+
+.custom-label__font {
+  display: block;
+  width: 192px;
+  color: $uap-boulder;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 18px;
+  margin-top: 30px;
+  font-family: $uap-roboto-condensed;
+}
+
+%no-outline {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  outline: none;
+}
+
+.create-assessment-block {
+  font-family: $uap-roboto-condensed;
+  &__align {
+    padding: 30px;
+  }
+  &__text-area-width {
+    @extend %custom-input-field-placeholder__text;
+    margin-top: 16px;
+    width: 645px;
+  }
+  &__custom-input-field {
+    @extend %custom-input-field-placeholder__text;
+    @extend %no-outline;
+    height: 30px;
+    width: 645px;
+  }
+  &__select-field__width {
+    @extend %custom-input-field-placeholder__text;
+    margin-top: 16px;
+    width: 645px;
+    height: 45px;
+  }
+}
+
+.test-title__align {
+  margin-top: 25px;
+  font-family: $uap-roboto-condensed;
+}
+
+.tests-block__align {
+  margin-top: 16px;
+  height: 200px;
+  display: block;
+  display: flex;
+  width: 100%;
+}
+
+.test-block {
+  &__currentcount-outline-circle {
+    @extend %custom-input-field-placeholder__text;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    border: 1px solid $uap-boulder;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.test-items-block {
+  @extend %custom-input-field-placeholder__text;
+  margin-top: 8px;
+  width: 608px;
+  height: 50px;
+  margin-left: 18px;
+  &__heading-font {
+    @extend .custom-label__font;
+    display: inline-block;
+    margin-top: 10px;
+  }
+  &__select-field__width {
+    @extend %custom-input-field-placeholder__text;
+    margin-top: 16px;
+    width: 585px;
+    height: 45px;
+  }
+}
+
+.input-field__width {
+  width: 100%;
+}
+
+.auto-complete-custom-input-block__align {
+  margin-top: 20px;
+}
+
+.test-sequence-block__align {
+  @extend .custom-label__font;
+  margin-top: 25px;
+}

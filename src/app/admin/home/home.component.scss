@@ -1,0 +1,13 @@
+@import 'index';
+h1 {
+  color: $uap-yellow;
+  font-family: $uap-roboto-condensed;
+}
+p {
+  color: $uap-red;
+  font-family: $uap-roboto-condensed;
+}
+h1,
+p {
+  text-align: center;
+}

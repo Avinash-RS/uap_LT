@@ -1,0 +1,144 @@
+@import 'index';
+.main-panel-schedule {
+  height: calc(100vh - 500px);
+  overflow-y: scroll;
+  padding-top: 10px;
+}
+.candidates-info-container {
+  .header {
+    display: flex;
+    width: 100%;
+    border-bottom: 2px solid $uap-venus;
+    padding-bottom: 10px;
+    .email {
+      font: bold 18px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 45%;
+      text-align: left;
+    }
+    .action {
+      font: bold 18px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 20%;
+      text-align: center;
+    }
+    .score {
+      font: bold 18px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 10%;
+      text-align: center;
+    }
+    .status {
+      font: bold 18px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 10%;
+      text-align: center;
+    }
+    .test-complition {
+      font: bold 18px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 15%;
+      text-align: center;
+    }
+  }
+  .details {
+    display: flex;
+    width: 100%;
+    padding-top: 10px;
+    .personal-details {
+      display: flex;
+      flex-direction: column;
+      width: 45%;
+      .email {
+        font: normal 18px / normal $uap-roboto-condensed;
+        color: $uap-venus;
+      }
+      .name {
+        font: normal 16px / normal $uap-roboto-condensed;
+        color: $uap-venus;
+      }
+    }
+    .score {
+      font: normal 18px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 10%;
+      text-align: center;
+    }
+    .action {
+      font: normal 16px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 20%;
+      text-align: center;
+      button {
+        width: 111px;
+        font: normal 12px / normal $uap-roboto-condensed;
+        background-color: $uap-nando;
+        padding: 0px;
+        outline: none;
+        border: none;
+        color: $uap-white;
+        border-radius: 20px;
+        height: 34px;
+        cursor: pointer;
+      }
+      .re-invite {
+        background-color: $uap-boulder;
+      }
+    }
+    .status {
+      font: normal 18px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 10%;
+      text-align: center;
+    }
+    .test-complition {
+      font: bold 18px / normal $uap-roboto-condensed;
+      color: $uap-venus;
+      width: 15%;
+      text-align: center;
+    }
+  }
+}
+.main-actions {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 10px;
+  align-items: center;
+}
+
+.search-field {
+  width: 33.3%;
+  text-align: left;
+  .mat-form-field {
+    width: 300px;
+  }
+}
+
+.filter-field {
+  width: 33.3%;
+  text-align: center;
+}
+.export-action {
+  width: 33.3%;
+  text-align: left;
+  button {
+    background-color: $uap-buddha-gold-1;
+    width: 86px;
+    border-radius: 20px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    font: bold 16px / normal $uap-roboto-condensed;
+  }
+}
+button {
+  color: $uap-white;
+  border-radius: 0;
+  height: 34px;
+  width: 150px;
+  font-weight: 600;
+  font: bold 18px/1 $uap-roboto-condensed;
+}
+.hide-report {
+  display: none;
+}

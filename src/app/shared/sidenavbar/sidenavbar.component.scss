@@ -1,0 +1,39 @@
+@import 'index';
+.sidenavbar-container-block {
+  position: fixed;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.sidenavbar-content__align {
+  width: 235px;
+  position: relative;
+  top: 90px;
+  cursor: pointer;
+}
+.sidenavbar-menu-item {
+  &__align{
+    padding-top: 40px;
+    outline: none;
+    font: bold 20px/1 $uap-roboto-condensed;
+    display: flex;
+    align-items: center;
+    color: $uap-nav-grey;
+    height: 50px;
+    padding: 10px 20px;
+  }
+  &__aligntext {
+    line-height: 1.5;
+    height: 33px;
+    padding-left: 15px;
+  }
+}
+
+.is-active {
+  background-color: $uap-yellow-light;
+  border-top: 1px solid $uap-grey;
+  border-bottom: 1px solid $uap-grey;
+}
+.side-nav-wrap {
+  background-color: $uap-pampas;
+}

@@ -1,0 +1,19 @@
+image: node:10.23.0-alpine3.11
+
+definitions:
+  steps:
+    - step: &build_deploy
+        name: BUILD&DEPLOY
+        trigger: automatic
+        caches:
+          - node
+        script:
+          - npm install
+          - npm run build
+          - npm run deploy
+pipelines:
+  branches:
+    dev:
+      - step:
+          <<: *build_deploy
+          deployment: DEV

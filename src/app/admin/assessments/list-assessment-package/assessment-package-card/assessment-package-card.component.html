@@ -1,0 +1,71 @@
+<div class="package">
+  <div class="package__info">
+    <div class="package__info-name">{{ packageContent.attributes.name }}</div>
+    <div class="package__info-contains">
+      <span>{{ createSubHeaderText() }}</span>
+    </div>
+  </div>
+  <div class="package__duration">
+    <div class="package__duration-level">
+      <app-level-indicator [level]="packageContent.attributes.level"></app-level-indicator>
+      <span>{{ packageContent.attributes.level }}</span>
+    </div>
+    <div class="package__duration-time">
+      <img src="/assets/clock.svg" />
+      <span>{{ assesmentsUtil.getDuration(packageContent.attributes.duration) }}</span>
+    </div>
+  </div>
+  <div class="package__actions">
+    <div
+      class="package__actions-status-published"
+      [ngClass]="
+        packageContent.attributes.status.toLowerCase() === 'published'
+          ? 'package__actions-status-published'
+          : 'package__actions-status-draft'
+      "
+    >
+      {{ packageContent.attributes.status }},
+      {{
+        assesmentsUtil.getUpdateTime(
+          packageContent.attributes.updatedTime,
+          packageContent.attributes.status
+        )
+      }}
+    </div>
+    <div class="package__actions-buttons">
+      <button
+        mat-flat-button
+        class="view"
+        [disabled]="canViewPackage"
+        routerLink="/admin/assessments/view/{{ packageContent.id }}"
+      >
+        View
+      </button>
+      <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          *ngIf="packageContent.attributes.status.toLowerCase() === 'published'"
+          (click)="archiveAssessmentPackage()"
+        >
+          Archive
+        </button>
+        <!-- Enable below button if rquired -->
+        <!-- <button mat-menu-item *ngIf="packageContent.attributes.status.toLowerCase() === 'draft'">
+          Edit
+        </button> -->
+        <!-- Enable below button once Api is available -->
+        <button
+          mat-menu-item
+          *ngIf="packageContent.attributes.status.toLowerCase() === 'draft'"
+          (click)="deleteAssessmentPackage()"
+        >
+          Delete
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+  <div *ngIf="packageContent.attributes.usageCount && packageContent.attributes.status.toLowerCase() === 'published'" class="package__invite-status">
+    {{ packageContent.attributes.usageCount }} invites sent
+  </div>
+</div>

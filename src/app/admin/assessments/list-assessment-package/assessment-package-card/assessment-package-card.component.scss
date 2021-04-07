@@ -1,0 +1,105 @@
+@import 'index';
+.package {
+    background-color: $uap-pampas;
+    padding-top: 30px;
+    padding-right: 5px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    color: $uap-mine-shaft;
+    border: 1px solid $uap-label-grey;
+    &__info {
+        width: 60%;
+        &-name {
+            color: $uap-boulder;
+            font: bold 20px/1 $uap-roboto-condensed;
+            padding-bottom: 10px;
+        }
+        &-contains {
+            color: $uap-boulder;
+            font: normal 18px/1 $uap-roboto-condensed;
+            max-width: 368px;
+            line-height: 1.5;
+        }
+    }
+    &__duration {
+        font: 500 20px/1 $uap-roboto-condensed;
+        padding-right: 20px;
+        margin-right: auto;
+        &-level {
+            color: $uap-boulder;
+            display: flex;
+            align-items: center;
+            padding-bottom: 10px;
+            span {
+                padding-left: 5px;
+            }
+        }
+        &-time {
+            color: $uap-boulder;
+            display: flex;
+            align-items: center;
+            scroll-padding: 10px;
+            span {
+                padding-left: 5px;
+            }
+        }
+    }
+    &__actions {
+        font: 500 16px/1 $uap-roboto-condensed;
+        &-status {
+            color: $uap-la-palma;
+            &-published {
+                color: $uap-la-palma;
+            }
+            &-draft {
+                color: $uap-boulder;
+            }
+        }
+        &-buttons {
+            padding-top: 10px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            button.invite {
+                background-color: $uap-crimson;
+            }
+            button.view {
+                font-weight: bold;
+                font-size: 20px;
+                background: $uap-buddha-gold;
+            }
+        }
+    }
+    &__invite-status {
+        background: $uap-malachite;
+        color: $uap-white;
+        font: bold 14px/1 $uap-roboto-condensed;
+        width: 152px;
+        height: 28px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+button {
+    color: $uap-white;
+    border-radius: 0;
+    height: 40px;
+    width: 149px;
+    font-weight: 600;
+    font: bold 18px/1 $uap-roboto-condensed;
+}
+
+.mat-menu-item {
+    color: $uap-black;
+}
