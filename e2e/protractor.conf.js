@@ -13,16 +13,19 @@ exports.config = {
     './src/**/*.e2e-spec.ts'
   ],
   capabilities: {
-    browserName: 'chrome'
+    browserName: 'chrome',
+    chromeOptions: {
+        args: ['--headless', '--disable-gpu', '--no-sandbox', '--window-size=1920x1200']
+    },
   },
   directConnect: true,
-  SELENIUM_PROMISE_MANAGER: false,
   baseUrl: 'http://localhost:4200/',
   framework: 'jasmine',
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 150000,
-    print: function() {}
+    print: function () { },
+    realtimeFailure: true
   },
   onPrepare() {
     require('ts-node').register({

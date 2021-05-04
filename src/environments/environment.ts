@@ -11,7 +11,8 @@ export const environment = {
     issuer: 'https://iam-staging.skiquo.io/auth/realms/kodepro',
     clientId: 'uap-ui',
     logging: LogLevel.Error
-  }
+  },
+  TOKEN_URL: 'https://iam-staging.skiquo.io/auth/realms/kodepro/protocol/openid-connect/token'
 };
 
 /*

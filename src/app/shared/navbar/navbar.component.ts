@@ -11,10 +11,14 @@ export class NavBarComponent {
   constructor(private oidcSecurityService: OidcSecurityService, private router: Router) {}
 
   logout(): void {
-    this.oidcSecurityService.logoff();
+    this.oidcSecurityService.logoff(this.postLogOut);
   }
 
   navigateToProfile(): void {
     this.router.navigateByUrl('/profile');
+  }
+
+  postLogOut(url:string) {
+    window.location.assign(`${url}&post_logout_redirect_uri=${window.location.href}`);
   }
 }

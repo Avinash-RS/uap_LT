@@ -7,7 +7,7 @@ export function configureAuth(oidcConfigService: OidcConfigService) {
     oidcConfigService.withConfig({
       stsServer: environment.OIDC_CONFIG.issuer,
       redirectUrl: window.location.origin,
-      postLogoutRedirectUri: window.location.origin,
+      postLogoutRedirectUri: undefined,
       clientId: environment.OIDC_CONFIG.clientId,
       scope: 'openid profile email',
       responseType: 'code',

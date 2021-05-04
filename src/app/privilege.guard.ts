@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { AppModuleEnum } from './app.enums';
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { UserAPIService } from './rest-api/user-api/user-api.service';
 import { catchError, map } from 'rxjs/operators';
@@ -21,7 +20,7 @@ export class PrivilegeGuard implements CanActivate {
     private store: Store<AppState>
   ) {}
 
-  canActivate(): Observable<boolean> | boolean {
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
     if (
       this.oidcSecurityService.getToken() &&
       !this.tokenValidationService.hasIdTokenExpired(
@@ -33,13 +32,6 @@ export class PrivilegeGuard implements CanActivate {
       this.store.dispatch(getUserProfile());
       return this.userAPIService.getUserProfile().pipe(
         map((userProfile: UserProfileResponseModel) => {
-          if (
-            AppModuleEnum.AssessmentTaker ===
-            userProfile?.data.attributes.organisations[0].roles[0].roleCode
-          ) {
-            this.router.navigate(['/unauthorized']);
-            return false;
-          }
           return true;
         }),
         catchError((error) => of(false))
