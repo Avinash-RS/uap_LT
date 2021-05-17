@@ -6,7 +6,7 @@ import { LogLevel } from 'angular-auth-oidc-client';
 
 export const environment = {
   production: false,
-  API_URL: 'https://api-uap-dev.skiquo.io',
+  API_URL: 'https://uap-api.lntiggnite.com',
   OIDC_CONFIG: {
     issuer: 'https://uap-iam.lntiggnite.com/auth/realms/kodepro',
     clientId: 'uap-ui',
