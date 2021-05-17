@@ -8,11 +8,11 @@ export const environment = {
   production: false,
   API_URL: 'https://api-uap-dev.skiquo.io',
   OIDC_CONFIG: {
-    issuer: 'https://iam-staging.skiquo.io/auth/realms/kodepro',
+    issuer: 'https://uap-iam.lntiggnite.com/auth/realms/kodepro',
     clientId: 'uap-ui',
     logging: LogLevel.Error
   },
-  TOKEN_URL: 'https://iam-staging.skiquo.io/auth/realms/kodepro/protocol/openid-connect/token'
+  TOKEN_URL: 'https://uap-iam.lntiggnite.com/auth/realms/kodepro/protocol/openid-connect/token'
 };
 
 /*
