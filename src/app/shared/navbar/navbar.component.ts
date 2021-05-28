@@ -1,14 +1,31 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { Store } from '@ngrx/store';
+import { AssessmentTasksReducerState } from '../../assessment/landing-page/redux/landing-page.model';
+import { selectAssessmentTasksListState } from '../../assessment/landing-page/redux/landing-page.reducers';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: 'navbar.component.html',
   styleUrls: ['navbar.component.scss']
 })
+
 export class NavBarComponent {
-  constructor(private oidcSecurityService: OidcSecurityService, private router: Router) {}
+  assessmentData: any;
+  displayName = '';
+  constructor(private oidcSecurityService: OidcSecurityService, private router: Router,
+    private store: Store<AssessmentTasksReducerState>,) {
+  }
+
+  ngOnInit(): void {
+    this.store.select(selectAssessmentTasksListState).subscribe((response) => {
+      this.assessmentData = response;
+      if (this.assessmentData) {
+        this.displayName = this.assessmentData.data.attributes.firstName + ' ' + this.assessmentData.data.attributes.lastName;
+      }
+    });
+  }
 
   logout(): void {
     this.oidcSecurityService.logoff(this.postLogOut);

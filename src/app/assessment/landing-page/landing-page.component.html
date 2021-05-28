@@ -1,6 +1,6 @@
 <main class="main">
     <div class="landing-padding_all">
-        <section class="welcome">
+        <section class="welcome" *ngIf="disableConsent == false">
             <div class="welcome__heading">Welcome !</div>
             <p class="welcome__text">You have been invited to take up an assessment by L&T EduTech.</p>
             <form class="user-details" [formGroup]="candidateDetailsForm">
@@ -30,14 +30,19 @@
             </form>
         </section>
         <section class="assessment-summary" *ngIf="showAssessmentSummary">
+            <div class="_htxt">
             <div class="assessment-summary__heading">Assessment Summary</div>
-            <p class="assessment-summary__text">
+            <span class="assessment-summary__text">
                 This assessment has <strong>{{ tasksCount }} Tasks</strong> with a total duration of <strong>{{ totalHours }}</strong>. Each task is time-bound and can be taken in any order, but can be submitted one at a time.
-            </p>
+            </span>
+            <button class="back_"><em> <img alt="back" src="../../../assets/back.svg"  /></em>Back</button>
+        </div>
+
             <app-task-cards (summaryDetails)="summaryDetails($event)" [canTakeAssessment]="canTakeAssessment" [assessmentTasksList]="assessmentTasksList"></app-task-cards>
             <div class="assessment-summary__message" *ngIf='isAllTasksCompleted'>
                 <span class="thank_you">Thank You ! &nbsp; </span> You have completed this assessment and can now close this window safely.
             </div>
+
         </section>
     </div>
 </main>

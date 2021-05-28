@@ -1,14 +1,15 @@
 <div class="assessments" *ngIf="assessmentTasksList">
+
     <div class="assessment-list" *ngFor="let task of assessmentTasksList; let i = index" [ngClass]="taskStatus[i]">
-        <div class="assessment-list__number">
-            <span *ngIf="task.status !== 'completed'; else notCompleted">{{ i + 1 }}</span>
+        <div class="assessment-list__number" [ngClass]="{ 'apicon' : task.taskType == 'Aptitude', 'cdicon' : task.taskType == 'Coding'}">
+            <!-- <span *ngIf="task.status !== 'completed'; else notCompleted">{{ i + 1 }}</span> -->
             <ng-template #notCompleted><span class="material-icons">done</span></ng-template>
         </div>
         <div class="assessment-list__card">
             <div class="assessment">
                 <h3 class="assessment__name">{{ task.taskName }}</h3>
-                <div class="assessmnet__duration">
-                    <span class="material-icons">hourglass_top</span> {{ taskDuration[i] }} | {{ task.taskType }}
+                <div class="assessment__duration">
+                     {{ taskDuration[i] }} <span>|</span> {{ task.taskType }}
                 </div>
             </div>
             <div class="assessment-actions">
@@ -30,4 +31,5 @@
             </div>
         </div>
     </div>
+
 </div>
