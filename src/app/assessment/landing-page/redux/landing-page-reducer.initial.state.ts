@@ -19,6 +19,9 @@ export let setInitialLandingPageState = (): AssessmentTaskModel => {
         duration: 0,
         level: '',
         hasAccepted: false,
+        packageName: '',
+        packageDes: '',
+        packageId: '',      
         assessmentTasks: [
           {
             id: 0,

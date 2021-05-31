@@ -55,6 +55,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     );
     this.store.select(selectAssessmentTasksListState).subscribe((response) => {
       this.assessmentData = response;
+      console.log('aad', response);
+      
       if (this.assessmentData.failureMessage?.error.errors[0].code === '4030') {
         this.router.navigateByUrl('/unauthorized');
       }
@@ -96,6 +98,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   summaryDetails(summary: AssessmentSummaryModel): void {
+    console.log('sub', summary);
+    
     this.tasksCount = summary.tasks;
     this.totalHours = summary.hour;
   }

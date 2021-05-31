@@ -32,14 +32,15 @@
         <section class="assessment-summary" *ngIf="showAssessmentSummary">
             <div class="header_info">
                 <div class="_htxt">
-                    <div class="assessment-summary__heading">Assessment Summary</div>
+                    <div class="assessment-summary__heading">{{assessmentData?.data?.attributes?.packageName}}</div>
                     <span class="assessment-summary__text">
-                        This assessment has <strong>{{ tasksCount }} Tasks</strong> with a total duration of
+                        <!-- This assessment has <strong>{{ tasksCount }} Tasks</strong> with a total duration of
                         <strong>{{ totalHours }}</strong>. Each task is time-bound and can be taken in any order, but
                         can be
-                        submitted one at a time.
+                        submitted one at a time. -->
+                        {{assessmentData?.data?.attributes?.packageDes}}
                     </span>
-                    <button class="back_"><em> <img alt="back" src="../../../assets/back.svg" /></em>Back</button>
+                    <button style="display: none;" class="back_"><em> <img alt="back" src="../../../assets/back.svg" /></em>Back</button>
                 </div>
 
             </div>
