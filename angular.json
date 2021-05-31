@@ -26,7 +26,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": ["src/favicon.ico", "src/assets", "src/static"],
+            "assets": ["src/favicon.ico", "src/assets", "src/static","src/web.config"],
             "stylePreprocessorOptions": {
               "includePaths": ["src/app/scss"]
             },
