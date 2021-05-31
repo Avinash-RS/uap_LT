@@ -1,5 +1,6 @@
 @import 'index';
 .assessment-list {
+    position: relative;
     display: flex;
     margin: 15px;
     border: 1px solid $uap-boulder;
@@ -67,6 +68,48 @@
             }
         }
     }
+    &.completed { 
+        &::before,
+        &:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            border-color: transparent;
+            border-style: solid;
+        }
+
+        &::before {
+            border-width: 1.5em;
+            border-right-color: #ccc;
+            border-top-color: #ccc;
+        }
+
+        &::after {
+            border-top-right-radius: 4px;
+            border-width: 1.5em;
+            border-right-color: $uap-lapalma;
+            border-top-color: $uap-lapalma;
+        }
+        .tickMark {
+            position: absolute;
+            z-index: 1;
+            font-weight: 100;
+            top: 2px;
+            right: 11.5px;
+            border-radius: 0px;
+            display: inline-block;
+            transform: rotate(45deg);
+            height: 18px;
+            width: 7px;
+            border-bottom: 2px solid $uap-white;
+            border-right: 2px solid $uap-white;
+        }
+    }
+}
+.assessments {
+    max-width: 1200px;
+    margin: 0 auto;
 }
 .assessment {
 
@@ -119,7 +162,7 @@
 
 .completed {
     .assessment-list__number {
-        border-color: $uap-lapalma;
+        
         &::before,
         &::after {
             background: $uap-lapalma;
@@ -130,3 +173,5 @@
         pointer-events: none;
     }
 }
+
+ 

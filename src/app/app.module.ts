@@ -6,6 +6,7 @@ import { APP_IMPORTS } from './app.imports';
 import { AuthConfigModule } from './auth-config.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PrivilegeGuard } from './privilege.guard';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
@@ -14,7 +15,18 @@ import { PrivilegeGuard } from './privilege.guard';
     AppRoutingModule,
     BrowserAnimationsModule,
     AuthConfigModule,
-    HttpClientModule
+    HttpClientModule,
+    ToastrModule.forRoot(
+      {
+        timeOut: 3000,
+        preventDuplicates: true,
+        maxOpened:3,
+        autoDismiss:true,
+        // progressBar:true,
+        // progressAnimation:'increasing',
+        closeButton:true
+      }
+    ),
   ],
   providers: [PrivilegeGuard],
   bootstrap: [AppComponent]

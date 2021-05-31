@@ -29,6 +29,9 @@ export interface AssessmentResponse {
   duration: number;
   level: string;
   hasAccepted: boolean;
+  packageName: string;
+  packageDes: string;
+  packageId: string;
   assessmentTasks: Array<AssessmentTaskResponse>;
 }
 

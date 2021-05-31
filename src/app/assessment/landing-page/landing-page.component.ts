@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -10,6 +11,7 @@ import { AssessmentTaskModel } from 'src/app/rest-api/assessments-api/models/ass
 import { AssessmentTaskResponse } from 'src/app/rest-api/assessments-api/models/assessment-task-response-model';
 import { AssessmentsModuleEnum } from 'src/app/admin/assessments/assessments.enums';
 import { selectUserProfileData } from 'src/app/redux/user/user.reducer';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-assessment-landing-page',
@@ -29,12 +31,14 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   assessmentID = '';
   displayTermsAndCondition = false;
   canTakeAssessment = false;
+  notShowThankYou = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private store: Store<AssessmentTasksReducerState>
+    private store: Store<AssessmentTasksReducerState>,
+    private toast: ToastrService
   ) {
     this.candidateDetailsForm = this.formBuilder.group({
       firstName: ['', Validators.required],
@@ -66,6 +70,12 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       );
       if (this.assessmentTasksList.length === completedAssessmentTasksLength.length) {
         this.isAllTasksCompleted = true;
+        // this.toast.success('You have completed this assessment and can now close this window safely.', 'Thank You !', {
+        //   timeOut: 0,
+        //   tapToDismiss: false,
+        //   disableTimeOut: true,
+        //   positionClass: 'toast-top-right'
+        // });
       } else {
         this.isAllTasksCompleted = false;
       }
@@ -95,7 +105,15 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  summaryDetails(summary: AssessmentSummaryModel): void {
+  redirectTo() {
+    if (environment.production) {
+     return window.location.href ='https://certificationqa.lntiggnite.com/myAssessment';
+    } else {
+      return window.location.href ='https://certificationqa.lntiggnite.com/myAssessment';
+      // return window.location.href ='https://certification.lntiggnite.com/myAssessment';
+    }
+  }
+  summaryDetails(summary: AssessmentSummaryModel): void {    
     this.tasksCount = summary.tasks;
     this.totalHours = summary.hour;
   }

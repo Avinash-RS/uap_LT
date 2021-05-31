@@ -1,7 +1,7 @@
 <main class="main">
     <div class="landing-padding_all">
         <section class="welcome" *ngIf="disableConsent == false">
-            <div class="welcome__heading">Welcome !</div>
+            <!-- <div class="welcome__heading">Welcome !</div>
             <p class="welcome__text">You have been invited to take up an assessment by L&T EduTech.</p>
             <form class="user-details" [formGroup]="candidateDetailsForm">
                 <div class="name-field">
@@ -27,24 +27,42 @@
                 <div class="consent">
                     <mat-checkbox formControlName="consent" (click)="updateAssessmentData()" [disabled]='disableConsent' required>I understand and accept Larsen & Toubro's <span (click)='toggleTermsAndCondition()' class="terms_red">Terms and Conditions</span> of usage.</mat-checkbox>
                 </div>
-            </form>
+            </form>-->
         </section>
         <section class="assessment-summary" *ngIf="showAssessmentSummary">
-            <div class="_htxt">
-            <div class="assessment-summary__heading">Assessment Summary</div>
-            <span class="assessment-summary__text">
-                This assessment has <strong>{{ tasksCount }} Tasks</strong> with a total duration of <strong>{{ totalHours }}</strong>. Each task is time-bound and can be taken in any order, but can be submitted one at a time.
-            </span>
-            <button class="back_"><em> <img alt="back" src="../../../assets/back.svg"  /></em>Back</button>
-        </div>
+            <div class="header_info">
+                <div class="_htxt">
+                    <div class="assessment-summary__heading">{{assessmentData?.data?.attributes?.packageName}}</div>
+                    <span class="assessment-summary__text">
+                        <!-- This assessment has <strong>{{ tasksCount }} Tasks</strong> with a total duration of
+                        <strong>{{ totalHours }}</strong>. Each task is time-bound and can be taken in any order, but
+                        can be
+                        submitted one at a time. -->
+                        {{assessmentData?.data?.attributes?.packageDes}}
+                    </span>
+                    <div *ngIf="isAllTasksCompleted && !notShowThankYou">&#160;</div>
+                    <button (click)="redirectTo()" class="back_"><em> <img alt="back" src="../../../assets/back.svg" /></em>Back</button> 
 
-            <app-task-cards (summaryDetails)="summaryDetails($event)" [canTakeAssessment]="canTakeAssessment" [assessmentTasksList]="assessmentTasksList"></app-task-cards>
-            <div class="assessment-summary__message" *ngIf='isAllTasksCompleted'>
-                <span class="thank_you">Thank You ! &nbsp; </span> You have completed this assessment and can now close this window safely.
+                        <div *ngIf='isAllTasksCompleted && !notShowThankYou' class="thankyou">
+                        <div class="close" (click)="notShowThankYou = !notShowThankYou"></div>
+                        <div class="icon"> &#160;<div class="check"></div></div>
+                        <div class="second">
+                            <div class="thank">Thank You !</div>
+                            <div>You have completed this assessment and can now close this window safely.</div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+            <app-task-cards (summaryDetails)="summaryDetails($event)" [canTakeAssessment]="canTakeAssessment"
+                [assessmentTasksList]="assessmentTasksList"></app-task-cards>
+            <!-- <div class="assessment-summary__message" *ngIf='isAllTasksCompleted'>
+                <span class="thank_you">Thank You ! &nbsp; </span> You have completed this assessment and can now close this window safely.
+            </div> -->
 
         </section>
     </div>
 </main>
 
-<app-terms-and-condition [showTerms]='displayTermsAndCondition' (hideTerms)='toggleTermsAndCondition()'></app-terms-and-condition>
+<app-terms-and-condition [showTerms]='displayTermsAndCondition' (hideTerms)='toggleTermsAndCondition()'>
+</app-terms-and-condition>
