@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -104,6 +105,14 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     });
   }
 
+  redirectTo() {
+    if (environment.production) {
+     return window.location.href ='https://certificationqa.lntiggnite.com/myAssessment';
+    } else {
+      return window.location.href ='https://certificationqa.lntiggnite.com/myAssessment';
+      // return window.location.href ='https://certification.lntiggnite.com/myAssessment';
+    }
+  }
   summaryDetails(summary: AssessmentSummaryModel): void {    
     this.tasksCount = summary.tasks;
     this.totalHours = summary.hour;
