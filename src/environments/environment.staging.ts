@@ -7,5 +7,6 @@ export const environment = {
     issuer: 'https://uap-iam.lntiggnite.com/auth/realms/uap',
     clientId: 'uap-ui',
     logging : LogLevel.Error
-  }
+  },
+  TOKEN_URL: 'https://uap-iam.lntiggnite.com/auth/realms/uap/protocol/openid-connect/token'
 };
