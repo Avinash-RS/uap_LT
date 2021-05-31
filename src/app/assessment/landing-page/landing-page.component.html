@@ -40,15 +40,25 @@
                         submitted one at a time. -->
                         {{assessmentData?.data?.attributes?.packageDes}}
                     </span>
-                    <button style="display: none;" class="back_"><em> <img alt="back" src="../../../assets/back.svg" /></em>Back</button>
+                    <div *ngIf="isAllTasksCompleted && !notShowThankYou">&#160;</div>
+                    <button style="display: none;" class="back_"><em> <img alt="back" src="../../../assets/back.svg" /></em>Back</button> 
+
+                        <div *ngIf='isAllTasksCompleted && !notShowThankYou' class="thankyou">
+                        <div class="close" (click)="notShowThankYou = !notShowThankYou"></div>
+                        <div class="icon"> &#160;<div class="check"></div></div>
+                        <div class="second">
+                            <div class="thank">Thank You !</div>
+                            <div>You have completed this assessment and can now close this window safely.</div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
             <app-task-cards (summaryDetails)="summaryDetails($event)" [canTakeAssessment]="canTakeAssessment"
                 [assessmentTasksList]="assessmentTasksList"></app-task-cards>
-            <div class="assessment-summary__message" *ngIf='isAllTasksCompleted'>
+            <!-- <div class="assessment-summary__message" *ngIf='isAllTasksCompleted'>
                 <span class="thank_you">Thank You ! &nbsp; </span> You have completed this assessment and can now close this window safely.
-            </div>
+            </div> -->
 
         </section>
     </div>
