@@ -44,7 +44,7 @@ button {
     height: 40px;
     width: 150px;
     font-weight: 600;
-    font: bold 18px/1 $uap-roboto-condensed;
+    font: normal 18px/1 $uap-roboto-condensed;
 }
 
 button.mat-menu-item {
@@ -57,5 +57,6 @@ button.mat-menu-item {
     button {
         background-color: $uap-la-palma;
         width: 180px;
+        border-radius: 4px;
     }
 }
