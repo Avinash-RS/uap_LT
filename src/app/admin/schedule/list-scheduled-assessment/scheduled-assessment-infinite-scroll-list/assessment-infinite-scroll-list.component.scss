@@ -5,7 +5,7 @@
   justify-content: space-evenly;
   background-color: $uap-pampas1;
   padding: 15px;
-  border: 1px solid $uap-cotton-seed;
+  border: 1px solid $uap-boulder;
   .batch-id {
     display: flex;
     flex-direction: column;
@@ -14,11 +14,11 @@
     padding-right: 10px;
     :first-child {
       font: bold 20px / normal $uap-roboto-condensed;
-      color: $uap-boulder;
+      color: $uap-light-black;
     }
     :last-child {
       font: 400 18px / normal $uap-roboto-condensed;
-      color: $uap-boulder;
+      color: $uap-light-black;
        overflow-wrap: break-word;
     }
   }
@@ -30,11 +30,11 @@
     padding-right: 10px;
     :first-child {
       font: bold 20px / normal $uap-roboto-condensed;
-      color: $uap-boulder;
+      color: $uap-light-black;
     }
     :last-child {
       font: 400 18px / normal $uap-roboto-condensed;
-      color: $uap-boulder;
+      color: $uap-light-black;
       overflow-wrap: break-word;
     }
   }
@@ -46,11 +46,11 @@
     padding-right: 10px;
     :first-child {
       font: bold 20px / normal $uap-roboto-condensed;
-      color: $uap-boulder;
+      color: $uap-light-black;
     }
     :last-child {
       font: 400 18px / normal $uap-roboto-condensed;
-      color: $uap-boulder;
+      color: $uap-light-black;
     }
   }
   .duration {
@@ -64,14 +64,14 @@
     }
     :first-child {
       font: 400 16px / normal $uap-roboto-condensed;
-      color: $uap-boulder;
+      color: $uap-light-black;
       display: flex;
       align-items: center;
       padding-bottom: 4px;
     }
     :last-child {
       font: 400 16px / normal $uap-roboto-condensed;
-      color: $uap-boulder;
+      color: $uap-light-black;
       display: flex;
       align-items: center;
     }
@@ -83,11 +83,11 @@
     text-align: left;
     :first-child {
       font: bold 20px / normal $uap-roboto-condensed;
-      color: $uap-boulder;
+      color: $uap-light-black;
     }
     :last-child {
       font: 400 18px / normal $uap-roboto-condensed;
-      color: $uap-boulder;
+      color: $uap-light-black;
     }
   }
 }
@@ -105,10 +105,11 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    color: $uap-boulder;
+    color: $uap-light-black;
     font: 500 16px / normal $uap-roboto-condensed;
-    border: 1px solid $uap-cotton-seed;
+    border: 1px solid $uap-boulder;
     cursor: pointer;
+    border-top: 0;
   }
 }
 .action-hide {
@@ -126,10 +127,11 @@
     align-items: center;
     justify-content: center;
     display: flex;
-    color: $uap-boulder;
+    color: $uap-light-black;
     font: 500 16px / normal $uap-roboto-condensed;
-    border: 1px solid $uap-cotton-seed;
+    border: 1px solid $uap-boulder;
     cursor: pointer;
+    border-bottom: 0;
   }
 }
 .candidates-content {
@@ -137,9 +139,11 @@
   padding-left: 15px;
   padding-top: 20px;
   padding-right: 20px;
+  border: 1px solid $uap-boulder;
+  border-top: 0;
   &-header {
     font: bold 20px / normal $uap-roboto-condensed;
-    color: $uap-boulder;
+    color: $uap-light-black;
   }
 }
 .main-panel-schedule-assessment {

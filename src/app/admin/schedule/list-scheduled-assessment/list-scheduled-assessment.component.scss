@@ -54,7 +54,8 @@ button.mat-menu-item {
     cursor: pointer;
     outline: none;
     border: none;
-    font: bold 20px/1 $uap-roboto-condensed;
+    font: normal 20px/1 $uap-roboto-condensed;
+    border-radius: 4px;
   }
 }
 .candidates-content {

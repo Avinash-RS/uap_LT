@@ -11,16 +11,16 @@
     justify-content: space-between;
     position: relative;
     color: $uap-mine-shaft;
-    border: 1px solid $uap-label-grey;
+    border: 1px solid $uap-boulder;
     &__info {
         width: 60%;
         &-name {
-            color: $uap-boulder;
+            color: $uap-light-black;
             font: bold 20px/1 $uap-roboto-condensed;
             padding-bottom: 10px;
         }
         &-contains {
-            color: $uap-boulder;
+            color: $uap-light-black;
             font: normal 18px/1 $uap-roboto-condensed;
             max-width: 368px;
             line-height: 1.5;
@@ -31,7 +31,7 @@
         padding-right: 20px;
         margin-right: auto;
         &-level {
-            color: $uap-boulder;
+            color: $uap-light-black;
             display: flex;
             align-items: center;
             padding-bottom: 10px;
@@ -40,7 +40,7 @@
             }
         }
         &-time {
-            color: $uap-boulder;
+            color: $uap-light-black;
             display: flex;
             align-items: center;
             scroll-padding: 10px;
@@ -57,7 +57,7 @@
                 color: $uap-la-palma;
             }
             &-draft {
-                color: $uap-boulder;
+                color: $uap-light-black;
             }
         }
         &-buttons {
@@ -69,15 +69,18 @@
                 background-color: $uap-crimson;
             }
             button.view {
-                font-weight: bold;
+                font-weight: normal;
                 font-size: 20px;
                 background: $uap-buddha-gold;
+                border-radius: 4px;
+                border: 1px solid $uap-buddha-goldb;
+                text-shadow: 1px 1px 1px $uap-buddha-goldb;
             }
         }
     }
     &__invite-status {
-        background: $uap-malachite;
-        color: $uap-white;
+        background: $uap-alto;
+        color: $uap-light-black;
         font: bold 14px/1 $uap-roboto-condensed;
         width: 152px;
         height: 28px;
@@ -88,6 +91,10 @@
         top: 0;
         left: 50%;
         transform: translateX(-50%);
+        font-weight: normal;
+        border: 1px solid $uap-boulder;
+        border-top-width: 0;
+        border-radius: 0 0 4px 4px;
     }
 }
 
