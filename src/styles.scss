@@ -5,7 +5,7 @@ body {
   height: 100%;
 }
 body {
-  background-color: $white;
+  background-color: $uap-boulder;
   margin: 0;
   font-family: $uap-roboto-condensed;
   box-sizing: border-box;
@@ -13,7 +13,6 @@ body {
 
 .mat-drawer-container {
   background-color: white;
-  /*color: #000;*/
 }
 
 .snackbar {
