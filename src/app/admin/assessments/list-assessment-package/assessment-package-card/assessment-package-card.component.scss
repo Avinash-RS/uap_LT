@@ -79,9 +79,9 @@
         }
     }
     &__invite-status {
-        background: $uap-alto;
-        color: $uap-light-black;
-        font: bold 14px/1 $uap-roboto-condensed;
+        background: $uap-malachite;
+        color: $white;
+        font: bold 16px/1 $uap-roboto-condensed;
         width: 152px;
         height: 28px;
         display: flex;
@@ -91,10 +91,11 @@
         top: 0;
         left: 50%;
         transform: translateX(-50%);
-        font-weight: normal;
-        border: 1px solid $uap-boulder;
+        font-weight: 500;
+        border: 1px solid #1fb72f;
         border-top-width: 0;
         border-radius: 0 0 4px 4px;
+        text-shadow: 0 1px 1px #0000006e;
     }
 }
 
