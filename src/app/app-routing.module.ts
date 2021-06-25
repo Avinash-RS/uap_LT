@@ -7,6 +7,11 @@ const routes: Routes = [
     path: '',
     children: [
       {
+        path: 'login',
+        loadChildren: () => import('./login/login.module').then((module) => module.LoginModule),
+        // canActivate: [PrivilegeGuard]
+      },
+      {
         path: 'landing',
         loadChildren: () => import('./assessment/index').then((module) => module.AssessmentModule),
         // canActivate: [PrivilegeGuard]
@@ -30,7 +35,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'profile',
+        redirectTo: 'login',
         pathMatch: 'full'
       }
     ]

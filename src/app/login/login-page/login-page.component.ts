@@ -33,6 +33,10 @@ export class LoginPageComponent implements OnInit {
     })
   }
 
+  login() {
+    console.log('ad', this.loginForm);    
+  }
+
   
   get username() {
     return this.loginForm.get('username');
