@@ -1,19 +1,18 @@
-<div>
+<div class="limiter">
     <mat-toolbar class="headerShadow">
         <img class="hearder-logo " alt="" src="../../../assets/lnt.svg">
     </mat-toolbar>
-    <div class="limiter">
+    <div >
         <div class="row container-reg200">
-            <div class="igniteLogo col-xl-8 col-md-6 col-sm-12 col-12 border-right no_pl">
+            <div class="igniteLogo border-right no_pl">
                 <div class="main-logo">
-                    <img alt="" class="beforeloginimg" style="width: inherit" src="../../../assets/iGGnite_SVG.svg">
+                    <img alt="" class="beforeloginimg" style="width: inherit" src="../../../assets/iggnite.svg">
                 </div>
             </div>
-            <div class="loginWrapper col-xl-4 col-md-6 col-sm-12 col-12">
-                <div class="wrap-reg">
+            <div class="loginWrapper"> 
                     <form [formGroup]="loginForm" autocomplete="off">
                         <h1 class="animated animatedFadeInUp fadeInUp signIn"> {{'Sign in to your account'}}</h1>
-                        <br><br>
+                        <br/><br/>
                         <mat-card-content style="margin-top:10px">
 
                             <mat-form-field appearance="outline">
@@ -58,9 +57,7 @@
                                     (click)="login()">{{'SIGN IN'}}</button>
                             </div>
                         </mat-card-content>
-                    </form>
-                </div>
-
+                    </form>  
             </div>
         </div>
     </div>

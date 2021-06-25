@@ -10,22 +10,37 @@
 
 .limiter {
     height: 100%;
+    background-color: $uap-white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 :host ::ng-deep .container-reg200 {
+    padding-top: 6em;
     margin: 0;
     width: 100%;
     height: 100%; 
     display: flex;
     justify-content: center;
-    align-items: center;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;
+    align-items: center; 
+    background-color:$uap-white;
+    flex-direction: column;
+    @media only screen and (min-width: 767px) {
+        flex-direction: row;
+    }
+    @media only screen and (min-width: 1440px) {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+  
 }
 
 .igniteLogo {
-    @media only screen and (max-width: 767px) {
-        display: none;
+    width: 100%;
+    @media only screen and (min-width: 767px) {
+        width: 65%;
     }
 }
 
@@ -35,8 +50,12 @@
 
 .beforeloginimg {
     width: 100%;
-    height: 0vh !important;
+    height: auto ;
     padding: 10px;
+
+    @media only screen and (min-width: 767px) {
+        height: 50vh;
+    }
 }
 
 .main-logo {
@@ -49,11 +68,27 @@
 
 .loginWrapper {
     height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    @media only screen and (min-width: 767px) {
+        width: 35%;
+    }
+
     .signIn {
         font-weight: 400;
         font-size: 24px;
         line-height: 32px;
+        color: $uap-grey;
+        text-align: center;
     }
+
+    form {
+        width: 100%;
+        padding: 1em 4em;
+    }
+    
 }
 
 .space-20 {
@@ -86,11 +121,65 @@
 }
 
 #footer {
-    color: $uap-button-grey;
     font-size: 13px;
-    width: 100%;
+    width: 100%; 
+    padding: 1em 0;
+    text-align: right;
+
+    .forgot1 {
+        margin-right: 5em;
+        color: $uap-button-grey;
+    }
+}
+
+.mat-toolbar {
+    background: $uap-yellow !important;
+    color: $uap-black;
+    position: absolute;
+    z-index: 4;
+    height: 55px !important;
+}
+
+.mat-form-field-infix {
+    display: block;
     position: relative;
-    left: 0px;
-    bottom: 5px;
-    text-align: center;
+    flex: auto;
+    min-width: 0;
+    width: 180px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: #C02222 !important;
+}
+:host ::ng-deep .mat-form-field-wrapper {
+    padding:0 !important ;
+}
+ 
+:host ::ng-deep {
+    mat-form-field {
+        width: 100%;
+    }
+
+ .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: $uap-crimson !important;
+}
+mat-error {
+    font-size: 0.9em;
+}
+.mat-form-field-appearance-outline .mat-form-field-outline-thick {
+    color: $uap-crimson !important;
+}
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: rgba(0, 0, 0, .12);
+}
+
+.mat-raised-button[disabled]:not([class*=mat-elevation-z]) {
+    color: #d2d1d1;
+    background: #C02222 !important;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%) !important;
+}
+mat-label, mat-icon {
+    color: $uap-grey;
+}
+
 }
