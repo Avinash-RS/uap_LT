@@ -7,6 +7,7 @@ import { AuthConfigModule } from './auth-config.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PrivilegeGuard } from './privilege.guard';
 import { ToastrModule } from 'ngx-toastr';
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +16,7 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     BrowserAnimationsModule,
     AuthConfigModule,
+    MaterialModule,
     HttpClientModule,
     ToastrModule.forRoot(
       {
