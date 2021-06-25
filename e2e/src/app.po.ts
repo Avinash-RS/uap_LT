@@ -113,21 +113,21 @@ export class AppPage {
     await element(by.xpath('/html/body/div[2]/div[2]/div/div/div/button')).click();
   }
 
-  async getAccessToken(): Promise<void> {
-    const url = environment.TOKEN_URL;
-    const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', url);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.onreadystatechange = async () => {
-      if (xhr.readyState === 4) {
-        const data = await JSON.parse(xhr.responseText);
-        accessToken = await data.access_token;
-      }
-    };
-    const requestBody = `client_id=uap-core-service&grant_type=password&username=dev%40hebbalelabs.com&password=SwYEGTdBqI&client_secret=19db9aef-1e70-4509-b827-9a76a981223d`;
-    xhr.send(requestBody);
-  }
+  // async getAccessToken(): Promise<void> {
+  //   const url = environment.TOKEN_URL;
+  //   const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+  //   const xhr = new XMLHttpRequest();
+  //   xhr.open('POST', url);
+  //   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  //   xhr.onreadystatechange = async () => {
+  //     if (xhr.readyState === 4) {
+  //       const data = await JSON.parse(xhr.responseText);
+  //       accessToken = await data.access_token;
+  //     }
+  //   };
+  //   const requestBody = `client_id=uap-core-service&grant_type=password&username=dev%40hebbalelabs.com&password=SwYEGTdBqI&client_secret=19db9aef-1e70-4509-b827-9a76a981223d`;
+  //   xhr.send(requestBody);
+  // }
 
   async getAssessmentID(): Promise<void> {
     const url = `${environment.API_URL}/assessments?assessmentStatus=YetToStart&limit=1&offset=0&search=${this.testingName}`;

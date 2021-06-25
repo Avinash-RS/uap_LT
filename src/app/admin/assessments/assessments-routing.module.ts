@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AutoLoginGuard } from 'angular-auth-oidc-client';
 import { AssessmentsComponent } from './assessments.component';
 
 const AssessmentsRoutes: Routes = [
@@ -14,7 +13,7 @@ const AssessmentsRoutes: Routes = [
           import('./list-assessment-package/index').then(
             (module) => module.ListAssessmentPackageModule
           ),
-        canActivate: [AutoLoginGuard]
+        // canActivate: [AutoLoginGuard]
       },
       {
         path: 'create',
@@ -22,7 +21,7 @@ const AssessmentsRoutes: Routes = [
           import('./create-or-edit-assessment-package/index').then(
             (module) => module.CreateOrEditAssessmentPackageModule
           ),
-        canActivate: [AutoLoginGuard]
+        // canActivate: [AutoLoginGuard]
       },
       {
         path: 'view/:id',
@@ -30,7 +29,7 @@ const AssessmentsRoutes: Routes = [
           import('./view-assessment-package/index').then(
             (module) => module.ViewAssessmentPackageModule
           ),
-        canActivate: [AutoLoginGuard]
+        // canActivate: [AutoLoginGuard]
       },
       {
         path: '',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+// import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-unauthorized-message',
@@ -7,8 +7,10 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
   styleUrls: ['unauthorized-message.component.scss']
 })
 export class UnAuthorizedMessageComponent {
-  constructor(private oidcSecurityService: OidcSecurityService) {}
+  constructor() {}
   logout(): void {
-    this.oidcSecurityService.logoff();
+    console.log('logout called');
+    
+    // this.oidcSecurityService.logoff();
   }
 }

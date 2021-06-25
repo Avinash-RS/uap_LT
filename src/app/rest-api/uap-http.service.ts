@@ -3,13 +3,12 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Injectable()
 export class UapHttpService {
   private apiBaseUrl = environment.API_URL;
 
-  constructor(public httpClient: HttpClient, public oidcSecurityService: OidcSecurityService) {}
+  constructor(public httpClient: HttpClient) {}
 
   get<T>(url: string): Observable<T> {
     return this.httpClient.get<T>(this.getUrl(url), { headers: this.createHeaders() });
@@ -59,18 +58,18 @@ export class UapHttpService {
     return new HttpHeaders({
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
+      // Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
     });
   }
   private createMultipartDataHeaders(): HttpHeaders {
     return new HttpHeaders({
-      Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
+      // Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
     });
   }
   private createHeadersWithDefaultContentType(): HttpHeaders {
     return new HttpHeaders({
       Accept: 'application/json',
-      Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
+      // Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
     });
   }
 
@@ -78,14 +77,14 @@ export class UapHttpService {
     return new HttpHeaders({
       'Content-Type': 'text/plain',
       Accept: 'application/json',
-      Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
+      // Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
     });
   }
   private createOctetStreamHeaders(): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/text',
       Accept: 'application/octet-stream',
-      Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
+      // Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
     });
   }
 }

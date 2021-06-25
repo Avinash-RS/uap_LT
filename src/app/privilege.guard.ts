@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { UserAPIService } from './rest-api/user-api/user-api.service';
 import { catchError, map } from 'rxjs/operators';
 import { UserProfileResponseModel } from './rest-api/user-api/models/user-profile.model';
-import { OidcSecurityService, TokenValidationService } from 'angular-auth-oidc-client';
 import { getUserProfile } from './redux/user/user.actions';
 import { getReferenceData } from './redux/reference-data/reference-data.actions';
 import { Store } from '@ngrx/store';
@@ -15,18 +14,16 @@ export class PrivilegeGuard implements CanActivate {
   constructor(
     private router: Router,
     private userAPIService: UserAPIService,
-    private oidcSecurityService: OidcSecurityService,
-    private tokenValidationService: TokenValidationService,
     private store: Store<AppState>
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
-    if (
-      this.oidcSecurityService.getToken() &&
-      !this.tokenValidationService.hasIdTokenExpired(
-        this.oidcSecurityService.getToken(),
-        this.oidcSecurityService.configuration.configuration.renewTimeBeforeTokenExpiresInSeconds
-      )
+    if (true
+      // this.oidcSecurityService.getToken() &&
+      // !this.tokenValidationService.hasIdTokenExpired(
+      //   this.oidcSecurityService.getToken(),
+      //   this.oidcSecurityService.configuration.configuration.renewTimeBeforeTokenExpiresInSeconds
+      // )
     ) {
       this.store.dispatch(getReferenceData());
       this.store.dispatch(getUserProfile());

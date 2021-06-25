@@ -3,7 +3,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_IMPORTS } from './app.imports';
-import { AuthConfigModule } from './auth-config.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PrivilegeGuard } from './privilege.guard';
 import { ToastrModule } from 'ngx-toastr';
@@ -14,7 +13,6 @@ import { ToastrModule } from 'ngx-toastr';
     APP_IMPORTS,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AuthConfigModule,
     HttpClientModule,
     ToastrModule.forRoot(
       {
