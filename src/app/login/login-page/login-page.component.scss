@@ -1,0 +1,96 @@
+@import 'colors';
+
+.headerShadow {
+    box-shadow: 0 3px 3px rgba(0, 0, 0, .2) !important;
+}
+
+.hearder-logo {
+    height: 36px;
+}
+
+.limiter {
+    height: 100%;
+}
+
+:host ::ng-deep .container-reg200 {
+    margin: 0;
+    width: 100%;
+    height: 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+}
+
+.igniteLogo {
+    @media only screen and (max-width: 767px) {
+        display: none;
+    }
+}
+
+.border-right {
+    border-right: 1px solid #ececec;
+}
+
+.beforeloginimg {
+    width: 100%;
+    height: 0vh !important;
+    padding: 10px;
+}
+
+.main-logo {
+    width: 60%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.loginWrapper {
+    height: 100%;
+    .signIn {
+        font-weight: 400;
+        font-size: 24px;
+        line-height: 32px;
+    }
+}
+
+.space-20 {
+    margin-top: 15px;
+}
+.center {
+    text-align: center;
+}
+
+.btn {
+    font-size: 16px;
+    background: $uap-crimson !important;
+    color: $uap-white;
+    border-radius: 50px !important;
+    width: 54%;
+    height: 45px;
+    margin-left: 23%;
+    margin-right: 23%;
+    margin-top: 10%;
+}
+
+:host ::ng-deep .btn.disabled,
+.btn:disabled {
+    opacity: .35 !important;
+    background-color: gray !important;
+    pointer-events: none;
+    color: $uap-white !important;
+    border-radius: .25rem;
+    font-size: 16px;
+}
+
+#footer {
+    color: $uap-button-grey;
+    font-size: 13px;
+    width: 100%;
+    position: relative;
+    left: 0px;
+    bottom: 5px;
+    text-align: center;
+}
