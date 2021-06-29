@@ -2,8 +2,8 @@
 
 export const environment = {
   production: false,
-  staging: true,
-  qa: false,
+  staging: false,
+  qa: true,
   dev: false,
   local: false,
   API_URL: 'https://uapdev-api.lntiggnite.com',
