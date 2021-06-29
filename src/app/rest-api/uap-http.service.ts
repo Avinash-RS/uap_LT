@@ -7,6 +7,7 @@ import { map } from 'rxjs/operators';
 @Injectable()
 export class UapHttpService {
   private apiBaseUrl = environment.API_URL;
+  private apiNodeUrl = environment.NODE_URL;
 
   constructor(public httpClient: HttpClient) {}
 
@@ -51,25 +52,33 @@ export class UapHttpService {
     return this.httpClient.delete<{}>(this.getUrl(url), { headers: this.createHeaders() });
   }
   private getUrl(url: string): string {
+    if (!url.includes('/login') && !url.includes('/getUserToken')) {
     return `${this.apiBaseUrl}${url}`;
+    } else {
+      return `${this.apiNodeUrl}${url}`;
+    }
+  }
+
+  private getToken() {
+    return localStorage.getItem('token') ? localStorage.getItem('token') : ''
   }
 
   private createHeaders(): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      // Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
+      Authorization: 'Bearer ' + this.getToken()
     });
   }
   private createMultipartDataHeaders(): HttpHeaders {
     return new HttpHeaders({
-      // Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
+      Authorization: 'Bearer ' + this.getToken()
     });
   }
   private createHeadersWithDefaultContentType(): HttpHeaders {
     return new HttpHeaders({
       Accept: 'application/json',
-      // Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
+      Authorization: 'Bearer ' + this.getToken()
     });
   }
 
@@ -77,14 +86,14 @@ export class UapHttpService {
     return new HttpHeaders({
       'Content-Type': 'text/plain',
       Accept: 'application/json',
-      // Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
+      Authorization: 'Bearer ' + this.getToken()
     });
   }
   private createOctetStreamHeaders(): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/text',
       Accept: 'application/octet-stream',
-      // Authorization: 'Bearer ' + this.oidcSecurityService.getToken()
+      Authorization: 'Bearer ' + this.getToken()
     });
   }
 }

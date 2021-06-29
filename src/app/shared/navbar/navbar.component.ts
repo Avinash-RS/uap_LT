@@ -1,9 +1,11 @@
+import { UserAPIService } from 'src/app/rest-api/user-api/user-api.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 // import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { Store } from '@ngrx/store';
 import { AssessmentTasksReducerState } from '../../assessment/landing-page/redux/landing-page.model';
 import { selectAssessmentTasksListState } from '../../assessment/landing-page/redux/landing-page.reducers';
+import  * as loginAction from 'src/app/login/redux/login.actions';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +17,7 @@ export class NavBarComponent {
   assessmentData: any;
   displayName = '';
   constructor(private router: Router,
-    private store: Store<AssessmentTasksReducerState>,) {
+    private store: Store<AssessmentTasksReducerState>, private userService: UserAPIService) {
   }
 
   ngOnInit(): void {
@@ -28,8 +30,8 @@ export class NavBarComponent {
   }
 
   logout(): void {
-    console.log('logout');
-    
+    this.store.dispatch(loginAction.logoutAction());
+    this.userService.logout();
     // this.oidcSecurityService.logoff(this.postLogOut);
   }
 

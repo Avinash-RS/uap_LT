@@ -1,3 +1,5 @@
+import { CustomSnackBarModule } from './shared/custom-snack-bar-content/index';
+import { SharedModule } from './shared/shared.module';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -7,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PrivilegeGuard } from './privilege.guard';
 import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule } from './material/material.module';
+import { PrivilegeAutoLogoutGuard } from './privilege-auto-logout.guard';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +18,8 @@ import { MaterialModule } from './material/material.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialModule,
+    SharedModule,
+    CustomSnackBarModule,
     HttpClientModule,
     ToastrModule.forRoot(
       {
@@ -28,7 +33,7 @@ import { MaterialModule } from './material/material.module';
       }
     ),
   ],
-  providers: [PrivilegeGuard],
+  providers: [PrivilegeGuard, PrivilegeAutoLogoutGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

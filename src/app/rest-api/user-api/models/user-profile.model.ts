@@ -2,6 +2,7 @@ import { ErrorResponse } from '../../common/models/error.model';
 
 export interface UserProfileResponseModel {
   data: UserMetaData;
+  // token: tokenData;
   failureMessage?: ErrorResponse;
 }
 

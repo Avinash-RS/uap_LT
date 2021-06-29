@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PrivilegeAutoLogoutGuard } from './privilege-auto-logout.guard';
 import { PrivilegeGuard } from './privilege.guard';
 
 const routes: Routes = [
@@ -9,22 +10,22 @@ const routes: Routes = [
       {
         path: 'login',
         loadChildren: () => import('./login/login.module').then((module) => module.LoginModule),
-        // canActivate: [PrivilegeGuard]
+        canActivate: [PrivilegeAutoLogoutGuard]
       },
       {
         path: 'landing',
         loadChildren: () => import('./assessment/index').then((module) => module.AssessmentModule),
-        // canActivate: [PrivilegeGuard]
+        canActivate: [PrivilegeGuard]
       },
       {
         path: 'admin',
         loadChildren: () => import('./admin/index').then((module) => module.AdminModule),
-        // canActivate: [PrivilegeGuard]
+        canActivate: [PrivilegeGuard]
       },
       {
         path: 'profile',
         loadChildren: () => import('./profile/index').then((module) => module.ProfileModule),
-        // canActivate: [PrivilegeGuard]
+        canActivate: [PrivilegeGuard]
       },
       {
         path: 'unauthorized',

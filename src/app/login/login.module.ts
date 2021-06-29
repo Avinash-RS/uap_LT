@@ -5,6 +5,8 @@ import { LoginRoutingModule } from './login-routing.module';
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginPageComponent } from './login-page/login-page.component';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 
 
@@ -14,7 +16,9 @@ import { LoginPageComponent } from './login-page/login-page.component';
     CommonModule,
     SharedModule,
     LoginRoutingModule,
-    MaterialModule
+    MaterialModule,
+    EffectsModule.forFeature([]),
+    // StoreModule.forFeature({})
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })

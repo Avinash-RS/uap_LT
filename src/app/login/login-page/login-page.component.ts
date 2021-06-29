@@ -1,6 +1,10 @@
+import { AppState } from './../../reducers/index';
+import { Store } from '@ngrx/store';
+import { UserAPIService } from './../../rest-api/user-api/user-api.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { loginAttempt, logoutAction } from '../redux/login.actions';
 
 @Component({
   selector: 'uap-login-page',
@@ -14,14 +18,23 @@ export class LoginPageComponent implements OnInit {
   hide = true;
   show = false;
   disableButton: boolean;
-
+  errorMessage: any;
   constructor(
     public fb: FormBuilder, 
-    public toastr: ToastrService
+    public toastr: ToastrService,
+    private api: UserAPIService,
+    private store: Store<AppState>
   ) { }
 
   ngOnInit(): void {
     this.formInitialize();
+    this.getErrorMessage();
+  }
+
+  getErrorMessage() {
+    // this.store.select(getUserProfileFailure).subscribe((data: any)=> {
+
+    // });
   }
 
   
@@ -34,7 +47,14 @@ export class LoginPageComponent implements OnInit {
   }
 
   login() {
-    console.log('ad', this.loginForm);    
+    if (this.loginForm.valid) {
+      let apiData = {
+        email: this.loginForm.value.username,
+        pass: this.loginForm.value.password
+      }
+      this.store.dispatch(loginAttempt({payload: apiData}));
+    } else {
+    }
   }
 
   

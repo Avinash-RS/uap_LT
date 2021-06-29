@@ -55,7 +55,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 // ---------------------------------------------------------------------
 // import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDialogModule } from '@angular/material/dialog';
-// import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatNativeDateModule } from '@angular/material/core';
 
 // Material Data tables
@@ -88,6 +88,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatToolbarModule,
     MatSidenavModule,
     MatSlideToggleModule,
+    MatSnackBarModule
   ],
   exports: [
     MatMenuModule,
@@ -110,7 +111,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatBadgeModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatSnackBarModule,
   ]
 })
 export class MaterialModule { }

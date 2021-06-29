@@ -6,7 +6,9 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://uap-api.lntiggnite.com',
+  // API_URL: 'https://uap-api.lntiggnite.com',
+  API_URL: 'https://uapdev-api.lntiggnite.com',
+  NODE_URL: 'https://edgeservice.lntiggnite.com'
 //   OIDC_CONFIG: {
 //     issuer: 'https://uap-iam.lntiggnite.com/auth/realms/uap',
 //     clientId: 'uap-ui',

@@ -1,3 +1,6 @@
+import { CustomSnackBarModule } from './../shared/custom-snack-bar-content/index';
+import { SharedModule } from './../shared/shared.module';
+import { MaterialModule } from './../material/material.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,7 +13,7 @@ import { UserAPIService } from './user-api/user-api.service';
 import { ReferenceAPIService } from './reference-api/reference-api.service';
 
 @NgModule({
-  imports: [CommonModule, HttpClientModule],
+  imports: [CommonModule, HttpClientModule, MaterialModule, CustomSnackBarModule],
   providers: [
     AssessmentAPIService,
     PackageAPIService,
