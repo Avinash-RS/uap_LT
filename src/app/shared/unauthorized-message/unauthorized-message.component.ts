@@ -1,5 +1,9 @@
+import * as loginAction from './../../login/redux/login.actions';
+import { AppState } from 'src/app/reducers';
+import { Store } from '@ngrx/store';
+import { UserAPIService } from 'src/app/rest-api/user-api/user-api.service';
 import { Component } from '@angular/core';
-import { OidcSecurityService } from 'angular-auth-oidc-client';
+// import { OidcSecurityService } from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-unauthorized-message',
@@ -7,8 +11,10 @@ import { OidcSecurityService } from 'angular-auth-oidc-client';
   styleUrls: ['unauthorized-message.component.scss']
 })
 export class UnAuthorizedMessageComponent {
-  constructor(private oidcSecurityService: OidcSecurityService) {}
+  constructor(private userService: UserAPIService, private store: Store<AppState>) {}
   logout(): void {
-    this.oidcSecurityService.logoff();
+    this.store.dispatch(loginAction.logoutAction());
+    this.userService.logout();
+    // this.oidcSecurityService.logoff();
   }
 }

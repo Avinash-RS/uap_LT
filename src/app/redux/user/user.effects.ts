@@ -1,13 +1,21 @@
+import { dummyAction } from './../../login/redux/login.actions';
+import { Router } from '@angular/router';
+import { AppState } from './../../reducers/index';
+import { Store } from '@ngrx/store';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import * as UserActions from './user.actions';
 import { Injectable } from '@angular/core';
 import { UserAPIService } from 'src/app/rest-api/user-api/user-api.service';
 import { UserProfileResponseModel } from 'src/app/rest-api/user-api/models/user-profile.model';
-import { catchError, mergeMap } from 'rxjs/operators';
+import { catchError, mergeMap, map, tap } from 'rxjs/operators';
 import { ErrorResponse } from 'src/app/rest-api/common/models/error.model';
+import { of } from 'rxjs';
+import { getUserProfile } from './user.selector';
 
 @Injectable()
 export class UserEffects {
+
+
   getUserProfile$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActions.getUserProfile),
@@ -24,5 +32,23 @@ export class UserEffects {
     )
   );
 
-  constructor(private actions$: Actions, private userAPIService: UserAPIService) {}
+  autoLogin$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(UserActions.autoLogin),
+      mergeMap((action) => {
+        const user = this.userAPIService.getUserFromLocalStorage();
+        let users = {
+          data: user
+        }
+        if (user) {
+          return of(UserActions.getUserProfileSuccess({ payload: users }));
+        } else {
+          return of(dummyAction);
+        }
+      })
+    );
+  });
+
+  constructor(private actions$: Actions, private userAPIService: UserAPIService, private store: Store<AppState>, private route: Router) { }
+
 }
