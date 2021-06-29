@@ -2,9 +2,9 @@
 
 export const environment = {
   production: false,
-  staging: true,
+  staging: false,
   qa: false,
-  dev: false,
+  dev: true,
   local: false,
   API_URL: 'https://uapdev-api.lntiggnite.com',
   NODE_URL: 'https://edgeservice.lntiggnite.com'

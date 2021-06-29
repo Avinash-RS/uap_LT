@@ -2,6 +2,10 @@
 
 export const environment = {
   production: true,
+  staging: false,
+  qa: false,
+  dev: false,
+  local: false,
   API_URL: 'https://uapdev-api.lntiggnite.com',
   NODE_URL: 'https://edgeservice.lntiggnite.com'
   // OIDC_CONFIG: {
