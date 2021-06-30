@@ -32,6 +32,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   displayTermsAndCondition = false;
   canTakeAssessment = false;
   notShowThankYou = false;
+  backToCertificationPortal: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -103,14 +104,24 @@ export class LandingPageComponent implements OnInit, OnDestroy {
         this.showAssessmentSummary = true;
       }
     });
+    this.checkBackButtonEnabled();
   }
 
+  checkBackButtonEnabled() {
+    let check = localStorage.getItem('fromCert') && localStorage.getItem('fromCert') == 'true' ? true : false;
+    this.backToCertificationPortal = check;
+  }
   redirectTo() {
     if (environment.production) {
      return window.location.href ='https://certificationqa.lntiggnite.com/myAssessment';
-    } else {
+    }
+    if (environment.dev) {
+      return window.location.href ='https://certification.lntiggnite.com/myAssessment';
+    } 
+    if (environment.qa) {
       return window.location.href ='https://certificationqa.lntiggnite.com/myAssessment';
-      // return window.location.href ='https://certification.lntiggnite.com/myAssessment';
+    } else {
+      return window.location.href ='https://certification.lntiggnite.com/myAssessment';
     }
   }
   summaryDetails(summary: AssessmentSummaryModel): void {    

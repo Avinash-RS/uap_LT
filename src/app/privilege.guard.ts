@@ -24,6 +24,9 @@ export class PrivilegeGuard implements CanActivate {
     if (!token) {
       let param = route.queryParams;
       if (param && param.token) {
+        if (param.appType && param.appType == '1') {
+          localStorage.setItem('fromCert', 'true')          
+        }
         let segments = route['_urlSegment']['segments'];
         let loop: any;
         const findI = segments.find((x: any, i: any) => {        
