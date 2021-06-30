@@ -38,8 +38,8 @@ export class PrivilegeGuard implements CanActivate {
         let id = segments[loop].path
         localStorage.setItem('routeTo', id);
         this.loginApi(param.token);
+        return false;  
       }
-      return false;
     }
     if (token) {
       // this.store.dispatch(autoLogin());
