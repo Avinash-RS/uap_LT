@@ -41,7 +41,7 @@
                         {{assessmentData?.data?.attributes?.packageDes}}
                     </span>
                     <div *ngIf="isAllTasksCompleted && !notShowThankYou">&#160;</div>
-                    <button (click)="redirectTo()" class="back_"><em> <img alt="back" src="../../../assets/back.svg" /></em>Back</button> 
+                    <button *ngIf="backToCertificationPortal" (click)="redirectTo()" class="back_"><em> <img alt="back" src="../../../assets/back.svg" /></em>Back</button> 
 
                         <div *ngIf='isAllTasksCompleted && !notShowThankYou' class="thankyou">
                         <div class="close" (click)="notShowThankYou = !notShowThankYou"></div>
