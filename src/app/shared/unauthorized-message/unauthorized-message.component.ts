@@ -13,7 +13,7 @@ import { Component } from '@angular/core';
 export class UnAuthorizedMessageComponent {
   constructor(private userService: UserAPIService, private store: Store<AppState>) {}
   logout(): void {
-    this.store.dispatch(loginAction.logoutAction());
+    // this.store.dispatch(loginAction.logoutAction());
     this.userService.logout();
     // this.oidcSecurityService.logoff();
   }

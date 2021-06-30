@@ -1,10 +1,16 @@
 import { ErrorResponse } from "src/app/rest-api/common/models/error.model";
+
 export interface loginRequest {
     email: string,
     pass: string
 }
 
+export interface AssessmentIdInterface {
+  assessmentId: string | null;
+}
+
 export interface loginState {
+    assessmentId: string | null;
     user: LoginProfileResponseModel;
   }   
 

@@ -54,7 +54,7 @@ export class PrivilegeGuard implements CanActivate {
         })
       );
     } else {
-      this.store.dispatch(logoutAction());
+      // this.store.dispatch(logoutAction());
       this.userAPIService.logout();
       return false;
     }

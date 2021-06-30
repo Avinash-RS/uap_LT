@@ -1,3 +1,4 @@
+import { assessmentIDAction } from './login/redux/login.actions';
 import { autoLogin } from './redux/user/user.actions';
 import { AppState } from 'src/app/reducers';
 import { Store } from '@ngrx/store';
@@ -21,6 +22,9 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('token')) {
       this.store.dispatch(autoLogin());
+      if (localStorage.getItem('assessmentId')) {
+        this.store.dispatch(assessmentIDAction({id: localStorage.getItem('assessmentId')}));
+      }
     }
   }
 }

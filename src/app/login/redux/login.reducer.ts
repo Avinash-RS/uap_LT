@@ -15,6 +15,12 @@ export const loginReducer = createReducer(
     return {
       ...state
     }
+  }),
+  on(loginActions.assessmentIDAction, (state, action)=> {
+    return {
+      ...state,
+      assessmentId: action && action.id && action.id ? action.id : null
+    }
   })
 );
 

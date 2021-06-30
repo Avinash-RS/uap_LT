@@ -44,7 +44,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.candidateDetailsForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      consent: [false, Validators.required]
+      consent: [false]
     });
   }
 
@@ -89,6 +89,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       this.candidateDetailsForm
         .get('consent')
         ?.setValue(this.assessmentData.data.attributes.hasAccepted);
+          // this.disableConsent = true;
     });
     this.candidateDetailsForm.valueChanges.subscribe(() => {
       if (

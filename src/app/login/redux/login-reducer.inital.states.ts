@@ -2,6 +2,7 @@ import { loginState } from "./login-model";
 
 
 export const initialState: loginState = {
+  assessmentId: null,
   user: 
   {
     data: {

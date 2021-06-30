@@ -4,7 +4,8 @@ import { UserAPIService } from './../../rest-api/user-api/user-api.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { loginAttempt, logoutAction } from '../redux/login.actions';
+import { assessmentIDAction, loginAttempt, logoutAction } from '../redux/login.actions';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'uap-login-page',
@@ -19,16 +20,30 @@ export class LoginPageComponent implements OnInit {
   show = false;
   disableButton: boolean;
   errorMessage: any;
+  assessmentId: any;
   constructor(
     public fb: FormBuilder, 
     public toastr: ToastrService,
     private api: UserAPIService,
+    private router: ActivatedRoute,
     private store: Store<AppState>
   ) { }
 
   ngOnInit(): void {
+    this.getAssessmentParam();
     this.formInitialize();
     this.getErrorMessage();
+  }
+
+  getAssessmentParam() {
+    this.router.queryParams.subscribe((param: any)=> {
+      let params = param;
+      if (params && params.assessmentId) {
+        this.assessmentId = params.assessmentId;
+        localStorage.setItem('assessmentId', this.assessmentId);
+        this.store.dispatch(assessmentIDAction({id: this.assessmentId}));
+      }
+    });
   }
 
   getErrorMessage() {
@@ -47,6 +62,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   login() {
+    localStorage.removeItem('token');
     if (this.loginForm.valid) {
       let apiData = {
         email: this.loginForm.value.username,
