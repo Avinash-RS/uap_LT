@@ -1,3 +1,4 @@
+import { LoadingService } from './../../rest-api/loading.service';
 import { environment } from 'src/environments/environment';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -39,8 +40,10 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private store: Store<AssessmentTasksReducerState>,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private _loading: LoadingService 
   ) {
+    this._loading.setLoading(false, 'request.url');
     this.candidateDetailsForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],

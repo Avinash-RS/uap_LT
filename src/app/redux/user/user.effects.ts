@@ -25,7 +25,6 @@ export class UserEffects {
         this._loading.setLoading(true, 'request.url');
         return this.userAPIService.getUserProfile().pipe(
           map((user: UserProfileResponseModel) => {
-            this._loading.setLoading(false, 'request.url');
             return UserActions.getUserProfileSuccess({ payload: user })
           }),
           catchError((error: ErrorResponse) => {

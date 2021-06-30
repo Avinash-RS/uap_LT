@@ -19,7 +19,6 @@ export class ReferenceEffects {
           this._loading.setLoading(true, 'request.url');
           return this.referenceAPIService.getReferenceData().pipe(
             map((reference: ReferenceResponseModel) => {
-              this._loading.setLoading(false, 'request.url');
               return referenceDataActions.getReferenceDataSuccess({ payload: reference });
             }),
             catchError((error: ErrorResponse) => {
