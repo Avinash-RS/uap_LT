@@ -52,13 +52,21 @@ export class LoginEffects {
           await this.store.dispatch(getUserProfile());
          const permsission  = await this.redirectTo();
           if (permsission && permsission == 'ADM') {
+            localStorage.removeItem('routeTo');
+            localStorage.removeItem('assessmentId');
             return this.route.navigate(['/admin/assessments'])
           } 
           if (permsission && permsission == 'AST') {
             let getId = localStorage.getItem('routeTo');
+            let getAssessId = localStorage.getItem('assessmentId');
             if (getId) {
+              localStorage.removeItem('assessmentId');
               return this.route.navigate(['/landing/assessment', getId]);
             }  
+            if (getAssessId) {
+              localStorage.removeItem('routeTo');
+              return this.route.navigate(['/landing/assessment', getAssessId]);
+            }
             return this.route.navigate(['/unauthorized']);
           } else {
             return this.route.navigate(['/unauthorized']);
@@ -76,15 +84,21 @@ export class LoginEffects {
         tap(async (action: any)=> { 
           const permsission  = await this.userredirectTo();
           if (permsission && permsission == 'ADM') {
-          //  await this.store.dispatch(getReferenceData());
-          //  await this.store.dispatch(getUserProfile());
+            localStorage.removeItem('routeTo');
+            localStorage.removeItem('assessmentId');
             return this.route.navigate(['/admin/assessments'])
           } 
           if (permsission && permsission == 'AST') {
             let getId = localStorage.getItem('routeTo');
+            let getAssessId = localStorage.getItem('assessmentId');
             if (getId) {
-              return this.route.navigate(['/landing/assessment', getId]);
+            localStorage.removeItem('assessmentId');
+            return this.route.navigate(['/landing/assessment', getId]);
             }  
+            if (getAssessId) {
+              localStorage.removeItem('routeTo');
+              return this.route.navigate(['/landing/assessment', getAssessId]);
+            }
             return this.route.navigate(['/unauthorized']);
             } else {
             return this.route.navigate(['/unauthorized']);

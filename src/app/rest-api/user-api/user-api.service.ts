@@ -49,9 +49,14 @@ export class UserAPIService {
   }
 
   logout() {
-    // this.store.dispatch(logoutAction());
+    let getId = localStorage.getItem('assessmentId') || localStorage.getItem('routeTo');
     localStorage.clear();
-    this.route.navigate(['/login']);
+    if (getId) {
+      this.route.navigate(['/login'], { queryParams: {assessmentId: getId}});      
+    } else {
+      this.route.navigate(['/login']);
+    }
+    this.store.dispatch(logoutAction());
   }
 
   openSnackBar(message: string | undefined): void {

@@ -24,6 +24,7 @@ export class PrivilegeGuard implements CanActivate {
     if (!token) {
       let param = route.queryParams;
       if (param && param.token) {
+        // this.router.navigate(['/login'])
         if (param.appType && param.appType == '1') {
           localStorage.setItem('fromCert', 'true')          
         }
@@ -54,7 +55,7 @@ export class PrivilegeGuard implements CanActivate {
         })
       );
     } else {
-      this.store.dispatch(logoutAction());
+      // this.store.dispatch(logoutAction());
       this.userAPIService.logout();
       return false;
     }

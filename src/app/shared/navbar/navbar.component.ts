@@ -30,7 +30,7 @@ export class NavBarComponent {
   }
 
   logout(): void {
-    this.store.dispatch(loginAction.logoutAction());
+    // this.store.dispatch(loginAction.logoutAction());
     this.userService.logout();
     // this.oidcSecurityService.logoff(this.postLogOut);
   }
