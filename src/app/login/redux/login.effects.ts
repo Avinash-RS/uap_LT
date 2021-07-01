@@ -1,3 +1,4 @@
+import { LoadingService } from 'src/app/rest-api/loading.service';
 import { selectUserProfileData } from 'src/app/redux/user/user.reducer';
 import { getLoginProfile } from './login.selector';
 import { Router } from '@angular/router';
@@ -41,7 +42,7 @@ export class LoginEffects {
   );
 
 
-  constructor(private actions$: Actions, private userAPIService: UserAPIService, private store: Store<AppState>, private route: Router) { }
+  constructor(private _loading: LoadingService, private actions$: Actions, private userAPIService: UserAPIService, private store: Store<AppState>, private route: Router) { }
 
   loginRedirect$ = createEffect(
     ()=> {
@@ -67,8 +68,10 @@ export class LoginEffects {
               localStorage.removeItem('routeTo');
               return this.route.navigate(['/landing/assessment', getAssessId]);
             }
+            this._loading.setLoading(false, 'request.url');
             return this.route.navigate(['/unauthorized']);
           } else {
+            this._loading.setLoading(false, 'request.url');
             return this.route.navigate(['/unauthorized']);
           }
         })
@@ -99,9 +102,11 @@ export class LoginEffects {
               localStorage.removeItem('routeTo');
               return this.route.navigate(['/landing/assessment', getAssessId]);
             }
+            this._loading.setLoading(false, 'request.url');
             return this.route.navigate(['/unauthorized']);
             } else {
-            return this.route.navigate(['/unauthorized']);
+              this._loading.setLoading(false, 'request.url');
+              return this.route.navigate(['/unauthorized']);
           }
         })
       )
