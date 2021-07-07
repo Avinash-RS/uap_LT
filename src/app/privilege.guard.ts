@@ -1,3 +1,4 @@
+import { LoadingService } from './rest-api/loading.service';
 import { logoutAction, loginSuccess } from './login/redux/login.actions';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, Params } from '@angular/router';
@@ -15,6 +16,7 @@ export class PrivilegeGuard implements CanActivate {
   constructor(
     private router: Router,
     private userAPIService: UserAPIService,
+    private _loading: LoadingService,
     private store: Store<AppState>
   ) {}
 
@@ -46,11 +48,14 @@ export class PrivilegeGuard implements CanActivate {
       // this.store.dispatch(autoLogin());
     //  this.store.dispatch(getReferenceData());
     //  this.store.dispatch(getUserProfile());
+    this._loading.setLoading(true, 'request.url');
     return this.userAPIService.getUserProfile().pipe(
         map((userProfile: UserProfileResponseModel) => {
           return true;
         }),
         catchError((error) => {
+          this._loading.setLoading(false, 'request.url');
+          this.router.navigate(['/unauthorized']);
           return of(false)
         })
       );
@@ -66,6 +71,7 @@ export class PrivilegeGuard implements CanActivate {
       email: data
     }
     let responseData;
+    this._loading.setLoading(true, 'request.url');
     this.userAPIService.getTokenFromParamForLogin(apiData).subscribe((res: any) => {
       if (res && res.data && res.data.data && res.data.token) {
         responseData = {
@@ -75,9 +81,11 @@ export class PrivilegeGuard implements CanActivate {
         this.userAPIService.isValidUser(responseData);
         this.store.dispatch(loginSuccess({ payload: responseData }));
       } else {
+        this._loading.setLoading(false, 'request.url');
         this.router.navigate(['/unauthorized']);
       }
     }, (err) => {
+      this._loading.setLoading(false, 'request.url');
       this.router.navigate(['/unauthorized']);
     })
   }

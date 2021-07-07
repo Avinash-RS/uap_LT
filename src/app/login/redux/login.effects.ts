@@ -24,14 +24,17 @@ export class LoginEffects {
     return this.actions$.pipe(
       ofType(LoginActions.loginAttempt),
       mergeMap((Action) => {        
+        this._loading.setLoading(true, 'request.url');
         return this.userAPIService.login(Action.payload).pipe(
           map((data: any) => {
             if (this.userAPIService.isValidUser(data)) {
               return LoginActions.loginSuccess({ payload: data });
             }
+            this._loading.setLoading(false, 'request.url');
             return LoginActions.loginFailure({ payload: data });
           }),
           catchError((error: any) => {
+            this._loading.setLoading(false, 'request.url');
             return of(LoginActions.loginFailure({ payload: error }));
           })
         )
