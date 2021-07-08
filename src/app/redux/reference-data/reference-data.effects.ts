@@ -23,6 +23,8 @@ export class ReferenceEffects {
             }),
             catchError((error: ErrorResponse) => {
               this._loading.setLoading(false, 'request.url');
+              localStorage.removeItem('token');
+              localStorage.removeItem('user');
               this.router.navigate(['/unauthorized']);
               return of(referenceDataActions.getReferenceDataFailure({ payload: error }))
             })
