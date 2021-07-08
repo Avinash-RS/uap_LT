@@ -38,6 +38,7 @@ export class LoginPageComponent implements OnInit {
   getAssessmentParam() {
     this.router.queryParams.subscribe((param: any)=> {
       let params = param;
+      localStorage.clear();
       if (params && params.assessmentId) {
         this.assessmentId = params.assessmentId;
         localStorage.setItem('assessmentId', this.assessmentId);

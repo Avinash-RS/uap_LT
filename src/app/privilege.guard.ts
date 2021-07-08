@@ -23,10 +23,9 @@ export class PrivilegeGuard implements CanActivate {
   canActivate(route: any): Observable<boolean> | boolean {
     let token = localStorage.getItem('token');
     // localStorage.removeItem('routeTo');
-    if (!token) {
+    // if (!token) {
       let param = route.queryParams;
       if (param && param.token) {
-        // this.router.navigate(['/login'])
         if (param.appType && param.appType == '1') {
           localStorage.setItem('fromCert', 'true')          
         }
@@ -43,7 +42,7 @@ export class PrivilegeGuard implements CanActivate {
         this.loginApi(param.token);
         return false;  
       }
-    }
+    // }
     if (token) {
       // this.store.dispatch(autoLogin());
     //  this.store.dispatch(getReferenceData());
@@ -82,10 +81,14 @@ export class PrivilegeGuard implements CanActivate {
         this.store.dispatch(loginSuccess({ payload: responseData }));
       } else {
         this._loading.setLoading(false, 'request.url');
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
         this.router.navigate(['/unauthorized']);
       }
     }, (err) => {
       this._loading.setLoading(false, 'request.url');
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
       this.router.navigate(['/unauthorized']);
     })
   }
