@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AssessmentTaskResponse } from 'src/app/rest-api/assessments-api/models/assessment-task-response-model';
 import { selectAssessmentTaskUrlState } from '../redux/landing-page.reducers';
 import { AssessmentTaskUrlModel } from 'src/app/rest-api/assessments-api/models/assessment-task-url-response-model';
+import * as moment from 'moment'; //in your component
 
 @Component({
   selector: 'app-task-cards',
@@ -95,4 +96,24 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
       this.isTaskStarted[index] = false;
     }
   }
+
+  getTooltipMessage(data) {
+    let custom = moment(data.endTime).diff(moment.now(), 'minutes');
+    console.log('cus', custom);
+    if (custom > 0) {
+      return '';
+    }
+    return 'Test time has been completed';
+  }
+
+  getIsTimeOutStatus(data, status) {
+    if (status == 'inprogress' || status == 'yettostart') {
+      let custom = moment(data.endTime).diff(moment.now(), 'minutes');
+      console.log('cus', custom);
+      if (custom > 0) {
+        return false;
+      }
+      return true;
+    }  
+    }
 }

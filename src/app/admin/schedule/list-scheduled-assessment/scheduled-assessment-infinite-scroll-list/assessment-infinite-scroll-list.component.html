@@ -24,7 +24,7 @@
                 scheduledTemplate.attributes.numberOfInvites
               }}</span
             >
-            <span> <img height="22" width="22" src="/assets/clock.svg" />2 Hrs</span>
+            <span style="white-space: nowrap;"> <img height="22" width="22" src="/assets/clock.svg" />{{ assesmentsUtil.getDuration(scheduledTemplate.attributes.duration) }}</span>
           </div>
           <div class="status">
             <span>Status</span> <span>{{ scheduledTemplate.attributes.status }}</span>

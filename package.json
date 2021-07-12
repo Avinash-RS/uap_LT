@@ -36,6 +36,7 @@
     "ngx-printer": "0.9.1",
     "ngx-spinner": "^10.0.1",
     "ngx-toastr": "^14.0.0",
+    "moment": "^2.26.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "uniqid": "^5.3.0",

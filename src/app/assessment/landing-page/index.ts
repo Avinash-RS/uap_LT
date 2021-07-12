@@ -1,3 +1,4 @@
+import { MaterialModule } from './../../material/material.module';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { LandingPageRoutingModule } from './landing-page-routing.module';
@@ -28,6 +29,7 @@ import { TermsAndConditionModule } from 'src/app/shared/terms-and-condition';
     MatIconModule,
     FormsModule,
     ReactiveFormsModule,
+    MaterialModule,
     StoreModule.forFeature('assessmentTasksModule', {
       assessmentTasksModuleState: fromAssessmentTasksReducer.LandingPageReducer
     }),

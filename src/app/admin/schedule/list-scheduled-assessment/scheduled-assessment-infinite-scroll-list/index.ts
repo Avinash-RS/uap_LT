@@ -1,4 +1,5 @@
-import { NgModule } from '@angular/core';
+import { AssesmentsUtil } from './../../../assessments/assessments.common.utils';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScheduledInfiniteScrollListComponent } from './assessment-infinite-scroll-list.component';
 import { YetToStartScheduledAssessmentModule } from './yet-to-start-scheduled-assessment';
@@ -7,6 +8,7 @@ import { CompletedScheduledAssessmentModule } from './completed-scheduled-assess
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { LazyLoaderModule } from 'src/app/shared/lazy-loader';
 import { ScheduleUtils } from '../../schedule.utils';
+import { MaterialModule } from 'src/app/material/material.module';
 
 @NgModule({
   imports: [
@@ -15,10 +17,12 @@ import { ScheduleUtils } from '../../schedule.utils';
     InProgressScheduledAssessmentModule,
     CompletedScheduledAssessmentModule,
     InfiniteScrollModule,
-    LazyLoaderModule
+    LazyLoaderModule,
+    MaterialModule
   ],
   exports: [ScheduledInfiniteScrollListComponent],
   declarations: [ScheduledInfiniteScrollListComponent],
-  providers: [ScheduleUtils]
+  providers: [ScheduleUtils, AssesmentsUtil],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class ScheduledInfiniteScrollListModule {}
