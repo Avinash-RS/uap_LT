@@ -2,13 +2,24 @@ export class AssesmentsUtil {
   getDuration(duration: number): string {
     let durationText = '';
     if (duration < 60) {
-      durationText = `${duration} Mins`;
+      durationText = `${this.getFixedDuration(duration)} Mins`;
     } else if (duration === 60) {
       durationText = `1 Hr`;
     } else {
-      durationText = `${duration / 60} Hrs`;
+      durationText = `${this.getFixedDuration(duration / 60)} Hrs`;
     }
     return durationText;
+  }
+
+  getFixedDuration(duration) {
+    if (Number.isInteger(duration)) {
+      return duration;
+    } else {
+      var rhours = Math.floor(duration);
+      var minutes = (duration - rhours) * 60;
+      var rminutes = Math.round(minutes);
+      return Number(rhours + '.' + rminutes).toFixed(2);
+    }
   }
   getUpdateTime(time: string, status: string): string {
     const date = new Date(time);

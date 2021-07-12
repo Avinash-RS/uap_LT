@@ -14,9 +14,9 @@
                 </div>
             </div>
             <div class="assessment-actions">
-                <button mat-flat-button [disabled]="isTaskStarted[i] || !canTakeAssessment" (click)="navigateToTask(task.id)">
+                <button [matTooltip]="getTooltipMessage(task)" matTooltipClass="tooltip" mat-flat-button [disabled]="isTaskStarted[i] || !canTakeAssessment" [ngClass]="getIsTimeOutStatus(task, taskStatus[i]) ? 'disableButton' : ''" (click)="getIsTimeOutStatus(task, taskStatus[i]) ? '' : navigateToTask(task.id)">
                     <div class="action_start" *ngIf="taskStatus[i] === 'yettostart'">
-                        <span *ngIf="!showTaskStartsOn[i]">Start</span>
+                        <span *ngIf="!showTaskStartsOn[i]">{{getIsTimeOutStatus(task, taskStatus[i]) ? 'Time is Over' : 'Start'}}</span>
                         <div *ngIf="showTaskStartsOn[i] && taskStartTime[i].showCountdown" class="action_start">
                             <span>Starts in</span>
                             <countdown [config]="taskStartTime[i].countdown" (event)="countdownchange($event, i)"></countdown>
@@ -26,7 +26,7 @@
                             <span>{{ taskStartTime[i].startOn }}</span>
                         </div>
                     </div>
-                    <span *ngIf="taskStatus[i] === 'inprogress'">Resume</span>
+                    <span *ngIf="taskStatus[i] === 'inprogress'">{{getIsTimeOutStatus(task, taskStatus[i]) ? 'Time is Over' : 'Resume'}}</span>
                     <span *ngIf="taskStatus[i] === 'completed'">Done</span>
                 </button>
             </div>
