@@ -13,11 +13,12 @@
     background-color: $uap-white;
     @extend .flex_ai_center;
     &-block {
-        max-width: 1200px;
+        // max-width: 1200px;
         margin: 0 auto;
         width: 100%;
         @extend .flex_ai_center;
         justify-content: space-between;
+        padding: 0 8px;
         
        
         a{
@@ -43,7 +44,7 @@
     font-size: 35px;
     color: $uap-grey;
     cursor: pointer;
-    margin: 0.2em 40px 0 0;
+    margin: 0.2em 20px 0 0;
     background: url(../../../assets/user.svg) no-repeat;
     background-color: $uap-yellow;
     color: transparent;

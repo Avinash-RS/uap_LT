@@ -35,7 +35,7 @@ export const reducers: ActionReducerMap<AppState> = {
 export function resetOnLogout(reducer: ActionReducer<AppState>): ActionReducer<AppState> {
   return (state, action) => {
     let newState: any;
-    if (action.type === '[User] Logout Success') {
+    if (action.type === '[LOGIN] Logout Success') {
       newState = Object.assign({}, state);
       Object.keys(modules).forEach((key) => {
         newState[key] = modules[key].initialState;

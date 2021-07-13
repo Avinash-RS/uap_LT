@@ -1,3 +1,4 @@
+import * as moment from 'moment'; //in your component
 export class AssesmentsUtil {
   getDuration(duration: number): string {
     let durationText = '';
@@ -22,15 +23,18 @@ export class AssesmentsUtil {
     }
   }
   getUpdateTime(time: string, status: string): string {
-    const date = new Date(time);
-    const currentTime = new Date();
-    const differenceInTime = currentTime.getTime() - date.getTime();
-    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+    let dateOn = moment(time).format('MM-DD-YYYY');
+    let today = moment();
+    // const date = new Date(time);
+    // const currentTime = new Date();
+    // const differenceInTime = currentTime.getTime() - date.getTime();
+    // const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+    const differenceInDays = today.diff(dateOn, 'days');
     let updateTimeText = '';
-    if (Math.trunc(differenceInDays) <= 1) {
+    if (Math.trunc(differenceInDays) < 1) {
       updateTimeText = 'today';
     } else {
-      updateTimeText = `${Math.trunc(differenceInDays)} days ago`;
+      updateTimeText = `${Math.trunc(differenceInDays) == 1 ? Math.trunc(differenceInDays) + ' day ago' : Math.trunc(differenceInDays) + ' days ago'}`;
     }
     return status === 'Draft' ? `created ${updateTimeText}` : updateTimeText;
   }

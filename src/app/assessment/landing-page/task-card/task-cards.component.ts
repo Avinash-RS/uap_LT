@@ -99,7 +99,6 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
 
   getTooltipMessage(data) {
     let custom = moment(data.endTime).diff(moment.now(), 'minutes');
-    console.log('cus', custom);
     if (custom > 0) {
       return '';
     }
@@ -109,7 +108,6 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
   getIsTimeOutStatus(data, status) {
     if (status == 'inprogress' || status == 'yettostart') {
       let custom = moment(data.endTime).diff(moment.now(), 'minutes');
-      console.log('cus', custom);
       if (custom > 0) {
         return false;
       }
