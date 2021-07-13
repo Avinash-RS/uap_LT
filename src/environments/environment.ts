@@ -2,19 +2,22 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { LogLevel } from 'angular-auth-oidc-client';
+// import { LogLevel } from 'angular-auth-oidc-client';
 
 export const environment = {
   production: false,
+  staging: false,
+  qa: false,
+  dev: false,
+  local: true,
   API_URL: 'https://uapcoreuat.lntedutech.com',
-  OIDC_CONFIG: {
-    // issuer: 'https://uap-iam.lntiggnite.com/auth/realms/kodepro',
-    issuer: 'https://assessecouat-iam.lntedutech.com/auth/realms/uap',
-    clientId: 'uap-ui',
-    logging: LogLevel.Error
-  },
-  // TOKEN_URL: 'https://uap-iam.lntiggnite.com/auth/realms/kodepro/protocol/openid-connect/token'
-  TOKEN_URL: 'https://assessecouat-iam.lntedutech.com/auth/realms/uap/protocol/openid-connect/token'
+  NODE_URL: 'https://edgeserviceuat.lntedutech.com'
+//   OIDC_CONFIG: {
+//     issuer: 'https://uap-iam.lntiggnite.com/auth/realms/uap',
+//     clientId: 'uap-ui',
+//     logging: LogLevel.Error
+//   },
+//   TOKEN_URL: 'https://uap-iam.lntiggnite.com/auth/realms/uap/protocol/openid-connect/token'
 };
 
 /*

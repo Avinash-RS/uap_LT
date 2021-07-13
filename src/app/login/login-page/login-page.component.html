@@ -1,0 +1,69 @@
+<div class="limiter">
+    <mat-toolbar class="headerShadow">
+        <img class="hearder-logo " alt="" src="../../../assets/lnt.svg">
+    </mat-toolbar>
+    <div >
+        <div class="row container-reg200">
+            <div class="igniteLogo border-right no_pl">
+                <div class="main-logo">
+                    <img alt="" class="beforeloginimg" style="width: inherit" src="../../../assets/EduTech_Logo.svg">
+                </div>
+            </div>
+            <div class="loginWrapper"> 
+                    <form [formGroup]="loginForm" autocomplete="off">
+                        <h1 class="animated animatedFadeInUp fadeInUp signIn"> {{'Sign in to your account'}}</h1>
+                        <br/><br/>
+                        <mat-card-content style="margin-top:10px">
+
+                            <mat-form-field appearance="outline">
+                                <mat-label class="label-color">{{'Username'}}</mat-label>
+                                <input matInput id="username" [placeholder]="'Enter the email'"
+                                    formControlName="username" maxlength="64" required>
+                                <mat-icon matPrefix class="icon-color">mail_outline</mat-icon>
+
+                            </mat-form-field>
+                            <ng-container *ngIf="username.invalid && username.touched">
+                                <mat-error class="error" *ngIf="username?.errors?.required">{{'Email is required'}}
+                                </mat-error>
+
+                                <mat-error class="error" *ngIf="username.errors?.pattern">{{'Please enter a valid email
+                                    address'}}</mat-error>
+                            </ng-container>
+
+                            <div class="space-20"></div>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label class="label-color">{{'Password'}}</mat-label>
+                                <input matInput [placeholder]="'Enter password'" [type]="hide ? 'password' : 'text'"
+                                    formControlName="password"
+                                    [ngClass]="{ 'is-invalid': password?.touched && password?.errors?.required}"
+                                    required>
+                                <mat-icon class="icon-color" matPrefix>lock_outline</mat-icon>
+                                <span mat-icon-button matSuffix (click)="hide = !hide"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                    <mat-icon class="icon-color">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </span>
+                            </mat-form-field>
+                            <ng-container *ngIf="password?.invalid && password?.touched">
+                                <mat-error class="error" *ngIf="password?.errors?.required">{{'Password is required'}}
+                                </mat-error>
+                            </ng-container>
+                            <div class="space-20"></div>
+
+                            <div class="space-20"></div>
+
+                            <div class="center">
+                                <button class="btn" [disabled]="!loginForm.valid" id="login" mat-raised-button
+                                    (click)="login()">{{'SIGN IN'}}</button>
+                            </div>
+                        </mat-card-content>
+                    </form>  
+            </div>
+        </div>
+    </div>
+    <div class="row" id="footer">
+        <div class="col-12">
+            <span class="forgot1">2021 © L&T EduTech All Rights Reserved</span>
+        </div>
+    </div>
+</div>

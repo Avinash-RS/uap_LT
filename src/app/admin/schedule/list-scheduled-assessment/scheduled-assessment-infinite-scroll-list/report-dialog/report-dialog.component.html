@@ -1,10 +1,21 @@
-<div style="visibility: hidden">
-  <div id="pdfTable" style="background-color: white">
+
+<ng-template #reference>
+<div *ngIf="reportResponse">
+  <div style="background-color: white">
     <div class="pdf-report-wrapper">
       <div class="lnt-header">
+        <div>
         <img class="header-logo" src="/assets/LT.svg" alt="L&T" />
         <span class="header-title">&nbsp;LARSEN &amp; TOUBRO</span>
       </div>
+      <div class="print-flex">
+        <span class="print-opt" (click)="openPrintOption()">Print</span>
+        <span (click)="closeDialog($event)" style="cursor: pointer;" class="material-icons material-icons-outlined">
+          cancel
+          </span>
+      </div>
+      </div>
+      <div class="spacing">
       <div class="user-info">
         <div style="width: 80%">
           <div class="header">Candidate Report</div>
@@ -43,8 +54,9 @@
           </div>
         </div>
         <div style="width: 20%">
-          <div class="batch-img">
-            {{ reportResponse.data.attributes.consolidatedScore | number: '1.2-2' }}
+          <div class="batch-img batch-flex">
+            <span class="batch-pos">
+            {{ reportResponse.data.attributes.consolidatedScore | number: '1.2-2' }}</span>
           </div>
         </div>
       </div>
@@ -53,6 +65,121 @@
           <div class="task-header">
             <div class="header">
               {{ taskResult.taskType }} - {{ taskResult.taskName }} - {{ taskResult.taskSubType }}
+            </div>
+            <div>
+              <i *ngIf="taskResult.generatedTime"
+                >Generated at:{{ scheduleUtil.getScheduledOn(taskResult.generatedTime) }}</i
+              >
+            </div>
+          </div>
+          <ng-template [ngIf]="taskResult.taskStatus === 'YetToStart'" [ngIfElse]="inProgress">
+            <div class="task-notice">Candidate yet to start the test.</div>
+          </ng-template>
+          <ng-template #inProgress>
+            <ng-template [ngIf]="taskResult.taskStatus === 'InProgress'" [ngIfElse]="completed">
+              <div class="task-notice">Candidate yet to submit the test.</div>
+            </ng-template>
+          </ng-template>
+          <ng-template #completed>
+            <ng-template
+              [ngIf]="taskResult.taskStatus === 'Completed' && !taskResult.generatedTime"
+              [ngIfElse]="reportTable"
+            >
+              <div class="task-notice">
+                Report generation in progress. Please try after sometime.
+              </div>
+            </ng-template>
+          </ng-template>
+          <ng-template #reportTable>
+            <div class="task-data-table">
+              <table>
+                <tr class="table-headr">
+                  <th class="score">Score(%)</th>
+                  <th class="pass-count">Pass Count</th>
+                  <th class="fail-count">Fail Count</th>
+                  <th class="start-time">Start Time</th>
+                  <th class="end-time">End Time</th>
+                  <th class="completed-time">Completed Time</th>
+                </tr>
+                <tr>
+                  <td>{{ taskResult.score | number: '1.2-2' }}</td>
+                  <td>{{ taskResult.passCnt }}</td>
+                  <td>{{ taskResult.failCnt }}</td>
+                  <td>{{ scheduleUtil.getScheduledOn(taskResult.taskStartTime) }}</td>
+                  <td>{{ scheduleUtil.getScheduledOn(taskResult.taskEndTime) }}</td>
+                  <td>{{ scheduleUtil.getScheduledOn(taskResult.taskCompletedTime) }}</td>
+                </tr>
+              </table>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+</ng-template>
+
+<div style="visibility: hidden">
+  <div id="pdfTable" style="background-color: white">
+    <div class="pdf-report-wrapper">
+      <div class="lnt-header">
+        <div>
+        <img class="header-logo" src="/assets/LT.svg" alt="L&T" />
+        <span class="header-title">&nbsp;LARSEN &amp; TOUBRO</span>
+      </div>
+      <div style="visibility: hidden;">
+        Print
+      </div>
+      </div>
+      <div class="user-info">
+        <div style="width: 80%">
+          <div class="header">Candidate Report</div>
+          <div class="first-name">
+            <span class="label">First Name</span>
+            <span class="value">: {{ reportResponse?.data?.attributes?.userDetails?.firstName }}</span>
+          </div>
+          <div class="last-name">
+            <span class="label">Last Name</span>
+            <span class="value">: {{ reportResponse?.data?.attributes?.userDetails?.lastName }}</span>
+          </div>
+          <div class="email-id">
+            <span class="label">Email Id</span>
+            <span class="value">: {{ reportResponse?.data?.attributes?.userDetails?.email }}</span>
+          </div>
+          <div class="submission-time">
+            <span class="label">Submission Time:</span>
+            <span class="value" *ngIf="reportResponse?.data?.attributes?.completedTime"
+              >
+              {{ scheduleUtil.getScheduledOn(reportResponse?.data?.attributes?.completedTime) }}</span
+            >
+          </div>
+          <div class="batch-id">
+            <span class="label">Batch Id</span>
+            <span class="value">: {{ reportResponse?.data?.attributes?.batchName }}</span>
+          </div>
+          <div class="status">
+            <span class="label">Status</span>
+            <span class="value">: {{ reportResponse?.data?.attributes?.status }}</span>
+          </div>
+          <div class="score">
+            <span class="label">Score(%)</span>
+            <span class="value"
+              >: {{ reportResponse?.data?.attributes?.consolidatedScore | number: '1.2-2' }}</span
+            >
+          </div>
+        </div>
+        <div style="width: 20%">
+          <div class="batch-img">
+            {{ reportResponse?.data?.attributes?.consolidatedScore | number: '1.2-2' }}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="task" *ngFor="let taskResult of reportResponse?.data?.attributes?.taskResults">
+          <div class="task-header">
+            <div class="header">
+              {{ taskResult?.taskType }} - {{ taskResult?.taskName }} - {{ taskResult?.taskSubType }}
             </div>
             <div>
               <i *ngIf="taskResult.generatedTime"

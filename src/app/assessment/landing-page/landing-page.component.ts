@@ -1,3 +1,4 @@
+import { LoadingService } from './../../rest-api/loading.service';
 import { environment } from 'src/environments/environment';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -32,18 +33,21 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   displayTermsAndCondition = false;
   canTakeAssessment = false;
   notShowThankYou = false;
+  backToCertificationPortal: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private store: Store<AssessmentTasksReducerState>,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private _loading: LoadingService 
   ) {
+    this._loading.setLoading(false, 'request.url');
     this.candidateDetailsForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      consent: [false, Validators.required]
+      consent: [false]
     });
   }
 
@@ -88,6 +92,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       this.candidateDetailsForm
         .get('consent')
         ?.setValue(this.assessmentData.data.attributes.hasAccepted);
+          // this.disableConsent = true;
     });
     this.candidateDetailsForm.valueChanges.subscribe(() => {
       if (
@@ -103,14 +108,24 @@ export class LandingPageComponent implements OnInit, OnDestroy {
         this.showAssessmentSummary = true;
       }
     });
+    this.checkBackButtonEnabled();
   }
 
+  checkBackButtonEnabled() {
+    let check = localStorage.getItem('fromCert') && localStorage.getItem('fromCert') == 'true' ? true : false;
+    this.backToCertificationPortal = check;
+  }
   redirectTo() {
     if (environment.production) {
      return window.location.href ='https://certificationqa.lntiggnite.com/myAssessment';
-    } else {
+    }
+    if (environment.dev) {
+      return window.location.href ='https://certification.lntiggnite.com/myAssessment';
+    } 
+    if (environment.qa) {
       return window.location.href ='https://certificationqa.lntiggnite.com/myAssessment';
-      // return window.location.href ='https://certification.lntiggnite.com/myAssessment';
+    } else {
+      return window.location.href ='https://certification.lntiggnite.com/myAssessment';
     }
   }
   summaryDetails(summary: AssessmentSummaryModel): void {    

@@ -56,10 +56,10 @@ export function landingPageReducer(state: LandingPageState, action: Action): Lan
 
 
 export const selectAssessmentTasksListState = (state: AssessmentTasksReducerState) =>
-  state.assessmentTasksModule.assessmentTasksModuleState.assessmentTaskList;
+  state?.assessmentTasksModule?.assessmentTasksModuleState?.assessmentTaskList;
 
 export const selectAssessmentTaskUrlState = (state: AssessmentTasksReducerState) =>
-  state.assessmentTasksModule.assessmentTasksModuleState.assessmentTaskUrl;
+  state?.assessmentTasksModule?.assessmentTasksModuleState?.assessmentTaskUrl;
 
 export const selectUpdateAssessmentState = (state: AssessmentTasksReducerState) =>
-  state.assessmentTasksModule.assessmentTasksModuleState.updateAssessment;
+  state?.assessmentTasksModule?.assessmentTasksModuleState?.updateAssessment;

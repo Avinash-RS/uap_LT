@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AutoLoginGuard } from 'angular-auth-oidc-client';
+import { PrivilegeAutoLogoutGuard } from './privilege-auto-logout.guard';
 import { PrivilegeGuard } from './privilege.guard';
 
 const routes: Routes = [
@@ -8,19 +8,24 @@ const routes: Routes = [
     path: '',
     children: [
       {
+        path: 'login',
+        loadChildren: () => import('./login/login.module').then((module) => module.LoginModule),
+        canActivate: [PrivilegeAutoLogoutGuard]
+      },
+      {
         path: 'landing',
         loadChildren: () => import('./assessment/index').then((module) => module.AssessmentModule),
-        canActivate: [AutoLoginGuard, PrivilegeGuard]
+        canActivate: [PrivilegeGuard]
       },
       {
         path: 'admin',
         loadChildren: () => import('./admin/index').then((module) => module.AdminModule),
-        canActivate: [AutoLoginGuard, PrivilegeGuard]
+        canActivate: [PrivilegeGuard]
       },
       {
         path: 'profile',
         loadChildren: () => import('./profile/index').then((module) => module.ProfileModule),
-        canActivate: [AutoLoginGuard, PrivilegeGuard]
+        canActivate: [PrivilegeGuard]
       },
       {
         path: 'unauthorized',
@@ -31,7 +36,7 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: 'admin',
+        redirectTo: 'login',
         pathMatch: 'full'
       }
     ]

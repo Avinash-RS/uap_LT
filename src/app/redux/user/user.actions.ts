@@ -13,3 +13,5 @@ export const getUserProfileFailure = createAction(
   '[USER MODULE] Get user profile failure',
   props<{ payload: ErrorResponse }>()
 );
+
+export const autoLogin = createAction('[user action] Auto login');

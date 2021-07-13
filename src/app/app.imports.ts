@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { RestApiModule } from './rest-api';
 import { UserEffects } from './redux/user/user.effects';
 import { ReferenceEffects } from './redux/reference-data/reference-data.effects';
+import { LoginEffects } from './login/redux/login.effects';
 export const APP_IMPORTS = [
   BrowserModule,
   CommonModule,
@@ -23,7 +24,7 @@ export const APP_IMPORTS = [
       strictActionImmutability: true
     }
   }),
-  EffectsModule.forRoot([RouterEffects, UserEffects, ReferenceEffects]),
+  EffectsModule.forRoot([RouterEffects, UserEffects, ReferenceEffects, LoginEffects]),
   StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   StoreRouterConnectingModule.forRoot({
     serializer: CustomSerializer

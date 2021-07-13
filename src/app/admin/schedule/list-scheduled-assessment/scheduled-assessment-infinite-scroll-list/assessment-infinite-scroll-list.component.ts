@@ -1,3 +1,4 @@
+import { AssesmentsUtil } from './../../../assessments/assessments.common.utils';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CandidatesAssessmentResponseModel } from 'src/app/rest-api/schedule-api/models/candidates-assessment-response.model';
 import {
@@ -47,7 +48,7 @@ export class ScheduledInfiniteScrollListComponent implements OnInit {
   ];
   selectedFilterValue: string = this.filterValues[0].value;
   candidatesAssessment: CandidatesAssessmentResponseModel;
-  constructor(private store: Store<SchedulerReducerState>, public scheduleUtil: ScheduleUtils) {}
+  constructor(private store: Store<SchedulerReducerState>, public scheduleUtil: ScheduleUtils, public assesmentsUtil: AssesmentsUtil) {}
   ngOnInit(): void {
     this.checkScheduleAccessStatus();
     this.store.select(selectCandidatesAssessment).subscribe((val) => {

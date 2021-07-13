@@ -6,12 +6,14 @@ import { UserState } from './user.model';
 
 export const userReducer = createReducer(
   initialState,
-  on(userActions.getUserProfileSuccess, (state, action) => ({
+  on(userActions.getUserProfileSuccess, (state, action) => {
+    return {
     ...state,
     user: {
       data: action.payload.data
     }
-  })),
+    }
+  }),
   on(userActions.getUserProfileFailure, (state, action) => ({
     ...state,
     user: {
