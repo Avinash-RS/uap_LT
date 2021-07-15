@@ -24,12 +24,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('token')) {
+    if (sessionStorage.getItem('token')) {
       this.store.dispatch(autoLogin());
       const reference = this.userService.getReferenceFromLocalStorage();
       reference ? this.store.dispatch(getReferenceDataSuccess({payload: reference})) : '';
-      if (localStorage.getItem('assessmentId')) {
-        this.store.dispatch(assessmentIDAction({id: localStorage.getItem('assessmentId')}));
+      if (sessionStorage.getItem('assessmentId')) {
+        this.store.dispatch(assessmentIDAction({id: sessionStorage.getItem('assessmentId')}));
       }
     }
 

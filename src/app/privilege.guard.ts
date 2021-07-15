@@ -21,13 +21,13 @@ export class PrivilegeGuard implements CanActivate {
   ) {}
 
   canActivate(route: any): Observable<boolean> | boolean {
-    let token = localStorage.getItem('token');
-    // localStorage.removeItem('routeTo');
+    let token = sessionStorage.getItem('token');
+    // sessionStorage.removeItem('routeTo');
     // if (!token) {
       let param = route.queryParams;
       if (param && param.token) {
         if (param.appType && param.appType == '1') {
-          localStorage.setItem('fromCert', 'true')          
+          sessionStorage.setItem('fromCert', 'true')          
         }
         let segments = route['_urlSegment']['segments'];
         let loop: any;
@@ -38,7 +38,7 @@ export class PrivilegeGuard implements CanActivate {
           }
         });
         let id = segments[loop].path
-        localStorage.setItem('routeTo', id);
+        sessionStorage.setItem('routeTo', id);
         this.loginApi(param.token);
         return false;  
       }
@@ -81,14 +81,14 @@ export class PrivilegeGuard implements CanActivate {
         this.store.dispatch(loginSuccess({ payload: responseData }));
       } else {
         this._loading.setLoading(false, 'request.url');
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('token');
+        sessionStorage.removeItem('user');
         this.router.navigate(['/unauthorized']);
       }
     }, (err) => {
       this._loading.setLoading(false, 'request.url');
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      sessionStorage.removeItem('token');
+      sessionStorage.removeItem('user');
       this.router.navigate(['/unauthorized']);
     })
   }

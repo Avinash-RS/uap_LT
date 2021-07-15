@@ -19,13 +19,13 @@ export class ReferenceEffects {
           this._loading.setLoading(true, 'request.url');
           return this.referenceAPIService.getReferenceData().pipe(
             map((reference: ReferenceResponseModel) => {
-              localStorage.setItem('reference', JSON.stringify(reference));
+              sessionStorage.setItem('reference', JSON.stringify(reference));
               return referenceDataActions.getReferenceDataSuccess({ payload: reference });
             }),
             catchError((error: ErrorResponse) => {
               this._loading.setLoading(false, 'request.url');
-              localStorage.removeItem('token');
-              localStorage.removeItem('user');
+              sessionStorage.removeItem('token');
+              sessionStorage.removeItem('user');
               this.router.navigate(['/unauthorized']);
               return of(referenceDataActions.getReferenceDataFailure({ payload: error }))
             })
