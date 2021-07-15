@@ -48,6 +48,11 @@ export class UserAPIService {
     return JSON.parse(users);
   }
 
+  getReferenceFromLocalStorage() {
+    let reference: any = localStorage.getItem('reference');
+    return JSON.parse(reference);
+  }
+
   logout() {
     let getId = localStorage.getItem('assessmentId') || localStorage.getItem('routeTo');
     localStorage.clear();
