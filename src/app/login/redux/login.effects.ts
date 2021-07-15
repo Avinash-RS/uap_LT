@@ -56,19 +56,19 @@ export class LoginEffects {
           await this.store.dispatch(getUserProfile());
          const permsission  = await this.redirectTo();
           if (permsission && permsission == 'ADM') {
-            localStorage.removeItem('routeTo');
-            localStorage.removeItem('assessmentId');
+            sessionStorage.removeItem('routeTo');
+            sessionStorage.removeItem('assessmentId');
             return this.route.navigate(['/admin/assessments'])
           } 
           if (permsission && permsission == 'AST') {
-            let getId = localStorage.getItem('routeTo');
-            let getAssessId = localStorage.getItem('assessmentId');
+            let getId = sessionStorage.getItem('routeTo');
+            let getAssessId = sessionStorage.getItem('assessmentId');
             if (getId) {
-              localStorage.removeItem('assessmentId');
+              sessionStorage.removeItem('assessmentId');
               return this.route.navigate(['/landing/assessment', getId]);
             }  
             if (getAssessId) {
-              localStorage.removeItem('routeTo');
+              sessionStorage.removeItem('routeTo');
               return this.route.navigate(['/landing/assessment', getAssessId]);
             }
             this._loading.setLoading(false, 'request.url');
@@ -90,19 +90,19 @@ export class LoginEffects {
         tap(async (action: any)=> { 
           const permsission  = await this.userredirectTo();
           if (permsission && permsission == 'ADM') {
-            localStorage.removeItem('routeTo');
-            localStorage.removeItem('assessmentId');
+            sessionStorage.removeItem('routeTo');
+            sessionStorage.removeItem('assessmentId');
             return this.route.navigate(['/admin/assessments'])
           } 
           if (permsission && permsission == 'AST') {
-            let getId = localStorage.getItem('routeTo');
-            let getAssessId = localStorage.getItem('assessmentId');
+            let getId = sessionStorage.getItem('routeTo');
+            let getAssessId = sessionStorage.getItem('assessmentId');
             if (getId) {
-            localStorage.removeItem('assessmentId');
+            sessionStorage.removeItem('assessmentId');
             return this.route.navigate(['/landing/assessment', getId]);
             }  
             if (getAssessId) {
-              localStorage.removeItem('routeTo');
+              sessionStorage.removeItem('routeTo');
               return this.route.navigate(['/landing/assessment', getAssessId]);
             }
             this._loading.setLoading(false, 'request.url');

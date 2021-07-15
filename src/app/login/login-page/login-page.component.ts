@@ -38,10 +38,10 @@ export class LoginPageComponent implements OnInit {
   getAssessmentParam() {
     this.router.queryParams.subscribe((param: any)=> {
       let params = param;
-      localStorage.clear();
+      sessionStorage.clear();
       if (params && params.assessmentId) {
         this.assessmentId = params.assessmentId;
-        localStorage.setItem('assessmentId', this.assessmentId);
+        sessionStorage.setItem('assessmentId', this.assessmentId);
         this.store.dispatch(assessmentIDAction({id: this.assessmentId}));
       }
     });
@@ -63,7 +63,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   login() {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     if (this.loginForm.valid) {
       let apiData = {
         email: this.loginForm.value.username,

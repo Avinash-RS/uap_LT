@@ -60,7 +60,7 @@ export class UapHttpService {
   }
 
   private getToken() {
-    return localStorage.getItem('token') ? localStorage.getItem('token') : ''
+    return sessionStorage.getItem('token') ? sessionStorage.getItem('token') : ''
   }
 
   private createHeaders(): HttpHeaders {
