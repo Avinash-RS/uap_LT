@@ -10,8 +10,8 @@ export const environment = {
   qa: false,
   dev: false,
   local: true,
-  API_URL: 'https://uapdev-api.lntiggnite.com',
-  NODE_URL: 'https://edgeservice.lntiggnite.com'
+  API_URL: 'https://uapcoreuat.lntedutech.com',
+  NODE_URL: 'https://edgeserviceuat.lntedutech.com'
 //   OIDC_CONFIG: {
 //     issuer: 'https://uap-iam.lntiggnite.com/auth/realms/uap',
 //     clientId: 'uap-ui',
