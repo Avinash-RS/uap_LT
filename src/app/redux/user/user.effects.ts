@@ -29,8 +29,8 @@ export class UserEffects {
           }),
           catchError((error: ErrorResponse) => {
             this._loading.setLoading(false, 'request.url');
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('user');
             this.router.navigate(['/unauthorized']);
             return of(UserActions.getUserProfileFailure({ payload: error }))
           })
