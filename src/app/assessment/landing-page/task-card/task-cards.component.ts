@@ -71,9 +71,10 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
     );
     this.store.select(selectAssessmentTaskUrlState).subscribe((response: AssessmentTaskUrlModel): void => {
       this.taskUrlData = response;
-      // if (this.taskUrlData.attributes.taskUrl) {
-      //   window.location.assign(this.taskUrlData.attributes.taskUrl);
-      // }
+      console.log('response', response);      
+      if (this.taskUrlData.attributes.taskUrl) {
+        window.location.assign(this.taskUrlData.attributes.taskUrl);
+      }
     });
   }
 
