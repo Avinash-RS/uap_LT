@@ -18,7 +18,7 @@
 
     &__number {
         width: 90px;
-        height: 90px;
+        min-height: 90px;
         margin: 0 auto;
         background: #d7d7d7;
         border-radius: 3em;
@@ -188,6 +188,7 @@
 
 ::ng-deep .tooltip {
     background-color: $uap-yellow;
-    color: $uap-monza !important;
+    transition: transform 5s ease-out;
+    color: $uap-black !important;
     font-size: 14px;
   }

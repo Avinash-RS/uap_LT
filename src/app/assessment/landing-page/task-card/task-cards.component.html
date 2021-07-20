@@ -8,7 +8,7 @@
         </div>
         <div class="assessment-list__card">
             <div class="assessment">
-                <h3 class="assessment__name">{{ task.taskName }}</h3>
+                <h3 [matTooltip]="task.taskName && task.taskName.length > 26 ? task.taskName : ''" matTooltipClass="tooltip" class="assessment__name">{{ isEclipsisNeeded(task.taskName) }}</h3>
                 <div class="assessment__duration">
                      {{ taskDuration[i] }} <span>|</span> {{ task.taskType }}
                 </div>
