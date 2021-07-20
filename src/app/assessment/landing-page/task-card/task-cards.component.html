@@ -1,16 +1,28 @@
-<div class="assessments" *ngIf="assessmentTasksList">
 
+
+<div class="assessments" *ngIf="assessmentTasksList">
+  
     <div class="assessment-list" *ngFor="let task of assessmentTasksList; let i = index" [ngClass]="taskStatus[i]">
         <div *ngIf="taskStatus[i] == 'completed'" class="tickMark">&#160;</div>
-        <div class="assessment-list__number" [ngClass]="{ 'apicon' : task.taskType == 'Aptitude', 'cdicon' : task.taskType == 'Coding', 'english' : task.taskType == 'English'}">
-            <!-- <span *ngIf="task.status !== 'completed'; else notCompleted">{{ i + 1 }}</span> -->
-            <ng-template #notCompleted><span class="material-icons">done</span></ng-template>
+        <div class="leftborder">
+            <div class="assessment-list__number" [ngClass]="{ 'apicon' : task.taskType == 'Aptitude', 'cdicon' : task.taskType == 'Coding', 'english' : task.taskType == 'English'}">
+                <!-- <span *ngIf="task.status !== 'completed'; else notCompleted">{{ i + 1 }}</span> -->
+                <ng-template #notCompleted><span class="material-icons">done</span></ng-template>
+            </div>
         </div>
         <div class="assessment-list__card">
             <div class="assessment">
-                <h3 [matTooltip]="task.taskName && task.taskName.length > 26 ? task.taskName : ''" matTooltipClass="tooltip" class="assessment__name">{{ isEclipsisNeeded(task.taskName) }}</h3>
+                <h3 [matTooltip]="task.taskName && task.taskName.length > 40 ? task.taskName : ''" matTooltipClass="tooltip" class="assessment__name">{{ isEclipsisNeeded(task.taskName) }}</h3>
                 <div class="assessment__duration">
-                     {{ taskDuration[i] }} <span>|</span> {{ task.taskType }}
+                    <span class="dura"><img src="../../../../assets/test.svg" />  {{ task.taskType }} </span>
+                    <span class="dura"> <img src="../../../../assets/watch.svg" /> {{ taskDuration[i] }} </span>
+                </div>
+                <div class="assessment__duration duration">
+                    <span><img src="../../../../assets/calendar.svg" /></span>
+                    <div>
+                        <span>{{getTime(task.startTime)}}</span>
+                        <!-- <span>06/09/2021 10:00:00 AM</span> -->
+                    </div>
                 </div>
             </div>
             <div class="assessment-actions">
