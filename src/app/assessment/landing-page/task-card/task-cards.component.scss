@@ -118,6 +118,9 @@
             border-right: 2px solid $uap-white;
         }
     }
+    .action_start {
+        font-weight: 500;
+    }
 }
 .assessments {
     max-width: 1200px;
@@ -171,8 +174,7 @@
                 filter: invert(52%) sepia(3%) saturate(5%) hue-rotate(55deg) brightness(88%) contrast(82%);
                 color: #777777;
                 display: inline-block;
-                margin-right: 10px;
-                padding-left: 30px;
+                margin-right: 10px; 
                 img {
                     width: 21px
                 }
