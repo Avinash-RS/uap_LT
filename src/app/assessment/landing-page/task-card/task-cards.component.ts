@@ -117,9 +117,9 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
     }
 
     isEclipsisNeeded(name) {
-      if (name.length > 40) {
+      if (name.length > 43) {
         let eclipe = '...'
-        return name.substr(0, 40) + eclipe;
+        return name.substr(0, 43) + eclipe;
       } else {
         return name;
       }
