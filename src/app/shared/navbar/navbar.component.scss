@@ -9,7 +9,7 @@
     z-index: 4;
     position: fixed;
     box-shadow: 0px 3px 5px 0px rgb(0 0 0 / 15%);
-    height: 50px;
+    height: 65px;
     background-color: $uap-white;
     @extend .flex_ai_center;
     &-block {
@@ -18,11 +18,11 @@
         width: 100%;
         @extend .flex_ai_center;
         justify-content: space-between;
-        padding: 0 8px;
+        max-width: 1200px;
         
        
         a{
-            padding-left: 16px;
+            padding-left: 10px;
         }
     }
 }

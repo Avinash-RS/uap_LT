@@ -1,0 +1,412 @@
+@import "_variables";
+
+
+/* Roboto Condensed Font */
+@font-face {
+  font-family: 'Roboto';
+  src: url('#{$fontPath}/Roboto-Light.woff2') format('woff2'),
+       url('#{$fontPath}/Roboto-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('#{$fontPath}/Roboto-Regular.woff2') format('woff2'),
+         url('#{$fontPath}/Roboto-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url('#{$fontPath}/Roboto-Bold.woff2') format('woff2'),
+         url('#{$fontPath}/Roboto-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+}
+
+// Icon Fonts - Icomoon
+@font-face {
+    font-family: 'icomoon';
+    src:  url('#{$fontPath}/icomoon.woff?bkp143') format('woff'),
+      url('#{$fontPath}/icomoon.svg?bkp143#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+  }
+  
+  [class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    
+    /* Enable Ligatures ================ */
+    letter-spacing: 0;
+    -webkit-font-feature-settings: "liga";
+    -moz-font-feature-settings: "liga=1";
+    -moz-font-feature-settings: "liga";
+    -ms-font-feature-settings: "liga" 1;
+    font-feature-settings: "liga";
+    -webkit-font-variant-ligatures: discretionary-ligatures;
+    font-variant-ligatures: discretionary-ligatures;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .icon-Role:before {
+    content: "\e970";
+  }
+  .icon-Job:before {
+    content: "\e971";
+  }
+  .icon-Hamburger:before {
+    content: "\e96f";
+  }
+  .icon-Hide:before {
+    content: "\e96e";
+  }
+  .icon-Shield:before {
+    content: "\e96c";
+  }
+  .icon-Tag:before {
+    content: "\e96d";
+  }
+  .icon-Add:before {
+    content: "\e900";
+  }
+  .icon-AddGroup:before {
+    content: "\e901";
+  }
+  .icon-AddUser:before {
+    content: "\e902";
+  }
+  .icon-Assessment:before {
+    content: "\e903";
+  }
+  .icon-AssessmentPlatform:before {
+    content: "\e904";
+  }
+  .icon-AssessmentTick:before {
+    content: "\e905";
+  }
+  .icon-AssessmentView:before {
+    content: "\e906";
+  }
+  .icon-Back:before {
+    content: "\e907";
+  }
+  .icon-Badge:before {
+    content: "\e908";
+  }
+  .icon-Bank:before {
+    content: "\e909";
+  }
+  .icon-Basket:before {
+    content: "\e90a";
+  }
+  .icon-Bell:before {
+    content: "\e90b";
+  }
+  .icon-Benchmark:before {
+    content: "\e90c";
+  }
+  .icon-Booked:before {
+    content: "\e90d";
+  }
+  .icon-BuildPortfolio:before {
+    content: "\e90e";
+  }
+  .icon-Calendar:before {
+    content: "\e90f";
+  }
+  .icon-Cart:before {
+    content: "\e910";
+  }
+  .icon-Certificate1:before {
+    content: "\e911";
+  }
+  .icon-Certificate2:before {
+    content: "\e912";
+  }
+  .icon-Certification:before {
+    content: "\e913";
+  }
+  .icon-checked:before {
+    content: "\e914";
+  }
+  .icon-CheckMark:before {
+    content: "\e915";
+  }
+  .icon-Chip:before {
+    content: "\e916";
+  }
+  .icon-Circuit:before {
+    content: "\e917";
+  }
+  .icon-Civil:before {
+    content: "\e918";
+  }
+  .icon-Clipboard:before {
+    content: "\e919";
+  }
+  .icon-Close:before {
+    content: "\e91a";
+  }
+  .icon-Contract:before {
+    content: "\e91b";
+  }
+  .icon-CreditCard:before {
+    content: "\e91c";
+  }
+  .icon-DateTime:before {
+    content: "\e91d";
+  }
+  .icon-Delete:before {
+    content: "\e91e";
+  }
+  .icon-Device:before {
+    content: "\e91f";
+  }
+  .icon-Dislike:before {
+    content: "\e920";
+  }
+  .icon-Document:before {
+    content: "\e921";
+  }
+  .icon-DownArrow:before {
+    content: "\e922";
+  }
+  .icon-Download:before {
+    content: "\e923";
+  }
+  .icon-Edit:before {
+    content: "\e924";
+  }
+  .icon-Email:before {
+    content: "\e925";
+  }
+  .icon-Expiration:before {
+    content: "\e926";
+  }
+  .icon-Facebook:before {
+    content: "\e927";
+  }
+  .icon-Favorite:before {
+    content: "\e928";
+  }
+  .icon-FileAdd:before {
+    content: "\e929";
+  }
+  .icon-FileDownload:before {
+    content: "\e92a";
+  }
+  .icon-FileEdit:before {
+    content: "\e92b";
+  }
+  .icon-Filter:before {
+    content: "\e92c";
+  }
+  .icon-Folder:before {
+    content: "\e92d";
+  }
+  .icon-GeneratedResults:before {
+    content: "\e92e";
+  }
+  .icon-Globe:before {
+    content: "\e92f";
+  }
+  .icon-Grade:before {
+    content: "\e930";
+  }
+  .icon-Grid:before {
+    content: "\e931";
+  }
+  .icon-Group:before {
+    content: "\e932";
+  }
+  .icon-Info:before {
+    content: "\e933";
+  }
+  .icon-Instagram:before {
+    content: "\e934";
+  }
+  .icon-Layers:before {
+    content: "\e935";
+  }
+  .icon-LeftArrow:before {
+    content: "\e936";
+  }
+  .icon-Level1:before {
+    content: "\e937";
+  }
+  .icon-Level2:before {
+    content: "\e938";
+  }
+  .icon-Level3:before {
+    content: "\e939";
+  }
+  .icon-Like:before {
+    content: "\e93a";
+  }
+  .icon-Link:before {
+    content: "\e93b";
+  }
+  .icon-Linkedin:before {
+    content: "\e93c";
+  }
+  .icon-List:before {
+    content: "\e93d";
+  }
+  .icon-Location:before {
+    content: "\e93e";
+  }
+  .icon-MailSend:before {
+    content: "\e93f";
+  }
+  .icon-Mechanical:before {
+    content: "\e940";
+  }
+  .icon-More:before {
+    content: "\e941";
+  }
+  .icon-Objectives:before {
+    content: "\e942";
+  }
+  .icon-Offer:before {
+    content: "\e943";
+  }
+  .icon-PassageTime:before {
+    content: "\e944";
+  }
+  .icon-Picture:before {
+    content: "\e945";
+  }
+  .icon-Play:before {
+    content: "\e946";
+  }
+  .icon-Portfolio:before {
+    content: "\e947";
+  }
+  .icon-Refresh:before {
+    content: "\e948";
+  }
+  .icon-RemoteProctoring:before {
+    content: "\e949";
+  }
+  .icon-Report:before {
+    content: "\e94a";
+  }
+  .icon-Resume:before {
+    content: "\e94b";
+  }
+  .icon-ResumeView:before {
+    content: "\e94c";
+  }
+  .icon-RightArrow:before {
+    content: "\e94d";
+  }
+  .icon-Rupee:before {
+    content: "\e94e";
+  }
+  .icon-Score:before {
+    content: "\e94f";
+  }
+  .icon-Search:before {
+    content: "\e950";
+  }
+  .icon-Settings:before {
+    content: "\e951";
+  }
+  .icon-SpeedoMeter:before {
+    content: "\e952";
+  }
+  .icon-Star:before {
+    content: "\e953";
+  }
+  .icon-Statistics:before {
+    content: "\e954";
+  }
+  .icon-Test:before {
+    content: "\e955";
+  }
+  .icon-TestBooking:before {
+    content: "\e956";
+  }
+  .icon-TestGrade:before {
+    content: "\e957";
+  }
+  .icon-Tests:before {
+    content: "\e958";
+  }
+  .icon-Tick:before {
+    content: "\e959";
+  }
+  .icon-Time:before {
+    content: "\e95a";
+  }
+  .icon-TimeLeft:before {
+    content: "\e95b";
+  }
+  .icon-Trophy:before {
+    content: "\e95c";
+  }
+  .icon-Twitter:before {
+    content: "\e95d";
+  }
+  .icon-UpArrow:before {
+    content: "\e95e";
+  }
+  .icon-UPI .path1:before {
+    content: "\e95f";
+    color: rgb(0, 0, 0);
+  }
+  .icon-UPI .path2:before {
+    content: "\e960";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+  }
+  .icon-UPI .path3:before {
+    content: "\e961";
+    margin-left: -1em;
+    color: rgb(0, 0, 0);
+  }
+  .icon-UPI .path4:before {
+    content: "\e962";
+    margin-left: -1em;
+    color: rgb(0, 0, 0);
+  }
+  .icon-UPI .path5:before {
+    content: "\e963";
+    margin-left: -1em;
+    color: rgb(0, 0, 0);
+  }
+  .icon-Upload:before {
+    content: "\e964";
+  }
+  .icon-UpSkill:before {
+    content: "\e965";
+  }
+  .icon-User:before {
+    content: "\e966";
+  }
+  .icon-View:before {
+    content: "\e967";
+  }
+  .icon-ViewItems:before {
+    content: "\e968";
+  }
+  .icon-Wallet:before {
+    content: "\e969";
+  }
+  .icon-WebDevelopment:before {
+    content: "\e96a";
+  }
+  .icon-Youtube:before {
+    content: "\e96b";
+  }
