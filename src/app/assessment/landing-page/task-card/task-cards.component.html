@@ -36,7 +36,7 @@
                         </div>
                     </div>
                     <span *ngIf="taskStatus[i] === 'inprogress'">{{getIsTimeOutStatus(task, taskStatus[i]) ? 'Time Expired' : 'Resume'}}</span>
-                    <span *ngIf="taskStatus[i] === 'completed'">Done</span>
+                    <span *ngIf="taskStatus[i] === 'completed'">Completed</span>
                 </button>
                 <div *ngIf="showTaskStartsOn[i] && taskStartTime[i].showCountdown" class="action_start">
                     <span>Starts in</span>

@@ -133,11 +133,11 @@
 }
 
 .mat-toolbar {
-    background: linear-gradient(to right,#fff 14%,#fc0 20%) !important;
+    background: linear-gradient(90deg, #fff 15%, #fc0 25%) !important;
     color: $uap-black;
     position: absolute;
     z-index: 4;
-    height: 55px !important;
+    height: 60px !important;
 }
 
 .mat-form-field-infix {
