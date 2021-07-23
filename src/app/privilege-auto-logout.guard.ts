@@ -29,7 +29,7 @@ export class PrivilegeAutoLogoutGuard implements CanActivate {
     let email = userProfile && userProfile.attributes && userProfile.attributes.email ? userProfile.attributes.email : null;
     if (param && param.coding) {
       if (email) {
-        this.loginApi(email);
+        // this.loginApi(email);
       }
     }
     let token = sessionStorage.getItem('token');

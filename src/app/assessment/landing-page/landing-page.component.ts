@@ -121,8 +121,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   getTaskIds() {
-    console.log('status', sessionStorage.getItem('loadTestStatusOnRefresh'));    
-    if (sessionStorage.getItem('loadTestStatusOnRefresh') == 'true') {
     this.taskIds = [];
     let codingIds= [];
     this.assessmentTasksList.forEach(element => {
@@ -140,7 +138,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       }
     });
     (this.taskIds.length > 0 || codingIds.length > 0) ? this.taskStatusApi(this.taskIds, codingIds) : '';
-  }
   }
 
   taskStatusApi(Taskids, codingIds) {
@@ -172,7 +169,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
             }
           })
         );    
-        sessionStorage.setItem('loadTestStatusOnRefresh', 'false');
     }, (err)=> {
       this._loading.setLoading(false, 'status');
       this.store.dispatch(
@@ -182,7 +178,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           }
         })
       );  
-      sessionStorage.setItem('loadTestStatusOnRefresh', 'false');
     });
   }
   checkBackButtonEnabled() {
