@@ -57,13 +57,18 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.assessmentID = this.route.snapshot.paramMap.get('id') || '';
     this.checkAssessmentTakingStatus();
-    this.store.dispatch(
-      assessmentTasksActions.getAssessmentTaskList({
-        payload: {
-          assessmentId: this.assessmentID
-        }
-      })
-    );
+    if (sessionStorage.getItem('statusCheck')) {
+      let data = JSON.parse(sessionStorage.getItem('statusCheck'));
+      this.statusCheckApi(data);
+    } else {
+      this.store.dispatch(
+        assessmentTasksActions.getAssessmentTaskList({
+          payload: {
+            assessmentId: this.assessmentID
+          }
+        })
+      );  
+    }
     this.store.select(selectAssessmentTasksListState).subscribe((response) => {
       this.assessmentData = response;
       if (this.assessmentData.failureMessage?.error.errors[0].code === '4030') {
@@ -153,18 +158,31 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       type: "English"
     }
   ];
-  
-    this.assessmentApiService.getStatus(apiData).subscribe((response: any)=> {
-      sessionStorage.setItem('loadTestStatusOnRefresh', 'false');
+    sessionStorage.setItem('statusCheck', JSON.stringify(apiData));
+  }
+
+  statusCheckApi(apiData) {
+    this._loading.setLoading(true, 'status');
+      this.assessmentApiService.getStatus(apiData).subscribe((response: any)=> {
+        this._loading.setLoading(false, 'status');
+        this.store.dispatch(
+          assessmentTasksActions.getAssessmentTaskList({
+            payload: {
+              assessmentId: this.assessmentID
+            }
+          })
+        );    
+        sessionStorage.setItem('loadTestStatusOnRefresh', 'false');
+    }, (err)=> {
+      this._loading.setLoading(false, 'status');
       this.store.dispatch(
         assessmentTasksActions.getAssessmentTaskList({
           payload: {
             assessmentId: this.assessmentID
           }
         })
-      );
-    }, (err)=> {
-    sessionStorage.setItem('loadTestStatusOnRefresh', 'false');
+      );  
+      sessionStorage.setItem('loadTestStatusOnRefresh', 'false');
     });
   }
   checkBackButtonEnabled() {
