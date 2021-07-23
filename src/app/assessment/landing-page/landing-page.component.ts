@@ -118,6 +118,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   getTaskIds() {
     console.log('status', sessionStorage.getItem('loadTestStatusOnRefresh'));    
     if (sessionStorage.getItem('loadTestStatusOnRefresh') == 'true') {
+    this.taskIds = [];
+    let codingIds= [];
     this.assessmentTasksList.forEach(element => {
       if (element.taskName && element.status == 'InProgress' && element.taskType == 'Coding') {
         let custom = moment(element.endTime).diff(moment.now(), 'minutes');
@@ -125,19 +127,33 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           this.taskIds.push(Number(element.id));
         }
       }
+      if (element.taskName && element.status == 'InProgress' && element.taskType == 'English') {
+        let custom = moment(element.endTime).diff(moment.now(), 'minutes');
+        if (custom > 0) {
+          codingIds.push(Number(element.id));
+        }
+      }
     });
-    this.taskIds.length > 0 ? this.taskStatusApi(this.taskIds) : '';
+    (this.taskIds.length > 0 || codingIds.length > 0) ? this.taskStatusApi(this.taskIds, codingIds) : '';
   }
   }
 
-  taskStatusApi(ids) {
+  taskStatusApi(Taskids, codingIds) {
     const userProfile = JSON.parse(sessionStorage.getItem('user'));
     let email = userProfile.attributes.email;
-    const apiData = {
-      testIds: ids,
+    const apiData = [
+      {
+      testIds: Taskids,
       email: email,
       type: "Coding"
-    };
+    },
+    {
+      testIds: codingIds,
+      email: email,
+      type: "English"
+    }
+  ];
+  
     this.assessmentApiService.getStatus(apiData).subscribe((response: any)=> {
       sessionStorage.setItem('loadTestStatusOnRefresh', 'false');
       this.store.dispatch(
