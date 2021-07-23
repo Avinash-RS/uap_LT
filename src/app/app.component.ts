@@ -20,7 +20,6 @@ export class AppComponent implements OnInit {
   title = 'uap';
   loading: boolean = true;
   constructor(private _loading: LoadingService, private userService: UserAPIService, private route: Router, private store: Store<AppState>) {
-    sessionStorage.setItem('loadTestStatusOnRefresh', 'true');
   }
 
   ngOnInit() {
