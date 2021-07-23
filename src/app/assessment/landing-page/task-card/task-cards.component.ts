@@ -71,6 +71,7 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
     );
     this.store.select(selectAssessmentTaskUrlState).subscribe((response: AssessmentTaskUrlModel): void => {
       this.taskUrlData = response;
+      console.log('response', response);      
       if (this.taskUrlData.attributes.taskUrl) {
         window.location.assign(this.taskUrlData.attributes.taskUrl);
       }
@@ -113,5 +114,21 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
       }
       return true;
     }  
+    }
+
+    isEclipsisNeeded(name) {
+      if (name.length > 43) {
+        let eclipe = '...'
+        return name.substr(0, 43) + eclipe;
+      } else {
+        return name;
+      }
+    }
+
+    getTime(date) {
+      if (date) {
+        const split = moment(date).format('LLL');
+        return split;
+      }
     }
 }

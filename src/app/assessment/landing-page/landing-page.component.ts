@@ -112,21 +112,11 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   checkBackButtonEnabled() {
-    let check = localStorage.getItem('fromCert') && localStorage.getItem('fromCert') == 'true' ? true : false;
+    let check = sessionStorage.getItem('fromCert') && sessionStorage.getItem('fromCert') == 'true' ? true : false;
     this.backToCertificationPortal = check;
   }
   redirectTo() {
-    if (environment.production) {
-     return window.location.href ='https://certificationqa.lntiggnite.com/myAssessment';
-    }
-    if (environment.dev) {
-      return window.location.href ='https://certification.lntiggnite.com/myAssessment';
-    } 
-    if (environment.qa) {
-      return window.location.href ='https://certificationqa.lntiggnite.com/myAssessment';
-    } else {
-      return window.location.href ='https://certification.lntiggnite.com/myAssessment';
-    }
+     return window.location.href = environment.MICROCERTREDIRECT;
   }
   summaryDetails(summary: AssessmentSummaryModel): void {    
     this.tasksCount = summary.tasks;

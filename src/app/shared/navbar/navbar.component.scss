@@ -9,8 +9,8 @@
     z-index: 4;
     position: fixed;
     box-shadow: 0px 3px 5px 0px rgb(0 0 0 / 15%);
-    height: 50px;
-    background-color: $uap-white;
+    height: 65px;
+    background:linear-gradient(to right, #fff 14%, #fc0 25%) !important ;
     @extend .flex_ai_center;
     &-block {
         // max-width: 1200px;
@@ -18,25 +18,25 @@
         width: 100%;
         @extend .flex_ai_center;
         justify-content: space-between;
-        padding: 0 8px;
+        max-width: 1200px;
         
        
         a{
-            padding-left: 16px;
+            padding-left: 10px;
         }
     }
 }
 
 .navbar-img__resize {
-    width: 100%;
-    max-width: 150px;
-    height: 30px;
+    /* width: 100%; */
+    width: 118px;
+    /* height: 35px; */
     margin-top: 8px;
 }
 
 .user_info {
     display: inline-block;
-    margin: 0.8em 20px 0 auto;
+    margin: 0.4em 20px 0 auto;
     font-size: 1.1em;
 }
 
@@ -46,7 +46,7 @@
     cursor: pointer;
     margin: 0.2em 20px 0 0;
     background: url(../../../assets/user.svg) no-repeat;
-    background-color: $uap-yellow;
+    background-color: #ececec;
     color: transparent;
     border-radius: 25px;
     background-size: 50%;

@@ -33,9 +33,9 @@ export class UserAPIService {
 
   isValidUser(data: any) {
     if (data && data.data && data.token) {
-      localStorage.setItem('user', JSON.stringify(data.data));
-      localStorage.setItem('token', data.token.access_token);
-      localStorage.setItem('refresh_token', data.token.refresh_token);
+      sessionStorage.setItem('user', JSON.stringify(data.data));
+      sessionStorage.setItem('token', data.token.access_token);
+      sessionStorage.setItem('refresh_token', data.token.refresh_token);
       return true;
     } else {
       this.openSnackBar('Invalid Login');
@@ -44,13 +44,18 @@ export class UserAPIService {
   }
 
   getUserFromLocalStorage() {
-    let users: any = localStorage.getItem('user');
+    let users: any = sessionStorage.getItem('user');
     return JSON.parse(users);
   }
 
+  getReferenceFromLocalStorage() {
+    let reference: any = sessionStorage.getItem('reference');
+    return JSON.parse(reference);
+  }
+
   logout() {
-    let getId = localStorage.getItem('assessmentId') || localStorage.getItem('routeTo');
-    localStorage.clear();
+    let getId = sessionStorage.getItem('assessmentId') || sessionStorage.getItem('routeTo');
+    sessionStorage.clear();
     if (getId) {
       this.route.navigate(['/login'], { queryParams: {assessmentId: getId}});      
     } else {

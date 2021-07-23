@@ -1,6 +1,6 @@
 @import 'index';
 .main {   
-    background: $white;
+    background: #f8f8f8;
     min-height: 100vh;
     .landing-padding_all {
         padding: 50px 0 0;
@@ -57,19 +57,36 @@
     }
 }
 
+.htxt {
+    padding: 14px 20px;
+    background-color: #fff;
+    font-size: 15px;
+    color: #545454;
+    -webkit-box-shadow: 0 2px 5px 0 #00000029, 0 2px 10px 0 #00000014;
+    box-shadow: 0 2px 5px 0 #00000024, 0 2px 10px 0 #0000001a;
+    p:first-child {
+        font-weight: 700;
+    }
+    p {
+        font-weight: 500;
+        line-height: 1.7;
+        margin: 0;
+    }
+}
+
 .assessment-summary { 
     font: bold 18px/1.2 $uap-roboto-condensed;
     position: relative;
+    background-color: #f8f8f8;
     .header_info {
-        background-color: $uap-yellow;
+        background-color: #f8f8f8;
     }
     ._htxt { 
         
         max-width: 1200px;
         margin: 0 auto;
-        padding: 2.5em 2em 1em .5em;
+        padding: 2.2em 2em 1em 0.5em;
         box-sizing: border-box;
-        margin-bottom: 1em;
         display: grid;
         grid-template-columns: 1fr 0.2fr;
         grid-template-areas:
@@ -124,7 +141,7 @@
                     border-radius: 50%;
                     width: 40px;
                     position: relative;
-                    height: 30px;
+                    height: 28px;
                     margin: 0em .75em;
                 }
                 .second {
@@ -160,14 +177,14 @@
         width: 125px;
         border-radius: 1.5em;
         color: $uap-grey;
-        border: 1px solid $uap-buddha-gold-1;
+        border: 1px solid #a5a5a5;
         outline: none;
         padding: 0.5em 1.3em;
         margin-left: 2.5em;
         box-shadow:  $uap-btnshadow;
         height: 37px;
         font-size: 0.8em;
-        margin-top: .5em;
+        margin-top: 1.5em;
         cursor: pointer;
         img {
             width: 16px;
@@ -184,7 +201,7 @@
         font-size: 1.5em;
     }
     &__text {
-        padding-bottom: 20px;
+        // padding-bottom: 20px;
         font-weight: normal;
         color: $uap-label-grey;
         grid-area: text_;

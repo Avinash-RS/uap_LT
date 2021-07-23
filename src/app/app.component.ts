@@ -1,3 +1,4 @@
+import { getReferenceDataSuccess } from './redux/reference-data/reference-data.actions';
 import { LoadingService } from './rest-api/loading.service';
 import { assessmentIDAction } from './login/redux/login.actions';
 import { autoLogin } from './redux/user/user.actions';
@@ -23,10 +24,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('token')) {
+    if (sessionStorage.getItem('token')) {
       this.store.dispatch(autoLogin());
-      if (localStorage.getItem('assessmentId')) {
-        this.store.dispatch(assessmentIDAction({id: localStorage.getItem('assessmentId')}));
+      const reference = this.userService.getReferenceFromLocalStorage();
+      reference ? this.store.dispatch(getReferenceDataSuccess({payload: reference})) : '';
+      if (sessionStorage.getItem('assessmentId')) {
+        this.store.dispatch(assessmentIDAction({id: sessionStorage.getItem('assessmentId')}));
       }
     }
 

@@ -6,8 +6,9 @@ export const environment = {
   qa: false,
   dev: true,
   local: false,
-  API_URL: 'https://uapcoreuat.lntedutech.com',
-  NODE_URL: 'https://edgeserviceuat.lntedutech.com'
+  MICROCERTREDIRECT: 'https://certification.lntiggnite.com/myAssessment',
+  API_URL: 'https://uapdev-api.lntiggnite.com',
+  NODE_URL: 'https://edgeservice.lntiggnite.com'
 //   OIDC_CONFIG: {
 //     issuer: 'https://uap-iam.lntiggnite.com/auth/realms/uap',
 //     clientId: 'uap-ui',

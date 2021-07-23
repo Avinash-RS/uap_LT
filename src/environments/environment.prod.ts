@@ -6,6 +6,7 @@ export const environment = {
   qa: false,
   dev: false,
   local: false,
+  MICROCERTREDIRECT: 'https://certificationuat.lntedutech.com/myAssessment',
   API_URL: 'https://uapcoreuat.lntedutech.com',
   NODE_URL: 'https://edgeserviceuat.lntedutech.com'
   // OIDC_CONFIG: {

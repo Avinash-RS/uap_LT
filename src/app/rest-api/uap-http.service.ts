@@ -52,7 +52,7 @@ export class UapHttpService {
     return this.httpClient.delete<{}>(this.getUrl(url), { headers: this.createHeaders() });
   }
   private getUrl(url: string): string {
-    if (!url.includes('/login') && !url.includes('/getUserToken') && !url.includes('//schedules')) {
+    if (!url.includes('/login') && !url.includes('/getUserToken') && !url.includes('/schedules') && !url.includes('/start') && !url.includes('/packages///')) {
     return `${this.apiBaseUrl}${url}`;
     } else {
       return `${this.apiNodeUrl}${url}`;
@@ -60,7 +60,7 @@ export class UapHttpService {
   }
 
   private getToken() {
-    return localStorage.getItem('token') ? localStorage.getItem('token') : ''
+    return sessionStorage.getItem('token') ? sessionStorage.getItem('token') : ''
   }
 
   private createHeaders(): HttpHeaders {

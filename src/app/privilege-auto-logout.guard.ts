@@ -20,7 +20,7 @@ export class PrivilegeAutoLogoutGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
-    let token = localStorage.getItem('token');
+    let token = sessionStorage.getItem('token');
     if (!token) {
         return true;
     } else {

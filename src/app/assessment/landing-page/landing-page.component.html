@@ -32,14 +32,21 @@
         <section class="assessment-summary" *ngIf="showAssessmentSummary">
             <div class="header_info">
                 <div class="_htxt">
-                    <div class="assessment-summary__heading">{{assessmentData?.data?.attributes?.packageName}}</div>
+                    <div class="assessment-summary__heading">My Tests </div>
                     <span class="assessment-summary__text">
                         <!-- This assessment has <strong>{{ tasksCount }} Tasks</strong> with a total duration of
                         <strong>{{ totalHours }}</strong>. Each task is time-bound and can be taken in any order, but
                         can be
                         submitted one at a time. -->
-                        {{assessmentData?.data?.attributes?.packageDes}}
+                        <!-- {{assessmentData?.data?.attributes?.packageDes}} -->
+                        <!-- <div class="htxt">
+                            <p></p>
+                            <p>There are three types of Tests: {{assessmentData?.data?.attributes?.packageName}}. In multiple choice tasks, there is a question followed by possible answers, programming test with programming question & adaptive test for listening, reading, speaking & writing skills. Please make sure all test are completed to view the report. </p>
+                        </div> -->
+                        Hello Candidate,
                     </span>
+                   
+                
                     <div *ngIf="isAllTasksCompleted && !notShowThankYou">&#160;</div>
                     <button *ngIf="backToCertificationPortal" (click)="redirectTo()" class="back_"><em> <img alt="back" src="../../../assets/back.svg" /></em>Back</button> 
 
