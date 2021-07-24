@@ -162,6 +162,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this._loading.setLoading(true, 'status');
       this.assessmentApiService.getStatus(apiData).subscribe((response: any)=> {
         this._loading.setLoading(false, 'status');
+        this.assessmentTasksList = [];
         this.store.dispatch(
           assessmentTasksActions.getAssessmentTaskList({
             payload: {
