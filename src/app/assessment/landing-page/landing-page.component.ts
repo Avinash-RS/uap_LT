@@ -124,13 +124,13 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.taskIds = [];
     let codingIds= [];
     this.assessmentTasksList.forEach(element => {
-      if (element.taskName && element.status == 'InProgress' && element.taskType == 'Coding') {
+      if (element.taskName && (element.status == 'InProgress' || element.status == 'YetToStart') && element.taskType == 'Coding') {
         let custom = moment(element.endTime).diff(moment.now(), 'minutes');
         if (custom > 0) {
           this.taskIds.push(Number(element.id));
         }
       }
-      if (element.taskName && element.status == 'InProgress' && element.taskType == 'English') {
+      if (element.taskName && (element.status == 'InProgress' || element.status == 'YetToStart') && element.taskType == 'English') {
         let custom = moment(element.endTime).diff(moment.now(), 'minutes');
         if (custom > 0) {
           codingIds.push(Number(element.id));
