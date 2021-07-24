@@ -13,6 +13,8 @@ import { AssessmentTaskResponse } from 'src/app/rest-api/assessments-api/models/
 import { AssessmentsModuleEnum } from 'src/app/admin/assessments/assessments.enums';
 import { selectUserProfileData } from 'src/app/redux/user/user.reducer';
 import { ToastrService } from 'ngx-toastr';
+import { AssessmentAPIService } from 'src/app/rest-api/assessments-api/assessments-api.service';
+import * as moment from 'moment'; //in your component
 
 @Component({
   selector: 'app-assessment-landing-page',
@@ -34,13 +36,14 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   canTakeAssessment = false;
   notShowThankYou = false;
   backToCertificationPortal: boolean;
-
+  taskIds: any = [];
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private store: Store<AssessmentTasksReducerState>,
     private toast: ToastrService,
+    private assessmentApiService: AssessmentAPIService,
     private _loading: LoadingService 
   ) {
     this._loading.setLoading(false, 'request.url');
@@ -54,19 +57,25 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.assessmentID = this.route.snapshot.paramMap.get('id') || '';
     this.checkAssessmentTakingStatus();
-    this.store.dispatch(
-      assessmentTasksActions.getAssessmentTaskList({
-        payload: {
-          assessmentId: this.assessmentID
-        }
-      })
-    );
+    if (sessionStorage.getItem('statusCheck')) {
+      let data = JSON.parse(sessionStorage.getItem('statusCheck'));
+      this.statusCheckApi(data);
+    } else {
+      this.store.dispatch(
+        assessmentTasksActions.getAssessmentTaskList({
+          payload: {
+            assessmentId: this.assessmentID
+          }
+        })
+      );  
+    }
     this.store.select(selectAssessmentTasksListState).subscribe((response) => {
       this.assessmentData = response;
       if (this.assessmentData.failureMessage?.error.errors[0].code === '4030') {
         this.router.navigateByUrl('/unauthorized');
       }
       this.assessmentTasksList = this.assessmentData.data.attributes.assessmentTasks;
+      this.getTaskIds();
       const completedAssessmentTasksLength = this.assessmentTasksList.filter(
         (task) =>
           task.status.toLowerCase() ===
@@ -111,6 +120,67 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.checkBackButtonEnabled();
   }
 
+  getTaskIds() {
+    this.taskIds = [];
+    let codingIds= [];
+    this.assessmentTasksList.forEach(element => {
+      if (element.taskName && element.status == 'InProgress' && element.taskType == 'Coding') {
+        let custom = moment(element.endTime).diff(moment.now(), 'minutes');
+        if (custom > 0) {
+          this.taskIds.push(Number(element.id));
+        }
+      }
+      if (element.taskName && element.status == 'InProgress' && element.taskType == 'English') {
+        let custom = moment(element.endTime).diff(moment.now(), 'minutes');
+        if (custom > 0) {
+          codingIds.push(Number(element.id));
+        }
+      }
+    });
+    (this.taskIds.length > 0 || codingIds.length > 0) ? this.taskStatusApi(this.taskIds, codingIds) : '';
+  }
+
+  taskStatusApi(Taskids, codingIds) {
+    const userProfile = JSON.parse(sessionStorage.getItem('user'));
+    let email = userProfile.attributes.email;
+    const apiData = [
+      {
+      testIds: Taskids,
+      email: email,
+      type: "Coding"
+    },
+    {
+      testIds: codingIds,
+      email: email,
+      type: "English"
+    }
+  ];
+    sessionStorage.setItem('statusCheck', JSON.stringify(apiData));
+  }
+
+  statusCheckApi(apiData) {
+    this._loading.setLoading(true, 'status');
+      this.assessmentApiService.getStatus(apiData).subscribe((response: any)=> {
+        this._loading.setLoading(false, 'status');
+        this.assessmentTasksList = [];
+        this.store.dispatch(
+          assessmentTasksActions.getAssessmentTaskList({
+            payload: {
+              assessmentId: this.assessmentID
+            }
+          })
+        );    
+    }, (err)=> {
+      this._loading.setLoading(false, 'status');
+      this.store.dispatch(
+        assessmentTasksActions.getAssessmentTaskList({
+          payload: {
+            assessmentId: this.assessmentID
+          }
+        })
+      );  
+    });
+  }
   checkBackButtonEnabled() {
     let check = sessionStorage.getItem('fromCert') && sessionStorage.getItem('fromCert') == 'true' ? true : false;
     this.backToCertificationPortal = check;
