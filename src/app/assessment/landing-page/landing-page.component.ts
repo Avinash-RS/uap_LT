@@ -122,39 +122,27 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   getTaskIds() {
     this.taskIds = [];
-    let codingIds= [];
+    const userProfile = JSON.parse(sessionStorage.getItem('user'));
+    let email = userProfile.attributes.email;
     this.assessmentTasksList.forEach(element => {
       if (element.taskName && (element.status == 'InProgress' || element.status == 'YetToStart') && element.taskType == 'Coding') {
         let custom = moment(element.endTime).diff(moment.now(), 'minutes');
         if (custom > 0) {
-          this.taskIds.push(Number(element.id));
-        }
-      }
-      if (element.taskName && (element.status == 'InProgress' || element.status == 'YetToStart') && element.taskType == 'English') {
-        let custom = moment(element.endTime).diff(moment.now(), 'minutes');
-        if (custom > 0) {
-          codingIds.push(Number(element.id));
+          let apiData = {
+            testIds: Number(element.id),
+            email,
+            type: element.taskType,
+            deliveryId: element.deliveryId ? element.deliveryId : ''
+          }
+          this.taskIds.push(apiData);
         }
       }
     });
-    (this.taskIds.length > 0 || codingIds.length > 0) ? this.taskStatusApi(this.taskIds, codingIds) : '';
+    (this.taskIds.length > 0) ? this.taskStatusApi(this.taskIds) : '';
   }
 
-  taskStatusApi(Taskids, codingIds) {
-    const userProfile = JSON.parse(sessionStorage.getItem('user'));
-    let email = userProfile.attributes.email;
-    const apiData = [
-      {
-      testIds: Taskids,
-      email: email,
-      type: "Coding"
-    },
-    {
-      testIds: codingIds,
-      email: email,
-      type: "English"
-    }
-  ];
+  taskStatusApi(Taskids) {
+    const apiData = Taskids;
     sessionStorage.setItem('statusCheck', JSON.stringify(apiData));
   }
 
