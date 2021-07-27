@@ -24,6 +24,10 @@ export class AssessmentAPIService {
     return this.httpClient.get<AssessmentTaskModel>(`/assessments/${assessmentId}`);
   }
 
+  getStatus(request: any) {
+    return this.httpClient.post<any>(`/taskStatusUpdate`, request);
+  }
+
   createAssessment(request: CreateAssessmentRequest): Observable<any> {
     return this.httpClient.post<any>(`/assessments`, request);
   }
