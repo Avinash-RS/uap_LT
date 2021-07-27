@@ -125,7 +125,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     const userProfile = JSON.parse(sessionStorage.getItem('user'));
     let email = userProfile.attributes.email;
     this.assessmentTasksList.forEach(element => {
-      if (element.taskName && (element.status == 'InProgress' || element.status == 'YetToStart') && element.taskType == 'Coding') {
+      if (element.taskName && (element.status == 'InProgress' || element.status == 'YetToStart') && (element.taskType == 'Coding' || element.taskType == 'English')) {
         let custom = moment(element.endTime).diff(moment.now(), 'minutes');
         if (custom > 0) {
           let apiData = {
