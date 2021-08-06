@@ -27,6 +27,11 @@ export class SideNavBarComponent implements OnInit {
       option: 'Schedule',
       routePath: '/admin/schedule',
       iconPath: '../../../assets/schedule-icon.svg'
+    },
+    {
+      option: 'Sync',
+      routePath: '/admin/sync',
+      iconPath: '../../../assets/images/sync_black_24dp.svg'
     }
   ];
   constructor() {}

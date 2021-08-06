@@ -24,6 +24,11 @@ const AdminRoutes: Routes = [
         canActivate:[AdminPrivilegeGuard]
       },
       {
+        path: 'sync',
+        loadChildren: () => import('./sync/sync.module').then((module) => module.SyncModule),
+        // canActivate: [AdminPrivilegeGuard]
+      },
+      {
         path: '',
         // TODO: redirect it to home once home screen is available
         //redirectTo: 'assessments',
