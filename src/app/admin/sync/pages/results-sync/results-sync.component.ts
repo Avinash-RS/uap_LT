@@ -121,7 +121,7 @@ export class ResultsSyncComponent implements OnInit {
   }
     this.syncService.testImport(apiData).subscribe((response: any)=> {
       if (response && response.success) {
-        this.toaster.warning(response && response.message ? response.message : 'Synced Successfully');
+        this.toaster.success(response && response.message ? response.message : 'Synced Successfully');
       } else {
         this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
       }
@@ -138,7 +138,7 @@ export class ResultsSyncComponent implements OnInit {
   }  
   this.syncService.testDetailsImport(apiData).subscribe((response: any)=> {
     if (response && response.success) {
-      this.toaster.warning(response && response.message ? response.message : 'Synced Successfully');
+      this.toaster.success(response && response.message ? response.message : 'Synced Successfully');
     } else {
       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
     }
@@ -153,7 +153,7 @@ export class ResultsSyncComponent implements OnInit {
   }  
   this.syncService.wecpToUapTestImport(apiData).subscribe((response: any)=> {
     if (response && response.success) {
-      this.toaster.warning(response && response.message ? response.message : 'Synced Successfully');
+      this.toaster.success(response && response.message ? response.message : 'Synced Successfully');
     } else {
       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
     }
