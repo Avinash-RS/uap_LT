@@ -27,7 +27,9 @@ export class InterceptorService implements HttpInterceptor {
     const clone = request.clone({
       headers: request.headers.set('Accept', 'application/json'),
     });
-    this._loading.setLoading(true, request.url);
+    if (!request.url.includes('/packages')) {
+      this._loading.setLoading(true, request.url);
+    }
     return next.handle(clone).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
