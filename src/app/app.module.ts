@@ -5,11 +5,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { APP_IMPORTS } from './app.imports';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PrivilegeGuard } from './privilege.guard';
 import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule } from './material/material.module';
 import { PrivilegeAutoLogoutGuard } from './privilege-auto-logout.guard';
+import { InterceptorService } from './interceptor.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +34,9 @@ import { PrivilegeAutoLogoutGuard } from './privilege-auto-logout.guard';
       }
     ),
   ],
-  providers: [PrivilegeGuard, PrivilegeAutoLogoutGuard],
+  providers: [PrivilegeGuard, PrivilegeAutoLogoutGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

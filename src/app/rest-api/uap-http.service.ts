@@ -57,7 +57,11 @@ export class UapHttpService {
      !url.includes('/schedules') && 
      !url.includes('/start') && 
      !url.includes('/packages///') && 
-     !url.includes('/taskStatusUpdate')) {
+     !url.includes('/taskStatusUpdate') &&
+     !url.includes('/testImport') &&
+     !url.includes('/testDetailsImport') &&
+     !url.includes('/wecpToUapTestImport')
+     ) {
     return `${this.apiBaseUrl}${url}`;
     } else {
       return `${this.apiNodeUrl}${url}`;

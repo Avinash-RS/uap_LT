@@ -1,13 +1,11 @@
 import { LoadingService } from './rest-api/loading.service';
-import { logoutAction, loginSuccess } from './login/redux/login.actions';
+import { loginSuccess } from './login/redux/login.actions';
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, CanActivate, Router, Params } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { UserAPIService } from './rest-api/user-api/user-api.service';
 import { catchError, map } from 'rxjs/operators';
 import { UserProfileResponseModel } from './rest-api/user-api/models/user-profile.model';
-import { getUserProfile, autoLogin } from './redux/user/user.actions';
-import { getReferenceData } from './redux/reference-data/reference-data.actions';
 import { Store } from '@ngrx/store';
 import { AppState } from './reducers';
 
@@ -22,8 +20,6 @@ export class PrivilegeGuard implements CanActivate {
 
   canActivate(route: any): Observable<boolean> | boolean {
     let token = sessionStorage.getItem('token');
-    // sessionStorage.removeItem('routeTo');
-    // if (!token) {
       let param = route.queryParams;
       if (param && param.token) {
         if (param.appType && param.appType == '1') {
@@ -42,11 +38,7 @@ export class PrivilegeGuard implements CanActivate {
         this.loginApi(param.token);
         return false;  
       }
-    // }
     if (token) {
-      // this.store.dispatch(autoLogin());
-    //  this.store.dispatch(getReferenceData());
-    //  this.store.dispatch(getUserProfile());
     this._loading.setLoading(true, 'request.url');
     return this.userAPIService.getUserProfile().pipe(
         map((userProfile: UserProfileResponseModel) => {
@@ -59,7 +51,6 @@ export class PrivilegeGuard implements CanActivate {
         })
       );
     } else {
-      // this.store.dispatch(logoutAction());
       this.userAPIService.logout();
       return false;
     }

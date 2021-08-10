@@ -1,7 +1,7 @@
 @import 'index';
 .sidenavbar-container-block {
   position: fixed;
-  max-width: 1200px;
+  max-width: 100%;
   margin: auto;
 }
 
@@ -15,16 +15,16 @@
   &__align{
     padding-top: 40px;
     outline: none;
-    font: bold 20px/1 $uap-roboto-condensed;
+    font: bold 16px/1 $uap-roboto-condensed;
     display: flex;
     align-items: center;
     color: $uap-nav-grey;
-    height: 50px;
+    height: 40px;
     padding: 10px 20px;
   }
   &__aligntext {
     line-height: 1.5;
-    height: 33px;
+    // height: 33px;
     padding-left: 15px;
   }
 }
