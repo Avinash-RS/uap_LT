@@ -14,7 +14,7 @@
             <div class="assessment">
                 <h3 [matTooltip]="task.taskName && task.taskName.length > 43 ? task.taskName : ''" matTooltipClass="tooltip" class="assessment__name">{{ isEclipsisNeeded(task.taskName) }}</h3>
                 <div class="assessment__duration">
-                    <span class="dura"><img src="../../../../assets/test.svg" />  {{ task.taskType }} </span>
+                    <span class="dura"><img src="../../../../assets/test.svg" />  {{ task.taskType.includes('Behaviour') ? 'Personality & Behaviour' : task.taskType }} </span>
                     <span *ngIf="!task.taskType.includes('Behaviour')" class="dura"> <img src="../../../../assets/watch.svg" /> {{ taskDuration[i] }} </span>
                 </div>
                 <div class="assessment__duration duration">

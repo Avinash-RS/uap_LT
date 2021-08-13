@@ -36,6 +36,7 @@ import { CustomSnackBarContentComponent } from 'src/app/shared/custom-snack-bar-
 import { ScheduleModuleEnum } from '../schedule.enums';
 import { selectUserProfileData } from 'src/app/redux/user/user.reducer';
 import { ScheduleAPIService } from 'src/app/rest-api/schedule-api/schedule-api.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-schedule-package',
@@ -73,7 +74,8 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     private store: Store<SchedulerReducerState>,
     private adminUtils: AdminUtils,
     private scheduleService: ScheduleAPIService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private toaster: ToastrService
   ) {
     const today = new Date();
     const timeFormat = today.getHours() > 11 ? 'PM' : 'AM';
@@ -331,7 +333,6 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
 
   createSchedulePackage(): void {
     this.openSnackBar(ScheduleModuleEnum.CreatingScheduleAssessmentStatus);
-    console.log('comp', this.getCreateSchedulePackageRequestPayload());
     this.createScheduleFromEdgeService(this.getCreateSchedulePackageRequestPayload());
     // this.store.dispatch(
     //   initCreateScheduleAssessmentPackage({
@@ -352,6 +353,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
         })
       );  
     } else {
+      console.log('req', request, this.selectedCSVFile);
       request.data.attributes.candidateDetails = [];
       const fd = new FormData();
       fd.append('batchName', request.data.attributes.batchName);
@@ -363,9 +365,15 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
       fd.append('startDateTime', request.data.attributes.startDateTime);
      this.scheduleService.createSchedulePackageEdgeService(fd).subscribe((response: any)=> {
-       console.log('res', response);
+      console.log('res', response);
+      if (response && response.success) {
+        this.toaster.success('Schedule Created Successfully');
+       } else {
+         this.toaster.warning('Please Try again...', 'Something went wrong');
+       }
      }, (err)=> {
-       console.log('res', err);
+      this.toaster.warning('Please Try again...', 'Something went wrong');
+      console.log('res', err);
      }); 
     }
   }

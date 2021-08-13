@@ -94,7 +94,7 @@
                   (change)="onSelectChange(i, $event)"
                 >
                   <option *ngFor="let testTypeOption of testTypes" [ngValue]="testTypeOption">
-                    {{testTypeOption}}
+                    {{testTypeOption && testTypeOption.includes('Behaviour') ? 'Personality & Behaviour' : testTypeOption}}
                   </option>
                 </select>
                 <div class="auto-complete-custom-input-block__align">
