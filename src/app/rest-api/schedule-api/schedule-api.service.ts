@@ -78,4 +78,9 @@ export class ScheduleAPIService {
   createSchedulePackage(request: ScheduleRequest): Observable<CreateSchedulePackageResponse> {
     return this.httpClient.post<CreateSchedulePackageResponse>(`/schedules`, request);
   }
+
+  createSchedulePackageEdgeService(request: any) {
+    return this.httpClient.postWithMultipartDataHeaders(`/bulkSchedules`, request);
+  }
+
 }

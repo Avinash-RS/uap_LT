@@ -24,9 +24,16 @@ export class InterceptorService implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const clone = request.clone({
-      headers: request.headers.set('Accept', 'application/json'),
-    });
+    let clone;
+    if (request.url.includes('bulkSchedules')) {
+      clone = request.clone({
+        headers: request.headers.set('Content-Type', undefined),
+      });  
+    } else {
+      clone = request.clone({
+        headers: request.headers.set('Accept', 'application/json'),
+      });  
+    }
     if (!request.url.includes('/packages')) {
       this._loading.setLoading(true, request.url);
     }
