@@ -343,22 +343,31 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   }
 
   createScheduleFromEdgeService(request) {
-    request.data.attributes.candidateDetails = [];
-
-     const fd = new FormData();
-     fd.append('batchName', request.data.attributes.batchName);
-     fd.append('candidateFile', this.selectedCSVFile);
-     fd.append('candidateDetails', request.data.attributes.candidateDetails);
-     fd.append('description', request.data.attributes.description);
-     fd.append('duration', request.data.attributes.duration);
-     fd.append('packageTemplateId', request.data.attributes.packageTemplateId);
-     fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
-     fd.append('startDateTime', request.data.attributes.startDateTime);
-    this.scheduleService.createSchedulePackageEdgeService(fd).subscribe((response: any)=> {
-      console.log('res', response);
-    }, (err)=> {
-      console.log('res', err);
-    });
+    if (request.data.attributes.candidateDetails.length > 0) {
+      this.store.dispatch(
+        initCreateScheduleAssessmentPackage({
+          payload: {
+            data: request
+          }
+        })
+      );  
+    } else {
+      request.data.attributes.candidateDetails = [];
+      const fd = new FormData();
+      fd.append('batchName', request.data.attributes.batchName);
+      fd.append('candidateFile', this.selectedCSVFile);
+      fd.append('candidateDetails', request.data.attributes.candidateDetails);
+      fd.append('description', request.data.attributes.description);
+      fd.append('duration', request.data.attributes.duration);
+      fd.append('packageTemplateId', request.data.attributes.packageTemplateId);
+      fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
+      fd.append('startDateTime', request.data.attributes.startDateTime);
+     this.scheduleService.createSchedulePackageEdgeService(fd).subscribe((response: any)=> {
+       console.log('res', response);
+     }, (err)=> {
+       console.log('res', err);
+     }); 
+    }
   }
 
   getCreateSchedulePackageRequestPayload(clearCandidateDetails: boolean = false): ScheduleRequest {
@@ -375,7 +384,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
           candidateDetails: clearCandidateDetails
             ? []
             : this.csvRows.length > 0
-            ? this.getUniqueAndValidEmails(ScheduleModuleEnum.CsvUpload)
+            ? []
             : this.getUniqueAndValidEmails(ScheduleModuleEnum.CustomUpload)
         }
       }
