@@ -139,6 +139,14 @@
               >
                 Upload CSV
               </button></span>
+              <span *ngIf="toogleUploadCsvButton"
+              ><button
+                class="upload-csv-button__align width_150"
+                (click)="downloadTemplate()"
+              >
+                Download Template
+              </button></span>
+
           </p>
           <p>
             <button

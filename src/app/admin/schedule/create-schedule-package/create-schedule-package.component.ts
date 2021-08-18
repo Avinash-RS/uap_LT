@@ -520,4 +520,9 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       });
     });
   }
+
+  downloadTemplate() {
+    const excel = `assets/templates/candidates.csv`;
+    window.open(excel, '_blank');
+  }
 }

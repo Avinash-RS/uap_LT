@@ -63,6 +63,7 @@ export class UapHttpService {
      !url.includes('/packages///') && 
      !url.includes('/taskStatusUpdate') &&
      !url.includes('/testImport') &&
+     !url.includes('/groupmasterImport') &&
      !url.includes('/testDetailsImport') &&
      !url.includes('/wecpToUapTestImport')
      ) {
