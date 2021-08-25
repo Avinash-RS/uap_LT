@@ -132,7 +132,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
             testIds: Number(element.id),
             email,
             type: element.taskType,
-            deliveryId: element.deliveryId ? element.deliveryId : ''
+            deliveryId: element.deliveryId ? element.deliveryId : '',
+            assessmentId: this.assessmentID
           }
           this.taskIds.push(apiData);
         }

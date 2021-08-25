@@ -75,16 +75,6 @@ export class UserAPIService {
       verticalPosition: 'top',
       panelClass: ['snackbar']
     });
-    // Once the snackbar is closed reset snackbarMessage to initial reducer state
-    // snackBarRef.afterDismissed().subscribe(() => {
-    //   this.store.dispatch(
-    //     ScheduleActions.resetCreateScheduleAsessmentPackageSnackBarMessage({
-    //       payload: {
-    //         snackbarMessage: ScheduleModuleEnum.CreatingScheduleAssessmentStatus
-    //       }
-    //     })
-    //   );
-    // });
   }
 
 }

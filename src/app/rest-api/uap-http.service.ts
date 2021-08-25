@@ -52,12 +52,21 @@ export class UapHttpService {
     return this.httpClient.delete<{}>(this.getUrl(url), { headers: this.createHeaders() });
   }
   private getUrl(url: string): string {
+    // if (url.includes('/bulkSchedules')) {
+    //   return `http://localhost:4000${url}`;
+    // }
     if (!url.includes('/login') &&
      !url.includes('/getUserToken') && 
      !url.includes('/schedules') && 
+     !url.includes('/bulkSchedules') && 
      !url.includes('/start') && 
      !url.includes('/packages///') && 
-     !url.includes('/taskStatusUpdate')) {
+     !url.includes('/taskStatusUpdate') &&
+     !url.includes('/testImport') &&
+     !url.includes('/groupmasterImport') &&
+     !url.includes('/testDetailsImport') &&
+     !url.includes('/wecpToUapTestImport')
+     ) {
     return `${this.apiBaseUrl}${url}`;
     } else {
       return `${this.apiNodeUrl}${url}`;

@@ -35,6 +35,9 @@ import { AssessmentsModuleEnum } from '../../assessments/assessments.enums';
 import { CustomSnackBarContentComponent } from 'src/app/shared/custom-snack-bar-content/custom-snack-bar-content.component';
 import { ScheduleModuleEnum } from '../schedule.enums';
 import { selectUserProfileData } from 'src/app/redux/user/user.reducer';
+import { ScheduleAPIService } from 'src/app/rest-api/schedule-api/schedule-api.service';
+import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-schedule-package',
@@ -66,11 +69,15 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   displayMessage: string | undefined;
   requestPackageId: string | undefined;
   canCreateSchedule = false;
+  selectedCSVFile: File;
   constructor(
     private fb: FormBuilder,
     private store: Store<SchedulerReducerState>,
     private adminUtils: AdminUtils,
-    private snackBar: MatSnackBar
+    private scheduleService: ScheduleAPIService,
+    private snackBar: MatSnackBar,
+    private toaster: ToastrService,
+    private router: Router
   ) {
     const today = new Date();
     const timeFormat = today.getHours() > 11 ? 'PM' : 'AM';
@@ -266,6 +273,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
+          this.selectedCSVFile = file;
           this.switchToAddEmailView = false;
           this.showCsvFileInformation = true;
           this.parseCsvFile(file);
@@ -326,13 +334,47 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
 
   createSchedulePackage(): void {
     this.openSnackBar(ScheduleModuleEnum.CreatingScheduleAssessmentStatus);
-    this.store.dispatch(
-      initCreateScheduleAssessmentPackage({
-        payload: {
-          data: this.getCreateSchedulePackageRequestPayload()
-        }
-      })
-    );
+    this.createScheduleFromEdgeService(this.getCreateSchedulePackageRequestPayload());
+    // this.store.dispatch(
+    //   initCreateScheduleAssessmentPackage({
+    //     payload: {
+    //       data: this.getCreateSchedulePackageRequestPayload()
+    //     }
+    //   })
+    // );
+  }
+
+  createScheduleFromEdgeService(request) {
+    if (request.data.attributes.candidateDetails.length > 0) {
+      this.store.dispatch(
+        initCreateScheduleAssessmentPackage({
+          payload: {
+            data: request
+          }
+        })
+      );  
+    } else {
+      request.data.attributes.candidateDetails = [];
+      const fd = new FormData();
+      fd.append('batchName', request.data.attributes.batchName);
+      fd.append('candidateFile', this.selectedCSVFile);
+      fd.append('candidateDetails', request.data.attributes.candidateDetails);
+      fd.append('description', request.data.attributes.description);
+      fd.append('duration', request.data.attributes.duration);
+      fd.append('packageTemplateId', request.data.attributes.packageTemplateId);
+      fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
+      fd.append('startDateTime', request.data.attributes.startDateTime);
+     this.scheduleService.createSchedulePackageEdgeService(fd).subscribe((response: any)=> {
+      if (response && response.success) {
+        this.toaster.success('Schedule Created Successfully');
+        this.router.navigate(['/admin/schedule/list']);
+       } else {
+         this.toaster.warning('Please Try again...', 'Something went wrong');
+       }
+     }, (err)=> {
+      this.toaster.warning('Please Try again...', 'Something went wrong');
+     }); 
+    }
   }
 
   getCreateSchedulePackageRequestPayload(clearCandidateDetails: boolean = false): ScheduleRequest {
@@ -349,7 +391,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
           candidateDetails: clearCandidateDetails
             ? []
             : this.csvRows.length > 0
-            ? this.getUniqueAndValidEmails(ScheduleModuleEnum.CsvUpload)
+            ? []
             : this.getUniqueAndValidEmails(ScheduleModuleEnum.CustomUpload)
         }
       }
@@ -477,5 +519,10 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
         });
       });
     });
+  }
+
+  downloadTemplate() {
+    const excel = `assets/templates/candidates.csv`;
+    window.open(excel, '_blank');
   }
 }

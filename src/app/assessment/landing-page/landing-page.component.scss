@@ -99,7 +99,7 @@
                 border: 1px solid rgba(132, 132, 132, 0.5);
                 border-radius: 4px;
                 width: 330px;
-                margin: 0 auto;
+                margin: 2px auto;
                 margin-left: 2em;
                 margin-bottom: 4px;
                 border-left: 8px solid $uap-checkmark-green;
@@ -164,8 +164,8 @@
                     border-bottom: 2px solid $uap-white;
                     border-right: 2px solid $uap-white;
                     position: absolute;
-                    margin-left: 6px;
-                    top: 6px;
+                    margin-left: 4px;
+                    top: 5px;
                     margin-bottom: 2px;
                     transition: 0.5s linear;
                 }                
