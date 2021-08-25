@@ -20,4 +20,9 @@ export class SyncService {
     return this.httpClient.post(`/wecpToUapTestImport`, data)
   }
 
+  groupMasterImport() {
+    return this.httpClient.get(`/groupmasterImport`);
+  }
+
+
 }

@@ -37,6 +37,7 @@ import { ScheduleModuleEnum } from '../schedule.enums';
 import { selectUserProfileData } from 'src/app/redux/user/user.reducer';
 import { ScheduleAPIService } from 'src/app/rest-api/schedule-api/schedule-api.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-schedule-package',
@@ -75,7 +76,8 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     private adminUtils: AdminUtils,
     private scheduleService: ScheduleAPIService,
     private snackBar: MatSnackBar,
-    private toaster: ToastrService
+    private toaster: ToastrService,
+    private router: Router
   ) {
     const today = new Date();
     const timeFormat = today.getHours() > 11 ? 'PM' : 'AM';
@@ -271,7 +273,6 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       if (droppedFile.fileEntry.isFile) {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
-          console.log('file', file);
           this.selectedCSVFile = file;
           this.switchToAddEmailView = false;
           this.showCsvFileInformation = true;
@@ -353,7 +354,6 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
         })
       );  
     } else {
-      console.log('req', request, this.selectedCSVFile);
       request.data.attributes.candidateDetails = [];
       const fd = new FormData();
       fd.append('batchName', request.data.attributes.batchName);
@@ -365,15 +365,14 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
       fd.append('startDateTime', request.data.attributes.startDateTime);
      this.scheduleService.createSchedulePackageEdgeService(fd).subscribe((response: any)=> {
-      console.log('res', response);
       if (response && response.success) {
         this.toaster.success('Schedule Created Successfully');
+        this.router.navigate(['/admin/schedule/list']);
        } else {
          this.toaster.warning('Please Try again...', 'Something went wrong');
        }
      }, (err)=> {
       this.toaster.warning('Please Try again...', 'Something went wrong');
-      console.log('res', err);
      }); 
     }
   }
@@ -520,5 +519,10 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
         });
       });
     });
+  }
+
+  downloadTemplate() {
+    const excel = `assets/templates/candidates.csv`;
+    window.open(excel, '_blank');
   }
 }
