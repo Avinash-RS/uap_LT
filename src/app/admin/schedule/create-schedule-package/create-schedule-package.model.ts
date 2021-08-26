@@ -12,6 +12,7 @@ export interface CandidateInforamtion {
   emailId: string;
   firstName: string;
   lastName: string;
+  instanceId?: string;
 }
 
 export interface InitScheduleCreateAssessmentModel {
