@@ -58,10 +58,10 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   toogleUploadCsvButton: boolean;
   switchToAddEmailView: boolean;
   showCsvFileInformation: boolean;
-  csvRows: Array<CandidateInforamtion[]> = [];
+  csvRows: Array<any[]> = [];
   csvFileName: string;
   invalidEmailsList: string[] = [];
-  validEmailsList: CandidateInforamtion[] = [];
+  validEmailsList: any[] = [];
   duplicateEmailsListCount = 0;
   files: NgxFileDropEntry[] = [];
   scheduleDateTimeTimeStamp: string;
@@ -244,20 +244,21 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
         allTextLines = csv.split(/\r|\n|\r/);
         const arrayLength = allTextLines.length;
         // Reading and createing table rows
-        const rows: CandidateInforamtion[] = [];
+        const rows: any[] = [];
         for (let i = 1; i < arrayLength - 1; i++) {
           const rowData = allTextLines[i].split(';')[0].split(',');
-          if (rowData.length > 1) {
+          if (rowData.length > 1 && rowData[0]) {
             rows.push({
-              emailId: rowData[0],
-              firstName: rowData[1],
-              lastName: rowData[2]
+              emailId: rowData[0] ? rowData[0].trim() : '',
+              firstName: rowData[1] ? rowData[1].trim() : '',
+              lastName: rowData[2] ? rowData[2].trim() : '',
+              instanceId: rowData[3] ? rowData[3].trim() : ''
             });
           }
         }
         this.csvRows.push(rows);
         // Check for valid emails, update if valid,invalid email exists
-        rows.forEach((candidateInfo: CandidateInforamtion) => {
+        rows.forEach((candidateInfo: any) => {
           this.validateEmailAndUpdateValidInvalidEmailList(candidateInfo);
           this.disableCreateButton = this.validEmailsList.length ? false : true;
         });
@@ -297,7 +298,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     this.switchToAddEmailView = false;
   }
 
-  validateEmailAndUpdateValidInvalidEmailList(candidateInfo: CandidateInforamtion): boolean {
+  validateEmailAndUpdateValidInvalidEmailList(candidateInfo: any): boolean {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (re.test(String(candidateInfo.emailId).toLowerCase())) {
       this.validEmailsList.push(candidateInfo);
@@ -327,13 +328,13 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     this.showCsvFileInformation = false;
   }
 
-  findAndUpdateDuplicateEmailsList(totalRows: CandidateInforamtion[]): void {
-    const uniqueEmails = [...new Set(totalRows.map((item: CandidateInforamtion) => item.emailId))];
+  findAndUpdateDuplicateEmailsList(totalRows: any[]): void {
+    const uniqueEmails = [...new Set(totalRows.map((item: any) => item.emailId))];
     this.duplicateEmailsListCount = totalRows.length - uniqueEmails.length;
   }
 
   createSchedulePackage(): void {
-    this.openSnackBar(ScheduleModuleEnum.CreatingScheduleAssessmentStatus);
+    // this.openSnackBar(ScheduleModuleEnum.CreatingScheduleAssessmentStatus);
     this.createScheduleFromEdgeService(this.getCreateSchedulePackageRequestPayload());
     // this.store.dispatch(
     //   initCreateScheduleAssessmentPackage({
@@ -354,19 +355,37 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
         })
       );  
     } else {
-      request.data.attributes.candidateDetails = [];
+      // request.data.attributes.candidateDetails = [];
+      let candidateDetails: any = this.getUniqueAndValidEmails(ScheduleModuleEnum.CustomUpload);
+      if (this.duplicateEmailsListCount) {
+        return this.toaster.warning('Duplicate Email Ids found in excel', 'Excel Upload Failed');
+      }
+      if (!candidateDetails || !candidateDetails[0] || !candidateDetails[0].instanceId) {
+        return this.toaster.warning('Instance id is missing in the first record of excel', 'Excel Upload Failed');
+      }
+      let invalidUsernames = candidateDetails.filter(data => !data.firstName);
+      if (invalidUsernames && invalidUsernames.length > 0) {
+        return this.toaster.warning(`FirstName column is empty for ${invalidUsernames.length} records`, 'Excel Upload Failed');
+      }
+
+      let candidate: any = [];
       const fd = new FormData();
       fd.append('batchName', request.data.attributes.batchName);
       fd.append('candidateFile', this.selectedCSVFile);
-      fd.append('candidateDetails', request.data.attributes.candidateDetails);
+      fd.append('candidateDetails', candidate);
       fd.append('description', request.data.attributes.description);
       fd.append('duration', request.data.attributes.duration);
       fd.append('packageTemplateId', request.data.attributes.packageTemplateId);
       fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
       fd.append('startDateTime', request.data.attributes.startDateTime);
+      
      this.scheduleService.createSchedulePackageEdgeService(fd).subscribe((response: any)=> {
       if (response && response.success) {
-        this.toaster.success('Schedule Created Successfully');
+        if (candidateDetails.length > 10) {
+          this.toaster.success('Schedule will be created shortly', 'Creating Schedule...');
+        } else {
+          this.toaster.success('Schedule Created Successfully');
+        }
         this.router.navigate(['/admin/schedule/list']);
        } else {
          this.toaster.warning('Please Try again...', 'Something went wrong');
@@ -376,7 +395,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
      }); 
     }
   }
-
+// this.getUniqueAndValidEmails(ScheduleModuleEnum.CsvUpload)
   getCreateSchedulePackageRequestPayload(clearCandidateDetails: boolean = false): ScheduleRequest {
     return {
       data: {
@@ -398,13 +417,13 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     };
   }
 
-  getUniqueAndValidEmails(submitType: string): CandidateInforamtion[] {
+  getUniqueAndValidEmails(submitType: string): any[] {
     if (submitType.toLowerCase() === ScheduleModuleEnum.CsvUpload.toLocaleLowerCase()) {
       // Aggregate Emails from csv file
       return this.getUniqueCandidateInformation();
     } else {
       // Aggregate Emails from custom input fields
-      this.getCandidatesInformation.value.forEach((candidateInfo: CandidateInforamtion) => {
+      this.getCandidatesInformation.value.forEach((candidateInfo: any) => {
         this.validateEmailAndUpdateValidInvalidEmailList(candidateInfo);
       });
       return this.getUniqueCandidateInformation();
@@ -412,9 +431,9 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   }
 
   // filtering based on email
-  getUniqueCandidateInformation(): CandidateInforamtion[] {
-    const uniqueCandidateInformation = new Map<string, CandidateInforamtion>();
-    this.validEmailsList.forEach((candidateInfo: CandidateInforamtion) => {
+  getUniqueCandidateInformation(): any[] {
+    const uniqueCandidateInformation = new Map<string, any>();
+    this.validEmailsList.forEach((candidateInfo: any) => {
       if (!uniqueCandidateInformation.get(candidateInfo.emailId)) {
         uniqueCandidateInformation.set(candidateInfo.emailId, candidateInfo);
       }
