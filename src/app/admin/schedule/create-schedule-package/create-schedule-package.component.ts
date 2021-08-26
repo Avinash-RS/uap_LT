@@ -357,6 +357,9 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     } else {
       // request.data.attributes.candidateDetails = [];
       let candidateDetails: any = this.getUniqueAndValidEmails(ScheduleModuleEnum.CustomUpload);
+      if (this.invalidEmailsList.length > 0) {
+        return this.toaster.warning('Invalid Email Ids found in excel', 'Excel Upload Failed');
+      }
       if (this.duplicateEmailsListCount) {
         return this.toaster.warning('Duplicate Email Ids found in excel', 'Excel Upload Failed');
       }
@@ -395,7 +398,6 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
      }); 
     }
   }
-// this.getUniqueAndValidEmails(ScheduleModuleEnum.CsvUpload)
   getCreateSchedulePackageRequestPayload(clearCandidateDetails: boolean = false): ScheduleRequest {
     return {
       data: {
