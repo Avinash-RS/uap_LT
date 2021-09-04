@@ -167,7 +167,13 @@
               contentClassName="ngx-file-drop"
               [multiple]="false"
             >
-              <ng-template ngx-file-drop-content-tmp> Drag & Drop CSV File </ng-template>
+              <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                <div style="cursor: pointer;" (click)="openFileSelector()">
+                 <div> Click to Browse </div>
+                 <div> Or </div>
+                 <div> Drag & Drop CSV File </div>
+                </div>
+                 </ng-template>
             </ngx-file-drop>
             <span class="exit-upload-mode__align" (click)="exitUploadMode()">Cancel</span>
           </div>
@@ -180,9 +186,9 @@
                 </button></span
               >
             </p>
-            <p class="candidate-info-block">{{csvRows[0].length}} candidates found!</p>
+            <p class="candidate-info-block">{{csvRows && csvRows[0] ? csvRows[0].length : ''}} candidates found!</p>
             <p class="candidate-info-block">
-              <span class="total-email-count">Total Emails Entered : {{csvRows[0].length}}</span> |
+              <span class="total-email-count">Total Emails Entered : {{csvRows && csvRows[0] ? csvRows[0].length : ''}}</span> |
               <span class="total-valid-email-count">Valid Emails : {{validEmailsList.length}}</span>
               |
               <span class="total-invalid-email-count"
