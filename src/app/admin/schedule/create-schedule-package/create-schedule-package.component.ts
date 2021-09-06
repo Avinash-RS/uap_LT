@@ -349,7 +349,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   createScheduleFromEdgeService(request) {
     
     if (request.data.attributes.candidateDetails.length > 0) {
-      request.data.attributes.is_proctor = this.is_proctor.value;
+      request.data.attributes.is_proctor = this.is_proctor.value ? '1' : '0';
         this.store.dispatch(
         initCreateScheduleAssessmentPackage({
           payload: {
@@ -384,7 +384,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       fd.append('packageTemplateId', request.data.attributes.packageTemplateId);
       fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
       fd.append('startDateTime', request.data.attributes.startDateTime);
-      fd.append('is_proctor', this.is_proctor.value);
+      fd.append('is_proctor', this.is_proctor.value ? '1' : '0');
       
      this.scheduleService.createSchedulePackageEdgeService(fd).subscribe((response: any)=> {
       if (response && response.success) {
