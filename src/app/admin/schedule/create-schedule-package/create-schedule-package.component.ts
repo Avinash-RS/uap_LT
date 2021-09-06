@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Store } from '@ngrx/store';
 import * as ScheduleActions from '../redux/schedule.actions';
@@ -70,6 +70,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   requestPackageId: string | undefined;
   canCreateSchedule = false;
   selectedCSVFile: File;
+  is_proctor = new FormControl(false);
   constructor(
     private fb: FormBuilder,
     private store: Store<SchedulerReducerState>,
@@ -346,8 +347,10 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   }
 
   createScheduleFromEdgeService(request) {
+    
     if (request.data.attributes.candidateDetails.length > 0) {
-      this.store.dispatch(
+      request.data.attributes.is_proctor = this.is_proctor.value;
+        this.store.dispatch(
         initCreateScheduleAssessmentPackage({
           payload: {
             data: request
@@ -381,6 +384,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       fd.append('packageTemplateId', request.data.attributes.packageTemplateId);
       fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
       fd.append('startDateTime', request.data.attributes.startDateTime);
+      fd.append('is_proctor', this.is_proctor.value);
       
      this.scheduleService.createSchedulePackageEdgeService(fd).subscribe((response: any)=> {
       if (response && response.success) {
