@@ -24,7 +24,6 @@ export class PrivilegeAutoLogoutGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> | boolean {
     let param = route.queryParams;
-    console.log('para', param);
     const userProfile = JSON.parse(sessionStorage.getItem('user'));
     let email = userProfile && userProfile.attributes && userProfile.attributes.email ? userProfile.attributes.email : null;
     if (param && param.coding) {

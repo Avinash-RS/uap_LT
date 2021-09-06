@@ -75,8 +75,6 @@ export class ScheduledInfiniteScrollListComponent implements OnInit {
   onViewDeatils(index: number): void {
     this.selectedbatchId = this.scheduledTemplates[index].id;
     this.selectedbatchName = this.scheduledTemplates[index].attributes.batchName;
-    console.log('coming', index);
-    
     this.store.dispatch(
       getCandidatesAssessments({
         payload: {
