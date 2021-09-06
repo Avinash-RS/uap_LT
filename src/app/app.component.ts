@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
 var isChromium = window['chrome'];
 var winNav = window.navigator;
 var vendorName = winNav.vendor;
-var isMobile = winNav['userAgentData']['mobile'];
+var isMobile = winNav && winNav['userAgentData'] && winNav['userAgentData']['mobile'] ? winNav['userAgentData']['mobile'] : false;
 var isOpera = typeof window['opr'] !== "undefined";
 var isIEedge = window.navigator.userAgent.indexOf("Edg/") > -1;
 var isIOSChrome = winNav.userAgent.match("CriOS");
