@@ -9,11 +9,11 @@ export class LandingPageUtils {
 
   getDurationMessage(hourAndModel: HourAndMinuteModel): string {
     if (!hourAndModel.hour) {
-      return `${hourAndModel.minute} Minute`;
+      return `${hourAndModel.minute} Minutes`;
     } else if (!hourAndModel.minute) {
-      return `${hourAndModel.hour} Hour`;
+      return `${hourAndModel.hour} ${hourAndModel.hour && hourAndModel.hour > 1 ? 'Hours' : 'Hour'}`;
     } else {
-      return `${hourAndModel.hour} Hour and ${hourAndModel.minute} Minute`;
+      return `${hourAndModel.hour} ${hourAndModel.hour && hourAndModel.hour > 1 ? 'Hours' : 'Hour'} and ${hourAndModel.minute} Minutes`;
     }
   }
 }

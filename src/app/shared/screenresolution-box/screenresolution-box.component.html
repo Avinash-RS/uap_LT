@@ -1,0 +1,32 @@
+<div class="modal" *ngIf="data" id="myModal" role="dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span style="font-size:22px; color: red;">{{'Alert !' }}</span>
+        </div>
+        <div class="modal-body">
+            <p class="f_size_16">{{'Assessment platform works best in Laptop / Desktop.' }}</p>
+            <p class="f_size_16">{{'Recommended resolution is 1366 x 768.' }}</p>
+            <div class="row">
+                <div class="col-8">
+                    <p><b>{{'Recommended browsers' }}</b></p>
+                </div>
+            </div>
+            <div>
+                <p>{{'Platform supports the most recent versions of the following browsers.' }}</p>
+                <ul>
+                    <li>{{'Google Chrome' }} ({{'recommended' }})</li>
+                    <!-- <li>{{'Firefox' }}</li>
+                    <li>{{'Safari' }}</li>
+                    <li>{{'Internet Explorer 11' }}</li> -->
+                    <!-- <li>{{'Microsoft Edge' }}</li> -->
+                </ul>
+                <p>If you're using an older browser , updating your browser can help solve problems.</p>
+            </div>
+
+        </div>
+        <div *ngIf="false" class="modal-footer">
+            <!-- <button class="submit" *ngIf="data && data['type'] == 'browser'" mat-raised-button data-dismiss="modal" (click)="logout()">Please Open Chrome</button> -->
+            <button class="submit" *ngIf="data && data['type'] != 'browser'" mat-raised-button data-dismiss="modal" (click)="cancel()">Close</button>
+        </div>
+    </div>
+</div>

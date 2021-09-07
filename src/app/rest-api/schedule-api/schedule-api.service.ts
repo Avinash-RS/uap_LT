@@ -62,7 +62,7 @@ export class ScheduleAPIService {
   ): Observable<CandidatesAssessmentResponseModel> {
     let endpoint = `/assessments?batchId=${request.batchId}`;
     if (request.pageMetaData) {
-      endpoint = `${endpoint}&limit=${request.pageMetaData.limit}&offset=${request.pageMetaData.offset}`;
+      endpoint = `${endpoint}&limit=${request.pageMetaData.limit}&offset=${request.pageMetaData.nextOffset}`;
     }
     if (request.status) {
       endpoint = `${endpoint}&inviteStatus=${request.status}`;
