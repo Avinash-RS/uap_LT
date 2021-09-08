@@ -96,7 +96,6 @@ export class ResultsSyncComponent implements OnInit {
   }
 
   dbChange(e) {
-    console.log('e', e);
     this.dbForm.patchValue({
       'datasource': e.value.datasource,
       'datatarget': e.value.datatarget,

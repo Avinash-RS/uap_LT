@@ -11,9 +11,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { MaterialModule } from './material/material.module';
 import { PrivilegeAutoLogoutGuard } from './privilege-auto-logout.guard';
 import { InterceptorService } from './interceptor.service';
+import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ScreenresolutionBoxComponent],
   imports: [
     APP_IMPORTS,
     AppRoutingModule,
