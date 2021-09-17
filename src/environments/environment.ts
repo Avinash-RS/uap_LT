@@ -10,6 +10,7 @@ export const environment = {
   qa: false,
   dev: false,
   local: true,
+  ADFBASEURL: 'https://uap-uat.azurewebsites.net',
   MICROCERTREDIRECT: 'https://certification.lntiggnite.com/myAssessment',
   API_URL: 'https://uapdev-api.lntiggnite.com',
   NODE_URL: 'https://edgeservice.lntiggnite.com'

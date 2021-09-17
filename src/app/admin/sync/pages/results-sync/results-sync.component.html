@@ -32,7 +32,7 @@
                     </mat-form-field>
                 </div>
 
-                <div class="fields-wrapper">
+                <div *ngIf="datatarget && datatarget.value" class="fields-wrapper">
                     <label class="label">Data Target</label>
                     <mat-form-field class="label input-wt w-100" appearance="outline">
                         <mat-select formControlName="datatarget" disableOptionCentering placeholder="Data Target">

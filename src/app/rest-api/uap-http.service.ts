@@ -8,11 +8,16 @@ import { map } from 'rxjs/operators';
 export class UapHttpService {
   private apiBaseUrl = environment.API_URL;
   private apiNodeUrl = environment.NODE_URL;
+  private adfBaseUrl = environment.ADFBASEURL;
 
   constructor(public httpClient: HttpClient) {}
 
   get<T>(url: string): Observable<T> {
     return this.httpClient.get<T>(this.getUrl(url), { headers: this.createHeaders() });
+  }
+
+  getADF<T>(url: string): Observable<T> {
+    return this.httpClient.get<T>(this.getADFUrl(url), { headers: this.createHeaders() });
   }
 
   getWithOctetStreamHeaders(url: string): Observable<Blob> {
@@ -73,6 +78,9 @@ export class UapHttpService {
     }
   }
 
+ private getADFUrl(url: string): string {
+  return `${this.adfBaseUrl}${url}`;
+  }
   private getToken() {
     return sessionStorage.getItem('token') ? sessionStorage.getItem('token') : ''
   }
