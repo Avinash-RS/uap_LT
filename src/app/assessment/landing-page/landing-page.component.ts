@@ -123,7 +123,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   getTaskIds() {
     this.taskIds = [];
     const userProfile = JSON.parse(sessionStorage.getItem('user'));
-    let email = userProfile.attributes.email;
+    let email = userProfile && userProfile.attributes && userProfile.attributes.email ? userProfile.attributes.email : '';
     this.assessmentTasksList.forEach(element => {
       if (element.taskName && (element.status == 'InProgress' || element.status == 'YetToStart') && (element.taskType == 'Coding' || element.taskType == 'English')) {
         let custom = moment(element.endTime).diff(moment.now(), 'minutes');

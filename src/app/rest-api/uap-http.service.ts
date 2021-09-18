@@ -20,6 +20,10 @@ export class UapHttpService {
     return this.httpClient.get<T>(this.getADFUrl(url), { headers: this.createHeaders() });
   }
 
+  postNode<T>(url: string, data: any): Observable<T> {
+    return this.httpClient.post<T>(this.getNodeURL(url), data, { headers: this.createHeaders() });
+  }
+
   getWithOctetStreamHeaders(url: string): Observable<Blob> {
     return this.httpClient
       .get(this.getUrl(url), { headers: this.createOctetStreamHeaders(), responseType: 'text' })
@@ -78,6 +82,10 @@ export class UapHttpService {
     }
   }
 
+  private getNodeURL(url: string): string {
+  return `${this.apiNodeUrl}${url}`;
+  }
+  
  private getADFUrl(url: string): string {
   return `${this.adfBaseUrl}${url}`;
   }

@@ -11,6 +11,7 @@ import { UserProfileResponseModel } from './models/user-profile.model';
 import { CustomSnackBarContentComponent } from 'src/app/shared/custom-snack-bar-content/custom-snack-bar-content.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { logoutAction } from 'src/app/login/redux/login.actions';
+import { selectUserProfileData } from 'src/app/redux/user/user.reducer';
 
 @Injectable()
 export class UserAPIService {
@@ -30,6 +31,10 @@ export class UserAPIService {
     return this.httpClient.post(`/getUserToken`, data)
   }
 
+  exitOtherSystem(data: any) {
+    return this.httpClient.postNode(`/exitOtherSystem`, data)
+  }
+
 
   isValidUser(data: any) {
     if (data && data.data && data.token) {
@@ -38,8 +43,16 @@ export class UserAPIService {
       sessionStorage.setItem('refresh_token', data.token.refresh_token);
       return true;
     } else {
-      this.openSnackBar('Invalid Login');
+      this.mulitpleUserLoginToast(data);
       return false;
+    }
+  }
+
+  mulitpleUserLoginToast(data) {
+    if (data && data.exist_login) {
+      this.toastr.warning(data && data.message ? data.message : 'You are already logged in...');
+    } else {
+      this.toastr.warning(data && data.message ? data.message : 'Invalid Login Credentials');
     }
   }
 
@@ -54,6 +67,28 @@ export class UserAPIService {
   }
 
   logout() {
+    let permission = this.userredirectTo();
+    if (permission && permission == 'AST') {
+      let email = sessionStorage.getItem('user') ? (JSON.parse(sessionStorage.getItem('user')) && JSON.parse(sessionStorage.getItem('user')).attributes && JSON.parse(sessionStorage.getItem('user')).attributes.email ? JSON.parse(sessionStorage.getItem('user')).attributes.email : '') : '';
+      email ? this.logoutForTestTaker(email) : this.logoutWhenTokenNotPresent();
+    } else {
+      this.logoutWhenTokenNotPresent();
+    }
+  }
+
+  logoutForTestTaker(email) {
+    this.exitOtherSystem({email}).subscribe((response: any)=> {
+      if (response && response.success) {
+        this.logoutWhenTokenNotPresent();
+      } else {
+        this.toastr.warning(response && response.message ? response.message : 'Try again later');
+      }
+    }, (err)=> {
+
+    });
+  }
+
+  logoutWhenTokenNotPresent() {
     let getId = sessionStorage.getItem('assessmentId') || sessionStorage.getItem('routeTo');
     sessionStorage.clear();
     if (getId) {
@@ -62,6 +97,15 @@ export class UserAPIService {
       this.route.navigate(['/login']);
     }
     this.store.dispatch(logoutAction());
+  }
+
+  
+  userredirectTo(): any {
+    let permission;
+    this.store.select(selectUserProfileData).subscribe((data: any)=> {
+      permission = data.attributes.organisations[0].roles[0].roleCode;
+    });
+    return permission;
   }
 
   openSnackBar(message: string | undefined): void {
