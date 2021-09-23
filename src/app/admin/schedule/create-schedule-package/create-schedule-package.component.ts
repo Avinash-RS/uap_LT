@@ -347,7 +347,6 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   }
 
   createScheduleFromEdgeService(request) {
-    
     if (request.data.attributes.candidateDetails.length > 0) {
       request.data.attributes.is_proctor = this.is_proctor.value ? '1' : '0';
         this.store.dispatch(
@@ -379,14 +378,17 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       fd.append('batchName', request.data.attributes.batchName);
       fd.append('candidateFile', this.selectedCSVFile);
       fd.append('candidateDetails', candidate);
+      fd.append('testDetails',request.data.attributes.testDetails);
       fd.append('description', request.data.attributes.description);
       fd.append('duration', request.data.attributes.duration);
       fd.append('packageTemplateId', request.data.attributes.packageTemplateId);
       fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
       fd.append('startDateTime', request.data.attributes.startDateTime);
       fd.append('is_proctor', this.is_proctor.value ? '1' : '0');
-      
-     this.scheduleService.createSchedulePackageEdgeService(fd).subscribe((response: any)=> {
+
+
+     this.scheduleService.createSchedulePackageEdgeService(fd,request.data.attributes.testDetails).subscribe((response: any)=> {
+
       if (response && response.success) {
         if (candidateDetails.length > 10) {
           this.toaster.success('Schedule will be created shortly', 'Creating Schedule...');
@@ -410,6 +412,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
           batchName: this.schedulePackageForm.get('batchName')?.value,
           description: this.schedulePackageForm.get('scheduleDescription')?.value,
           packageTemplateId: this.packageDetails.id,
+          testDetails: this.packageDetails.attributes.tasks,
           startDateTime: this.scheduleDateTimeTimeStamp,
           duration: this.packageDetails.attributes.duration,
           scheduledAtTestLevel: false,

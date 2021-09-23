@@ -36,6 +36,7 @@ export interface ScheduleRequestDataAttributes {
    * List of Canidates to be invited
    */
   candidateDetails: Array<object>;
+  testDetails: Array<object>;
 }
 
 export interface ScheduleRequestData {

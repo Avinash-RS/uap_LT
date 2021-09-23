@@ -79,8 +79,8 @@ export class ScheduleAPIService {
     return this.httpClient.post<CreateSchedulePackageResponse>(`/schedules`, request);
   }
 
-  createSchedulePackageEdgeService(request: any) {
-    return this.httpClient.postWithMultipartDataHeaders(`/bulkSchedules`, request);
+  createSchedulePackageEdgeService(request: any,testdetails:any) {
+    return this.httpClient.postWithMultipartDataHeaders(`/bulkSchedules?`+JSON.stringify({testDetails:testdetails}), request);
   }
 
 }
