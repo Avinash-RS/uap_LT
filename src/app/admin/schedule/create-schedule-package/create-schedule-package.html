@@ -1,7 +1,7 @@
 <div class="header-block">
-  <span class="header-block__title-font-size">Schedule/Create</span>
-  <div class="header-block__buttons-align">
-    <span>
+    <span class="header-block__title-font-size">Schedule/Create</span>
+    <div class="header-block__buttons-align">
+        <span>
       <button
         class="header-block__button"
         (click)="createSchedulePackage()"
@@ -21,6 +21,18 @@
   <div class="create-form__overflow">
     <div class="schedule-assessment-block">
       <div class="schedule-assessment-block__align">
+
+        <span class="auto-complete-block__align">
+          <mat-form-field appearance="fill">
+            <mat-label>Organization</mat-label>
+            <mat-select  required formControlName="orgId">
+              <mat-option *ngFor="let org of listOfOrg" [value]="org?.id" > {{org?.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div class="mat-input-field__error" *ngIf="validateFormField('orgId')">
+            Required
+          </div>
+        </span>
         <label class="custom-label__font">
           Schedule Name
           <input
@@ -44,7 +56,7 @@
         </label>
         <label class="custom-label__font"> Schedule On </label>
         <div class="date-time-block__align">
-          <span class="date-block">
+            <span class="date-block">
             <mat-form-field appearance="fill" class="date-block__input">
               <mat-label>Select Date</mat-label>
               <input
@@ -57,7 +69,7 @@
               <mat-datepicker #dp3 disabled="false"></mat-datepicker>
             </mat-form-field>
           </span>
-          <span class="time-block">
+            <span class="time-block">
             <div class="ngx-timepicker-field-example">
               <ngx-timepicker-field
                 [format]="12"
@@ -68,8 +80,36 @@
             </div>
           </span>
         </div>
+
+        <label class="custom-label__font"> Schedule End </label>
+        <div class="date-time-block__align">
+            <span class="date-block">
+            <mat-form-field appearance="fill" class="date-block__input">
+              <mat-label>Select Date</mat-label>
+              <input
+                matInput
+                [matDatepicker]="dp4"
+                (dateChange)="onEndDateChanged($event)"
+                formControlName="scheduleEndDate"
+              />
+              <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+              <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+            </mat-form-field>
+            
+          </span>
+            <span class="time-block">
+            <div class="ngx-timepicker-field-example">
+              <ngx-timepicker-field
+                [format]="12"
+                formControlName="scheduleEndTime"
+                [defaultTime]="'12:01 pm'"
+                (timeChanged)="onEndTimeChanged($event)"
+              ></ngx-timepicker-field>
+            </div>
+          </span>
+        </div>
         <div>
-          <span class="auto-complete-block__align">
+            <span class="auto-complete-block__align">
             <mat-form-field class="example-full-width">
               <mat-label>Assessment Name</mat-label>
               <input
@@ -100,92 +140,73 @@
               Required
             </div>
           </span>
-          <span class="schedule-block__align">
+            <span class="schedule-block__align">
             <mat-checkbox class="example-margin" [disabled]="false"
               >Schedule at Test Level</mat-checkbox>
           </span>
-          <span *ngIf=" packageDetails.attributes.tasks.length > 0" style="margin-left: 2em;" class="schedule-block__align">
+            <span *ngIf=" packageDetails.attributes.tasks.length > 0" style="margin-left: 2em;" class="schedule-block__align">
             <mat-checkbox [formControl]="is_proctor" class="example-margin"
               >Is Proctor</mat-checkbox>
           </span>
         </div>
         <div class="package-details-block" *ngIf=" packageDetails.attributes.tasks.length > 0">
-          <table class="schedule-table">
-            <tr class="schedule-table-tr">
-              <th class="schedule-table-th">Test Name</th>
-              <th class="schedule-table-type">Type</th>
-              <th class="schedule-table-duration">Duration</th>
-              <th>Schedule On</th>
-            </tr>
-            <ng-container *ngFor="let item of packageDetails.attributes.tasks;">
-              <tr class="schedule-table-body">
-                <th class="schedule-table-data">{{item.name}}</th>
-                <th class="schedule-table-data">{{item.type}}</th>
-                <th class="schedule-table-data">{{item.duration}}</th>
-                <th class="schedule-table-data">
-                  <input
-                    type="text"
-                    disabled
-                    value="{{scheduleDateTime}}"
-                    class="custom-date-time-input__border"
-                  />
-                </th>
-              </tr>
-            </ng-container>
-          </table>
-          <p class="add-candidate-heading__align">
-            Candidates
-            <span *ngIf="toogleUploadCsvButton"
-              ><button
+            <table class="schedule-table">
+                <tr class="schedule-table-tr">
+                    <th class="schedule-table-th">Test Name</th>
+                    <th class="schedule-table-type">Type</th>
+                    <th class="schedule-table-duration">Duration</th>
+                    <th>Schedule On</th>
+                </tr>
+                <ng-container *ngFor="let item of packageDetails.attributes.tasks;">
+                    <tr class="schedule-table-body">
+                        <th class="schedule-table-data">{{item.name}}</th>
+                        <th class="schedule-table-data">{{item.type}}</th>
+                        <th class="schedule-table-data">{{item.duration}}</th>
+                        <th class="schedule-table-data">
+                            <input type="text" disabled value="{{scheduleDateTime}}" class="custom-date-time-input__border" />
+                        </th>
+                    </tr>
+                </ng-container>
+            </table>
+            <p class="add-candidate-heading__align">
+                Candidates
+                <span *ngIf="toogleUploadCsvButton"><button
                 class="upload-csv-button__align"
                 (click)="onCsvButtonClick()"
                 [disabled]="schedulePackageForm.invalid"
               >
                 Upload CSV
               </button></span>
-              <span
-              ><button
+                <span><button
                 class="upload-csv-button__align width_150"
                 (click)="downloadTemplate()"
               >
                 Download Template
               </button></span>
 
-          </p>
-          <p>
-            <button
-              class="package-details-block__add-candidate-button-align"
-              (click)="addNewCandidateInformation()"
-              *ngIf="toogleAddCandidateInfoButton"
-              [disabled]="schedulePackageForm.invalid"
-            >
+            </p>
+            <p>
+                <button class="package-details-block__add-candidate-button-align" (click)="addNewCandidateInformation()" *ngIf="toogleAddCandidateInfoButton" [disabled]="schedulePackageForm.invalid">
               Add Candidate
             </button>
-          </p>
-          <!-- directory=Boolean("false") [showBrowseBtn]="true" multiple="false" -->
-          <div class="drag-drop-zone__align" *ngIf="switchToAddEmailView">
-            <ngx-file-drop
-              dropZoneLabel="Drop files here"
-              (onFileDrop)="fileDropped($event)"
-              accept=".csv"
-              contentClassName="ngx-file-drop"
-              [multiple]="false"
-            >
-              <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                <div style="cursor: pointer;" (click)="openFileSelector()">
-                 <div> Click to Browse </div>
-                 <div> Or </div>
-                 <div> Drag & Drop CSV File </div>
-                </div>
-                 </ng-template>
-            </ngx-file-drop>
-            <span class="exit-upload-mode__align" (click)="exitUploadMode()">Cancel</span>
-          </div>
-          <div *ngIf="showCsvFileInformation">
-            <p class="uploaded-heading">
-              Uploaded {{csvFileName}}
-              <span
-                ><button class="delete-file-button__style" (click)="deleteCsvFile()">
+            </p>
+            <!-- directory=Boolean("false") [showBrowseBtn]="true" multiple="false" -->
+            <div class="drag-drop-zone__align" *ngIf="switchToAddEmailView">
+                <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="fileDropped($event)" accept=".csv" contentClassName="ngx-file-drop" [multiple]="false">
+                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                        <div style="cursor: pointer;" (click)="openFileSelector()">
+                            <div> Click to Browse </div>
+                            <div> Or </div>
+                            <div> Drag & Drop CSV File </div>
+                        </div>
+                    </ng-template>
+                </ngx-file-drop>
+                <span class="exit-upload-mode__align" (click)="exitUploadMode()">Cancel</span>
+            </div>
+            <div *ngIf="showCsvFileInformation">
+                <p class="uploaded-heading">
+                    Uploaded {{csvFileName}}
+                    <span><button class="delete-file-button__style" (click)="deleteCsvFile()">
                   Delete
                 </button></span
               >
@@ -193,10 +214,8 @@
             <p class="candidate-info-block">{{csvRows && csvRows[0] ? csvRows[0].length : ''}} candidates found!</p>
             <p class="candidate-info-block">
               <span class="total-email-count">Total Emails Entered : {{csvRows && csvRows[0] ? csvRows[0].length : ''}}</span> |
-              <span class="total-valid-email-count">Valid Emails : {{validEmailsList.length}}</span>
-              |
-              <span class="total-invalid-email-count"
-                >Invalid Emails : {{invalidEmailsList.length}}</span
+                    <span class="total-valid-email-count">Valid Emails : {{validEmailsList.length}}</span> |
+                    <span class="total-invalid-email-count">Invalid Emails : {{invalidEmailsList.length}}</span
               >
               |
               <span class="total-duplicate-email-count"

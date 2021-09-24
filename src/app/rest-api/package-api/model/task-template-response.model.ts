@@ -33,6 +33,7 @@ export interface TaskAttributesModel {
   subType: string;
   duration: number;
   level: string;
+
 }
 
 export interface MetaInformationModel {

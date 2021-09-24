@@ -11,9 +11,11 @@ import {
   CreateSchedulePackageResponse,
   ScheduleRequest
 } from './models/schedule-assessment-request.model';
+import { environment } from 'src/environments/environment.dev';
 
 @Injectable()
 export class ScheduleAPIService {
+  private apiNodeUrl = environment.NODE_URL;
   constructor(private httpClient: UapHttpService) {}
   getScheduledAssessment(
     request: LoadMoreScheduledAssessmentsModel
@@ -81,6 +83,10 @@ export class ScheduleAPIService {
 
   createSchedulePackageEdgeService(request: any,testdetails:any) {
     return this.httpClient.postWithMultipartDataHeaders(`/bulkSchedules?`+JSON.stringify({testDetails:testdetails}), request);
+  }
+
+  getWEPCOrganization(request: any){
+    return this.httpClient.post(`/getWecpOrgDetails`, request);
   }
 
 }
