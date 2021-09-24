@@ -14,6 +14,7 @@ import { CreateSchedulePackageResponse } from 'src/app/rest-api/schedule-api/mod
 import { clearPackageDetailsState } from '../../assessments/redux/assessments.actions';
 import { CandidateReportResponseModel } from 'src/app/rest-api/schedule-api/models/candidate-report-response.model';
 import { AssessmentAPIService } from 'src/app/rest-api/assessments-api/assessments-api.service';
+import { of } from 'rxjs';
 
 @Injectable()
 export class ScheduleEffects {
@@ -107,6 +108,32 @@ export class ScheduleEffects {
       )
     )
   );
+
+
+  // createScheduleAssessmentPackage$ = createEffect(() => {
+  //   return this.action$.pipe(
+  //     ofType(ScheduleActions.initCreateScheduleAssessmentPackage),
+  //     mergeMap((Action) => {        
+  //       // this._loading.setLoading(true, 'request.url');
+  //       return this.userAPIService.login(Action.payload).pipe(
+  //         map((data: any) => {
+  //           if (this.userAPIService.isValidUser(data)) {
+  //             return LoginActions.loginSuccess({ payload: data });
+  //           }
+  //           // this._loading.setLoading(false, 'request.url');
+  //           return LoginActions.loginFailure({ payload: data });
+  //         }),
+  //         catchError((error: any) => {
+  //           // this._loading.setLoading(false, 'request.url');
+  //           return of(ScheduleActions.createScheduleAssessmentPackageFailure({ payload: error }));
+  //         })
+  //       )
+  //     }
+  //     )
+  //   )
+  // }
+  // );
+
   createScheduleAssessmentPackage$ = createEffect(() =>
     this.action$.pipe(
       ofType(ScheduleActions.initCreateScheduleAssessmentPackage),

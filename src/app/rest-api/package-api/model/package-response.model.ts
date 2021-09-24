@@ -39,6 +39,7 @@ export interface TaskModel {
   type: string;
   subType: string;
   duration: number;
+
 }
 export interface PackageTemplateErrorResponse {
   errors: PackageTemplateErrors[];

@@ -52,6 +52,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   filteredOptions: Observable<AssesmentPackagesModel[]> | undefined;
   packageDetails: PackageDetailsData;
   scheduleDateTime: string;
+  scheduleEndDateTime: string;
   disableCreateButton = true;
   // Candidates Information
   toogleAddCandidateInfoButton: boolean;
@@ -65,12 +66,14 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   duplicateEmailsListCount = 0;
   files: NgxFileDropEntry[] = [];
   scheduleDateTimeTimeStamp: string;
+  scheduleEndDateTimeTimeStamp: string;
   // Snackbar
   displayMessage: string | undefined;
   requestPackageId: string | undefined;
   canCreateSchedule = false;
   selectedCSVFile: File;
   is_proctor = new FormControl(false);
+  listOfOrg: any;
   constructor(
     private fb: FormBuilder,
     private store: Store<SchedulerReducerState>,
@@ -88,22 +91,30 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       scheduleDescription: ['', Validators.required],
       scheduleDate: [new Date(), Validators.required],
       scheduleTime: [currentTime, Validators.required],
+      // schedul end Date and time
+      scheduleEndDate:[new Date(), Validators.required],
+      scheduleEndTime: [currentTime, Validators.required], 
       assessmentName: ['', Validators.required],
+      orgId:['', Validators.required],
       candidatesInformation: this.fb.array([])
     });
-
+    this.getWEPCOrganizationList();
     this.schedulePackageForm.valueChanges.subscribe(
       (getSchedulePackageForm: CreateSchedulePackageFormModel) => {
         const selectedDate: Date = getSchedulePackageForm.scheduleDate;
-        this.scheduleDateTime =
-          selectedDate.toString().substring(4, 15).replace(/\s/g, '-') +
-          '  ' +
-          this.schedulePackageForm.get('scheduleTime')?.value;
-        const concatedDateTime = this.getConcatedDateTime(
-          selectedDate,
-          getSchedulePackageForm.scheduleTime
-        );
+        const selectedEndDate: Date = getSchedulePackageForm.scheduleEndDate;
+
+        this.scheduleDateTime = selectedDate.toString().substring(4, 15).replace(/\s/g, '-') +'  ' +
+        this.schedulePackageForm.get('scheduleTime')?.value;
+
+        this.scheduleEndDateTime = selectedEndDate.toString().substring(4, 15).replace(/\s/g, '-') +'  ' +
+        this.schedulePackageForm.get('scheduleEndTime')?.value;
+
+        const concatedDateTime = this.getConcatedDateTime(selectedDate,getSchedulePackageForm.scheduleTime);
         this.scheduleDateTimeTimeStamp = new Date(concatedDateTime).toISOString();
+
+        const concatedEndDateTime = this.getConcatedDateTime(selectedEndDate,getSchedulePackageForm.scheduleTime);
+        this.scheduleEndDateTimeTimeStamp = new Date(concatedEndDateTime).toISOString();
       }
     );
   }
@@ -175,6 +186,15 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   onTimeChanged(time: string): void {
     this.schedulePackageForm.patchValue({ scheduleTime: time });
   }
+
+  onEndDateChanged(event: MatDatepickerInputEvent<Date>): void {
+    this.schedulePackageForm.patchValue({ scheduleEndDate: event.value });
+  }
+
+  onEndTimeChanged(time: string): void {
+    this.schedulePackageForm.patchValue({ scheduleEndTime: time });
+  }
+
 
   getOptionSelectedData(selectedPackage: AssesmentPackagesModel): void {
     this.store.dispatch(
@@ -380,10 +400,12 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       fd.append('candidateDetails', candidate);
       fd.append('testDetails',request.data.attributes.testDetails);
       fd.append('description', request.data.attributes.description);
+      fd.append('orgId', request.data.attributes.id);
       fd.append('duration', request.data.attributes.duration);
       fd.append('packageTemplateId', request.data.attributes.packageTemplateId);
       fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
       fd.append('startDateTime', request.data.attributes.startDateTime);
+      fd.append('endDateTime', request.data.attributes.endDateTime);
       fd.append('is_proctor', this.is_proctor.value ? '1' : '0');
 
 
@@ -414,7 +436,9 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
           packageTemplateId: this.packageDetails.id,
           testDetails: this.packageDetails.attributes.tasks,
           startDateTime: this.scheduleDateTimeTimeStamp,
+          endDateTime: this.scheduleEndDateTimeTimeStamp,
           duration: this.packageDetails.attributes.duration,
+          orgId: this.schedulePackageForm.get('orgId')?.value,
           scheduledAtTestLevel: false,
           candidateDetails: clearCandidateDetails
             ? []
@@ -552,5 +576,15 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   downloadTemplate() {
     const excel = `assets/templates/candidates.csv`;
     window.open(excel, '_blank');
+  }
+
+  getWEPCOrganizationList(){
+    this.scheduleService.getWEPCOrganization({}).subscribe((response: any)=> {
+      if(response.success){
+         this.listOfOrg = response.data;
+      }else {
+        this.toaster.warning('Please Try again...', 'Something went wrong');
+      }
+    })
   }
 }

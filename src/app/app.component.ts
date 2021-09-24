@@ -7,9 +7,10 @@ import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { UserAPIService } from 'src/app/rest-api/user-api/user-api.service';
 import { Component, ViewEncapsulation, OnInit, HostListener } from '@angular/core';
-import { delay } from 'rxjs/operators';
+import { delay, switchMap } from 'rxjs/operators';
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
 import { MatDialog } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
 
 // TODO: configure sass in main.scss
 @Component({
@@ -23,11 +24,13 @@ export class AppComponent implements OnInit {
   loading: boolean = true;
   isPopUpOpened = false;
   isIE = false;
+  userIP = '';
 
   constructor(private _loading: LoadingService, private userService: UserAPIService, private matDialog: MatDialog, private route: Router, private store: Store<AppState>) {
   }
 
   ngOnInit() {
+   
     if (sessionStorage.getItem('token')) {
       this.store.dispatch(autoLogin());
       const reference = this.userService.getReferenceFromLocalStorage();
@@ -40,6 +43,9 @@ export class AppComponent implements OnInit {
     this.listenToLoading();
     this.checkIE();
   }
+
+
+   
 
   public getBrowserName() {
     const agent = window.navigator.userAgent.toLowerCase()

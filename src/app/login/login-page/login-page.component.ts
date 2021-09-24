@@ -6,7 +6,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { assessmentIDAction, loginAttempt, logoutAction } from '../redux/login.actions';
 import { ActivatedRoute } from '@angular/router';
-
+import browser from 'browser-detect';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'uap-login-page',
   templateUrl: './login-page.component.html',
@@ -14,22 +15,25 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LoginPageComponent implements OnInit {
 
-
+  userIP = '';
   loginForm: FormGroup;
   hide = true;
   show = false;
   disableButton: boolean;
   errorMessage: any;
   assessmentId: any;
+  browserDetails: any;
   constructor(
     public fb: FormBuilder, 
     public toastr: ToastrService,
     private api: UserAPIService,
     private router: ActivatedRoute,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private httpClient: HttpClient,
   ) { }
 
   ngOnInit(): void {
+    this.loadIp();
     this.getAssessmentParam();
     this.formInitialize();
     this.getErrorMessage();
@@ -65,9 +69,18 @@ export class LoginPageComponent implements OnInit {
   login() {
     sessionStorage.removeItem('token');
     if (this.loginForm.valid) {
+      let ipInfo = {
+        ip :  this.userIP,
+        name: this.browserDetails.name,
+        os: this.browserDetails.os,
+        version: this.browserDetails.version,
+        versionNumber: this.browserDetails.versionNumber
+      }
+
       let apiData = {
         email: this.loginForm.value.username,
-        pass: this.loginForm.value.password
+        pass: this.loginForm.value.password,
+        browserinfo: ipInfo,
       }
       this.store.dispatch(loginAttempt({payload: apiData}));
     } else {
@@ -81,5 +94,18 @@ export class LoginPageComponent implements OnInit {
   get password() {
     return this.loginForm.get('password');
   }
+
+  loadIp() {
+    this.httpClient.get('https://jsonip.com').subscribe(
+      (value:any) => {
+        this.browserDetails = browser();
+        this.userIP = value.ip;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
 
 }

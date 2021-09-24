@@ -5,7 +5,10 @@ export interface CreateSchedulePackageFormModel {
   scheduleDescription: string;
   scheduleDate: Date;
   scheduleTime: string;
+  scheduleEndDate: Date;
+  scheduleEndTime: string;
   assessmentName: string;
+  orgId:string
 }
 
 export interface CandidateInforamtion {

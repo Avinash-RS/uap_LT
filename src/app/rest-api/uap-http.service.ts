@@ -74,7 +74,8 @@ export class UapHttpService {
      !url.includes('/testImport') &&
      !url.includes('/groupmasterImport') &&
      !url.includes('/testDetailsImport') &&
-     !url.includes('/wecpToUapTestImport')
+     !url.includes('/wecpToUapTestImport') &&
+     !url.includes('/getWecpOrgDetails')
      ) {
     return `${this.apiBaseUrl}${url}`;
     } else {
