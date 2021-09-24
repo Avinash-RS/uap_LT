@@ -61,6 +61,7 @@
               <mat-label>Select Date</mat-label>
               <input
                 matInput
+                [max]="maxDate"
                 [matDatepicker]="dp3"
                 (dateChange)="onDateChanged($event)"
                 formControlName="scheduleDate"
@@ -89,6 +90,7 @@
               <input
                 matInput
                 [matDatepicker]="dp4"
+                 [min]="minDate"
                 (dateChange)="onEndDateChanged($event)"
                 formControlName="scheduleEndDate"
               />
