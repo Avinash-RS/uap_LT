@@ -74,6 +74,10 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   selectedCSVFile: File;
   is_proctor = new FormControl(false);
   listOfOrg: any;
+  minDate: Date;
+  maxDate: Date;
+  startTime: string;
+  endTime: string;
   constructor(
     private fb: FormBuilder,
     private store: Store<SchedulerReducerState>,
@@ -180,19 +184,39 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   }
 
   onDateChanged(event: MatDatepickerInputEvent<Date>): void {
+    this.minDate = event.value;
     this.schedulePackageForm.patchValue({ scheduleDate: event.value });
   }
 
   onTimeChanged(time: string): void {
-    this.schedulePackageForm.patchValue({ scheduleTime: time });
+    this.startTime = time;
+    if(this.endTime < this.startTime){
+      this.disableCreateButton = false;
+      this.schedulePackageForm.patchValue({ scheduleTime: time });
+ 
+    }else {
+      this.disableCreateButton = true;
+      this.toaster.warning('Start time should be less than end time')
+    }
+   
   }
 
   onEndDateChanged(event: MatDatepickerInputEvent<Date>): void {
+    this.maxDate = event.value;
     this.schedulePackageForm.patchValue({ scheduleEndDate: event.value });
   }
 
   onEndTimeChanged(time: string): void {
-    this.schedulePackageForm.patchValue({ scheduleEndTime: time });
+    this.endTime = time;
+    if(this.endTime > this.startTime){
+      this.disableCreateButton = false;
+      this.schedulePackageForm.patchValue({ scheduleEndTime: time });
+   
+    }else {
+      this.disableCreateButton = true;
+      this.toaster.warning('End time should be greater than start time')
+    }
+    
   }
 
 
