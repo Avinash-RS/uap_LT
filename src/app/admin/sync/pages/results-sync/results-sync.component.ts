@@ -69,6 +69,30 @@ export class ResultsSyncComponent implements OnInit {
       label: 'Test Sync WECP DB to UAP DB',
       type: 'syncToNode',
       apiCall: 'wecpToUapTestImport'
+    },
+    {
+      datasource: '',
+      datatarget: '',
+      description: 'ADF Sync Candidates',
+      label: 'ADF Sync Candidates (For Live)',
+      type: 'syncToNode',
+      apiCall: 'adfSyncCandidates'
+    },
+    {
+      datasource: '',
+      datatarget: '',
+      description: 'ADF Sync Masters',
+      label: 'ADF Sync Masters (For Live)',
+      type: 'syncToNode',
+      apiCall: 'adfSyncMasters'
+    },
+    {
+      datasource: '',
+      datatarget: '',
+      description: 'ADF Sync Results',
+      label: 'ADF Sync Results (For Live)',
+      type: 'syncToNode',
+      apiCall: 'adfSyncResults'
     }
   ]
   constructor(
@@ -89,8 +113,8 @@ export class ResultsSyncComponent implements OnInit {
   formInitialize() {
     this.dbForm = this.fb.group({
       'label': [{value: null, disabled: false}, [Validators.required, Validators.maxLength(255)]],
-      'datasource': [{value: null, disabled: true}, [Validators.required, Validators.maxLength(255)]],
-      'datatarget':[{value: null, disabled: true}, [Validators.required, Validators.maxLength(255)]],
+      'datasource': [{value: null, disabled: true}, [Validators.maxLength(255)]],
+      'datatarget':[{value: null, disabled: true}, [Validators.maxLength(255)]],
       'description': [{value: null, disabled: true}, [Validators.maxLength(255)]]
     })
   }
@@ -119,12 +143,48 @@ export class ResultsSyncComponent implements OnInit {
 
     if (this.dbForm.value.label.apiCall == 'wecpToUapTestImport') {
       return this.wecpToUapTestImport();
-    } else {
+    } 
+
+    if (this.dbForm.value.label.apiCall == 'adfSyncCandidates') {
+      return this.adfSyncCandidates();
+    }
+
+    if (this.dbForm.value.label.apiCall == 'adfSyncMasters') {
+      return this.adfSyncMasters();
+    }
+
+    if (this.dbForm.value.label.apiCall == 'adfSyncResults') {
+      return this.adfSyncResults();
+    } 
+
+    else {
       return this.toaster.warning('Currently Syncing is not integrated for the selected action..');
     }
   }
 }
    
+adfSyncCandidates() {
+  this.syncService.adfSyncCandidates().subscribe((response: any)=> {
+    this.toaster.success('Sync Triggered Successfully');
+  }, (err)=> {
+    this.toaster.warning('Having trouble on sync trigger...');
+  });
+}
+adfSyncMasters() {
+  this.syncService.adfSyncMasters().subscribe((response: any)=> {
+      this.toaster.success('Sync Triggered Successfully');
+  }, (err)=> {
+    this.toaster.warning('Having trouble on sync trigger...');
+  });
+}
+adfSyncResults() {
+  this.syncService.adfSyncResults().subscribe((response: any)=> {
+    this.toaster.success('Sync Triggered Successfully');
+  }, (err)=> {
+    this.toaster.warning('Having trouble on sync trigger...');
+  });
+}
+
   testImport() {
     let apiData = {
       "groupLimt": 5,
