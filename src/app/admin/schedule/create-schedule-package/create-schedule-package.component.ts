@@ -234,23 +234,20 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
    }
 
   onTimeChanged(time: any,duration:any): void {
-    this.startTime = '';
-    this.startTime = time;
+    // this.startTime = '';
+    // this.startTime = time;
 
-    var h = parseInt(this.startTime.split(':')[0]) * 60;
-    var m =  h + parseInt(this.startTime.split(':')[1]) + duration
-    if (this.startTime.split(':')[1].split(' ')[1] == "PM") {
-        h = h + 12;
-    }
-      // var m = parseInt(this.startTime.split(':')[1].split(' ')[0]);
-    console.log(m)
-
-    this.startTime = m;
-    // this.startTime = this.startTime + duration;
+    // var h = parseInt(this.startTime.split(':')[0]) * 60;
+    // var m =  h + parseInt(this.startTime.split(':')[1]) + duration
+    // if (this.startTime.split(':')[1].split(' ')[1] == "PM") {
+    //     h = h + 12;
+    // }
+    // console.log(m)
+    // this.startTime = m;
  
     // if(this.endTime < this.startTime){
-      // this.disableCreateButton = false;
-      // this.schedulePackageForm.patchValue({ scheduleTime: time });
+      this.disableCreateButton = false;
+      this.schedulePackageForm.patchValue({ scheduleTime: time });
  
     // }else {
     //   this.disableCreateButton = true;
@@ -265,38 +262,17 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   }
 
   onEndTimeChanged(time: any,duration:any): void {
-    this.endTime = time;
+    // this.endTime = time;
 
-    var hr = parseInt(this.endTime.split(':')[0]) * 60;
-    var mins =  hr + parseInt(this.endTime.split(':')[1])
-    if (this.endTime.split(':')[1].split(' ')[1] == "PM") {
-        hr = hr + 12;
-    }
+    // var hr = parseInt(this.endTime.split(':')[0]) * 60;
+    // var mins =  hr + parseInt(this.endTime.split(':')[1])
+    // if (this.endTime.split(':')[1].split(' ')[1] == "PM") {
+    //     hr = hr + 12;
+    // }
 
-    this.endTime = mins;
-
-    console.log(this.startTime,'>' ,this.endTime)
-    // let endTime1 : any;
-
-    // var strStartTime = this.convertHourstoMinute(this.startTime ? this.startTime : this.currentTime);
-    // var strEndTime   = this.convertHourstoMinute(time ? time : this.currentTime) + duration;
-    // console.log(strStartTime,'strStartTime',strEndTime,'strEndTime')
-
-    // var startTime1 = new Date().setHours(this.GetHours(this.startTime ? this.startTime : this.currentTime), this.GetMinutes(this.startTime ? this.startTime : this.currentTime), 0);
-
-    // endTime1 = new Date(startTime1)
-    // endTime1 = endTime1.setHours(this.GetHours(time ? time : this.currentTime), this.GetMinutes(time ? time : this.currentTime), 0);
-    // console.log(startTime1,'startTime1',endTime1)
-
-    // if(strStartTime < strEndTime){
+    //     this.endTime = mins;
       this.canCreateSchedule = true;
       this.schedulePackageForm.patchValue({ scheduleEndTime: time });
-   
-    // }else {
-    //   this.canCreateSchedule = false;
-    //   this.toaster.warning('End time should be greater than start time')
-    // }
-    
   }
 
   GetHours(d) {
