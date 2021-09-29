@@ -38,6 +38,8 @@ import { selectUserProfileData } from 'src/app/redux/user/user.reducer';
 import { ScheduleAPIService } from 'src/app/rest-api/schedule-api/schedule-api.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { SentData } from 'src/app/rest-api/sendData';
 
 @Component({
   selector: 'app-create-schedule-package',
@@ -76,8 +78,12 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   listOfOrg: any;
   minDate: Date;
   maxDate: Date;
-  startTime: string;
-  endTime: string;
+  startTime: any;
+  endTime: any;
+  currentTime:any;
+  duration: any;
+  subscription: any;
+  batchDetails:any;
   constructor(
     private fb: FormBuilder,
     private store: Store<SchedulerReducerState>,
@@ -85,19 +91,21 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     private scheduleService: ScheduleAPIService,
     private snackBar: MatSnackBar,
     private toaster: ToastrService,
-    private router: Router
+    private router: Router,
+    private sendData: SentData
   ) {
     const today = new Date();
     const timeFormat = today.getHours() > 11 ? 'PM' : 'AM';
-    const currentTime = `${today.getHours() % 12 || 12}:${today.getMinutes()} ${timeFormat}`;
+     this.currentTime = `${today.getHours() % 12 || 12}:${today.getMinutes()} ${timeFormat}`;
+     this.startTime = this.convertHourstoMinute(this.currentTime);
     this.schedulePackageForm = this.fb.group({
       batchName: ['', Validators.required],
       scheduleDescription: ['', Validators.required],
       scheduleDate: [new Date(), Validators.required],
-      scheduleTime: [currentTime, Validators.required],
+      scheduleTime: [this.currentTime, Validators.required],
       // schedul end Date and time
       scheduleEndDate:[new Date(), Validators.required],
-      scheduleEndTime: [currentTime, Validators.required], 
+      scheduleEndTime: [this.currentTime, Validators.required], 
       assessmentName: ['', Validators.required],
       orgId:['', Validators.required],
       candidatesInformation: this.fb.array([])
@@ -117,31 +125,50 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
         const concatedDateTime = this.getConcatedDateTime(selectedDate,getSchedulePackageForm.scheduleTime);
         this.scheduleDateTimeTimeStamp = new Date(concatedDateTime).toISOString();
 
-        const concatedEndDateTime = this.getConcatedDateTime(selectedEndDate,getSchedulePackageForm.scheduleTime);
+        const concatedEndDateTime = this.getConcatedDateTime(selectedEndDate,getSchedulePackageForm.scheduleEndTime);
         this.scheduleEndDateTimeTimeStamp = new Date(concatedEndDateTime).toISOString();
       }
     );
+    // this.subscription = this.sendData.getMessage().subscribe(batchData => {
+    //   // alert('2')
+    //   this.batchDetails = batchData;
+
+    //   this.getBatchDetails(batchData);
+    //   // console.log(this.batchDetails?.attributes?.batchName,'this.batchDetails.batchName')
+     
+    // });
+
   }
 
   ngOnInit(): void {
+    // this.subscription = this.sendData.getMessage().subscribe(batchData => {
+    //   // alert('2')
+    //   this.batchDetails = batchData;
+    //   this.getBatchDetails(batchData);
+    //   this.schedulePackageForm.patchValue({
+    //     'batchName':  this.batchDetails?.attributes?.batchName
+    //   })
+     
+    // });
+
+ 
+
     this.initializeCandidateInformatinView();
     this.packageListActionDispatcher();
     this.checkScheduleAccessStatus();
     this.store.select(selectPackageListState).subscribe((packageList: PackageResponse) => {
       this.packageList = packageList;
     });
-    this.store
-      .select(selectPackageDetailsState)
-      .subscribe((getPackageDetail: PackageDetailResponse) => {
+    this.store.select(selectPackageDetailsState).subscribe((getPackageDetail: PackageDetailResponse) => {
         this.packageDetails = getPackageDetail.data;
       });
+
     this.filteredOptions = this.schedulePackageForm.get('assessmentName')?.valueChanges.pipe(
       startWith(''),
       map((value) => this._filter(value))
     );
-    this.store
-      .select(selectCreateScheduleAssessmentSnackBarMessage)
-      .subscribe((message: string | undefined) => {
+
+    this.store.select(selectCreateScheduleAssessmentSnackBarMessage).subscribe((message: string | undefined) => {
         this.displayMessage = message;
         if (this.getSavedOrFailedStatus(this.displayMessage)) {
           this.openSnackBar(this.displayMessage);
@@ -156,6 +183,15 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+
+  // getBatchDetails(batachDetails){
+  //   // alert('1')
+  //   console.log(batachDetails,'dadadddadads',batachDetails.attributes.batchName)
+
+  //   console.log(this.schedulePackageForm)
+  //   // this.schedulePackageForm.get('batchName').patchValue(batachDetails.attributes.batchName);
+  // }
 
   get getCandidatesInformation(): FormArray {
     return this.schedulePackageForm.get('candidatesInformation') as FormArray;
@@ -188,16 +224,35 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     this.schedulePackageForm.patchValue({ scheduleDate: event.value });
   }
 
-  onTimeChanged(time: string): void {
-    this.startTime = time;
-    if(this.endTime < this.startTime){
+  convertHourstoMinute(time) {
+    var hour =parseInt(time.split(':')[0]) * 60; //Split returns an array
+    var minute = hour + parseInt(time.split(':')[1]);
+    if (time.split(':')[1].split(' ')[1] == "PM") {
+      hour = hour + 12;
+  }
+    return minute;
+   }
+
+  onTimeChanged(time: any,duration:any): void {
+    // this.startTime = '';
+    // this.startTime = time;
+
+    // var h = parseInt(this.startTime.split(':')[0]) * 60;
+    // var m =  h + parseInt(this.startTime.split(':')[1]) + duration
+    // if (this.startTime.split(':')[1].split(' ')[1] == "PM") {
+    //     h = h + 12;
+    // }
+    // console.log(m)
+    // this.startTime = m;
+ 
+    // if(this.endTime < this.startTime){
       this.disableCreateButton = false;
       this.schedulePackageForm.patchValue({ scheduleTime: time });
  
-    }else {
-      this.disableCreateButton = true;
-      this.toaster.warning('Start time should be less than end time')
-    }
+    // }else {
+    //   this.disableCreateButton = true;
+    //   this.toaster.warning('Start time should be less than end time')
+    // }
    
   }
 
@@ -206,25 +261,39 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     this.schedulePackageForm.patchValue({ scheduleEndDate: event.value });
   }
 
-  onEndTimeChanged(time: string): void {
-    this.endTime = time;
-    if(this.endTime > this.startTime){
-      this.disableCreateButton = false;
+  onEndTimeChanged(time: any,duration:any): void {
+    // this.endTime = time;
+
+    // var hr = parseInt(this.endTime.split(':')[0]) * 60;
+    // var mins =  hr + parseInt(this.endTime.split(':')[1])
+    // if (this.endTime.split(':')[1].split(' ')[1] == "PM") {
+    //     hr = hr + 12;
+    // }
+
+    //     this.endTime = mins;
+      this.canCreateSchedule = true;
       this.schedulePackageForm.patchValue({ scheduleEndTime: time });
-   
-    }else {
-      this.disableCreateButton = true;
-      this.toaster.warning('End time should be greater than start time')
-    }
-    
   }
+
+  GetHours(d) {
+    var h = parseInt(d.split(':')[0]);
+    if (d.split(':')[1].split(' ')[1] == "PM") {
+        h = h + 12;
+    }
+    return h;
+}
+
+GetMinutes(d) {
+  return parseInt(d.split(':')[1].split(' ')[0]);
+}
 
 
   getOptionSelectedData(selectedPackage: AssesmentPackagesModel): void {
     this.store.dispatch(
       ScheduleActions.initGetPackageDetails({
         payload: {
-          packageId: selectedPackage.id.toString()
+          packageId: selectedPackage.id.toString(),
+          orgId: this.schedulePackageForm.get('orgId')?.value,
         }
       })
     );
@@ -526,6 +595,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   }
 
   getSavedOrFailedStatus(meesage: string | undefined): boolean | undefined {
+    console.log(meesage)
     if (
       this.displayMessage?.includes(ScheduleModuleEnum.FailedScheduleAssessmentStatus) ||
       this.displayMessage?.includes(ScheduleModuleEnum.CreatedScheduleAssessmentStatus)

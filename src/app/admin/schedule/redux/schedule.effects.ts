@@ -15,9 +15,12 @@ import { clearPackageDetailsState } from '../../assessments/redux/assessments.ac
 import { CandidateReportResponseModel } from 'src/app/rest-api/schedule-api/models/candidate-report-response.model';
 import { AssessmentAPIService } from 'src/app/rest-api/assessments-api/assessments-api.service';
 import { of } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
+
 export class ScheduleEffects {
+
   getPackageList$ = createEffect(() =>
     this.action$.pipe(
       ofType(ScheduleActions.getPackageList),
@@ -36,9 +39,9 @@ export class ScheduleEffects {
   getPackageDetails$ = createEffect(() =>
     this.action$.pipe(
       ofType(ScheduleActions.initGetPackageDetails),
-      map((action) => action.payload.packageId),
-      switchMap((packageId: string) =>
-        this.packageAPIService.getPackage(packageId).pipe(
+      map((action) => action.payload),
+      switchMap((payload) =>
+        this.packageAPIService.getPackage(payload.packageId,payload.orgId).pipe(
           mergeMap((response: PackageDetailResponse) => [
             ScheduleActions.getPackageDetailsSuccess({ payload: response })
           ]),
@@ -108,56 +111,82 @@ export class ScheduleEffects {
       )
     )
   );
-
-
-  // createScheduleAssessmentPackage$ = createEffect(() => {
-  //   return this.action$.pipe(
-  //     ofType(ScheduleActions.initCreateScheduleAssessmentPackage),
-  //     mergeMap((Action) => {        
-  //       // this._loading.setLoading(true, 'request.url');
-  //       return this.userAPIService.login(Action.payload).pipe(
-  //         map((data: any) => {
-  //           if (this.userAPIService.isValidUser(data)) {
-  //             return LoginActions.loginSuccess({ payload: data });
-  //           }
-  //           // this._loading.setLoading(false, 'request.url');
-  //           return LoginActions.loginFailure({ payload: data });
-  //         }),
-  //         catchError((error: any) => {
-  //           // this._loading.setLoading(false, 'request.url');
-  //           return of(ScheduleActions.createScheduleAssessmentPackageFailure({ payload: error }));
-  //         })
-  //       )
-  //     }
-  //     )
+  // getUserProfile$ = createEffect(
+  //   () => {
+  // return this.actions$.pipe(
+  //   ofType(UserActions.getUserProfile),
+  //   mergeMap((action) => {
+  //   this._loading.setLoading(true, 'request.url');
+  //   return this.userAPIService.getUserProfile().pipe(
+  //     map((user: UserProfileResponseModel) => {
+  //       return UserActions.getUserProfileSuccess({ payload: user })
+  //     }),
+  //     catchError((error: ErrorResponse) => {
+  //       this._loading.setLoading(false, 'request.url');
+  //       sessionStorage.removeItem('token');
+  //       sessionStorage.removeItem('user');
+  //       this.router.navigate(['/unauthorized']);
+  //       return of(UserActions.getUserProfileFailure({ payload: error }))
+  //     })
   //   )
-  // }
-  // );
+  //   })
+  // ) 
 
-  createScheduleAssessmentPackage$ = createEffect(() =>
-    this.action$.pipe(
+  createScheduleAssessmentPackage$ = createEffect(() =>{
+    return this.action$.pipe(
       ofType(ScheduleActions.initCreateScheduleAssessmentPackage),
-      map((action) => action.payload),
-      exhaustMap((scheduleAssessmentPackageData: InitScheduleCreateAssessmentModel) =>
+      map((action) => action.payload),exhaustMap((scheduleAssessmentPackageData: InitScheduleCreateAssessmentModel) =>
         this.scheduleAPIService.createSchedulePackage(scheduleAssessmentPackageData.data).pipe(
-          mergeMap((response: CreateSchedulePackageResponse) => [
-            ScheduleActions.createScheduleAssessmentPackageSuccess({ payload: response }),
-            go({ payload: { path: ['/admin/schedule/list'] } })
-          ]),
-          catchError((error) => [
-            ScheduleActions.createScheduleAssessmentPackageFailure({ payload: error })
-          ])
+          mergeMap((response :any) => {
+              if(response.success){
+                return [ ScheduleActions.createScheduleAssessmentPackageSuccess({ payload: response }),
+                  go({ payload: { path: ['/admin/schedule/list'] } })]
+              } else{
+                  return [ScheduleActions.createScheduleAssessmentPackageFailure({ payload: {
+                    error :{errors:[response.message]}
+                  } })]
+              }
+        
+          }),
+          catchError((error) => {
+           return of (ScheduleActions.createScheduleAssessmentPackageFailure({ payload: error }))
+          })
         )
       )
     )
+  }
   );
+
+
+  reInviteAssessment$ = createEffect(() =>
+  this.action$.pipe(
+    ofType(ScheduleActions.initReinviteAssessment),
+    map((action) => action.payload.packageTemplateId),
+    concatMap((packageTemplateId: string) =>
+      this.assessmentAPIService.reInviteAssessment(packageTemplateId).pipe(
+        mergeMap((response: CreateSchedulePackageResponse) => {
+          return [
+            ScheduleActions.reinviteAssessmentSuccess({
+              payload: {
+                success: 'Assessment Re-Invited To Candidate Successfully'
+              }
+            })
+          ];
+        }),
+        catchError((error) => [ScheduleActions.reinviteAssessmentFailure({ payload: error })])
+      )
+    )
+  )
+);
+
+
   getCandidatesAssessmentExports$ = createEffect(() =>
     this.action$.pipe(
       ofType(ScheduleActions.getCandidatesAssessmentExport),
       map((action) => action.payload),
       exhaustMap((payload) =>
         this.scheduleAPIService.getCandidatesAssessment(payload).pipe(
-          mergeMap((response: CandidatesAssessmentResponseModel) => [
+          mergeMap((response: CandidatesAssessmentResponseModel) =>  [
             ScheduleActions.getCandidatesAssessmentExportSuccess({ payload: response })
           ]),
           catchError((error) => [
@@ -167,26 +196,7 @@ export class ScheduleEffects {
       )
     )
   );
-  reInviteAssessment$ = createEffect(() =>
-    this.action$.pipe(
-      ofType(ScheduleActions.initReinviteAssessment),
-      map((action) => action.payload.packageTemplateId),
-      concatMap((packageTemplateId: string) =>
-        this.assessmentAPIService.reInviteAssessment(packageTemplateId).pipe(
-          mergeMap((response: CreateSchedulePackageResponse) => {
-            return [
-              ScheduleActions.reinviteAssessmentSuccess({
-                payload: {
-                  success: 'Assessment Re-Invited To Candidate Successfully'
-                }
-              })
-            ];
-          }),
-          catchError((error) => [ScheduleActions.reinviteAssessmentFailure({ payload: error })])
-        )
-      )
-    )
-  );
+
   getCandidateReport$ = createEffect(() =>
     this.action$.pipe(
       ofType(ScheduleActions.getCandidateReport),
@@ -208,3 +218,5 @@ export class ScheduleEffects {
     private assessmentAPIService: AssessmentAPIService
   ) {}
 }
+
+

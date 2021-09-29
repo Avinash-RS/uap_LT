@@ -86,7 +86,12 @@ export class ScheduleAPIService {
   }
 
   getWEPCOrganization(request: any){
-    return this.httpClient.post(`/getWecpOrgDetails`, request);
+    return this.httpClient.get(`/getUapOrganizations`);
+  }
+
+
+  updateScheduleEndDate(request:any){
+    return this.httpClient.post(`/updateScheduleEndtime`, request);
   }
 
 }

@@ -24,6 +24,16 @@ const StatusRoutes: Routes = [
           ),
         // canActivate: [AutoLoginGuard]
       },
+
+      {
+        path: 'edit',
+        loadChildren: () =>
+          import('./edit-schedule-package/index').then(
+            (module) => module.EditScheduleAssessmentPackageModule
+          ),
+        // canActivate: [AutoLoginGuard]
+      },
+      
       {
         path: '',
         redirectTo: 'list',

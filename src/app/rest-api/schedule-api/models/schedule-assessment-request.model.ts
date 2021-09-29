@@ -51,6 +51,8 @@ export interface ScheduleRequest {
 
 export interface CreateSchedulePackageResponse {
   data: SchedulePackageResponseData;
+  success?: string;
+  message?:string;
 }
 
 export interface SchedulePackageResponseData {
