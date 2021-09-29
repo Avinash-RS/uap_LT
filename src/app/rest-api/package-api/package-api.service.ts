@@ -14,6 +14,7 @@ export class PackageAPIService {
   getTasks(taskType?: string, pagination?: PaginationModel): Observable<TaskTemplateResponse> {
     return this.httpClient.get<TaskTemplateResponse>(`/tasks?type=${taskType}`);
   }
+
   getPackages(request: LoadMorePackageTemplatesModel): Observable<PackageResponse> {
     let endpoint = `/packages?offset=${request.pageMetaData.offset}&limit=${request.pageMetaData.limit}`;
     if (request.status) {
@@ -34,8 +35,10 @@ export class PackageAPIService {
     }
     return this.httpClient.get<PackageResponse>(endpoint);
   }
-  getPackage(id: string): Observable<PackageDetailResponse> {
-    return this.httpClient.get<PackageDetailResponse>(`/packages/${id}`);
+
+  getPackage(id: string,orgId:string): Observable<PackageDetailResponse> {
+    console.log(id)
+    return this.httpClient.get<PackageDetailResponse>(`/packages/${id}/org/`+orgId);
   }
   createPackage(request: PackageRequest): Observable<CreateOrUpdatePackageResponse> {
     return this.httpClient.post<CreateOrUpdatePackageResponse>(`/packages`, request);

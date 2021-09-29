@@ -1,29 +1,19 @@
 <div class="header-block">
-    <span class="header-block__title-font-size">Schedule/Create</span>
+    <span class="header-block__title-font-size">Schedule/Edit</span>
     <div class="header-block__buttons-align">
         <span>
-      <button
-        class="header-block__button"
-        (click)="createSchedulePackage()"
-        [disabled]="disableCreateButton || !canCreateSchedule"
-      >
-        Create
-      </button></span
-    >
-    <span
-      ><button class="header-block__exit-button" routerLink="/admin/schedule/list">
-        Exit
-      </button></span
-    >
-  </div>
+      <button class="header-block__button" (click)="updateSchedule()">Update</button></span>
+        <span>
+        <button class="header-block__exit-button" routerLink="/admin/schedule/list">Exit</button></span>
+    </div>
 </div>
-<form [formGroup]="schedulePackageForm" novalidate>
-  <div class="create-form__overflow">
+<!-- <form  novalidate > -->
+<div class="create-form__overflow" *ngIf="batchDetails">
     <div class="schedule-assessment-block">
-      <div class="schedule-assessment-block__align">
+        <div class="schedule-assessment-block__align">
 
-        <span class="auto-complete-block__align">
-          <mat-form-field appearance="fill">
+            <span class="auto-complete-block__align">
+          <!-- <mat-form-field appearance="fill">
             <mat-label>Organization</mat-label>
             <mat-select  required formControlName="orgId">
               <mat-option *ngFor="let org of listOfOrg" [value]="org?.id" > {{org?.name}}</mat-option>
@@ -31,87 +21,83 @@
             <div class="mat-input-field__error" *ngIf="validateFormField('orgId')">
               Required
             </div>
-          </mat-form-field>
+          </mat-form-field> -->
          
         </span>
-        <label class="custom-label__font">
+            <label class="custom-label__font">
           Batch Id
-          <input
-            formControlName="batchName"
-            type="text"
-            class="schedule-assessment-block__custom-input-field"
-          />
-          <div class="input-field__error" *ngIf="validateFormField('batchName')">Required</div>
-        </label>
-        <label class="custom-label__font">
+        <input readonly  class="schedule-assessment-block__custom-input-field" [(ngModel)]="batchDetails.attributes.batchName" type="text" />
+        <!-- <div class="input-field__error" *ngIf="validateFormField('batchName')">Required</div> -->
+    </label>
+            <label class="custom-label__font">
           Description
-          <textarea
-            formControlName="scheduleDescription"
+          <textarea readonly
             cols="62"
             rows="4"
             class="schedule-assessment-block__text-area-width"
           ></textarea>
-          <div class="input-field__error" *ngIf="validateFormField('scheduleDescription')">
+          <!-- <div class="input-field__error">
             Required
-          </div>
+          </div> -->
         </label>
-        <label class="custom-label__font"> Schedule On </label>
-        <div class="date-time-block__align">
-            <span class="date-block">
+            <label class="custom-label__font"> Schedule On </label>
+            <div class="date-time-block__align">
+                <span class="date-block">
             <mat-form-field appearance="fill" class="date-block__input">
               <mat-label>Select Date</mat-label>
-              <input
+              <input readonly
                 matInput
                 [max]="maxDate"
                 [matDatepicker]="dp3"
-                (dateChange)="onDateChanged($event)"
-                formControlName="scheduleDate"
+                [(ngModel)]="scheduleStartDate"
+              
               />
               <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-              <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+              <mat-datepicker #dp3 disabled="true"></mat-datepicker>
             </mat-form-field>
           </span>
-            <span class="time-block">
+                <span class="time-block">
             <div class="ngx-timepicker-field-example">
               <ngx-timepicker-field
                 [format]="12"
-                formControlName="scheduleTime"
-                [defaultTime]="'12:01 pm'"
-                (timeChanged)="onTimeChanged($event,packageDetails.attributes.duration)"
+                [(ngModel)]="batchStartTime"
+                disabled="true"
+               
               ></ngx-timepicker-field>
             </div>
           </span>
-        </div>
+            </div>
 
-        <label class="custom-label__font"> Schedule End </label>
-        <div class="date-time-block__align">
-            <span class="date-block">
+            <label class="custom-label__font"> Schedule End </label>
+            <div class="date-time-block__align">
+                <span class="date-block">
             <mat-form-field appearance="fill" class="date-block__input">
               <mat-label>Select Date</mat-label>
               <input
                 matInput
                 [matDatepicker]="dp4"
-                 [min]="minDate"
+                [(ngModel)]="scheduleEndDate"
+                [min]="minDate"
                 (dateChange)="onEndDateChanged($event)"
-                formControlName="scheduleEndDate"
               />
               <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
               <mat-datepicker #dp4 disabled="false"></mat-datepicker>
             </mat-form-field>
             
           </span>
-            <span class="time-block">
+                <span class="time-block">
             <div class="ngx-timepicker-field-example">
-              <ngx-timepicker-field
+              <ngx-timepicker-field 
+              matInput
                 [format]="12"
-                formControlName="scheduleEndTime"
-                [defaultTime]="'12:01 pm'"
-                (timeChanged)="onEndTimeChanged($event,packageDetails.attributes.duration)"
+                [(ngModel)]="batchEndTime"
+                (timeChanged)="onEndTimeChanged($event)"
+                
               ></ngx-timepicker-field>
             </div>
           </span>
-        </div>
-        <div>
+            </div>
+            <!-- <div>
             <span class="auto-complete-block__align">
             <mat-form-field class="example-full-width">
               <mat-label>Assessment Name</mat-label>
@@ -151,9 +137,9 @@
             <mat-checkbox [formControl]="is_proctor" class="example-margin"
               >Is Proctor</mat-checkbox>
           </span>
-        </div>
-        <div class="package-details-block" *ngIf=" packageDetails.attributes.tasks.length > 0">
-            <table class="schedule-table">
+        </div> -->
+            <!-- <div class="package-details-block" *ngIf=" packageDetails.attributes.tasks.length > 0"> -->
+            <!-- <table class="schedule-table">
                 <tr class="schedule-table-tr">
                     <th class="schedule-table-th">Test Name</th>
                     <th class="schedule-table-type">Type</th>
@@ -170,8 +156,8 @@
                         </th>
                     </tr>
                 </ng-container>
-            </table>
-            <p class="add-candidate-heading__align">
+            </table> -->
+            <!-- <p class="add-candidate-heading__align">
                 Candidates
                 <span *ngIf="toogleUploadCsvButton"><button
                 class="upload-csv-button__align"
@@ -192,9 +178,9 @@
                 <button class="package-details-block__add-candidate-button-align" (click)="addNewCandidateInformation()" *ngIf="toogleAddCandidateInfoButton" [disabled]="schedulePackageForm.invalid">
               Add Candidate
             </button>
-            </p>
-            <!-- directory=Boolean("false") [showBrowseBtn]="true" multiple="false" -->
-            <div class="drag-drop-zone__align" *ngIf="switchToAddEmailView">
+            </p> -->
+
+            <!-- <div class="drag-drop-zone__align" *ngIf="switchToAddEmailView">
                 <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="fileDropped($event)" accept=".csv" contentClassName="ngx-file-drop" [multiple]="false">
                     <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
                         <div style="cursor: pointer;" (click)="openFileSelector()">
@@ -290,9 +276,9 @@
                 </tr>
               </ng-container>
             </table>
-          </div>
+          </div> -->
         </div>
-      </div>
     </div>
-  </div>
-</form>
+</div>
+<!-- </div> -->
+<!-- </form> -->

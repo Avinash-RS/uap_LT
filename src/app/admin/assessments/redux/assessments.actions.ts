@@ -48,7 +48,7 @@ export const getPackageListFailure = createAction(
 
 export const initGetPackageDetails = createAction(
   '[ASSESSMENTS MODULE] Init Get package details',
-  props<{ payload: { packageId: string } }>()
+  props<{ payload: { packageId: string,orgId:string } }>()
 );
 
 export const getPackageDetailsSuccess = createAction(

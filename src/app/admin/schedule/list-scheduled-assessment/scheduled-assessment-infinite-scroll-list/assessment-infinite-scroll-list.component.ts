@@ -16,6 +16,8 @@ import { selectCandidatesAssessment } from '../../redux/schedule.reducers';
 import { ScheduleModuleEnum } from '../../schedule.enums';
 import { ScheduleUtils } from '../../schedule.utils';
 import { selectUserProfileData } from 'src/app/redux/user/user.reducer';
+import { SentData } from 'src/app/rest-api/sendData';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-scheduled-infinite-scroll-list',
@@ -48,7 +50,7 @@ export class ScheduledInfiniteScrollListComponent implements OnInit {
   ];
   selectedFilterValue: string = this.filterValues[0].value;
   candidatesAssessment: CandidatesAssessmentResponseModel;
-  constructor(private store: Store<SchedulerReducerState>, public scheduleUtil: ScheduleUtils, public assesmentsUtil: AssesmentsUtil) {}
+  constructor(private store: Store<SchedulerReducerState>,    private router: Router,private sendData: SentData, public scheduleUtil: ScheduleUtils, public assesmentsUtil: AssesmentsUtil) {}
   ngOnInit(): void {
     this.checkScheduleAccessStatus();
     this.store.select(selectCandidatesAssessment).subscribe((val) => {
@@ -91,6 +93,11 @@ export class ScheduledInfiniteScrollListComponent implements OnInit {
     );
     this.selectedIndexEvent.emit(index);
     this.store.dispatch(clearCandidatesAssessmentExportData());
+  }
+
+  onEditDeatils(index,assessments){
+      this.router.navigate(['/admin/schedule/edit'], {state:{data:assessments}});
+      this.sendData.sendMessage(assessments);
   }
 
   checkScheduleAccessStatus(): void {
