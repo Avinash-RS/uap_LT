@@ -11,6 +11,7 @@
                         <span>{{ scheduledTemplate.attributes.packageTemplateName }}</span>
                     </div>
                     <div class="scheduled"><span>Scheduled On</span> <span>{{scheduleUtil.getScheduledOn(scheduledTemplate.attributes.startDateTime)}}</span></div>
+                    <div class="scheduled"><span>Scheduled End</span> <span>{{scheduleUtil.getScheduledOn(scheduledTemplate.attributes.endDateTime)}}</span></div>
                     <div class="duration">
                         <span><img height="18" width="19" src="/assets/profile-no-outline.svg" />{{
                 scheduledTemplate.attributes.numberOfInvites
