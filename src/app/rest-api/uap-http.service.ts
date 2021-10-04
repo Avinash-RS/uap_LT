@@ -76,7 +76,7 @@ export class UapHttpService {
      !url.includes('/testDetailsImport') &&
      !url.includes('/wecpToUapTestImport') &&
      !url.includes('/getUapOrganizations') && 
-     !url.includes('/packages/') &&
+    //  !url.includes('/packages/') &&
     //  !url.includes('/packages') &&
      !url.includes('/updateScheduleEndtime')
      ) {
