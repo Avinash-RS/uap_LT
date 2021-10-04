@@ -493,7 +493,7 @@ GetMinutes(d) {
       fd.append('candidateDetails', candidate);
       fd.append('testDetails',request.data.attributes.testDetails);
       fd.append('description', request.data.attributes.description);
-      fd.append('orgId', request.data.attributes.id);
+      fd.append('orgId', this.schedulePackageForm.get('orgId')?.value);
       fd.append('duration', request.data.attributes.duration);
       fd.append('packageTemplateId', request.data.attributes.packageTemplateId);
       fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
@@ -503,7 +503,6 @@ GetMinutes(d) {
 
 
      this.scheduleService.createSchedulePackageEdgeService(fd,request.data.attributes.testDetails).subscribe((response: any)=> {
-
       if (response && response.success) {
         if (candidateDetails.length > 10) {
           this.toaster.success('Schedule will be created shortly', 'Creating Schedule...');
@@ -512,7 +511,7 @@ GetMinutes(d) {
         }
         this.router.navigate(['/admin/schedule/list']);
        } else {
-         this.toaster.warning('Please Try again...', 'Something went wrong');
+         this.toaster.warning(response.message);
        }
      }, (err)=> {
       this.toaster.warning('Please Try again...', 'Something went wrong');
