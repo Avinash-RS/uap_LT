@@ -66,8 +66,8 @@ export class LoginPageComponent implements OnInit {
     sessionStorage.removeItem('token');
     if (this.loginForm.valid) {
       let apiData = {
-        email: this.loginForm.value.username,
-        pass: this.loginForm.value.password
+        email: this.loginForm.value.username.trim(),
+        pass: this.loginForm.value.password.trim(),
       }
       this.store.dispatch(loginAttempt({payload: apiData}));
     } else {
