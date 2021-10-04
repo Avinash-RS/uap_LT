@@ -595,7 +595,7 @@ GetMinutes(d) {
   }
 
   getSavedOrFailedStatus(meesage: string | undefined): boolean | undefined {
-    console.log(meesage)
+    // console.log(meesage)
     if (
       this.displayMessage?.includes(ScheduleModuleEnum.FailedScheduleAssessmentStatus) ||
       this.displayMessage?.includes(ScheduleModuleEnum.CreatedScheduleAssessmentStatus)

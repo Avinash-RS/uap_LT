@@ -12,10 +12,9 @@
         text-align: left;
         padding-right: 10px;
          :first-child {
-            // font: bold 20px / normal $uap-roboto-condensed;
-            font-size: 15px;
-            font-weight: 500;
-            color: $uap-black;
+            color: #666666;
+            font: bold 20px/1 "Roboto", sans-serif;
+            padding-bottom: 10px;
         }
          :last-child {
             font: 400 18px / normal $uap-roboto-condensed;
@@ -30,11 +29,9 @@
         text-align: left;
         padding-right: 10px;
          :first-child {
-            // font: bold 20px / normal $uap-roboto-condensed;
-            // color: $uap-light-black;
-            font-size: 15px;
-            font-weight: 500;
-            color: $uap-black;
+            color: #666666;
+            font: bold 20px/1 "Roboto", sans-serif;
+            padding-bottom: 10px;
         }
          :last-child {
             font: 400 18px / normal $uap-roboto-condensed;
@@ -49,9 +46,9 @@
         text-align: left;
         padding-right: 10px;
          :first-child {
-            font-size: 15px;
-            font-weight: 500;
-            color: $uap-black;
+            color: #666666;
+            font: bold 20px/1 "Roboto", sans-serif;
+            padding-bottom: 10px;
         }
          :last-child {
             font: 400 18px / normal $uap-roboto-condensed;
@@ -88,9 +85,9 @@
         width: 10%;
         text-align: left;
          :first-child {
-            font-size: 15px;
-            font-weight: 500;
-            color: $uap-black;
+            color: #666666;
+            font: bold 20px/1 "Roboto", sans-serif;
+            padding-bottom: 10px;
         }
          :last-child {
             font: 400 18px / normal $uap-roboto-condensed;
@@ -99,6 +96,7 @@
     }
     .action-btn {
         display: flex;
+        cursor: pointer;
     }
 }
 
