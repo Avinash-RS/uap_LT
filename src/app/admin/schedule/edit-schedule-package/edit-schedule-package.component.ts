@@ -6,6 +6,7 @@ import { AdminUtils } from '../../admin.utils';
 import { ScheduleAPIService } from 'src/app/rest-api/schedule-api/schedule-api.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ToastrService } from 'ngx-toastr';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-edit-schedule-package',
@@ -29,6 +30,7 @@ export class EditSchedulePackageComponent implements OnInit {
   selectedDate: Date;
   selectedTime: any;
   scheduleDateTimeTimeStamp: string;
+  startDateWithDurations: string;
 
 
   constructor(private toaster: ToastrService,private scheduleService: ScheduleAPIService,private router: Router,private store: Store<SchedulerReducerState>,private adminUtils: AdminUtils,) {
@@ -36,7 +38,12 @@ export class EditSchedulePackageComponent implements OnInit {
             this.batchDetails = this.router.getCurrentNavigation().extras.state.data;
             const selectedDate: Date =  this.batchDetails.attributes.startDateTime;
             const selectedEndDate: Date =  this.batchDetails.attributes.endDateTime;
-      
+            const duration = this.batchDetails.attributes.duration
+
+            this.startDateWithDurations = moment(selectedDate).add(duration,'minutes').format('YYYY-MM-DDTHH:mm:ss');
+            // this.startDateWithDurations = new Date(startWithDuration).toISOString();
+
+            // Start date and time
             this.scheduleStartDate = new Date(selectedDate);
             this.batchStartTime = this.formatAMPM(this.scheduleStartDate)
             // End date and time
@@ -77,19 +84,26 @@ onEndTimeChanged(time: any): void {
 
 updateSchedule(){
   const concatedDateTime = this.getConcatedDateTime(this.scheduleEndDate, this.batchEndTime)
-  this.scheduleDateTimeTimeStamp = new Date(concatedDateTime).toISOString();
-  let data = {
-    "scheduleId":this.batchDetails.id,
-    "endTime":this.scheduleDateTimeTimeStamp
-  }
-  this.scheduleService.updateScheduleEndDate(data).subscribe((response: any)=> {
-      if(response.success = true){
-        this.toaster.success(response.message);
-        this.router.navigate(['/admin/schedule/list'])
-      }else {
-        this.toaster.warning('Please Try again...', 'Something went wrong');
-      }
-  })
+  // this.scheduleDateTimeTimeStamp = new Date(concatedDateTime).toISOString();
+  this.scheduleDateTimeTimeStamp = moment(concatedDateTime).format('YYYY-MM-DDTHH:mm:ss');
+  const dateIsBefore = moment(this.startDateWithDurations).isBefore(moment(this.scheduleDateTimeTimeStamp));
+   if(dateIsBefore){
+    let data = {
+      "scheduleId":this.batchDetails.id,
+      "endTime":this.scheduleDateTimeTimeStamp
+    }
+    this.scheduleService.updateScheduleEndDate(data).subscribe((response: any)=> {
+        if(response.success = true){
+          this.toaster.success(response.message);
+          this.router.navigate(['/admin/schedule/list'])
+        }else {
+          this.toaster.warning('Please Try again...', 'Something went wrong');
+        }
+    })
+   }else {
+     this.toaster.warning('End date should be greater than start date and test durations ')
+   }
+
 }
 
 getConcatedDateTime(selectedEndDate: Date, scheduleEndTime: string): string {

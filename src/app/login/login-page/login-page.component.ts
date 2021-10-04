@@ -78,8 +78,8 @@ export class LoginPageComponent implements OnInit {
       }
 
       let apiData = {
-        email: this.loginForm.value.username,
-        pass: this.loginForm.value.password,
+        email: this.loginForm.value.username.trim(),
+        pass: this.loginForm.value.password.trim(),
         browserinfo: ipInfo,
       }
       this.store.dispatch(loginAttempt({payload: apiData}));

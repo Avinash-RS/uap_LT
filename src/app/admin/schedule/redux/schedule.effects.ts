@@ -142,14 +142,15 @@ export class ScheduleEffects {
                 return [ ScheduleActions.createScheduleAssessmentPackageSuccess({ payload: response }),
                   go({ payload: { path: ['/admin/schedule/list'] } })]
               } else{
-                  return [ScheduleActions.createScheduleAssessmentPackageFailure({ payload: {
+                  return of (ScheduleActions.createScheduleAssessmentPackageFailure({ payload: {
                     error :{errors:[response.message]}
-                  } })]
+                      
+                  } }))
               }
         
           }),
           catchError((error) => {
-           return of (ScheduleActions.createScheduleAssessmentPackageFailure({ payload: error }))
+           return of (ScheduleActions.createScheduleAssessmentPackageFailure({ payload: error.errors[0] }))
           })
         )
       )

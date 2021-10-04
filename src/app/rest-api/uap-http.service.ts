@@ -77,7 +77,7 @@ export class UapHttpService {
      !url.includes('/wecpToUapTestImport') &&
      !url.includes('/getUapOrganizations') && 
      !url.includes('/packages/') &&
-     !url.includes('/packages') &&
+    //  !url.includes('/packages') &&
      !url.includes('/updateScheduleEndtime')
      ) {
     return `${this.apiBaseUrl}${url}`;
