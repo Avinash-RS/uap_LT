@@ -52,7 +52,11 @@ export class UserAPIService {
     if (data && data.exist_login) {
       this.toastr.warning(data && data.message ? data.message : 'You are already logged in...');
     } else {
-      this.toastr.warning(data && data.message ? data.message : 'Invalid Login Credentials');
+      if (data.message && data.message.error_description) {
+        this.toastr.warning(data && data.message ? data.message.error_description : 'Invalid Login Credentials');
+      } else {
+        this.toastr.warning(data && data.message ? data.message : 'Invalid Login Credentials');
+      }
     }
   }
 
