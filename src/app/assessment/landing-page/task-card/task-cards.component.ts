@@ -40,7 +40,14 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
       const startTime = new Date(task.startTime);
       this.taskDuration.push(this.getTaskDuration(task.duration));
       this.taskStatus.push(task.status.toLowerCase());
-      const currentTime = new Date();
+      // const currentTime = new Date();
+
+      let currentTime:any = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+      currentTime = new Date(currentTime);
+      console.log(currentTime)
+
+
+
       this.isTaskStarted.push(startTime > currentTime);
       this.getCountdownTimer(startTime, currentTime);
     });
