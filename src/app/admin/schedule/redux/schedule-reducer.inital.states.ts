@@ -69,6 +69,7 @@ export let setInitialCandidateReportState = (): CandidateReportResponseModel => 
         status: '',
         consolidatedScore: 0,
         batchName: '',
+
         userDetails: {
           firstName: '',
           lastName: '',

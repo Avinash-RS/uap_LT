@@ -50,9 +50,9 @@ export class AssessmentsEffects {
   getPackageDetails$ = createEffect(() =>
     this.action$.pipe(
       ofType(AssessmentsActions.initGetPackageDetails),
-      map((action) => action.payload.packageId),
-      switchMap((packageId: string) =>
-        this.packageAPIService.getPackage(packageId).pipe(
+      map((action) => action.payload),
+      switchMap((payload) =>
+        this.packageAPIService.getPackage(payload.packageId,payload.orgId).pipe(
           mergeMap((response: PackageDetailResponse) => [
             AssessmentsActions.getPackageDetailsSuccess({ payload: response })
           ]),
@@ -84,7 +84,7 @@ export class AssessmentsEffects {
         this.packageAPIService.createPackage(assessmentPackageData.data).pipe(
           mergeMap((response: CreateOrUpdatePackageResponse) => {
             if (assessmentPackageData.saveButtonClickCount === 0) {
-              return [
+              return [  
                 AssessmentsActions.createAssessmentPackageSuccess({ payload: response }),
                 go({ payload: { path: ['/admin/assessments/list'] } })
               ];
