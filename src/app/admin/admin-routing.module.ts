@@ -29,6 +29,11 @@ const AdminRoutes: Routes = [
         // canActivate: [AdminPrivilegeGuard]
       },
       {
+        path: 'logout',
+        loadChildren: () => import('./forcelogout/force-logout.module').then((module) => module.ForceLogoutModule),
+        // canActivate: [AdminPrivilegeGuard]
+      },
+      {
         path: '',
         // TODO: redirect it to home once home screen is available
         //redirectTo: 'assessments',
