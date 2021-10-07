@@ -82,7 +82,8 @@ export class ScheduleAPIService {
   }
 
   createSchedulePackageEdgeService(request: any,testdetails:any) {
-    return this.httpClient.postWithMultipartDataHeaders(`/bulkSchedules?`+JSON.stringify({testDetails:testdetails}), request);
+    return this.httpClient.postWithMultipartDataHeaders(`/schedules`, request);
+    // +JSON.stringify({testDetails:testdetails}),
   }
 
   getWEPCOrganization(request: any){
