@@ -486,23 +486,43 @@ GetMinutes(d) {
         return this.toaster.warning(`FirstName column is empty for ${invalidUsernames.length} records`, 'Excel Upload Failed');
       }
 
-      let candidate: any = [];
-      const fd = new FormData();
-      fd.append('batchName', request.data.attributes.batchName);
-      fd.append('candidateFile', this.selectedCSVFile);
-      fd.append('candidateDetails', candidate);
-      fd.append('testDetails',request.data.attributes.testDetails);
-      fd.append('description', request.data.attributes.description);
-      fd.append('orgId', this.schedulePackageForm.get('orgId')?.value);
-      fd.append('duration', request.data.attributes.duration);
-      fd.append('packageTemplateId', request.data.attributes.packageTemplateId);
-      fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
-      fd.append('startDateTime', request.data.attributes.startDateTime);
-      fd.append('endDateTime', request.data.attributes.endDateTime);
-      fd.append('is_proctor', this.is_proctor.value ? '1' : '0');
+      // let candidate: any = [];
+      // const fd = new FormData();
+      // fd.append('batchName', request.data.attributes.batchName);
+      // fd.append('candidateFile', this.selectedCSVFile);
+      // fd.append('candidateDetails', candidate);
+      // fd.append('testDetails',request.data.attributes.testDetails);
+      // fd.append('description', request.data.attributes.description);
+      // fd.append('orgId', this.schedulePackageForm.get('orgId')?.value);
+      // fd.append('duration', request.data.attributes.duration);
+      // fd.append('packageTemplateId', request.data.attributes.packageTemplateId);
+      // fd.append('scheduledAtTestLevel', request.data.attributes.scheduledAtTestLevel);
+      // fd.append('startDateTime', request.data.attributes.startDateTime);
+      // fd.append('endDateTime', request.data.attributes.endDateTime);
+      // fd.append('is_proctor', this.is_proctor.value ? '1' : '0');
+
+      let data = {
+        data: {
+        type: 'batchSchedule',
+        attributes: {
+          batchName: request.data.attributes.batchName,
+          description: request.data.attributes.description,
+          packageTemplateId: request.data.attributes.packageTemplateId,
+          testDetails: this.packageDetails.attributes.tasks,
+          startDateTime: request.data.attributes.startDateTime,
+          endDateTime: request.data.attributes.endDateTime,
+          duration: request.data.attributes.duration,
+          orgId: this.schedulePackageForm.get('orgId')?.value,
+          scheduledAtTestLevel: request.data.attributes.scheduledAtTestLevel,
+          candidateDetails: this.csvRows[0],
+          is_proctor:this.is_proctor.value ? '1' : '0',
+           
+        }
+      }
+      }
 
 
-     this.scheduleService.createSchedulePackageEdgeService(fd,request.data.attributes.testDetails).subscribe((response: any)=> {
+     this.scheduleService.createSchedulePackageEdgeService(data,request.data.attributes.testDetails).subscribe((response: any)=> {
       if (response && response.success) {
         if (candidateDetails.length > 10) {
           this.toaster.success('Schedule will be created shortly', 'Creating Schedule...');
