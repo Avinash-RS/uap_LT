@@ -84,8 +84,8 @@ onEndTimeChanged(time: any): void {
 
 updateSchedule(){
   const concatedDateTime = this.getConcatedDateTime(this.scheduleEndDate, this.batchEndTime)
-  // this.scheduleDateTimeTimeStamp = new Date(concatedDateTime).toISOString();
-  this.scheduleDateTimeTimeStamp = moment(concatedDateTime).format('YYYY-MM-DDTHH:mm:ss');
+  this.scheduleDateTimeTimeStamp = new Date(concatedDateTime).toISOString();
+  // this.scheduleDateTimeTimeStamp = moment(concatedDateTime).format('YYYY-MM-DDTHH:mm:ss');
   const dateIsBefore = moment(this.startDateWithDurations).isBefore(moment(this.scheduleDateTimeTimeStamp));
    if(dateIsBefore){
     let data = {
