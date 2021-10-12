@@ -17,6 +17,7 @@ export interface loginState {
   export interface LoginProfileResponseModel {
     data: UserMetaData;
     token: tokenModel;
+    loginId : string | null;
     // failureMessage?: ErrorResponse;
   }
 

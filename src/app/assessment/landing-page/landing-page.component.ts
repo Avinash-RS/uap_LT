@@ -64,7 +64,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       this.store.dispatch(
         assessmentTasksActions.getAssessmentTaskList({
           payload: {
-            assessmentId: this.assessmentID
+            assessmentId: this.assessmentID,
+            loginId: sessionStorage.getItem('loginId')
           }
         })
       );  
@@ -155,7 +156,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
         this.store.dispatch(
           assessmentTasksActions.getAssessmentTaskList({
             payload: {
-              assessmentId: this.assessmentID
+              assessmentId: this.assessmentID,
+              loginId: sessionStorage.getItem('loginId')
             }
           })
         );    
@@ -164,7 +166,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       this.store.dispatch(
         assessmentTasksActions.getAssessmentTaskList({
           payload: {
-            assessmentId: this.assessmentID
+            assessmentId: this.assessmentID,
+            loginId: sessionStorage.getItem('loginId')
           }
         })
       );  

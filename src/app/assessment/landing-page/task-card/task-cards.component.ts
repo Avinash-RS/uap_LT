@@ -76,7 +76,8 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
       assessmentTasksActions.getAssessmentTaskUrl({
         payload: {
           assessmentId: this.route.snapshot.paramMap.get('id') || '',
-          taskId
+          taskId,
+          loginId: sessionStorage.getItem('loginId')
         }
       })
     );
