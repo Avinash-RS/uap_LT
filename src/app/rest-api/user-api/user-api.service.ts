@@ -41,6 +41,7 @@ export class UserAPIService {
       sessionStorage.setItem('user', JSON.stringify(data.data));
       sessionStorage.setItem('token', data.token.access_token);
       sessionStorage.setItem('refresh_token', data.token.refresh_token);
+      sessionStorage.setItem('loginId', data.loginId);
       return true;
     } else {
       this.mulitpleUserLoginToast(data);

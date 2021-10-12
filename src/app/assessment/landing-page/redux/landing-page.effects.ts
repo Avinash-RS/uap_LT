@@ -12,9 +12,9 @@ export class LandingPageEffects {
   getAssessmentTasksList$ = createEffect(() =>
     this.action$.pipe(
       ofType(AssessmentTasksActions.getAssessmentTaskList),
-      map((action) => action.payload.assessmentId),
-      switchMap((assessmentId: string) =>
-        this.assessmentAPIService.getAssessment(assessmentId).pipe(
+      map((action) => action.payload),
+      switchMap((payloads: any) =>
+        this.assessmentAPIService.getAssessment(payloads.assessmentId, payloads.loginId).pipe(
           mergeMap((response: AssessmentTaskModel) => [
             AssessmentTasksActions.getAssessmentTaskListSuccess({ payload: response })
           ]),
@@ -31,7 +31,7 @@ export class LandingPageEffects {
       ofType(AssessmentTasksActions.getAssessmentTaskUrl),
       map((action) => action.payload),
       switchMap((payload) =>
-        this.assessmentAPIService.getAssessmentTaskUrl(payload.assessmentId, payload.taskId).pipe(
+        this.assessmentAPIService.getAssessmentTaskUrl(payload.assessmentId, payload.taskId,payload.loginId).pipe(
           mergeMap((response: AssessmentTaskUrlModel) => [
             AssessmentTasksActions.getAssessmentTaskUrlSuccess({ payload: response })
           ]),

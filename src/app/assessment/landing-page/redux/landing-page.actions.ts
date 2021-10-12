@@ -6,7 +6,7 @@ import { UpdateAssessmentRequest } from 'src/app/rest-api/assessments-api/models
 
 export const getAssessmentTaskList = createAction(
   '[ASSESSMENT MODULE] Get assessmnet tasks list',
-  props<{ payload: { assessmentId: string } }>()
+  props<{ payload: { assessmentId: string, loginId: string } }>()
 );
 
 export const getAssessmentTaskListSuccess = createAction(
@@ -21,7 +21,7 @@ export const getAssessmentTaskListFailure = createAction(
 
 export const getAssessmentTaskUrl = createAction(
   '[ASSESSMENT MODULE] Get assessment task URL',
-  props<{ payload: { assessmentId: string; taskId: number } }>()
+  props<{ payload: { assessmentId: string; taskId: number,loginId: string } }>()
 );
 
 export const getAssessmentTaskUrlSuccess = createAction(
