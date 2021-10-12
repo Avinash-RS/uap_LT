@@ -25,6 +25,7 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
   isTaskStarted: boolean[] = [];
   taskStartTime: StartTimeModel[] = [];
   showTaskStartsOn: boolean[] = [];
+  startTime1: any;
   @Input() canTakeAssessment: boolean;
   @Input() assessmentTasksList: AssessmentTaskResponse[];
   @Output() summaryDetails: EventEmitter<AssessmentSummaryModel> = new EventEmitter();
@@ -37,13 +38,17 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.assessmentTasksList.forEach((task) => {
-      const startTime = new Date(task.startTime);
+      let startTime:any = new Date(task.startTime).toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+      this.startTime1 = new Date(startTime)
       this.taskDuration.push(this.getTaskDuration(task.duration));
       this.taskStatus.push(task.status.toLowerCase());
-      const currentTime = new Date();
-      this.isTaskStarted.push(startTime > currentTime);
-      this.getCountdownTimer(startTime, currentTime);
+      // const currentTime = new Date();
+      let currentTime:any = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+      currentTime = new Date(currentTime);
+      this.isTaskStarted.push(this.startTime1 > currentTime);
+      this.getCountdownTimer(this.startTime1, currentTime);
     });
+
     const assessmentTotalMinutes = this.landingUtil.getHourAndMinutes(
       this.totalHours * 60 + this.totalMinutes
     );
