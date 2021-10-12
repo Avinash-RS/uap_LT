@@ -37,4 +37,5 @@ export interface PackageTaskAttributesModel {
   subType: string;
   duration: number;
   level?: string;
+  
 }

@@ -32,6 +32,11 @@ export class SideNavBarComponent implements OnInit {
       option: 'Sync',
       routePath: '/admin/sync',
       iconPath: '../../../assets/images/sync_black_24dp.svg'
+    },
+    {
+      option: 'Force logout',
+      routePath: '/admin/logout',
+      iconPath: '../../../assets/images/sync_black_24dp.svg'
     }
   ];
   constructor() {}

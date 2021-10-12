@@ -37,4 +37,9 @@ export class SyncService {
   }
 
 
+  forcelogout(data){
+    return this.httpClient.post(`/exitOtherSystem`, data)
+  }
+
+
 }

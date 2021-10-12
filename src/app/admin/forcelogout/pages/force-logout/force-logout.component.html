@@ -1,0 +1,27 @@
+<div class="reports-wrapper">
+    <div class="">
+        <h2>
+            Force logout
+        </h2>
+        <form [formGroup]="dbForm" *ngIf="this.dbForm">
+            <div class="query-wrapper">
+                <div class="fields-wrapper m-t-19">
+
+                    <mat-form-field appearance="outline">
+                        <input matInput placeholder="Enter mail id" formControlName="email">
+
+                    </mat-form-field>
+                    <ng-container *ngIf="email.invalid && email.touched">
+                        <mat-error class="error" *ngIf="email?.errors?.required">{{'Email is required'}}
+                        </mat-error>
+
+                        <mat-error class="error" *ngIf="email?.errors?.pattern">{{'Please enter a valid email address'}}</mat-error>
+                    </ng-container>
+                </div>
+
+
+                <button type="button" [disabled]="!dbForm.valid" class="btnConnect" mat-raised-button (click)="forcelogout()">logout</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,74 +1,66 @@
 <div class="main-panel-schedule-assessment">
-  <div
-    infinite-scroll
-    [infiniteScrollDistance]="1"
-    [infiniteScrollThrottle]="50"
-    (scrolled)="onScroll()"
-    [infiniteScrollContainer]="selector"
-    [fromRoot]="true"
-  >
-    <ng-container *ngFor="let scheduledTemplate of scheduledTemplates; let index = index">
-      <div style="margin-bottom: 25px">
-        <div class="assessment-panel">
-          <div class="batch-id">
-            <span>Batch Id</span> <span>{{ scheduledTemplate.attributes.batchName }}</span>
-          </div>
-          <div class="assessment">
-            <span>Assessment</span>
-            <span>{{ scheduledTemplate.attributes.packageTemplateName }}</span>
-          </div>
-          <div class="scheduled"><span>Scheduled On</span> <span>{{scheduleUtil.getScheduledOn(scheduledTemplate.attributes.startDateTime)}}</span></div>
-          <div class="duration">
-            <span
-              ><img height="18" width="19" src="/assets/profile-no-outline.svg" />{{
+    <div infinite-scroll [infiniteScrollDistance]="1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [infiniteScrollContainer]="selector" [fromRoot]="true">
+        <ng-container *ngFor="let scheduledTemplate of scheduledTemplates; let index = index">
+            <div style="margin-bottom: 25px">
+                <div class="assessment-panel">
+                    <div class="batch-id">
+                        <span>Schedule Name</span> <span>{{ scheduledTemplate.attributes.batchName }}</span>
+                    </div>
+                    <div class="assessment">
+                        <span>Assessment</span>
+                        <span>{{ scheduledTemplate.attributes.packageTemplateName }}</span>
+                    </div>
+                    <div class="scheduled"><span>Scheduled On</span> <span>{{scheduleUtil.getScheduledOn(scheduledTemplate.attributes.startDateTime)}}</span></div>
+                    <div class="scheduled"><span>Scheduled End</span> <span>{{scheduleUtil.getScheduledOn(scheduledTemplate.attributes.endDateTime)}}</span></div>
+                    <div class="duration">
+                        <span><img height="18" width="19" src="/assets/profile-no-outline.svg" />{{
                 scheduledTemplate.attributes.numberOfInvites
               }}</span
             >
             <span style="white-space: nowrap;"> <img height="22" width="22" src="/assets/clock.svg" />{{ assesmentsUtil.getDuration(scheduledTemplate.attributes.duration) }}</span>
-          </div>
-          <div class="status">
-            <span>Status</span> <span>{{ scheduledTemplate.attributes.status }}</span>
-          </div>
-        </div>
-        <div *ngIf="selectedIndex === index" class="candidates-content">
-          <div>
-            <div class="candidates-content-header">Candidates</div>
-            <app-yet-to-start-scheduled-assessment
-              [selectedbatchId]="selectedbatchId"
-              [selectedbatchName]="selectedbatchName"
-              *ngIf="scheduledTemplate.attributes.status.toLowerCase() === 'yettostart'"
-            ></app-yet-to-start-scheduled-assessment>
-            <app-in-progress-scheduled-assessment
-              [selectedbatchId]="selectedbatchId"
-              [selectedbatchName]="selectedbatchName"
-              *ngIf="scheduledTemplate.attributes.status.toLowerCase() === 'inprogress'"
-            ></app-in-progress-scheduled-assessment>
-            <app-completed-scheduled-assessment
-            [selectedbatchName]="selectedbatchName"
-              *ngIf="scheduledTemplate.attributes.status.toLowerCase() === 'completed'"
-              [selectedbatchId]="selectedbatchId"
-            >
-            </app-completed-scheduled-assessment>
-          </div>
-          <div class="action-hide">
-            <div class="align" (click)="onHideDeatils()">Hide Details</div>
-          </div>
-        </div>
+                    </div>
+                    <div class="status">
+                        <span>Status</span> <span>{{ scheduledTemplate.attributes.status }}</span>
+                    </div>
 
-        <div class="action-view">
-          <div
-            class="align"
-            *ngIf="selectedIndex !== index"
-            (click)="onViewDeatils(index)"
-            [ngStyle]="{ 'pointer-events': canViewSchedule ? 'all' : 'none' }"
-          >
-            View Details
-          </div>
+                    <div class="action-btn">
+                        <span class="material-icons " (click)="onEditDeatils(index,scheduledTemplate)">
+                          edit
+                          </span>
+                        <span class="material-icons" *ngIf="selectedIndex !== index" (click)="onViewDeatils(index)" [ngStyle]="{ 'pointer-events': canViewSchedule ? 'all' : 'none' }">
+                            visibility
+                            </span>
+                    </div>
+
+
+
+
+                </div>
+                <div *ngIf="selectedIndex === index" class="candidates-content">
+                    <div>
+                        <div class="candidates-content-header">Candidates</div>
+                        <app-yet-to-start-scheduled-assessment [selectedbatchId]="selectedbatchId" [selectedbatchName]="selectedbatchName" *ngIf="scheduledTemplate.attributes.status.toLowerCase() === 'yettostart'"></app-yet-to-start-scheduled-assessment>
+                        <app-in-progress-scheduled-assessment [selectedbatchId]="selectedbatchId" [selectedbatchName]="selectedbatchName" *ngIf="scheduledTemplate.attributes.status.toLowerCase() === 'inprogress'"></app-in-progress-scheduled-assessment>
+                        <app-completed-scheduled-assessment [selectedbatchName]="selectedbatchName" *ngIf="scheduledTemplate.attributes.status.toLowerCase() === 'completed'" [selectedbatchId]="selectedbatchId">
+                        </app-completed-scheduled-assessment>
+                    </div>
+                    <div class="action-hide">
+                        <div class="align" (click)="onHideDeatils()">Hide Details</div>
+                    </div>
+                </div>
+
+                <!-- <div class="action-view"> -->
+                <!-- <div class="align">
+                        View Details
+                    </div> -->
+                <!-- <div class="align" *ngIf="selectedIndex !== index" (click)="onEditDeatils(scheduledTemplates)" [ngStyle]="{ 'pointer-events': canViewSchedule ? 'all' : 'none' }">
+                        Edit Details
+                    </div> -->
+                <!-- </div> -->
+            </div>
+        </ng-container>
+        <div class="loader-row">
+            <app-lazy-loader *ngIf="showLazyLoading"></app-lazy-loader>
         </div>
-      </div>
-    </ng-container>
-    <div class="loader-row">
-      <app-lazy-loader *ngIf="showLazyLoading"></app-lazy-loader>
     </div>
-  </div>
 </div>

@@ -63,7 +63,8 @@ export class ViewAssessmentPackageComponent implements OnInit, OnDestroy {
     this.store.dispatch(
       assessmentActions.initGetPackageDetails({
         payload: {
-          packageId: this.packageId
+          packageId: this.packageId,
+          orgId:''
         }
       })
     );
