@@ -687,7 +687,7 @@ GetMinutes(d) {
   }
 
   downloadTemplate() {
-    const excel = `assets/templates/candidates.csv`;
+    const excel = `assets/templates/bulkschedule01.csv`;
     window.open(excel, '_blank');
   }
 
