@@ -32,6 +32,7 @@ export const initialState: loginState = {
         ]
       }
     },
+    loginId : '',
     token: {
       access_token: '',
       expires_in: 0,
