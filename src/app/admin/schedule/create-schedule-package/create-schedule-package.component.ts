@@ -366,7 +366,8 @@ GetMinutes(d) {
               emailId: rowData[0] ? rowData[0].trim() : '',
               firstName: rowData[1] ? rowData[1].trim() : '',
               lastName: rowData[2] ? rowData[2].trim() : '',
-              instanceId: rowData[3] ? rowData[3].trim() : ''
+              instanceId: rowData[3] ? rowData[3].trim() : '',
+              password: rowData[4] ? rowData[4].trim() : '',
             });
           }
         }
