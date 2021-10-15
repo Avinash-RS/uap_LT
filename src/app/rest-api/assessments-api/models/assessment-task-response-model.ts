@@ -12,4 +12,5 @@ export interface AssessmentTaskResponse {
   duration: number;
   taskType: string;
   deliveryId?: string;
+  currentDateTime:string;
 }
