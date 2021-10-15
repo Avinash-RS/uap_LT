@@ -32,6 +32,7 @@ export interface AssessmentResponse {
   packageName: string;
   packageDes: string;
   packageId: string;
+  currentDateTime:string;
   assessmentTasks: Array<AssessmentTaskResponse>;
 }
 
