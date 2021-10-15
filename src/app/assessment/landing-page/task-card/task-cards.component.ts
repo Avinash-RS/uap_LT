@@ -38,23 +38,18 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.assessmentTasksList.forEach((task) => {
-      
+      // console.log(this.assessmentTasksList,task)
       let startTime:any = new Date(task.startTime).toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
       this.startTime1 = new Date(startTime)
-
       this.taskDuration.push(this.getTaskDuration(task.duration));
       this.taskStatus.push(task.status.toLowerCase());
       // const currentTime = new Date();
-
-      let currentTime:any = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+      let currentTime:any = new Date(task.currentDateTime).toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
       currentTime = new Date(currentTime);
-
-
-
-
       this.isTaskStarted.push(this.startTime1 > currentTime);
       this.getCountdownTimer(this.startTime1, currentTime);
     });
+
     const assessmentTotalMinutes = this.landingUtil.getHourAndMinutes(
       this.totalHours * 60 + this.totalMinutes
     );
