@@ -20,8 +20,8 @@ export class AssessmentAPIService {
     );
   }
 
-  getAssessment(assessmentId: string): Observable<AssessmentTaskModel> {
-    return this.httpClient.get<AssessmentTaskModel>(`/assessments/${assessmentId}`);
+  getAssessment(assessmentId: string,loginId:any): Observable<AssessmentTaskModel> {
+    return this.httpClient.post<AssessmentTaskModel>(`/assessments/${assessmentId}`,{loginId:loginId});
   }
 
   getStatus(request: any) {
@@ -40,10 +40,8 @@ export class AssessmentAPIService {
     return this.httpClient.get<CandidateReportResponseModel>(`/assessments/${assessmentId}/report`);
   }
 
-  getAssessmentTaskUrl(assessmentId: string, taskId: number): Observable<AssessmentTaskUrlModel> {
-    return this.httpClient.post<AssessmentTaskUrlModel>(
-      `/assessments/${assessmentId}/tasks/${taskId}/start`,
-      ''
+  getAssessmentTaskUrl(assessmentId: string, taskId: number,loginId:any): Observable<AssessmentTaskUrlModel> {
+    return this.httpClient.post<AssessmentTaskUrlModel>(`/assessments/${assessmentId}/tasks/${taskId}/start`,{loginId:loginId}
     );
   }
 

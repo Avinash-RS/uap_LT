@@ -21,7 +21,8 @@ export let setInitialLandingPageState = (): AssessmentTaskModel => {
         hasAccepted: false,
         packageName: '',
         packageDes: '',
-        packageId: '',      
+        packageId: '',  
+        currentDateTime: '',    
         assessmentTasks: [
           {
             id: 0,
@@ -31,7 +32,8 @@ export let setInitialLandingPageState = (): AssessmentTaskModel => {
             endTime: '',
             completedTime: '',
             duration: 0,
-            taskType: ''
+            taskType: '',
+            currentDateTime:'',
           }
         ]
       }
