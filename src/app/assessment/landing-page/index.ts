@@ -19,7 +19,6 @@ import { CountdownModule } from 'ngx-countdown';
 import { TermsAndConditionModule } from 'src/app/shared/terms-and-condition';
 import { TestInformationComponent } from './test-information/test-information.component';
 import { VideoInterviewComponent } from './video-interview/video-interview.component';
-import { SystemReadinessCheckComponent } from './system-readiness-check/system-readiness-check.component';
 
 @NgModule({
   imports: [

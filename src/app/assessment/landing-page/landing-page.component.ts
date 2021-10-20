@@ -129,7 +129,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   nav(){
     // this.getVideoAssesmentToken()
-    // this.router.navigateByUrl('/SystemReadinessCheck');
+    this.router.navigateByUrl('/landing/SystemReadinessCheck');
   }
 
 

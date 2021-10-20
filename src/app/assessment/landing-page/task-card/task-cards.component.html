@@ -26,7 +26,7 @@
             <div class="assessment-actions">
                 <!-- [matTooltip]="getTooltipMessage(task)" -->
                 <ng-template #show>
-                    <button (click)="getVideoAssesmentToken(task)">submit</button>
+                    <!-- <button (click)="getVideoAssesmentToken(task)">submit</button> -->
                     <button matTooltipClass="tooltip" mat-flat-button [disabled]="isTaskStarted[i] || !canTakeAssessment" [ngClass]="getIsTimeOutStatus(task, taskStatus[i]) ? 'disableButton' : ''" (click)="getIsTimeOutStatus(task, taskStatus[i]) ? '' : navigateToTask(task.id)">
                     <div class="action_start" *ngIf="taskStatus[i] === 'yettostart'">
                         <span *ngIf="!showTaskStartsOn[i]">{{getIsTimeOutStatus(task, taskStatus[i]) ? 'Time Expired' : 'Start'}}</span>

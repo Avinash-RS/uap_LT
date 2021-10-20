@@ -6,8 +6,10 @@ const LandingPageRoutes: Routes = [
   {
     path: '',
     component: LandingPageComponent,
-  },
+    children : [
  
+    ],
+  },
 ];
 @NgModule({
   imports: [RouterModule.forChild(LandingPageRoutes)],

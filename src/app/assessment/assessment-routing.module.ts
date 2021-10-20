@@ -16,10 +16,15 @@ const AssessmentRoutes: Routes = [
       {
         path: 'SystemReadinessCheck',
         loadChildren: () =>
-          import('../assessment/landing-page/system-readiness-check/index').then((module) => module.SystemReadinessCheckModule)
+          import('./system-readiness-check/index').then((module) => module.SystemReadinessCheckModule),
+         
       },
+     
     ]
-  }
+
+   
+  },
+
 ];
 @NgModule({
   imports: [RouterModule.forChild(AssessmentRoutes)],
