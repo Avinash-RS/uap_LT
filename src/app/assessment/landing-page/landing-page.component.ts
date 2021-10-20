@@ -15,6 +15,9 @@ import { selectUserProfileData } from 'src/app/redux/user/user.reducer';
 import { ToastrService } from 'ngx-toastr';
 import { AssessmentAPIService } from 'src/app/rest-api/assessments-api/assessments-api.service';
 import * as moment from 'moment'; //in your component
+import { DomSanitizer } from '@angular/platform-browser';
+import { HttpClient } from '@angular/common/http';
+import { UapHttpService } from 'src/app/rest-api/uap-http.service';
 
 @Component({
   selector: 'app-assessment-landing-page',
@@ -37,6 +40,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   notShowThankYou = false;
   backToCertificationPortal: boolean;
   taskIds: any = [];
+  KisshtHtml;
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -55,6 +59,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+
     this.assessmentID = this.route.snapshot.paramMap.get('id') || '';
     this.checkAssessmentTakingStatus();
     if (sessionStorage.getItem('statusCheck')) {
@@ -120,6 +126,12 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     });
     this.checkBackButtonEnabled();
   }
+
+  nav(){
+    // this.getVideoAssesmentToken()
+    // this.router.navigateByUrl('/SystemReadinessCheck');
+  }
+
 
   getTaskIds() {
     this.taskIds = [];
@@ -222,5 +234,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    
+  }
 }

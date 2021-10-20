@@ -5,8 +5,9 @@ import { LandingPageComponent } from './landing-page.component';
 const LandingPageRoutes: Routes = [
   {
     path: '',
-    component: LandingPageComponent
-  }
+    component: LandingPageComponent,
+  },
+ 
 ];
 @NgModule({
   imports: [RouterModule.forChild(LandingPageRoutes)],

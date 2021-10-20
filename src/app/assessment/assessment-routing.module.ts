@@ -11,7 +11,13 @@ const AssessmentRoutes: Routes = [
         path: 'assessment/:id',
         loadChildren: () =>
           import('./landing-page/index').then((module) => module.LandingPageModule)
-      }
+      },
+
+      {
+        path: 'SystemReadinessCheck',
+        loadChildren: () =>
+          import('../assessment/landing-page/system-readiness-check/index').then((module) => module.SystemReadinessCheckModule)
+      },
     ]
   }
 ];

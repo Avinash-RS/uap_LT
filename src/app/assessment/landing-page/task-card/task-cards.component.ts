@@ -10,6 +10,8 @@ import { AssessmentTaskResponse } from 'src/app/rest-api/assessments-api/models/
 import { selectAssessmentTaskUrlState } from '../redux/landing-page.reducers';
 import { AssessmentTaskUrlModel } from 'src/app/rest-api/assessments-api/models/assessment-task-url-response-model';
 import * as moment from 'moment'; //in your component
+import { UapHttpService } from 'src/app/rest-api/uap-http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-task-cards',
@@ -26,6 +28,7 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
   taskStartTime: StartTimeModel[] = [];
   showTaskStartsOn: boolean[] = [];
   startTime1: any;
+  userDetails:any = [];
   @Input() canTakeAssessment: boolean;
   @Input() assessmentTasksList: AssessmentTaskResponse[];
   @Output() summaryDetails: EventEmitter<AssessmentSummaryModel> = new EventEmitter();
@@ -33,10 +36,14 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
   constructor(
     public landingUtil: LandingPageUtils,
     private route: ActivatedRoute,
-    private store: Store<AssessmentTasksReducerState>
+    private store: Store<AssessmentTasksReducerState>,
+    private httpClient: UapHttpService,
+    private toast: ToastrService,
   ) {}
 
   ngOnInit(): void {
+
+    this.userDetails  = JSON.parse(sessionStorage.getItem('user'));
     this.assessmentTasksList.forEach((task) => {
       // console.log(this.assessmentTasksList,task)
       let startTime:any = new Date(task.startTime).toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
@@ -137,4 +144,41 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
         return split;
       }
     }
+
+
+    getVideoAssesmentToken(task){
+      console.log(task)
+    
+      console.log(this.userDetails,'asdasdasd')
+      if(this.userDetails){
+        let data ={
+          "username":this.userDetails.attributes.firstName,
+    
+          "nickname":this.userDetails.attributes.email,
+    
+          "roomid":"",
+    
+          "subject":task.taskName,
+    
+          "tags":[task.taskType],
+    
+          "timeout":"0"
+    
+        }
+        this.httpClient.getVideoAssesment('/generateProctorToken',data).subscribe((response: any)=> {
+          console.log(response)
+          if(response.success == true){
+            sessionStorage.setItem('videotoken',response.proctorToken)
+          }else {
+              this.toast.warning('Something went wrong... Please try after sometime')
+          }
+         
+        })
+      }else {
+
+      }
+
+   
+    }
+  
 }

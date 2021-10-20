@@ -19,6 +19,7 @@ import { CountdownModule } from 'ngx-countdown';
 import { TermsAndConditionModule } from 'src/app/shared/terms-and-condition';
 import { TestInformationComponent } from './test-information/test-information.component';
 import { VideoInterviewComponent } from './video-interview/video-interview.component';
+import { SystemReadinessCheckComponent } from './system-readiness-check/system-readiness-check.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,7 @@ import { VideoInterviewComponent } from './video-interview/video-interview.compo
     CountdownModule,
     TermsAndConditionModule
   ],
-  declarations: [LandingPageComponent, TaskCardsComponent,TestInformationComponent,VideoInterviewComponent],
+  declarations: [LandingPageComponent,TestInformationComponent,VideoInterviewComponent,TaskCardsComponent],
   providers: [LandingPageUtils]
 })
 export class LandingPageModule {}

@@ -9,6 +9,7 @@ export class UapHttpService {
   private apiBaseUrl = environment.API_URL;
   private apiNodeUrl = environment.NODE_URL;
   private adfBaseUrl = environment.ADFBASEURL;
+  private videoAssesment = environment.VideoAssementToken;
 
   constructor(public httpClient: HttpClient) {}
 
@@ -16,8 +17,12 @@ export class UapHttpService {
     return this.httpClient.get<T>(this.getUrl(url), { headers: this.createHeaders() });
   }
 
-  getADF<T>(url: string): Observable<T> {
-    return this.httpClient.get<T>(this.getADFUrl(url), { headers: this.createHeaders() });
+    getADF<T>(url: string): Observable<T> {
+      return this.httpClient.get<T>(this.getADFUrl(url), { headers: this.createHeaders() });
+    }
+
+  getVideoAssesment<T>(url: string,data:any): Observable<T> {
+    return this.httpClient.post<T>(this.getVideoAssesmentUrl(url), data, { headers: this.createHeaders() });
   }
 
   postNode<T>(url: string, data: any): Observable<T> {
@@ -96,6 +101,10 @@ export class UapHttpService {
   
  private getADFUrl(url: string): string {
   return `${this.adfBaseUrl}${url}`;
+  }
+
+  private getVideoAssesmentUrl(url: string):string {
+    return `${this.videoAssesment}${url}`;
   }
   private getToken() {
     return sessionStorage.getItem('token') ? sessionStorage.getItem('token') : ''

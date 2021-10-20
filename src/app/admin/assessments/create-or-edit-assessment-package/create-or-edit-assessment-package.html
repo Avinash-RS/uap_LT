@@ -1,7 +1,7 @@
 <div class="header-block">
-  <span class="header-block__title-font-size">Assessment/Create</span>
-  <div class="header-block__buttons-align">
-    <span>
+    <span class="header-block__title-font-size">Assessment/Create</span>
+    <div class="header-block__buttons-align">
+        <span>
       <button
         class="header-block__button"
         (click)="saveAssessmentPackage()"
@@ -80,47 +80,29 @@
               <div class="test-block__count">
                 <div class="test-block__currentcount-outline-circle">
                   <span class="test-block__current-count">{{ i + 1}}</span>
-                </div>
-              </div>
-              <div class="test-items-block">
-                <label class="test-items-block__heading-font"> Type </label>
-                <span>
+    </div>
+</div>
+<div class="test-items-block">
+    <label class="test-items-block__heading-font"> Type </label>
+    <span>
                   <button class="delete-button__align" (click)="deleteTest(i)">Delete</button>
                 </span>
-                <!-- TODO: Use material UI select -->
-                <select
-                  class="test-items-block__select-field__width"
-                  formControlName="testTypeSelectOption"
-                  (change)="onSelectChange(i, $event)"
-                >
+    <!-- TODO: Use material UI select -->
+    <select class="test-items-block__select-field__width" formControlName="testTypeSelectOption" (change)="onSelectChange(i, $event)">
                   <option *ngFor="let testTypeOption of testTypes" [ngValue]="testTypeOption">
                     {{testTypeOption && testTypeOption.includes('Behaviour') ? 'Personality & Behaviour' : testTypeOption}}
                   </option>
+                  
                 </select>
-                <div class="auto-complete-custom-input-block__align">
-                  <form (submit)="onEnter($event)">
-                    <mat-form-field class="input-field__width">
-                      <mat-label>Test Name</mat-label>
-                      <input
-                        type="text"
-                        placeholder="Test Name"
-                        matInput
-                        id="auto-complete-input-field-{{i}}"
-                        name="auto-complete-input-field-{{i}}"
-                        aria-label="Number"
-                        formControlName="testName"
-                        [matAutocomplete]="auto"
-                      />
-                      <mat-autocomplete #auto="matAutocomplete">
-                        <mat-option
-                          *ngFor="let option of listOfAutoCompleteFilteredOptions[i]"
-                          [value]="option.attributes.name"
-                        >
-                          {{option.attributes.name}}
-                          <span
-                            class="level"
-                            *ngIf="option.attributes.hasOwnProperty('level') && option.attributes.level.length"
-                            >[{{option.attributes.level}}]</span
+    <div class="auto-complete-custom-input-block__align">
+        <form (submit)="onEnter($event)">
+            <mat-form-field class="input-field__width">
+                <mat-label>Test Name</mat-label>
+                <input type="text" placeholder="Test Name" matInput id="auto-complete-input-field-{{i}}" name="auto-complete-input-field-{{i}}" aria-label="Number" formControlName="testName" [matAutocomplete]="auto" />
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of listOfAutoCompleteFilteredOptions[i]" [value]="option.attributes.name">
+                        {{option.attributes.name}}
+                        <span class="level" *ngIf="option.attributes.hasOwnProperty('level') && option.attributes.level.length">[{{option.attributes.level}}]</span
                           >
                         </mat-option>
                       </mat-autocomplete>

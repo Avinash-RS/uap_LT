@@ -1,5 +1,5 @@
 @import 'index';
-.main {   
+.main {
     background: #f8f8f8;
     min-height: 100vh;
     .landing-padding_all {
@@ -74,106 +74,101 @@
     }
 }
 
-.assessment-summary { 
+.assessment-summary {
     font: bold 18px/1.2 $uap-roboto-condensed;
     position: relative;
     background-color: #f8f8f8;
     .header_info {
         background-color: #f8f8f8;
     }
-    ._htxt { 
-        
+    ._htxt {
         max-width: 1200px;
         margin: 0 auto;
         padding: 2.2em 2em 1em 0.1em;
         box-sizing: border-box;
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-areas:
-            'heading button'
-            'text_ button';
-
-            .thankyou {
-                background: $uap-white 0% 0% no-repeat padding-box;
-                box-shadow: 0px 0px 5px #00000026;
-                border: 1px solid rgba(132, 132, 132, 0.5);
-                border-radius: 4px;
-                width: 330px;
-                margin: 2px auto;
-                margin-left: 2em;
-                margin-bottom: 4px;
-                border-left: 8px solid $uap-checkmark-green;
-                padding: .5em;
-                padding-left: 0px;
-                display: flex;
-                align-items: center;
+        grid-template-areas: 'heading button' 'text_ button';
+        .thankyou {
+            background: $uap-white 0% 0% no-repeat padding-box;
+            box-shadow: 0px 0px 5px #00000026;
+            border: 1px solid rgba(132, 132, 132, 0.5);
+            border-radius: 4px;
+            width: 330px;
+            margin: 2px auto;
+            margin-left: 2em;
+            margin-bottom: 4px;
+            border-left: 8px solid $uap-checkmark-green;
+            padding: .5em;
+            padding-left: 0px;
+            display: flex;
+            align-items: center;
+            position: absolute;
+            top: 14px;
+            right: 16px;
+            .close {
                 position: absolute;
-                top: 14px;
-                right: 16px;
-                .close {
-                    position: absolute;
-                    right: 5px;
-                    top: 8px;
-                    width: 25px;
-                    height: 12px;
-                    opacity: 0.3;
-                    cursor: pointer;
-                  }
-                  .close:hover {
-                    opacity: 1;
-                  }
-                  .close:before, .close:after {
-                    position: absolute;
-                    left: 15px;
-                    content: ' ';
-                    height: 12px;
-                    width: 2px;
-                    background-color: $uap-mine-shaft;
-                  }
-                  .close:before {
-                    transform: rotate(45deg);
-                  }
-                  .close:after {
-                    transform: rotate(-45deg);
-                  }                  
-                .icon {
-                    background: $uap-checkmark-green;
-                    border-radius: 50%;
-                    width: 40px;
-                    position: relative;
-                    height: 28px;
-                    margin: 0em .75em;
-                }
-                .second {
-                    color: $uap-light-black;
-                    font-size: 14px;
-                    font-weight: 500;
-                    .thank {
-                        color: $uap-black;
-                        font-size: 22px;
-                        font-weight: 500;
-                        padding-bottom: 4px;  
-                    }
-                }
-                .check {
-                    border-radius: 0px;
-                    display: inline-block;
-                    transform: rotate(45deg);
-                    height: 13px;
-                    width: 5px;
-                    border-bottom: 2px solid $uap-white;
-                    border-right: 2px solid $uap-white;
-                    position: absolute;
-                    margin-left: 4px;
-                    top: 5px;
-                    margin-bottom: 2px;
-                    transition: 0.5s linear;
-                }                
+                right: 5px;
+                top: 8px;
+                width: 25px;
+                height: 12px;
+                opacity: 0.3;
+                cursor: pointer;
             }
-        
+            .close:hover {
+                opacity: 1;
+            }
+            .close:before,
+            .close:after {
+                position: absolute;
+                left: 15px;
+                content: ' ';
+                height: 12px;
+                width: 2px;
+                background-color: $uap-mine-shaft;
+            }
+            .close:before {
+                transform: rotate(45deg);
+            }
+            .close:after {
+                transform: rotate(-45deg);
+            }
+            .icon {
+                background: $uap-checkmark-green;
+                border-radius: 50%;
+                width: 40px;
+                position: relative;
+                height: 28px;
+                margin: 0em .75em;
+            }
+            .second {
+                color: $uap-light-black;
+                font-size: 14px;
+                font-weight: 500;
+                .thank {
+                    color: $uap-black;
+                    font-size: 22px;
+                    font-weight: 500;
+                    padding-bottom: 4px;
+                }
+            }
+            .check {
+                border-radius: 0px;
+                display: inline-block;
+                transform: rotate(45deg);
+                height: 13px;
+                width: 5px;
+                border-bottom: 2px solid $uap-white;
+                border-right: 2px solid $uap-white;
+                position: absolute;
+                margin-left: 4px;
+                top: 5px;
+                margin-bottom: 2px;
+                transition: 0.5s linear;
+            }
+        }
     }
-
-    .back_{ 
+    .back_ {
         width: 125px;
         border-radius: 1.5em;
         color: $uap-grey;
@@ -181,7 +176,7 @@
         outline: none;
         padding: 0.5em 1.3em;
         margin-left: 2.5em;
-        box-shadow:  $uap-btnshadow;
+        box-shadow: $uap-btnshadow;
         height: 37px;
         font-size: 0.8em;
         margin-top: 1.5em;
@@ -192,7 +187,6 @@
             margin-left: 1em;
         }
     }
-
     &__heading {
         font-size: 20px;
         padding-bottom: 15px;
@@ -249,10 +243,12 @@
 .mat-form-field.mat-focused .mat-form-field-ripple {
     background-color: $uap-red;
 }
+
 app-task-cards {
     display: block;
     padding-bottom: 5em;
 }
+
 .info-icon {
     margin-right: 8px;
     background: white;
@@ -264,3 +260,5 @@ app-task-cards {
     display: flex;
     align-items: center;
 }
+
+//////////  Test Information css

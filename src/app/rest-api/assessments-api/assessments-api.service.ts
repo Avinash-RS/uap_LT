@@ -51,4 +51,10 @@ export class AssessmentAPIService {
       ''
     );
   }
+
+
+  updateScheduleEndDate(request:any){
+    return this.httpClient.post(`/updateScheduleEndtime`, request);
+  }
+
 }
