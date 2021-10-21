@@ -15,6 +15,7 @@ export interface AssessmentTaskDataModel {
   id: number;
   type: string;
   attributes: AssessmentResponse;
+  proctorToken:string;
 }
 
 export interface AssessmentResponse {
@@ -34,6 +35,7 @@ export interface AssessmentResponse {
   packageId: string;
   currentDateTime:string;
   assessmentTasks: Array<AssessmentTaskResponse>;
+
 }
 
 export interface MetaInformationModel {

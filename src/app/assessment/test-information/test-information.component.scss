@@ -65,7 +65,7 @@
                 opacity: 1;
             }
             .box {
-                background: url("../../../../assets/images/Instructions_icon.svg") no-repeat 0 6px;
+                background: url("../../../assets/images/Instructions_icon.svg") no-repeat 0 6px;
                 width: 46px;
                 height: 50px;
                 background-size: 288px;
@@ -73,7 +73,7 @@
                 top: 3px;
             }
             .hand {
-                background: url("../../../../assets/images/Instructions_icon.svg") no-repeat -61px;
+                background: url("../../../assets/images/Instructions_icon.svg") no-repeat -61px;
                 width: 46px;
                 height: 50px;
                 background-size: 288px;
@@ -81,7 +81,7 @@
                 top: 5px;
             }
             .flov {
-                background: url("../../../../assets/images/Instructions_icon.svg") no-repeat -121px;
+                background: url("../../../assets/images/Instructions_icon.svg") no-repeat -121px;
                 width: 46px;
                 height: 50px;
                 background-size: 288px;
@@ -89,7 +89,7 @@
                 top: 5px;
             }
             .round {
-                background: url("../../../../assets/images/Instructions_icon.svg") no-repeat -182px;
+                background: url("../../../assets/images/Instructions_icon.svg") no-repeat -182px;
                 width: 46px;
                 height: 50px;
                 background-size: 288px;
@@ -97,7 +97,7 @@
                 top: -4px;
             }
             .clock {
-                background: url("../../../../assets/images/Instructions_icon.svg") no-repeat -242px;
+                background: url("../../../assets/images/Instructions_icon.svg") no-repeat -242px;
                 width: 46px;
                 height: 50px;
                 background-size: 288px;
@@ -202,4 +202,20 @@
     .m-t-10 {
         margin-top: 10px;
     }
+}
+
+.frame {
+    border: none;
+    overflow: hidden;
+    position: absolute;
+    right: 0px;
+    bottom: 0;
+}
+
+#bowlerList {
+    border-radius: 10px;
+    overflow: hidden;
+    /* width: 240px; */
+    width: 191px;
+    height: 131px;
 }

@@ -5,6 +5,7 @@ export interface AssessmentTaskUrlModel {
   id: number;
   type: string;
   attributes: AttributesModel;
+  proctorToken:string;
 }
 
 export interface AttributesModel {

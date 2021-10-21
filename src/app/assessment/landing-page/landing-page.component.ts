@@ -48,7 +48,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     private store: Store<AssessmentTasksReducerState>,
     private toast: ToastrService,
     private assessmentApiService: AssessmentAPIService,
-    private _loading: LoadingService 
+    private _loading: LoadingService
   ) {
     this._loading.setLoading(false, 'request.url');
     this.candidateDetailsForm = this.formBuilder.group({
@@ -59,8 +59,6 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
-
     this.assessmentID = this.route.snapshot.paramMap.get('id') || '';
     this.checkAssessmentTakingStatus();
     if (sessionStorage.getItem('statusCheck')) {
@@ -74,7 +72,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
             loginId: sessionStorage.getItem('loginId')
           }
         })
-      );  
+      );
     }
     this.store.select(selectAssessmentTasksListState).subscribe((response) => {
       this.assessmentData = response;
@@ -108,7 +106,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       this.candidateDetailsForm
         .get('consent')
         ?.setValue(this.assessmentData.data.attributes.hasAccepted);
-          // this.disableConsent = true;
+      // this.disableConsent = true;
     });
     this.candidateDetailsForm.valueChanges.subscribe(() => {
       if (
@@ -127,18 +125,24 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.checkBackButtonEnabled();
   }
 
-  nav(){
+  nav() {
     // this.getVideoAssesmentToken()
     this.router.navigateByUrl('/landing/SystemReadinessCheck');
   }
 
-
   getTaskIds() {
     this.taskIds = [];
     const userProfile = JSON.parse(sessionStorage.getItem('user'));
-    let email = userProfile && userProfile.attributes && userProfile.attributes.email ? userProfile.attributes.email : '';
-    this.assessmentTasksList.forEach(element => {
-      if (element.taskName && (element.status == 'InProgress' || element.status == 'YetToStart') && (element.taskType == 'Coding' || element.taskType == 'English')) {
+    let email =
+      userProfile && userProfile.attributes && userProfile.attributes.email
+        ? userProfile.attributes.email
+        : '';
+    this.assessmentTasksList.forEach((element) => {
+      if (
+        element.taskName &&
+        (element.status == 'InProgress' || element.status == 'YetToStart') &&
+        (element.taskType == 'Coding' || element.taskType == 'English')
+      ) {
         let custom = moment(element.endTime).diff(moment.now(), 'minutes');
         if (custom > 0) {
           let apiData = {
@@ -147,12 +151,12 @@ export class LandingPageComponent implements OnInit, OnDestroy {
             type: element.taskType,
             deliveryId: element.deliveryId ? element.deliveryId : '',
             assessmentId: this.assessmentID
-          }
+          };
           this.taskIds.push(apiData);
         }
       }
     });
-    (this.taskIds.length > 0) ? this.taskStatusApi(this.taskIds) : '';
+    this.taskIds.length > 0 ? this.taskStatusApi(this.taskIds) : '';
   }
 
   taskStatusApi(Taskids) {
@@ -162,7 +166,8 @@ export class LandingPageComponent implements OnInit, OnDestroy {
 
   statusCheckApi(apiData) {
     this._loading.setLoading(true, 'status');
-      this.assessmentApiService.getStatus(apiData).subscribe((response: any)=> {
+    this.assessmentApiService.getStatus(apiData).subscribe(
+      (response: any) => {
         this._loading.setLoading(false, 'status');
         this.assessmentTasksList = [];
         this.store.dispatch(
@@ -172,27 +177,32 @@ export class LandingPageComponent implements OnInit, OnDestroy {
               loginId: sessionStorage.getItem('loginId')
             }
           })
-        );    
-    }, (err)=> {
-      this._loading.setLoading(false, 'status');
-      this.store.dispatch(
-        assessmentTasksActions.getAssessmentTaskList({
-          payload: {
-            assessmentId: this.assessmentID,
-            loginId: sessionStorage.getItem('loginId')
-          }
-        })
-      );  
-    });
+        );
+      },
+      (err) => {
+        this._loading.setLoading(false, 'status');
+        this.store.dispatch(
+          assessmentTasksActions.getAssessmentTaskList({
+            payload: {
+              assessmentId: this.assessmentID,
+              loginId: sessionStorage.getItem('loginId')
+            }
+          })
+        );
+      }
+    );
   }
   checkBackButtonEnabled() {
-    let check = sessionStorage.getItem('fromCert') && sessionStorage.getItem('fromCert') == 'true' ? true : false;
+    let check =
+      sessionStorage.getItem('fromCert') && sessionStorage.getItem('fromCert') == 'true'
+        ? true
+        : false;
     this.backToCertificationPortal = check;
   }
   redirectTo() {
-     return window.location.href = environment.MICROCERTREDIRECT;
+    return (window.location.href = environment.MICROCERTREDIRECT);
   }
-  summaryDetails(summary: AssessmentSummaryModel): void {    
+  summaryDetails(summary: AssessmentSummaryModel): void {
     this.tasksCount = summary.tasks;
     this.totalHours = summary.hour;
   }
@@ -234,7 +244,5 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    
-  }
+  ngOnDestroy(): void {}
 }

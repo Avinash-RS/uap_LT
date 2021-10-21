@@ -19,6 +19,21 @@ const AssessmentRoutes: Routes = [
           import('./system-readiness-check/index').then((module) => module.SystemReadinessCheckModule),
          
       },
+
+      {
+        path: 'TestInformation',
+        loadChildren: () =>
+          import('./test-information/index').then((module) => module.TestInformationModule),
+         
+      },
+
+
+      {
+        path: 'VideoAssesment',
+        loadChildren: () =>
+          import('./video-interview/index').then((module) => module.VideoInterviewModule),
+         
+      },
      
     ]
 

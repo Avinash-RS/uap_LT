@@ -17,8 +17,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { LandingPageEffects } from './redux/landing-page.effects';
 import { CountdownModule } from 'ngx-countdown';
 import { TermsAndConditionModule } from 'src/app/shared/terms-and-condition';
-import { TestInformationComponent } from './test-information/test-information.component';
-import { VideoInterviewComponent } from './video-interview/video-interview.component';
+
 
 @NgModule({
   imports: [
@@ -39,7 +38,7 @@ import { VideoInterviewComponent } from './video-interview/video-interview.compo
     CountdownModule,
     TermsAndConditionModule
   ],
-  declarations: [LandingPageComponent,TestInformationComponent,VideoInterviewComponent,TaskCardsComponent],
+  declarations: [LandingPageComponent,TaskCardsComponent],
   providers: [LandingPageUtils]
 })
 export class LandingPageModule {}

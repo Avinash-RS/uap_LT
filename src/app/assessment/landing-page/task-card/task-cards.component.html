@@ -25,9 +25,11 @@
             </div>
             <div class="assessment-actions">
                 <!-- [matTooltip]="getTooltipMessage(task)" -->
+                <div>
+
+                </div>
                 <ng-template #show>
-                    <!-- <button (click)="getVideoAssesmentToken(task)">submit</button> -->
-                    <button matTooltipClass="tooltip" mat-flat-button [disabled]="isTaskStarted[i] || !canTakeAssessment" [ngClass]="getIsTimeOutStatus(task, taskStatus[i]) ? 'disableButton' : ''" (click)="getIsTimeOutStatus(task, taskStatus[i]) ? '' : navigateToTask(task.id)">
+                    <button matTooltipClass="tooltip" mat-flat-button [disabled]="isTaskStarted[i] || !canTakeAssessment" [ngClass]="getIsTimeOutStatus(task, taskStatus[i]) ? 'disableButton' : ''" (click)="getIsTimeOutStatus(task, taskStatus[i]) ? '' : navigateToTask(task.id,task.taskType,task)">
                     <div class="action_start" *ngIf="taskStatus[i] === 'yettostart'">
                         <span *ngIf="!showTaskStartsOn[i]">{{getIsTimeOutStatus(task, taskStatus[i]) ? 'Time Expired' : 'Start'}}</span>
                         <div *ngIf="showTaskStartsOn[i] && !taskStartTime[i].showCountdown" class="action_start">
@@ -39,6 +41,7 @@
                     <span *ngIf="taskStatus[i] === 'completed'">Completed</span>
                 </button>
                 </ng-template>
+
                 <div *ngIf="showTaskStartsOn[i] && taskStartTime[i].showCountdown else show" class="action_start">
                     <span>Starts in </span>
                     <countdown [config]="taskStartTime[i].countdown" (event)="countdownchange($event, i)"></countdown>
