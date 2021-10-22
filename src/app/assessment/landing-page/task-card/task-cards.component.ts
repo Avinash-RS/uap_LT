@@ -93,8 +93,13 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
         .select(selectAssessmentTaskUrlState)
         .subscribe((response: AssessmentTaskUrlModel): void => {
           this.taskUrlData = response;
-          sessionStorage.setItem('videotoken', this.taskUrlData.proctorToken);
-          this.router.navigate(['/landing/TestInformation']);
+          if(this.taskUrlData.proctorToken.length > 0){
+            sessionStorage.setItem('videotoken', this.taskUrlData.proctorToken);
+            this.router.navigate(['/landing/TestInformation']);
+          }else {
+
+          }
+          
         });
     } else {
       this.store.dispatch(
@@ -173,26 +178,5 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
     }
   }
 
-  getVideoAssesmentToken(task) {
-    if (this.userDetails) {
-      let data = {
-        username: this.userDetails.attributes.firstName,
-        nickname: this.userDetails.attributes.email,
-        roomid: '',
-        subject: task.taskName,
-        tags: [task.taskType],
-        timeout: '0'
-      };
-      this.httpClient
-        .getVideoAssesment('/generateProctorToken', data)
-        .subscribe((response: any) => {
-          if (response.success == true) {
-            sessionStorage.setItem('videotoken', response.proctorToken);
-          } else {
-            this.toast.warning('Something went wrong... Please try after sometime');
-          }
-        });
-    } else {
-    }
-  }
+
 }

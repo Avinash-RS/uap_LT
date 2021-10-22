@@ -15,6 +15,7 @@ export class VideoInterviewComponent implements OnInit {
     var token = sessionStorage.getItem('videotoken');
     var decoded = jwt_decode(token);
     this.getVideoAssesmentToken(decoded);
+    console.log(decoded,'Video Interview');
   }
 
   ngOnInit(): void {}
@@ -25,7 +26,7 @@ export class VideoInterviewComponent implements OnInit {
         .getVideoAssesment('/generateProctorToken', task)
         .subscribe((response: any) => {
           if (response.success == true) {
-            sessionStorage.setItem('videotoken', response.proctorToken);
+            // sessionStorage.setItem('videotoken', response.proctorToken);
           } else {
             this.toast.warning('Something went wrong... Please try after sometime');
           }
