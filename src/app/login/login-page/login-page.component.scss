@@ -29,7 +29,7 @@
         flex-direction: row;
     }
     @media only screen and (min-width: 1440px) {
-        max-width: 1200px;
+        // max-width: 1200px;
         margin: 0 auto;
     }
 }
@@ -37,7 +37,7 @@
 .igniteLogo {
     width: 100%;
     @media only screen and (min-width: 767px) {
-        width: 65%;
+        width: 62%;
     }
 }
 
@@ -190,8 +190,6 @@
 .container-xl,
 .container-xxl {
     width: 100%;
-    padding-right: var(--bs-gutter-x, .75rem);
-    padding-left: var(--bs-gutter-x, .75rem);
     margin-right: auto;
     .align-items-stretch {
         align-items: stretch!important;
@@ -249,15 +247,19 @@
     height: 47px;
     bottom: 0;
     position: fixed;
-    background: linear-gradient(to right, #00b0ed 0%, #53aa34 100%);
+    // background: linear-gradient(to right, #00b0ed 0%, #53aa34 100%);
 }
 
 .message {
     padding: 16px;
-    color: #fff;
+    color: #1b4e9b;
 }
 
 .link {
-    color: #fff !important;
+    color: #1b4e9b !important;
     text-decoration: none;
+}
+
+.m-t-7 {
+    margin-top: 7%;
 }
