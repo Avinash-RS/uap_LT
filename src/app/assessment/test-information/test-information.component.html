@@ -18,7 +18,7 @@
                 <span class="box"></span>
                 <div>
                     <span class="userName">Sections</span>
-                    <span class="nickName">1</span>
+                    <span class="nickName">{{testInfo ? testInfo?.section : '-'}}</span>
                 </div>
             </div>
 
@@ -27,7 +27,7 @@
                 </span>
                 <div>
                     <span class="userName">No. Attempts</span>
-                    <span class="nickName">1</span>
+                    <span class="nickName">{{testInfo ? testInfo?.noOfAttempt : '-'}}</span>
                 </div>
             </div>
 
@@ -37,7 +37,7 @@
                 </span>
                 <div>
                     <span class="userName">Questions</span>
-                    <span class="nickName">1</span>
+                    <span class="nickName">{{testInfo ? testInfo?.totalNoquestions : '-'}}</span>
                 </div>
             </div>
 
@@ -47,7 +47,7 @@
                 </span>
                 <div>
                     <span class="userName">Proctoing</span>
-                    <span class="nickName">YES</span>
+                    <span class="nickName">{{testInfo?.is_proctor == "1" ? 'YES' : 'NO'}}</span>
                 </div>
             </div>
 
@@ -57,7 +57,7 @@
                 </span>
                 <div>
                     <span class="userName">Druation</span>
-                    <span class="nickName">30 Mins</span>
+                    <span class="nickName">{{testInfo ? testInfo?.totalDuration : '-'}} Mins</span>
                 </div>
             </div>
         </div>
@@ -72,10 +72,10 @@
                 <th>Marks</th>
             </tr>
             <tr>
-                <td>Video Interview</td>
-                <td>10</td>
-                <td>15 min</td>
-                <td>15</td>
+                <td>{{testInfo ? testInfo?.section : '-'}}</td>
+                <td>{{testInfo ? testInfo?.totalNoquestions : '-'}}</td>
+                <td>{{testInfo ? testInfo?.totalDuration : '-'}} Mins</td>
+                <td>{{testInfo ? testInfo?.totalMarks : '-'}}</td>
             </tr>
         </table>
     </div>
@@ -113,7 +113,7 @@
         <button class="btn" mat-button (click)="NavToVideo()">Start Test</button>
     </div>
     <div>
-        <iframe class="frame" src="../../../assets/templates/test.html" title="description" height="200" width="300"></iframe>
+        <iframe class="frame" src="../../../assets/templates/test.html" title="description" [ngClass]="{small : proctorScreen == true,big:proctorScreen == false}"></iframe>
     </div>
 
 

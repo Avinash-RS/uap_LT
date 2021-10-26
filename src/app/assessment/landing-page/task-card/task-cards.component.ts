@@ -95,6 +95,8 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
           this.taskUrlData = response;
           if(this.taskUrlData.proctorToken.length > 0){
             sessionStorage.setItem('videotoken', this.taskUrlData.proctorToken);
+            sessionStorage.setItem("smallScreen", 'false')
+            sessionStorage.setItem('schuduleId',this.taskUrlData.attributes.scheduleId);
             this.router.navigate(['/landing/TestInformation']);
           }else {
 
@@ -154,6 +156,8 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
 
   getIsTimeOutStatus(data, status) {
     if (status == 'inprogress' || status == 'yettostart') {
+      // console.log(moment(data.endTime).diff(moment.now(), 'minutes'),'akjsgakjdbkjgdga')
+      // console.log('moment(data.endTime)', moment(data.endTime).format('YYYY-MM-DD HH:mm:ss'));
       let custom = moment(data.endTime).diff(moment.now(), 'minutes');
       if (custom > 0) {
         return false;

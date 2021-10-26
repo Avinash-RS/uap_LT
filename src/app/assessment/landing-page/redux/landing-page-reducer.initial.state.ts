@@ -50,7 +50,8 @@ export let setInitialAssessmentTaskUrlState = (): AssessmentTaskUrlModel => {
     attributes: {
       taskSource: '',
       srcTaskId: '',
-      taskUrl: ''
+      taskUrl: '',
+      scheduleId:''
     }
   };
 };

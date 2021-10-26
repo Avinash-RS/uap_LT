@@ -12,4 +12,5 @@ export interface AttributesModel {
   taskSource: string;
   srcTaskId: string;
   taskUrl: string;
+  scheduleId:string;
 }

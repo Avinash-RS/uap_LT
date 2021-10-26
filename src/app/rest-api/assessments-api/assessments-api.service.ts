@@ -57,4 +57,9 @@ export class AssessmentAPIService {
     return this.httpClient.post(`/updateScheduleEndtime`, request);
   }
 
+
+  getTestInformation(request:any){
+    return this.httpClient.post(`/scheduledQuestionDetails`, request);
+  }
+
 }

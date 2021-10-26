@@ -3,7 +3,8 @@
 <head>
     <style>
         #bowlerList {
-            width: 100%;
+            padding: 30px;
+            width: 95%;
         }
     </style>
 
@@ -5383,7 +5384,6 @@
                                     var t = this.$(en.body),
                                         r = t.firstChild;
                                     f("/api/chat/".concat(He.get("id"), "?filter[type]=message&limit=20&skip=").concat(e)).then((n) => {
-                                        sessionStorage.setItem("smallScreen", true)
                                         if (n.length) {
                                             if (
                                                 ((function(e) {
@@ -5663,7 +5663,7 @@
                                     }
 
 
-                                    // console.log("sssss----" + this.mount);
+                                    console.log("sssss----" + this.mount);
                                     this.mount(e.el || document.body);
                                 }
                                 render() {
@@ -6589,8 +6589,6 @@
                             const l = c;
                         },
                         3500: (e, t, r) => {
-                            var screenSize = sessionStorage.getItem('smallScreen')
-                                // console.log(screenSize, 'test htnl screen size')
                             "use strict";
                             r.d(t, {
                                 Z: () => y
@@ -10681,10 +10679,10 @@
         //   require(['Supervisor'], function(Supervisor) {
 
         var supervisor = new Supervisor({
-            url: 'https://lntproctordev.lntedutech.com'
+            url: 'https://lntproctor.lntedutech.com'
         });
         // log in and initialize the session
-        // console.log(window.sessionStorage.getItem('videotoken'))
+        console.log(window.sessionStorage.getItem('videotoken'))
         supervisor.init({
             provider: 'jwt',
             // get JWT string from our server
@@ -10695,8 +10693,8 @@
         }).catch(function(err) {
             // show alert with an error
             // alert();
-            // console.log(err.toString())
-            // redirect to home page
+            console.log(err.toString())
+                // redirect to home page
             location.href = '/';
         });
 

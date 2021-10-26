@@ -27,12 +27,13 @@ div {
             padding: 20px 20px 20px 34px;
         }
         .qusCard {
-            width: 442px;
+            width: 85%;
             height: 44px;
             background: #FFFFFF 0% 0% no-repeat padding-box;
             margin-left: 34px;
             border-radius: 4px;
             opacity: 1;
+            margin-bottom: 10px;
             .qus-align {
                 margin: 12px;
             }
@@ -96,15 +97,14 @@ div {
         }
         .playpause {
             background-repeat: no-repeat;
-            width: 95%;
-            height: 98.5%;
+            width: 98%;
+            height: 100%;
             position: absolute;
-            left: 3%;
+            left: 0%;
             right: 0%;
             top: 0%;
-            background: #b0b0b073;
+            background: #030303b3;
             bottom: 0%;
-            // opacity: 0.5;
             background-size: contain;
             background-position: center;
         }
@@ -114,9 +114,35 @@ div {
             opacity: 1;
             width: 168px;
             height: 33px;
+            position: absolute;
             color: #fff;
             margin-left: 40%;
-            margin-top: 25%;
+            margin-top: 21%;
+        }
+        .btn-next {
+            background: #1B4E9B 0% 0% no-repeat padding-box;
+            border-radius: 16px;
+            opacity: 1;
+            width: 120px;
+            height: 33px;
+            color: #fff;
+        }
+        .btn-skip {
+            // background: #fff 0% 0% no-repeat padding-box;
+            border-radius: 16px;
+            opacity: 1;
+            width: 120px;
+            height: 33px;
+            color: #666666;
+        }
+        .btn-previous {
+            border-radius: 16px;
+            opacity: 1;
+            width: 120px;
+            height: 33px;
+            margin-right: 5px;
+            color: #666666;
+            border: 1px solid #666666;
         }
         .video-color {
             color: #fff;
@@ -124,10 +150,45 @@ div {
             font-weight: 500;
             line-height: 1.4;
         }
+        .button-grid {
+            display: block;
+            margin-top: 3%;
+        }
+        .recordCount {
+            position: absolute;
+            top: 4%;
+            left: 1%;
+            color: #fff;
+            line-height: 19px;
+            font-weight: 500;
+            height: 17px;
+            width: 95px;
+        }
+        .reddot {
+            position: absolute;
+            width: 11px;
+            left: 5px;
+            top: 3px;
+            height: 11px;
+            border-radius: 50%;
+            background: #BE2020;
+        }
+        .record-bx {
+            height: 61px;
+            border-radius: 17px;
+            background: #000000c4;
+            padding: 0px;
+        }
     }
-    .wrapword {
-        height: auto;
-    }
+}
+
+.wrapword {
+    height: auto;
+}
+
+.blue {
+    border-left: 1px solid #27BBEE;
+    border-left-width: 5px;
 }
 
 // }

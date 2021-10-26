@@ -83,11 +83,11 @@ export class UapHttpService {
      !url.includes('/getUapOrganizations') && 
      !url.includes('/exitOtherSystem') &&
      !url.includes('/assessments/') &&
-
+     !url.includes('/assessments/') &&
 
     //  !url.includes('/packages/') &&
     //  !url.includes('/packages') &&
-     !url.includes('/updateScheduleEndtime')
+     !url.includes('/scheduledQuestionDetails')
      ) {
     return `${this.apiBaseUrl}${url}`;
     } else {
