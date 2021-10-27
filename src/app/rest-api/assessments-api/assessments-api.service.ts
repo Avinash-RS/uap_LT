@@ -62,4 +62,8 @@ export class AssessmentAPIService {
     return this.httpClient.post(`/scheduledQuestionDetails`, request);
   }
 
+  submitTestDetails(request:any){
+    return this.httpClient.post(`/submitTestDetails`, request);
+  }
+
 }

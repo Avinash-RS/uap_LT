@@ -6,7 +6,7 @@
                 Questions
             </div>
             <div *ngFor="let qus of qusInfo;let i=index">
-                <div class="qusCard" [ngClass]="{ blue : i == activequs}" (click)="getTime(qus.questionDetails.duration,i)">
+                <div class="qusCard" [ngClass]="{ blue : i == activequs}" (click)="getTime(qus.questionDetails.duration,i,activequs);">
                     <div class="qus-align">Q{{i+1}} {{qus.questionDetails.questionDes}}</div>
                 </div>
             </div>
@@ -25,6 +25,7 @@
                     <div class="flex-dir">
 
                         <mat-icon class="clock-color">access_alarms</mat-icon><span class="time">Time left: <b>  
+                            <!-- <cd-timer #cd class="timer" [startTime]="countdown" [endTime]="countdownStart" format="hms"></cd-timer> -->
                             <countdown #cd  [config]="{ leftTime: countdown, demand: true, format: 'HH:mm:ss' }"></countdown>
                         </b></span>
 
@@ -37,8 +38,9 @@
                         <div class="d-flex record-bx">
                             <span class="reddot"></span>
                             <span class="recordCount">
-                                <!-- <h5><span id="time" class="text-primary">00:00</span></h5> -->
-                            <countdown style="margin-left: 20px;" [config]="{ leftTime: countdown, format: 'HH:mm:ss' }"></countdown>
+                                <cd-timer class="timer" (onComplete)="onComplete($event)"
+                                (onStart)="onStart($event)" [startTime]="countdownStart" [endTime]="countdown" format="hms"></cd-timer>
+                             <!-- <div class="timer">{{format(hh)}}:{{format(mm)}}:{{format(ss)}}</div>  -->
                             </span>
                         </div>
 
@@ -49,14 +51,15 @@
                     </div>
 
                     <div class="playpause" *ngIf="isStartbtn">
-                        <button class="btn" mat-button (click)="cd.begin();startRecord()"><mat-icon class="video-color" >videocam</mat-icon>Start Recording</button>
+                        <button class="btn" mat-button (click)="cd.begin();startRecord();"><mat-icon class="video-color" >videocam</mat-icon>Start Recording</button>
                     </div>
                 </div>
 
                 <div class="button-grid">
                     <button *ngIf="activequs > 0" class="btn-previous" mat-button (click)="previousQus(activequs)">Previous</button>
-                    <button class="btn-next" mat-button (click)="nextQus(activequs)">Next</button>
-                    <button class="btn-skip" mat-button (click)="skipQus(activequs)">Skip</button>
+                    <button *ngIf="activequs != qusInfo.length -1" class="btn-next" mat-button (click)="nextQus(activequs)">Next</button>
+                    <button *ngIf="activequs == qusInfo.length -1" class="btn-next" mat-button>Submit</button>
+                    <button *ngIf="activequs != qusInfo.length -1" class="btn-skip" mat-button (click)="skipQus(activequs)">Skip</button>
 
                 </div>
 

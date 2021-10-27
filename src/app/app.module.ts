@@ -12,10 +12,11 @@ import { MaterialModule } from './material/material.module';
 import { PrivilegeAutoLogoutGuard } from './privilege-auto-logout.guard';
 import { InterceptorService } from './interceptor.service';
 import { ScreenresolutionBoxComponent } from './shared/screenresolution-box/screenresolution-box.component';
-
+import { CdTimerModule } from 'angular-cd-timer';
 @NgModule({
   declarations: [AppComponent, ScreenresolutionBoxComponent],
   imports: [
+    CdTimerModule,
     APP_IMPORTS,
     AppRoutingModule,
     BrowserAnimationsModule,

@@ -25,9 +25,6 @@
             </div>
             <div class="assessment-actions">
                 <!-- [matTooltip]="getTooltipMessage(task)" -->
-                <div>
-
-                </div>
                 <ng-template #show>
                     <button matTooltipClass="tooltip" mat-flat-button [disabled]="isTaskStarted[i] || !canTakeAssessment" [ngClass]="getIsTimeOutStatus(task, taskStatus[i]) ? 'disableButton' : ''" (click)="getIsTimeOutStatus(task, taskStatus[i]) ? '' : navigateToTask(task.id,task.taskType,task)">
                     <div class="action_start" *ngIf="taskStatus[i] === 'yettostart'">
