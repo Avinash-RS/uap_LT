@@ -38,8 +38,8 @@
                         <div class="d-flex record-bx">
                             <span class="reddot"></span>
                             <span class="recordCount">
-                                <cd-timer class="timer" (onComplete)="onComplete($event)"
-                                (onStart)="onStart($event)" [startTime]="countdownStart" [endTime]="countdown" format="hms"></cd-timer>
+                                <cd-timer  class="timer" (onComplete)="onComplete($event,activequs)" (onStart)="onStart($event)"
+                                [startTime]="countdownStart" [endTime]="countdown" format="hms"></cd-timer>
                              <!-- <div class="timer">{{format(hh)}}:{{format(mm)}}:{{format(ss)}}</div>  -->
                             </span>
                         </div>
@@ -51,15 +51,15 @@
                     </div>
 
                     <div class="playpause" *ngIf="isStartbtn">
-                        <button class="btn" mat-button (click)="cd.begin();startRecord();"><mat-icon class="video-color" >videocam</mat-icon>Start Recording</button>
+                        <button class="btn" mat-button (click)="cd.begin();startRecord(activequs,'start');"><mat-icon class="video-color" >videocam</mat-icon>Start Recording</button>
                     </div>
                 </div>
 
                 <div class="button-grid">
-                    <button *ngIf="activequs > 0" class="btn-previous" mat-button (click)="previousQus(activequs)">Previous</button>
-                    <button *ngIf="activequs != qusInfo.length -1" class="btn-next" mat-button (click)="nextQus(activequs)">Next</button>
-                    <button *ngIf="activequs == qusInfo.length -1" class="btn-next" mat-button>Submit</button>
-                    <button *ngIf="activequs != qusInfo.length -1" class="btn-skip" mat-button (click)="skipQus(activequs)">Skip</button>
+                    <button *ngIf="activequs > 0" class="btn-previous" mat-button (click)="previousQus(activequs,'previous')">Previous</button>
+                    <button *ngIf="activequs != qusInfo.length -1" class="btn-next" mat-button (click)="nextQus(activequs,'next')">Next</button>
+                    <button *ngIf="activequs == qusInfo.length -1" class="btn-next" mat-button (click)="onSubmit(activequs,'submit')">Submit</button>
+                    <button *ngIf="activequs != qusInfo.length -1" class="btn-skip" mat-button (click)="skipQus(activequs,'skip')">Skip</button>
 
                 </div>
 
@@ -69,3 +69,17 @@
     </div>
 </section>
 <!-- </div> -->
+
+<ng-template #matDialog1>
+    <div class="tick">
+        <mat-icon class="f-50">check_circle</mat-icon>
+    </div>
+
+    <h1 mat-dialog-title class="center">Thank you for taking video assessment</h1>
+    <div mat-dialog-content>
+        <p class="center color">HR will contact you for next process.</p>
+    </div>
+    <div mat-dialog-actions>
+        <button class="close" mat-button mat-dialog-close (click)="navToLanding()">Close</button>
+    </div>
+</ng-template>

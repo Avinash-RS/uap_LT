@@ -12,7 +12,6 @@ import { AssessmentTaskUrlModel } from 'src/app/rest-api/assessments-api/models/
 import * as moment from 'moment'; //in your component
 import { UapHttpService } from 'src/app/rest-api/uap-http.service';
 import { ToastrService } from 'ngx-toastr';
-import { SentData } from 'src/app/rest-api/sendData';
 
 @Component({
   selector: 'app-task-cards',
@@ -78,7 +77,7 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
     return this.landingUtil.getDurationMessage(hourAndMinute);
   }
 
-  navigateToTask(taskId: number, taskType: any, task: any): void {
+  navigateToTask(taskId: number, taskType: any, taskstatus: any): void {
     if (taskType == 'Video') {
       this.store.dispatch(
         assessmentTasksActions.getAssessmentTaskUrl({
@@ -93,11 +92,16 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
         .select(selectAssessmentTaskUrlState)
         .subscribe((response: AssessmentTaskUrlModel): void => {
           this.taskUrlData = response;
+         
           if(this.taskUrlData.proctorToken.length > 0){
             sessionStorage.setItem('videotoken', this.taskUrlData.proctorToken);
-            sessionStorage.setItem("smallScreen", 'false')
             sessionStorage.setItem('schuduleId',this.taskUrlData.attributes.scheduleId);
-            this.router.navigate(['/landing/TestInformation']);
+            if(taskstatus != "inprogress"){
+              this.router.navigate(['/landing/TestInformation']);
+            } else {
+              this.router.navigate(['/landing/VideoAssesment']);
+            }
+           
           }else {
 
           }
@@ -156,8 +160,6 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
 
   getIsTimeOutStatus(data, status) {
     if (status == 'inprogress' || status == 'yettostart') {
-      // console.log(moment(data.endTime).diff(moment.now(), 'minutes'),'akjsgakjdbkjgdga')
-      // console.log('moment(data.endTime)', moment(data.endTime).format('YYYY-MM-DD HH:mm:ss'));
       let custom = moment(data.endTime).diff(moment.now(), 'minutes');
       if (custom > 0) {
         return false;

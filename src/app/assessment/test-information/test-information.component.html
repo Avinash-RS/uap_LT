@@ -112,8 +112,12 @@
     <div class="m-t-10">
         <button class="btn" mat-button (click)="NavToVideo()">Start Test</button>
     </div>
-    <div>
-        <iframe class="frame" src="../../../assets/templates/test.html" title="description" [ngClass]="{small : proctorScreen == true,big:proctorScreen == false}"></iframe>
+    <div *ngIf="proctorScreen == 'true'">
+        <iframe class="frame small" src="../../../assets/templates/test.html" title="description"></iframe>
+    </div>
+
+    <div *ngIf="proctorScreen == 'false'">
+        <iframe class="frame big" src="../../../assets/templates/test.html" title="description"></iframe>
     </div>
 
 

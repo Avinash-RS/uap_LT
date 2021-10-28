@@ -9,6 +9,7 @@ import { VideoInterviewRoutingModule } from './video-interview-routing.module';
 import { VideoInterviewComponent } from './video-interview.component';
 import { CdTimerModule } from 'angular-cd-timer';
 
+
 @NgModule({
   imports: [CdTimerModule,CommonModule, MatButtonModule, MatIconModule, MaterialModule,VideoInterviewRoutingModule,CountdownModule],
   declarations: [VideoInterviewComponent],

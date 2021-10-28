@@ -37,6 +37,7 @@ export class LoginPageComponent implements OnInit {
     this.getAssessmentParam();
     this.formInitialize();
     this.getErrorMessage();
+    sessionStorage.setItem("smallScreen", 'false')
   }
 
   getAssessmentParam() {
