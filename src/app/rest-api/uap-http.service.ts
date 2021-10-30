@@ -21,9 +21,9 @@ export class UapHttpService {
       return this.httpClient.get<T>(this.getADFUrl(url), { headers: this.createHeaders() });
     }
 
-  getVideoAssesment<T>(url: string,data:any): Observable<T> {
-    return this.httpClient.post<T>(this.getVideoAssesmentUrl(url), data, { headers: this.createHeaders() });
-  }
+  // getVideoAssesment<T>(url: string,data:any): Observable<T> {
+  //   return this.httpClient.post<T>(this.getVideoAssesmentUrl(url), data, { headers: this.createHeaders() });
+  // }
 
   postNode<T>(url: string, data: any): Observable<T> {
     return this.httpClient.post<T>(this.getNodeURL(url), data, { headers: this.createHeaders() });
@@ -104,9 +104,9 @@ export class UapHttpService {
   return `${this.adfBaseUrl}${url}`;
   }
 
-  private getVideoAssesmentUrl(url: string):string {
-    return `${this.videoAssesment}${url}`;
-  }
+  // private getVideoAssesmentUrl(url: string):string {
+  //   return `${this.videoAssesment}${url}`;
+  // }
   private getToken() {
     return sessionStorage.getItem('token') ? sessionStorage.getItem('token') : ''
   }

@@ -42,9 +42,9 @@ export class SyncService {
   }
 
 
-  VideoAssesment(data){
-    return this.httpClient.getVideoAssesment(`/generateProctorToken`,DataTransferItem)
-  }
+  // VideoAssesment(data){
+  //   return this.httpClient.getVideoAssesment(`/generateProctorToken`,DataTransferItem)
+  // }
 
 
 }
