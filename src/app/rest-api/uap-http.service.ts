@@ -9,7 +9,7 @@ export class UapHttpService {
   private apiBaseUrl = environment.API_URL;
   private apiNodeUrl = environment.NODE_URL;
   private adfBaseUrl = environment.ADFBASEURL;
-  private videoAssesment = environment.VideoAssementToken;
+  // private videoAssesment = environment.VideoAssementToken;
 
   constructor(public httpClient: HttpClient) {}
 
