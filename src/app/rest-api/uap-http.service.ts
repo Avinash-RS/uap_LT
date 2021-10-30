@@ -84,8 +84,8 @@ export class UapHttpService {
      !url.includes('/exitOtherSystem') &&
      !url.includes('/assessments/') &&
      !url.includes('/assessments/') &&
-     !url.includes('/submitTestDetails') &&
-
+     !url.includes('/actionLog') &&
+     !url.includes('/questionMasterExcelUpload') &&
     //  !url.includes('/packages/') &&
     //  !url.includes('/packages') &&
      !url.includes('/scheduledQuestionDetails')

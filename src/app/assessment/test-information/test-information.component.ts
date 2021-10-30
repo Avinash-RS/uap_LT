@@ -11,13 +11,12 @@ import { AssessmentAPIService } from 'src/app/rest-api/assessments-api/assessmen
 export class TestInformationComponent implements OnInit {
   VideoToken: any;
   subscription: any;
-
   testInfo:any = [];
   proctorScreen: any;
   constructor(private router: Router,private httpClient: UapHttpService,private toast: ToastrService,private http : AssessmentAPIService) {
     this.checkToken();
     this.proctorScreen = sessionStorage.getItem('smallScreen');
-    console.log(typeof(this.proctorScreen) )
+    // console.log(typeof(this.proctorScreen) )
   }
 
   ngOnInit(): void {
@@ -27,8 +26,6 @@ export class TestInformationComponent implements OnInit {
 
   checkToken() {
     this.VideoToken = sessionStorage.getItem('videotoken');
-   
-    // 
   }
 
   testInformation(){

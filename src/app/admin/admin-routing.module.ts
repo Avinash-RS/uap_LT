@@ -33,6 +33,12 @@ const AdminRoutes: Routes = [
         loadChildren: () => import('./forcelogout/force-logout.module').then((module) => module.ForceLogoutModule),
         // canActivate: [AdminPrivilegeGuard]
       },
+
+      {
+        path: 'Questions',
+        loadChildren: () => import('./questionMasterExcelUpload/question-master.module').then((module) => module.QuestionMasterModule),
+        // canActivate: [AdminPrivilegeGuard]
+      },
       {
         path: '',
         // TODO: redirect it to home once home screen is available

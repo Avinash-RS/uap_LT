@@ -63,7 +63,11 @@ export class AssessmentAPIService {
   }
 
   submitTestDetails(request:any){
-    return this.httpClient.post(`/submitTestDetails`, request);
+    return this.httpClient.post(`/actionLog`, request);
+  }
+
+  questionupload(request:any){
+    return this.httpClient.post(`/questionMasterExcelUpload`, request);
   }
 
 }

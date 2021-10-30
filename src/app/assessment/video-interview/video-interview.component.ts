@@ -22,15 +22,15 @@ export class VideoInterviewComponent implements OnInit {
   userProfile:any
   qusDetails: any;
   nextQusId: any;
+  qusEndTime: any;
+  qusStartDate: Date;
   
-  constructor(private route: Router,private httpClient: UapHttpService,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
-    this.proctorScreen = sessionStorage.getItem('smallScreen');
+  constructor(private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
     this.userProfile = JSON.parse(sessionStorage.getItem('user'));
   }
 
   ngOnInit(): void {
     this.testInformation();
-    // sessionStorage.setItem("smallScreen", 'true')
   }
 
   testInformation(){
@@ -56,6 +56,8 @@ export class VideoInterviewComponent implements OnInit {
 
  
   nextQus(nextqus,status){
+    this.qusDetails = this.qusInfo[nextqus].questionDetails._id;
+    this.nextQusId = this.qusInfo[nextqus+ 1].questionDetails._id;
     this.actions(status);
     this.isStartbtn = true; 
     this.countdown = 0;
@@ -63,34 +65,34 @@ export class VideoInterviewComponent implements OnInit {
     if(this.qusInfo.length > nextqus){
       this.activequs = nextqus + 1;
       this.countdown =  this.qusInfo[nextqus+ 1].questionDetails.duration * 60;
-      this.nextQusId = this.qusInfo[nextqus+ 1].questionDetails._id;
-
     }else {
-
       this.toast.warning('No Next question..')
     }
    
   }
 
   skipQus(skipqus,status){
-    this.actions(status);
     this.isStartbtn = true; 
     if(this.qusInfo.length > skipqus){
+      this.qusDetails = this.qusInfo[skipqus].questionDetails._id;
+      this.nextQusId = this.qusInfo[skipqus+ 1].questionDetails._id;
+      this.actions(status);
       this.activequs = skipqus + 1;
       this.countdown =  this.qusInfo[skipqus+ 1].questionDetails.duration * 60;
-      this.nextQusId = this.qusInfo[skipqus+ 1].questionDetails._id;
+   
     }else {
       this.toast.warning('No question to skip..')
     }
   }
 
   previousQus(previousQus,status){
-    this.actions(status);
     this.isStartbtn = true; 
     if(previousQus > 0){
-        this.activequs = previousQus - 1;
-        this.countdown =  this.qusInfo[previousQus - 1].questionDetails.duration * 60;
-        this.nextQusId = this.qusInfo[previousQus+ 1].questionDetails._id;
+      this.qusDetails = this.qusInfo[previousQus].questionDetails._id;
+      this.nextQusId = this.qusInfo[previousQus - 1].questionDetails._id;
+      this.actions(status);
+      this.activequs = previousQus - 1;
+      this.countdown =  this.qusInfo[previousQus - 1].questionDetails.duration * 60;
     }else {
       this.toast.warning('No question to previous..')
     }
@@ -98,7 +100,6 @@ export class VideoInterviewComponent implements OnInit {
 
 
   // Ans record timer event
-
   onComplete($event,nextqus){
       if($event){
         if(this.qusInfo.length > nextqus){
@@ -109,25 +110,25 @@ export class VideoInterviewComponent implements OnInit {
             this.activequs = nextqus + 1;
             this.countdown =  this.qusInfo[nextqus+ 1].questionDetails.duration * 60;
             this.nextQusId = this.qusInfo[nextqus+ 1].questionDetails._id;
-      
+            this.qusEndTime = new Date();
           }else {
             this.toast.warning('No Next question..')
           }
-
       }
-
   }
 
-  onTick($event){
-    // console.log($event,'on tick')
-  }
+  onTick($event){}
 
-  onStart($event){
-    console.log($event,'on start')
-  }
+  onStart($event){}
 
   startRecord(activequs,stauts){
+    this.qusStartDate = new Date();
     this.qusDetails = this.qusInfo[activequs].questionDetails._id;
+      if(stauts != 'submit'){
+        this.nextQusId = this.qusInfo[activequs+ 1].questionDetails._id;
+      }else {
+        this.nextQusId = this.qusInfo[activequs].questionDetails._id;
+      }
     this.isStartbtn = false;  // disable start button
     this.actions(stauts);
 }
@@ -138,47 +139,62 @@ onSubmit(activequs,stauts){
   this.actions(stauts);
 }
 
-
-
   actions(status){
     let request;
     if(status == 'start'){
       request = {
         "scheduleId": sessionStorage.getItem('schuduleId'),
-        "startTime": new Date(),
+        "startAt": new Date(),
         "questionId":this.qusDetails ? this.qusDetails : '',
+        "nextQuestionId":  this.nextQusId ? this.nextQusId : '',
         "emailId" : this.userProfile && this.userProfile.attributes && this.userProfile.attributes.email ? this.userProfile.attributes.email : null,
         "action": status,
+      }
+    } else if(status == 'submit'){
+      request = {
+        "scheduleId": sessionStorage.getItem('schuduleId'),
+        "startAt": this.qusStartDate,
+        "endAt":  new Date(),
+        "questionId":this.qusDetails ? this.qusDetails : '',
+        "nextQuestionId":  this.nextQusId ? this.nextQusId : '',
+        "emailId" : this.userProfile && this.userProfile.attributes && this.userProfile.attributes.email ? this.userProfile.attributes.email : null,
+        "action": status,
+        "existDuration": this.countdown / 60,
+        "assessmentId":sessionStorage.getItem('assessmentId')
       }
     } else{
       request = {
         "scheduleId": sessionStorage.getItem('schuduleId'),
-        "endTime": new Date(),
+        "startAt": this.qusStartDate,
+        "endAt":  new Date(),
         "questionId":this.qusDetails ? this.qusDetails : '',
-        "nextQuestionId": this.nextQusId ? this.nextQusId : '',
+        "nextQuestionId":  this.nextQusId ? this.nextQusId : '',
         "emailId" : this.userProfile && this.userProfile.attributes && this.userProfile.attributes.email ? this.userProfile.attributes.email : null,
         "action": status,
+        "existDuration": this.countdown / 60,
       }
 
     }
         this.http.submitTestDetails(request).subscribe((response: any) => {
           if(response.success == true){
+            console.log(response.data)
               if(request.action == 'submit'){
                   this.openDialog()
               }
+              this.countdown = response.data.duration - request.existDuration * 60;
+              console.log(response.data.duration - request.existDuration * 60,'quest')
+              this.countdownStart = response.data.duration
           }else{
-              // this.toast.warning('Please try after sometimes')
           }
 
         })
     }
 
-
-
     openDialog() {
       const dialogRef = this.dialog.open(this.matDialogRef1,{
         width: '572px',
         height: '286px',
+        disableClose: true
       });
     }
 

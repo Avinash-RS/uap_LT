@@ -20,19 +20,18 @@
                     <mat-icon class="alert-color">info</mat-icon>
                     <span class="alertInfo">a video-based question, you will be presented with a question in video form and be given several minutes to respond to each question</span>
                 </div>
+
+                <!-- Questions duration -->
                 <div class="sub-head">
                     <div class="">Video Response</div>
                     <div class="flex-dir">
-
                         <mat-icon class="clock-color">access_alarms</mat-icon><span class="time">Time left: <b>  
-                            <!-- <cd-timer #cd class="timer" [startTime]="countdown" [endTime]="countdownStart" format="hms"></cd-timer> -->
                             <countdown #cd  [config]="{ leftTime: countdown, demand: true, format: 'HH:mm:ss' }"></countdown>
                         </b></span>
-
                     </div>
-
                 </div>
 
+                <!--  Recording time -->
                 <div class="wrapper">
                     <div class="recordCount" *ngIf="!isStartbtn">
                         <div class="d-flex record-bx">
@@ -40,12 +39,10 @@
                             <span class="recordCount">
                                 <cd-timer  class="timer" (onComplete)="onComplete($event,activequs)" (onStart)="onStart($event)"
                                 [startTime]="countdownStart" [endTime]="countdown" format="hms"></cd-timer>
-                             <!-- <div class="timer">{{format(hh)}}:{{format(mm)}}:{{format(ss)}}</div>  -->
                             </span>
                         </div>
-
-
                     </div>
+
                     <div>
                         <iframe class="frame" src="../../../assets/templates/test.html" title="description" height="421" width="790"></iframe>
                     </div>
@@ -60,11 +57,8 @@
                     <button *ngIf="activequs != qusInfo.length -1" class="btn-next" mat-button (click)="nextQus(activequs,'next')">Next</button>
                     <button *ngIf="activequs == qusInfo.length -1" class="btn-next" mat-button (click)="onSubmit(activequs,'submit')">Submit</button>
                     <button *ngIf="activequs != qusInfo.length -1" class="btn-skip" mat-button (click)="skipQus(activequs,'skip')">Skip</button>
-
                 </div>
-
             </div>
-
         </div>
     </div>
 </section>
