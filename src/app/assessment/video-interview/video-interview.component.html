@@ -26,7 +26,8 @@
                     <div class="">Video Response</div>
                     <div class="flex-dir">
                         <mat-icon class="clock-color">access_alarms</mat-icon><span class="time">Time left: <b>  
-                            <countdown #cd  [config]="{ leftTime: countdown, demand: true, format: 'HH:mm:ss' }"></countdown>
+                            <!-- <cd-timer  class="timer" [startTime]="countdown" [endTime]="countdownStart" format="hms"></cd-timer> -->
+                            <countdown #cd  (event)="handleEvent($event)" [config]="{ leftTime: timeLeft, demand: true, format: 'HH:mm:ss' }"></countdown>
                         </b></span>
                     </div>
                 </div>
@@ -38,7 +39,7 @@
                             <span class="reddot"></span>
                             <span class="recordCount">
                                 <cd-timer  class="timer" (onComplete)="onComplete($event,activequs)" (onStart)="onStart($event)"
-                                [startTime]="countdownStart" [endTime]="countdown" format="hms"></cd-timer>
+                                [startTime]="countdownStart" [endTime]="timeLeft"  format="hms"></cd-timer>
                             </span>
                         </div>
                     </div>
@@ -48,7 +49,7 @@
                     </div>
 
                     <div class="playpause" *ngIf="isStartbtn">
-                        <button class="btn" mat-button (click)="cd.begin();startRecord(activequs,'start');"><mat-icon class="video-color" >videocam</mat-icon>Start Recording</button>
+                        <button class="btn" mat-button (click)="startRecord(activequs,'start');"><mat-icon class="video-color" >videocam</mat-icon>Start Recording</button>
                     </div>
                 </div>
 
