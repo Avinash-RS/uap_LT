@@ -5,11 +5,13 @@ import { AssessmentSummaryModel, StartTimeModel } from './task-cards.model';
 import { AssessmentTasksReducerState } from '../redux/landing-page.model';
 import { Store } from '@ngrx/store';
 import * as assessmentTasksActions from '../redux/landing-page.actions';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AssessmentTaskResponse } from 'src/app/rest-api/assessments-api/models/assessment-task-response-model';
 import { selectAssessmentTaskUrlState } from '../redux/landing-page.reducers';
 import { AssessmentTaskUrlModel } from 'src/app/rest-api/assessments-api/models/assessment-task-url-response-model';
 import * as moment from 'moment'; //in your component
+import { UapHttpService } from 'src/app/rest-api/uap-http.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-task-cards',
@@ -26,6 +28,7 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
   taskStartTime: StartTimeModel[] = [];
   showTaskStartsOn: boolean[] = [];
   startTime1: any;
+  userDetails: any = [];
   @Input() canTakeAssessment: boolean;
   @Input() assessmentTasksList: AssessmentTaskResponse[];
   @Output() summaryDetails: EventEmitter<AssessmentSummaryModel> = new EventEmitter();
@@ -33,18 +36,26 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
   constructor(
     public landingUtil: LandingPageUtils,
     private route: ActivatedRoute,
-    private store: Store<AssessmentTasksReducerState>
+    private router: Router,
+    private store: Store<AssessmentTasksReducerState>,
+    private httpClient: UapHttpService,
+    private toast: ToastrService,
   ) {}
 
   ngOnInit(): void {
+    this.userDetails = JSON.parse(sessionStorage.getItem('user'));
     this.assessmentTasksList.forEach((task) => {
       // console.log(this.assessmentTasksList,task)
-      let startTime:any = new Date(task.startTime).toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
-      this.startTime1 = new Date(startTime)
+      let startTime: any = new Date(task.startTime).toLocaleString('en-US', {
+        timeZone: 'Asia/Kolkata'
+      });
+      this.startTime1 = new Date(startTime);
       this.taskDuration.push(this.getTaskDuration(task.duration));
       this.taskStatus.push(task.status.toLowerCase());
       // const currentTime = new Date();
-      let currentTime:any = new Date(task.currentDateTime).toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+      let currentTime: any = new Date(task.currentDateTime).toLocaleString('en-US', {
+        timeZone: 'Asia/Kolkata'
+      });
       currentTime = new Date(currentTime);
       this.isTaskStarted.push(this.startTime1 > currentTime);
       this.getCountdownTimer(this.startTime1, currentTime);
@@ -66,22 +77,55 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
     return this.landingUtil.getDurationMessage(hourAndMinute);
   }
 
-  navigateToTask(taskId: number): void {
-    this.store.dispatch(
-      assessmentTasksActions.getAssessmentTaskUrl({
-        payload: {
-          assessmentId: this.route.snapshot.paramMap.get('id') || '',
-          taskId,
-          loginId: sessionStorage.getItem('loginId')
-        }
-      })
-    );
-    this.store.select(selectAssessmentTaskUrlState).subscribe((response: AssessmentTaskUrlModel): void => {
-      this.taskUrlData = response;
-      if (this.taskUrlData.attributes.taskUrl) {
-        window.location.assign(this.taskUrlData.attributes.taskUrl);
-      }
-    });
+  navigateToTask(taskId: number, taskType: any, taskstatus: any): void {
+    if (taskType == 'Video') {
+      this.store.dispatch(
+        assessmentTasksActions.getAssessmentTaskUrl({
+          payload: {
+            assessmentId: this.route.snapshot.paramMap.get('id') || '',
+            taskId,
+            loginId: sessionStorage.getItem('loginId')
+          }
+        })
+      );
+      this.store
+        .select(selectAssessmentTaskUrlState)
+        .subscribe((response: AssessmentTaskUrlModel): void => {
+          this.taskUrlData = response;
+         
+          if(this.taskUrlData.proctorToken.length > 0){
+            sessionStorage.setItem('videotoken', this.taskUrlData.proctorToken);
+            sessionStorage.setItem('schuduleId',this.taskUrlData.attributes.scheduleId);
+            if(taskstatus != "inprogress"){
+              this.router.navigate(['/landing/TestInformation']);
+            } else {
+              this.router.navigate(['/landing/VideoAssesment']);
+            }
+           
+          }else {
+
+          }
+          
+        });
+    } else {
+      this.store.dispatch(
+        assessmentTasksActions.getAssessmentTaskUrl({
+          payload: {
+            assessmentId: this.route.snapshot.paramMap.get('id') || '',
+            taskId,
+            loginId: sessionStorage.getItem('loginId')
+          }
+        })
+      );
+      this.store
+        .select(selectAssessmentTaskUrlState)
+        .subscribe((response: AssessmentTaskUrlModel): void => {
+          this.taskUrlData = response;
+          if (this.taskUrlData.attributes.taskUrl) {
+            window.location.assign(this.taskUrlData.attributes.taskUrl);
+          }
+        });
+    }
   }
 
   getCountdownTimer(startTime: Date, currentTime: Date): void {
@@ -90,12 +134,14 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
     const leftTime = leftOutTime / 1000;
     const startOn = `${startTime.getDate()}/${startTime.getMonth() + 1}/${startTime.getFullYear()}`;
     const showCountdown = leftTime < 86400 ? true : false;
-    this.taskStartTime.push(
-      { countdown: { leftTime, format: 'HH: mm: ss' }, startOn, showCountdown }
-    );
+    this.taskStartTime.push({
+      countdown: { leftTime, format: 'HH: mm: ss' },
+      startOn,
+      showCountdown
+    });
   }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy(): void {}
 
   countdownchange(event: any, index: number): void {
     if (event.action === 'done') {
@@ -119,22 +165,24 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
         return false;
       }
       return true;
-    }  
     }
+  }
 
-    isEclipsisNeeded(name) {
-      if (name.length > 43) {
-        let eclipe = '...'
-        return name.substr(0, 43) + eclipe;
-      } else {
-        return name;
-      }
+  isEclipsisNeeded(name) {
+    if (name.length > 43) {
+      let eclipe = '...';
+      return name.substr(0, 43) + eclipe;
+    } else {
+      return name;
     }
+  }
 
-    getTime(date) {
-      if (date) {
-        const split = moment(date).format('LLL');
-        return split;
-      }
+  getTime(date) {
+    if (date) {
+      const split = moment(date).format('LLL');
+      return split;
     }
+  }
+
+
 }

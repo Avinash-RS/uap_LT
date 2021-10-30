@@ -1,4 +1,22 @@
+<!-- <router-outlet></router-outlet> -->
 <main class="main">
+
+    <!-- <uap-test-information></uap-test-information> -->
+    <!-- <uap-video-interview></uap-video-interview> -->
+
+
+    <!-- <iframe src="../../../assets/templates/test.html" title="description" height="200" width="300"></iframe>
+
+
+ -->
+
+
+
+
+
+
+
+
     <div class="landing-padding_all">
         <section class="welcome" *ngIf="disableConsent == false">
             <!-- <div class="welcome__heading">Welcome !</div>
@@ -48,33 +66,35 @@
                             <p class="desc-para"><span class="material-icons info-icon">
                                 info
                                 </span> {{assessmentData?.data?.attributes?.packageDes}}</p>
-                        </div>
-
-                        <!-- Hello Candidate, -->
-                    </span>
-                   
-                
-                    <div *ngIf="isAllTasksCompleted && !notShowThankYou">&#160;</div>
-                    <button *ngIf="backToCertificationPortal" (click)="redirectTo()" class="back_"><em> <img alt="back" src="../../../assets/back.svg" /></em>Back</button> 
-
-                        <div *ngIf='isAllTasksCompleted && !notShowThankYou' class="thankyou">
-                        <div class="close" (click)="notShowThankYou = !notShowThankYou"></div>
-                        <div class="icon"> &#160;<div class="check"></div></div>
-                        <div class="second">
-                            <div class="thank">Thank You !</div>
-                            <div>You have completed this assessment and can now close this window safely.</div>
-                        </div>
-                    </div>
                 </div>
 
+                <!-- Hello Candidate, -->
+                </span>
+
+
+                <div *ngIf="isAllTasksCompleted && !notShowThankYou">&#160;</div>
+                <button *ngIf="backToCertificationPortal" (click)="redirectTo()" class="back_"><em> <img alt="back" src="../../../assets/back.svg" /></em>Back</button>
+
+                <div *ngIf='isAllTasksCompleted && !notShowThankYou' class="thankyou">
+                    <div class="close" (click)="notShowThankYou = !notShowThankYou"></div>
+                    <div class="icon"> &#160;
+                        <div class="check"></div>
+                    </div>
+                    <div class="second">
+                        <div class="thank">Thank You !</div>
+                        <div>You have completed this assessment and can now close this window safely.</div>
+                    </div>
+                </div>
             </div>
-            <app-task-cards (summaryDetails)="summaryDetails($event)" [canTakeAssessment]="canTakeAssessment"
-                [assessmentTasksList]="assessmentTasksList"></app-task-cards>
-            <!-- <div class="assessment-summary__message" *ngIf='isAllTasksCompleted'>
+
+    </div>
+    <!-- <button (click)="nav()">nav</button> -->
+    <app-task-cards (summaryDetails)="summaryDetails($event)" [canTakeAssessment]="canTakeAssessment" [assessmentTasksList]="assessmentTasksList"></app-task-cards>
+    <!-- <div class="assessment-summary__message" *ngIf='isAllTasksCompleted'>
                 <span class="thank_you">Thank You ! &nbsp; </span> You have completed this assessment and can now close this window safely.
             </div> -->
 
-        </section>
+    </section>
     </div>
 </main>
 

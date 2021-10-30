@@ -42,4 +42,9 @@ export class SyncService {
   }
 
 
+  VideoAssesment(data){
+    return this.httpClient.getVideoAssesment(`/generateProctorToken`,DataTransferItem)
+  }
+
+
 }

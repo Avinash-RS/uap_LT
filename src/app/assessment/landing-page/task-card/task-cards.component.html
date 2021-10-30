@@ -3,7 +3,7 @@
     <div class="assessment-list" *ngFor="let task of assessmentTasksList; let i = index" [ngClass]="taskStatus[i]">
         <div *ngIf="taskStatus[i] == 'completed'" class="tickMark">&#160;</div>
         <div class="leftborder">
-            <div class="assessment-list__number" [ngClass]="{ 'apicon' : task.taskType == 'Aptitude', 'cdicon' : task.taskType == 'Coding', 'english' : task.taskType == 'English', 'psych' : task.taskType.includes('Behaviour')}">
+            <div class="assessment-list__number" [ngClass]="{ 'apicon' : task.taskType == 'Aptitude',  'video' : task.taskType == 'Video' ,'cdicon' : task.taskType == 'Coding', 'english' : task.taskType == 'English', 'psych' : task.taskType.includes('Behaviour')}">
                 <!-- <span *ngIf="task.status !== 'completed'; else notCompleted">{{ i + 1 }}</span> -->
                 <ng-template #notCompleted><span class="material-icons">done</span></ng-template>
             </div>
@@ -26,7 +26,7 @@
             <div class="assessment-actions">
                 <!-- [matTooltip]="getTooltipMessage(task)" -->
                 <ng-template #show>
-                    <button matTooltipClass="tooltip" mat-flat-button [disabled]="isTaskStarted[i] || !canTakeAssessment" [ngClass]="getIsTimeOutStatus(task, taskStatus[i]) ? 'disableButton' : ''" (click)="getIsTimeOutStatus(task, taskStatus[i]) ? '' : navigateToTask(task.id)">
+                    <button matTooltipClass="tooltip" mat-flat-button [disabled]="isTaskStarted[i] || !canTakeAssessment" [ngClass]="getIsTimeOutStatus(task, taskStatus[i]) ? 'disableButton' : ''" (click)="getIsTimeOutStatus(task, taskStatus[i]) ? '' : navigateToTask(task.id,task.taskType,taskStatus[i])">
                     <div class="action_start" *ngIf="taskStatus[i] === 'yettostart'">
                         <span *ngIf="!showTaskStartsOn[i]">{{getIsTimeOutStatus(task, taskStatus[i]) ? 'Time Expired' : 'Start'}}</span>
                         <div *ngIf="showTaskStartsOn[i] && !taskStartTime[i].showCountdown" class="action_start">
@@ -38,6 +38,7 @@
                     <span *ngIf="taskStatus[i] === 'completed'">Completed</span>
                 </button>
                 </ng-template>
+
                 <div *ngIf="showTaskStartsOn[i] && taskStartTime[i].showCountdown else show" class="action_start">
                     <span>Starts in </span>
                     <countdown [config]="taskStartTime[i].countdown" (event)="countdownchange($event, i)"></countdown>

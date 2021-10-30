@@ -5,10 +5,12 @@ export interface AssessmentTaskUrlModel {
   id: number;
   type: string;
   attributes: AttributesModel;
+  proctorToken:string;
 }
 
 export interface AttributesModel {
   taskSource: string;
   srcTaskId: string;
   taskUrl: string;
+  scheduleId:string;
 }

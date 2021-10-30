@@ -51,4 +51,23 @@ export class AssessmentAPIService {
       ''
     );
   }
+
+
+  updateScheduleEndDate(request:any){
+    return this.httpClient.post(`/updateScheduleEndtime`, request);
+  }
+
+
+  getTestInformation(request:any){
+    return this.httpClient.post(`/scheduledQuestionDetails`, request);
+  }
+
+  submitTestDetails(request:any){
+    return this.httpClient.post(`/actionLog`, request);
+  }
+
+  questionupload(request:any){
+    return this.httpClient.post(`/questionMasterExcelUpload`, request);
+  }
+
 }

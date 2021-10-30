@@ -1,0 +1,16 @@
+<div class="reports-wrapper">
+    <div class="">
+        <h2>
+            Questions Master For Video Assesments
+        </h2>
+        <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="fileDropped($event)" accept=".csv" contentClassName="ngx-file-drop" [multiple]="false">
+            <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                <div class="upload" style="cursor: pointer;" (click)="openFileSelector()">
+                    <div class="btn"> Click to Browse </div>
+                    <div class="front"> Or </div>
+                    <div class="front"> Drag & Drop CSV File </div>
+                </div>
+            </ng-template>
+        </ngx-file-drop>
+    </div>
+</div>

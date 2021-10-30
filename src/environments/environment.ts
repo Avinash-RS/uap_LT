@@ -13,7 +13,8 @@ export const environment = {
   ADFBASEURL: 'https://uap-uat.azurewebsites.net',
   MICROCERTREDIRECT: 'https://certification.lntiggnite.com/myAssessment',
   API_URL: 'https://uapdev-api.lntiggnite.com',
-  NODE_URL: 'https://edgeservice.lntiggnite.com'
+  NODE_URL: 'https://edgeservice.lntiggnite.com',
+  VideoAssementToken: 'https://uapcoreservice.lntedutech.com'
 //   OIDC_CONFIG: {
 //     issuer: 'https://uap-iam.lntiggnite.com/auth/realms/uap',
 //     clientId: 'uap-ui',

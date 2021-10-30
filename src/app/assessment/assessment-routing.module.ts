@@ -11,9 +11,35 @@ const AssessmentRoutes: Routes = [
         path: 'assessment/:id',
         loadChildren: () =>
           import('./landing-page/index').then((module) => module.LandingPageModule)
-      }
+      },
+
+      {
+        path: 'SystemReadinessCheck',
+        loadChildren: () =>
+          import('./system-readiness-check/index').then((module) => module.SystemReadinessCheckModule),
+         
+      },
+
+      {
+        path: 'TestInformation',
+        loadChildren: () =>
+          import('./test-information/index').then((module) => module.TestInformationModule),
+         
+      },
+
+
+      {
+        path: 'VideoAssesment',
+        loadChildren: () =>
+          import('./video-interview/index').then((module) => module.VideoInterviewModule),
+         
+      },
+     
     ]
-  }
+
+   
+  },
+
 ];
 @NgModule({
   imports: [RouterModule.forChild(AssessmentRoutes)],

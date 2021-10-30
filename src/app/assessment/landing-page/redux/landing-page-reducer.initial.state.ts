@@ -7,6 +7,7 @@ export let setInitialLandingPageState = (): AssessmentTaskModel => {
     data: {
       id: 0,
       type: '',
+      proctorToken:'',
       attributes: {
         firstName: '',
         lastName: '',
@@ -45,10 +46,12 @@ export let setInitialAssessmentTaskUrlState = (): AssessmentTaskUrlModel => {
   return {
     id: 0,
     type: '',
+    proctorToken: '',
     attributes: {
       taskSource: '',
       srcTaskId: '',
-      taskUrl: ''
+      taskUrl: '',
+      scheduleId:''
     }
   };
 };

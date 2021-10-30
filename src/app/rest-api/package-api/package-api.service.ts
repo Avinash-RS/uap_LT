@@ -37,7 +37,7 @@ export class PackageAPIService {
   }
 
   getPackage(id: string,orgId:string): Observable<PackageDetailResponse> {
-    console.log(id)
+    // console.log(id)
     return this.httpClient.get<PackageDetailResponse>(`/packages/${id}`);
   }
   createPackage(request: PackageRequest): Observable<CreateOrUpdatePackageResponse> {
