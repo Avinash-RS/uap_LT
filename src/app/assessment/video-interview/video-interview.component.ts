@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { ToastrService } from 'ngx-toastr';
+import { AlertPromise } from 'selenium-webdriver';
 import { AssessmentAPIService } from 'src/app/rest-api/assessments-api/assessments-api.service';
 import { UapHttpService } from 'src/app/rest-api/uap-http.service';
 @Component({
@@ -18,7 +19,7 @@ export class VideoInterviewComponent implements OnInit {
   qusInfo:any = [];
   isStartbtn = true;
   timeLeft: number = 0;
-  countdownStart: number =0;
+  countdownStart: number = 1;
   firstQusTime:number;
   activequs = 0;
   proctorScreen :any;
@@ -26,9 +27,12 @@ export class VideoInterviewComponent implements OnInit {
   qusDetails: any;
   nextQusId: any;
   qusEndTime: any;
-  qusStartDate: Date;
+  qusStartDate: any;
   qusDuration: number;
   timerActions:any = 'leftTime'
+  isRecordStarted:boolean;
+  qusEndDate: Date;
+  isQusEnable = false;
   constructor(private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
     this.userProfile = JSON.parse(sessionStorage.getItem('user'));
     this.testInformation();
@@ -60,55 +64,82 @@ export class VideoInterviewComponent implements OnInit {
   }
 
 
-  startRecord(activequs,stauts){
-   
-    this.qusStartDate = new Date();
+  startRecord(activequs,stauts,isStart){
+      // this.handleEvent(event,true);
+    this.isRecordStarted = isStart;
+    if(this.isRecordStarted == true){
+      this.qusStartDate = new Date();
+    }else {
+        this.qusStartDate = '';
+    }
     this.qusDetails = this.qusInfo[activequs].questionDetails._id;
     this.isStartbtn = false;  // disable start button
-    this.actions(stauts,true);
+    this.actions(stauts,true,activequs);
 }
 
  
   nextQus(nextqus,status){
+      if(this.isRecordStarted == true){
+            this.isRecordStarted = false;
+            this.qusEndDate = new Date();
+
+      }else{
+        this.qusStartDate = '';
+      }
     this.qusDetails = this.qusInfo[nextqus].questionDetails._id;
     this.nextQusId = this.qusInfo[nextqus+ 1].questionDetails._id;
-    this.qusDuration = this.qusInfo[nextqus].questionDetails.duration * 60;
-    this.actions(status, false);
+    this.qusDuration = this.qusInfo[nextqus + 1].questionDetails.duration * 60;
     this.isStartbtn = true; 
     if(this.qusInfo.length > nextqus){
       this.activequs = nextqus + 1;
-      this.timeLeft =  this.qusInfo[nextqus+ 1].questionDetails.duration * 60;
+      this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
       
     }else {
       this.toast.warning('No Next question..')
     }
-   
+    this.actions(status, false,this.activequs);
   }
 
   skipQus(skipqus,status){
+    if(this.isRecordStarted == true){
+      this.isRecordStarted = false;
+      this.qusEndDate = new Date();
+
+}else{
+  this.qusStartDate = '';
+}
     this.isStartbtn = true; 
     if(this.qusInfo.length > skipqus){
       this.qusDetails = this.qusInfo[skipqus].questionDetails._id;
       this.nextQusId = this.qusInfo[skipqus+ 1].questionDetails._id;
-      this.qusDuration = this.qusInfo[skipqus].questionDetails.duration * 60;
-      this.actions(status,false);
+      this.qusDuration = this.qusInfo[skipqus + 1].questionDetails.duration * 60;
       this.activequs = skipqus + 1;
-      this.timeLeft =  this.qusInfo[skipqus+ 1].questionDetails.duration * 60;
-   
+      this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+      this.actions(status,false, this.activequs);
+      // if(this.qusInfo.length == this.activequs){
+      //   this.actions('next',false)
+      // }
     }else {
       this.toast.warning('No question to skip..')
     }
   }
 
   previousQus(previousQus,status){
+    if(this.isRecordStarted == true){
+      this.isRecordStarted = false;
+      this.qusEndDate = new Date();
+
+      }else{
+        this.qusStartDate = '';
+      }
     this.isStartbtn = true; 
     if(previousQus > 0){
       this.qusDetails = this.qusInfo[previousQus].questionDetails._id;
       this.nextQusId = this.qusInfo[previousQus - 1].questionDetails._id;
-      this.qusDuration = this.qusInfo[previousQus -1].questionDetails.duration * 60;
-      this.actions(status,false);
+      this.qusDuration = this.qusInfo[previousQus - 1].questionDetails.duration * 60;
       this.activequs = previousQus - 1;
-      this.timeLeft =  this.qusInfo[previousQus - 1].questionDetails.duration * 60;
+      this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+      this.actions(status,false, this.activequs);
     }else {
       this.toast.warning('No question to previous..')
     }
@@ -116,25 +147,22 @@ export class VideoInterviewComponent implements OnInit {
 
 
   // Ans record timer event
-  onComplete($event,nextqus){
+  onComplete($event,index){
+    console.log($event,'complete',this.qusInfo.length ,'lenght',index)
       if($event){
-        if(this.qusInfo.length > nextqus){
+        if(this.qusInfo.length -1 > index){
           alert('Please press ok to move next question');
             this.isStartbtn = true; 
             this.timeLeft = 0;
-            this.countdownStart = 0;
-            this.activequs = nextqus + 1;
-            this.timeLeft =  this.qusInfo[nextqus+ 1].questionDetails.duration * 60;
-            this.nextQusId = this.qusInfo[nextqus+ 1].questionDetails._id;
-            this.qusDuration = this.qusInfo[nextqus].questionDetails.duration * 60;
-            if(this.qusInfo >= nextqus){
-              this.actions('next',false)
-            }else {
-              this.actions('submit',false)
-            }
-
+            this.countdownStart = 1;
+            this.activequs = index + 1;
+            this.timeLeft =  this.qusInfo[index +1].questionDetails.duration * 60;
+            this.nextQusId = this.qusInfo[index+ 1].questionDetails._id;
+            this.qusDuration = this.qusInfo[index + 1].questionDetails.duration * 60;
             this.qusEndTime = new Date();
+            this.actions('next',false,'')
           }else {
+            this.actions('submit',false,'')
             this.toast.warning('No Next question..')
           }
       }
@@ -143,6 +171,7 @@ export class VideoInterviewComponent implements OnInit {
   onTick($event){}
 
   onStart($event){
+    console.log($event)
   }
 
 
@@ -150,10 +179,11 @@ export class VideoInterviewComponent implements OnInit {
 
 onSubmit(activequs,stauts){
   this.qusDetails = this.qusInfo[activequs].questionDetails._id;
-  this.actions(stauts,false);
+  this.qusDuration = this.qusInfo[activequs].questionDetails.duration * 60;
+  this.actions(stauts,false,activequs);
 }
 
-  actions(status,restart){
+  actions(status,restart,qusIndex){
     let request;
     if(status == 'start'){
       request = {
@@ -167,7 +197,7 @@ onSubmit(activequs,stauts){
     } else if(status == 'submit'){
       request = {
         "scheduleId": sessionStorage.getItem('schuduleId'),
-        "startAt": this.qusStartDate,
+        "startAt": this.qusStartDate ? this.qusStartDate : '' ,
         "endAt":  new Date(),
         "questionId":this.qusDetails ? this.qusDetails : '',
         "nextQuestionId":  this.nextQusId ? this.nextQusId : '',
@@ -179,7 +209,7 @@ onSubmit(activequs,stauts){
     } else{
       request = {
         "scheduleId": sessionStorage.getItem('schuduleId'),
-        "startAt": this.qusStartDate,
+        "startAt": this.qusStartDate ? this.qusStartDate : '' ,
         "endAt":  new Date(),
         "questionId":this.qusDetails ? this.qusDetails : '',
         "nextQuestionId":  this.nextQusId ? this.nextQusId : '',
@@ -191,12 +221,15 @@ onSubmit(activequs,stauts){
     }
         this.http.submitTestDetails(request).subscribe((response: any) => {
           if(response.success == true){
-            console.log(response.data)
               if(request.action == 'submit'){
                   this.openDialog()
               }
+                // if(response.data.timeLeft < 0){
+                //     this.isQusEnable = true;
+                    
+                // }
               this.timeLeft = response.data.timeLeft ? response.data.timeLeft : this.timeLeft;
-              this.countdownStart = response.data.duration;
+              this.countdownStart = response.data.duration ? response.data.duration : 1;
               if(restart){
                 this.counterStart.begin();
                 setTimeout(() => {
@@ -223,8 +256,7 @@ onSubmit(activequs,stauts){
     }
 
 
-    handleEvent(e: CountdownEvent) {
+    handleEvent(event:any) {
 
     }
-
 }
