@@ -86,7 +86,8 @@ export class UserAPIService {
       if (response && response.success) {
         this.logoutWhenTokenNotPresent();
       } else {
-        this.toastr.warning(response && response.message ? response.message : 'Try again later');
+        // this.toastr.warning(response && response.message ? response.message : 'Try again later');
+        this.logoutWhenTokenNotPresent();
       }
     }, (err)=> {
 

@@ -13,4 +13,10 @@ export interface AttributesModel {
   srcTaskId: string;
   taskUrl: string;
   scheduleId:string;
+  lastVideoQuestionDetails : lastVideoQuestionModel;
+}
+
+export interface lastVideoQuestionModel {
+  duration: string;
+  id: string;
 }

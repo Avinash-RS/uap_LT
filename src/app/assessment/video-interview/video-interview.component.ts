@@ -3,9 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdown';
 import { ToastrService } from 'ngx-toastr';
-import { AlertPromise } from 'selenium-webdriver';
 import { AssessmentAPIService } from 'src/app/rest-api/assessments-api/assessments-api.service';
-import { UapHttpService } from 'src/app/rest-api/uap-http.service';
+import _ from 'lodash';
+import { selectAssessmentTaskUrlState } from '../landing-page/redux/landing-page.reducers';
+import { AssessmentTaskUrlModel } from 'src/app/rest-api/assessments-api/models/assessment-task-url-response-model';
+import { AssessmentTasksReducerState } from '../landing-page/redux/landing-page.model';
+import { Store } from '@ngrx/store';
 @Component({
   selector: 'uap-video-interview',
   templateUrl: './video-interview.component.html',
@@ -33,13 +36,34 @@ export class VideoInterviewComponent implements OnInit {
   isRecordStarted:boolean;
   qusEndDate: Date;
   isQusEnable = false;
+  lastQusDetails: any;
+  taskUrlData: AssessmentTaskUrlModel;
+  private store: Store<AssessmentTasksReducerState>
   constructor(private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
     this.userProfile = JSON.parse(sessionStorage.getItem('user'));
-    this.testInformation();
+  
+
   }
 
   ngOnInit(): void {
+    
+
+    // this.store.select(selectAssessmentTaskUrlState).subscribe((response: AssessmentTaskUrlModel): void => {
+    //   this.taskUrlData = response;
+    //     console.log(response)
+    //   if(this.taskUrlData.proctorToken.length > 0){
+    //     // let arr:any = [];
+    //     // arr = ;
+    //     sessionStorage.setItem('lastQus',JSON.stringify(this.taskUrlData.attributes.lastVideoQuestionDetails))
+       
+    //   }else {
+
+    //   }
+      
+    // });
     this.testInformation();
+    this.lastQusDetails = JSON.parse(sessionStorage.getItem('lastQus'));
+    console.log(this.lastQusDetails,'last qus details')
   }
 
   testInformation(){
@@ -49,23 +73,51 @@ export class VideoInterviewComponent implements OnInit {
     this.http.getTestInformation(data).subscribe((response: any) => {
       if(response.success == true){
         this.qusInfo = response.data[0].questionDetailsArray;
-        this.firstQusTime =  this.qusInfo[0].questionDetails.duration;
-        this.timeLeft = this.firstQusTime * 60;
+        if(Object.getOwnPropertyNames(this.lastQusDetails).length > 0){
+          this.findLastQusDetails(response.data[0].questionDetailsArray)
+        } else {
+          this.firstQusTime =  this.qusInfo[0].questionDetails.duration;
+          this.timeLeft = this.firstQusTime * 60;
+        }
       }else {
         this.toast.warning('Please try after sometime...')
       }
     })
   }
 
-  getTime(duration,index,activequs){
-    this.activequs = index; // display active qus button
-    this.isStartbtn = true; // start button enable disable
-    this.timeLeft = parseInt(duration) * 60;  // convert mins into sec
+  findLastQusDetails(qusArr){
+    let matchLastQus = [];
+    qusArr.forEach(element => {
+        matchLastQus.push(element.questionDetails)
+    });
+    // match qus id from qus array 
+   let val =  _.filter(matchLastQus, {_id: this.lastQusDetails.id}); // get last qus 
+  //  console.log(val)
+   this.countdownStart = parseInt(this.lastQusDetails.duration);
+   this.timeLeft = parseInt(val[0].duration) * 60 - this.countdownStart;
+    // console.log(this.timeLeft , this.countdownStart)
+   let index = matchLastQus.findIndex(item => item._id === this.lastQusDetails.id); // find qus index
+  //  console.log(index,'qus index') 
+   this.activequs = index;
   }
+
+  // getTime(duration,index,qusLength,activequs){
+  //   this.activequs = index; // display active qus button
+  //   this.isStartbtn = true; // start button enable disable
+  //   this.timeLeft = parseInt(duration) * 60;  // convert mins into secx
+  //   this.countdownStart = 1;
+  //   this.qusDetails = this.qusInfo[activequs].questionDetails._id;
+  //   this.nextQusId = this.qusInfo[activequs+ 1].questionDetails._id;
+  //   this.qusDuration = duration * 60;
+  //   if(qusLength -1 == index){
+  //     // this.actions('submit',false,activequs);
+  //   }else{
+  //     this.actions('next', false,activequs);
+  //   }
+  // }
 
 
   startRecord(activequs,stauts,isStart){
-      // this.handleEvent(event,true);
     this.isRecordStarted = isStart;
     if(this.isRecordStarted == true){
       this.qusStartDate = new Date();
@@ -95,34 +147,31 @@ export class VideoInterviewComponent implements OnInit {
       this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
       
     }else {
-      this.toast.warning('No Next question..')
+      this.toast.warning('No'+status+'question..')
     }
     this.actions(status, false,this.activequs);
   }
 
-  skipQus(skipqus,status){
-    if(this.isRecordStarted == true){
-      this.isRecordStarted = false;
-      this.qusEndDate = new Date();
+  // skipQus(skipqus,status){
+  //   if(this.isRecordStarted == true){
+  //     this.isRecordStarted = false;
+  //     this.qusEndDate = new Date();
 
-}else{
-  this.qusStartDate = '';
-}
-    this.isStartbtn = true; 
-    if(this.qusInfo.length > skipqus){
-      this.qusDetails = this.qusInfo[skipqus].questionDetails._id;
-      this.nextQusId = this.qusInfo[skipqus+ 1].questionDetails._id;
-      this.qusDuration = this.qusInfo[skipqus + 1].questionDetails.duration * 60;
-      this.activequs = skipqus + 1;
-      this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
-      this.actions(status,false, this.activequs);
-      // if(this.qusInfo.length == this.activequs){
-      //   this.actions('next',false)
-      // }
-    }else {
-      this.toast.warning('No question to skip..')
-    }
-  }
+  //       }else{
+  //         this.qusStartDate = '';
+  //       }
+  //           this.isStartbtn = true; 
+  //           if(this.qusInfo.length > skipqus){
+  //             this.qusDetails = this.qusInfo[skipqus].questionDetails._id;
+  //             this.nextQusId = this.qusInfo[skipqus+ 1].questionDetails._id;
+  //             this.qusDuration = this.qusInfo[skipqus + 1].questionDetails.duration * 60;
+  //             this.activequs = skipqus + 1;
+  //             this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+  //             this.actions(status,false, this.activequs);
+  //           }else {
+  //             this.toast.warning('No question to skip..')
+  //           }
+  // }
 
   previousQus(previousQus,status){
     if(this.isRecordStarted == true){
@@ -148,13 +197,13 @@ export class VideoInterviewComponent implements OnInit {
 
   // Ans record timer event
   onComplete($event,index){
-    console.log($event,'complete',this.qusInfo.length ,'lenght',index)
+      console.log($event)
       if($event){
         if(this.qusInfo.length -1 > index){
           alert('Please press ok to move next question');
             this.isStartbtn = true; 
-            this.timeLeft = 0;
-            this.countdownStart = 1;
+            // this.timeLeft = 0;
+            // this.countdownStart = 1;
             this.activequs = index + 1;
             this.timeLeft =  this.qusInfo[index +1].questionDetails.duration * 60;
             this.nextQusId = this.qusInfo[index+ 1].questionDetails._id;
@@ -224,10 +273,6 @@ onSubmit(activequs,stauts){
               if(request.action == 'submit'){
                   this.openDialog()
               }
-                // if(response.data.timeLeft < 0){
-                //     this.isQusEnable = true;
-                    
-                // }
               this.timeLeft = response.data.timeLeft ? response.data.timeLeft : this.timeLeft;
               this.countdownStart = response.data.duration ? response.data.duration : 1;
               if(restart){
