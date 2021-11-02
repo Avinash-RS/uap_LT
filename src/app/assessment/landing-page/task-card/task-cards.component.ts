@@ -92,16 +92,12 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
         .select(selectAssessmentTaskUrlState)
         .subscribe((response: AssessmentTaskUrlModel): void => {
           this.taskUrlData = response;
-         
           if(this.taskUrlData.proctorToken.length > 0){
-            // let arr:any = [];
-            // arr = ;
             sessionStorage.setItem('lastQus',JSON.stringify(this.taskUrlData.attributes.lastVideoQuestionDetails))
             sessionStorage.setItem('videotoken', this.taskUrlData.proctorToken);
             sessionStorage.setItem('schuduleId',this.taskUrlData.attributes.scheduleId);
-
-            if(taskstatus != "inprogress"){
-              this.router.navigate(['/landing/TestInformation']);
+            if(taskstatus != "inprogress" || sessionStorage.getItem('smallScreen') != 'true'){
+              this.router.navigate(['/landing/SystemReadinessCheck']);
             } else {
               this.router.navigate(['/landing/VideoAssesment']);
             }

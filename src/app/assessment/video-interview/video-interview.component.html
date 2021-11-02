@@ -50,7 +50,7 @@
                     </div>
 
                     <div class="playpause" *ngIf="isStartbtn">
-                        <button class="btn" mat-button (click)="startRecord(activequs,'start',true);"><mat-icon class="video-color" >videocam</mat-icon>Start Recording</button>
+                        <button class="btn" [disabled]="isStartEnable" mat-button (click)="startRecord(activequs,'start',true);"><mat-icon class="video-color" >videocam</mat-icon>Start Recording</button>
                     </div>
                 </div>
 
