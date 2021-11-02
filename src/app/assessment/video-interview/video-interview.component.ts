@@ -37,6 +37,7 @@ export class VideoInterviewComponent implements OnInit {
   qusEndDate: Date;
   isQusEnable = false;
   lastQusDetails: any;
+  isStartEnable = false;
   taskUrlData: AssessmentTaskUrlModel;
   private store: Store<AssessmentTasksReducerState>
   constructor(private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
@@ -63,7 +64,7 @@ export class VideoInterviewComponent implements OnInit {
     // });
     this.testInformation();
     this.lastQusDetails = JSON.parse(sessionStorage.getItem('lastQus'));
-    console.log(this.lastQusDetails,'last qus details')
+    // console.log(this.lastQusDetails,'last qus details')
   }
 
   testInformation(){
@@ -197,7 +198,7 @@ export class VideoInterviewComponent implements OnInit {
 
   // Ans record timer event
   onComplete($event,index){
-      console.log($event)
+      // console.log($event)
       if($event){
         if(this.qusInfo.length -1 > index){
           alert('Please press ok to move next question');
@@ -274,13 +275,23 @@ onSubmit(activequs,stauts){
                   this.openDialog()
               }
               this.timeLeft = response.data.timeLeft ? response.data.timeLeft : this.timeLeft;
-              this.countdownStart = response.data.duration ? response.data.duration : 1;
-              if(restart){
-                this.counterStart.begin();
-                setTimeout(() => {
-                 this.counterStart.begin();
-                }, 0);
+              if(response.data.timeLeft <=0){
+                this.timeLeft = 0;
+                this.countdownStart = 0;
+                this.counterStart.stop();
+                this.toast.warning('Question time expired')
+                this.isStartEnable = true;
+              }else{
+                this.countdownStart = response.data.duration ? response.data.duration : 1;
+                if(restart){
+                  this.counterStart.begin();
+                  setTimeout(() => {
+                   this.counterStart.begin();
+                  }, 0);
+                }
+                this.isStartEnable = false;
               }
+
 
           }else{
           }

@@ -8,3 +8,19 @@
         border: none;
     }
 }
+
+.align {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    bottom: 56px;
+}
+
+.btn-next {
+    background: #1B4E9B 0% 0% no-repeat padding-box;
+    border-radius: 16px;
+    opacity: 1;
+    width: 120px;
+    height: 33px;
+    color: #fff;
+}
