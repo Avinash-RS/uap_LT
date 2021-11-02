@@ -44,3 +44,5 @@ export interface MetaInformationModel {
   nextOffset: number;
   totalRecordCount: number;
 }
+
+

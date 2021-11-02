@@ -51,7 +51,11 @@ export let setInitialAssessmentTaskUrlState = (): AssessmentTaskUrlModel => {
       taskSource: '',
       srcTaskId: '',
       taskUrl: '',
-      scheduleId:''
+      scheduleId:'',
+      lastVideoQuestionDetails:{
+        duration: '',
+        id: '',
+      }
     }
   };
 };

@@ -102,7 +102,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
         ?.setValue(this.assessmentData.data.attributes.firstName);
       this.candidateDetailsForm
         .get('lastName')
-        ?.setValue(this.assessmentData.data.attributes.lastName);
+        ?.setValue(this.assessmentData.data.attributes.lastName ? this.assessmentData.data.attributes.lastName : ' ');
       this.candidateDetailsForm
         .get('consent')
         ?.setValue(this.assessmentData.data.attributes.hasAccepted);
