@@ -1,14 +1,11 @@
-import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { CountdownComponent, CountdownConfig, CountdownEvent } from 'ngx-countdown';
+import { CountdownComponent, CountdownConfig } from 'ngx-countdown';
 import { ToastrService } from 'ngx-toastr';
 import { AssessmentAPIService } from 'src/app/rest-api/assessments-api/assessments-api.service';
 import _ from 'lodash';
-import { selectAssessmentTaskUrlState } from '../landing-page/redux/landing-page.reducers';
 import { AssessmentTaskUrlModel } from 'src/app/rest-api/assessments-api/models/assessment-task-url-response-model';
-import { AssessmentTasksReducerState } from '../landing-page/redux/landing-page.model';
-import { Store } from '@ngrx/store';
 @Component({
   selector: 'uap-video-interview',
   templateUrl: './video-interview.component.html',
@@ -39,7 +36,6 @@ export class VideoInterviewComponent implements OnInit {
   lastQusDetails: any;
   isStartEnable = false;
   taskUrlData: AssessmentTaskUrlModel;
-  private store: Store<AssessmentTasksReducerState>
   constructor(private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
     this.userProfile = JSON.parse(sessionStorage.getItem('user'));
   
@@ -64,7 +60,6 @@ export class VideoInterviewComponent implements OnInit {
     // });
     this.testInformation();
     this.lastQusDetails = JSON.parse(sessionStorage.getItem('lastQus'));
-    // console.log(this.lastQusDetails,'last qus details')
   }
 
   testInformation(){
@@ -93,12 +88,9 @@ export class VideoInterviewComponent implements OnInit {
     });
     // match qus id from qus array 
    let val =  _.filter(matchLastQus, {_id: this.lastQusDetails.id}); // get last qus 
-  //  console.log(val)
    this.countdownStart = parseInt(this.lastQusDetails.duration);
    this.timeLeft = parseInt(val[0].duration) * 60 - this.countdownStart;
-    // console.log(this.timeLeft , this.countdownStart)
    let index = matchLastQus.findIndex(item => item._id === this.lastQusDetails.id); // find qus index
-  //  console.log(index,'qus index') 
    this.activequs = index;
   }
 
@@ -198,7 +190,6 @@ export class VideoInterviewComponent implements OnInit {
 
   // Ans record timer event
   onComplete($event,index){
-      // console.log($event)
       if($event){
         if(this.qusInfo.length -1 > index){
           alert('Please press ok to move next question');
