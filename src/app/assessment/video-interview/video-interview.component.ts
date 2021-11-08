@@ -21,7 +21,7 @@ export class VideoInterviewComponent implements OnInit {
   timeLeft: number = 0;
   countdownStart: number = 1;
   firstQusTime:number;
-  activequs = 0;
+  activequs:any = 0;
   proctorScreen :any;
   userProfile:any
   qusDetails: any;
@@ -35,29 +35,17 @@ export class VideoInterviewComponent implements OnInit {
   isQusEnable = false;
   lastQusDetails: any;
   isStartEnable = false;
+  isNextBtn = true;
   taskUrlData: AssessmentTaskUrlModel;
+  displayQus: any;
   constructor(private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
     this.userProfile = JSON.parse(sessionStorage.getItem('user'));
-  
+    sessionStorage.setItem('activequs',this.activequs)
+    this.activequs = sessionStorage.getItem('activequs') ? sessionStorage.getItem('activequs') : 0;
 
   }
 
   ngOnInit(): void {
-    
-
-    // this.store.select(selectAssessmentTaskUrlState).subscribe((response: AssessmentTaskUrlModel): void => {
-    //   this.taskUrlData = response;
-    //     console.log(response)
-    //   if(this.taskUrlData.proctorToken.length > 0){
-    //     // let arr:any = [];
-    //     // arr = ;
-    //     sessionStorage.setItem('lastQus',JSON.stringify(this.taskUrlData.attributes.lastVideoQuestionDetails))
-       
-    //   }else {
-
-    //   }
-      
-    // });
     this.testInformation();
     this.lastQusDetails = JSON.parse(sessionStorage.getItem('lastQus'));
   }
@@ -68,7 +56,8 @@ export class VideoInterviewComponent implements OnInit {
     }
     this.http.getTestInformation(data).subscribe((response: any) => {
       if(response.success == true){
-        this.qusInfo = response.data[0].questionDetailsArray;
+        this.qusInfo = response.data[this.activequs].questionDetailsArray;
+        this.displayQus =  this.qusInfo[this.activequs].questionDetails.questionDes;
         if(Object.getOwnPropertyNames(this.lastQusDetails).length > 0){
           this.findLastQusDetails(response.data[0].questionDetailsArray)
         } else {
@@ -90,8 +79,12 @@ export class VideoInterviewComponent implements OnInit {
    let val =  _.filter(matchLastQus, {_id: this.lastQusDetails.id}); // get last qus 
    this.countdownStart = parseInt(this.lastQusDetails.duration);
    this.timeLeft = parseInt(val[0].duration) * 60 - this.countdownStart;
+  //  console.log(val[0])
+   this.displayQus =  val[0].questionDes;
    let index = matchLastQus.findIndex(item => item._id === this.lastQusDetails.id); // find qus index
+  //  console.log(index,'index')
    this.activequs = index;
+   sessionStorage.setItem('activequs',this.activequs)
   }
 
   // getTime(duration,index,qusLength,activequs){
@@ -112,6 +105,7 @@ export class VideoInterviewComponent implements OnInit {
 
   startRecord(activequs,stauts,isStart){
     this.isRecordStarted = isStart;
+    this.isNextBtn = true;
     if(this.isRecordStarted == true){
       this.qusStartDate = new Date();
     }else {
@@ -131,12 +125,15 @@ export class VideoInterviewComponent implements OnInit {
       }else{
         this.qusStartDate = '';
       }
-    this.qusDetails = this.qusInfo[nextqus].questionDetails._id;
-    this.nextQusId = this.qusInfo[nextqus+ 1].questionDetails._id;
-    this.qusDuration = this.qusInfo[nextqus + 1].questionDetails.duration * 60;
+    this.qusDetails = this.qusInfo[this.activequs].questionDetails._id;
+    this.nextQusId = this.qusInfo[this.activequs+ 1].questionDetails._id;
+    this.qusDuration = this.qusInfo[this.activequs + 1].questionDetails.duration * 60;
+   
     this.isStartbtn = true; 
-    if(this.qusInfo.length > nextqus){
-      this.activequs = nextqus + 1;
+    if(this.qusInfo.length > this.activequs){
+      this.activequs = this.activequs + 1;
+      sessionStorage.setItem('activequs',this.activequs)
+      this.displayQus = this.qusInfo[this.activequs].questionDetails.questionDes
       this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
       
     }else {
@@ -166,26 +163,26 @@ export class VideoInterviewComponent implements OnInit {
   //           }
   // }
 
-  previousQus(previousQus,status){
-    if(this.isRecordStarted == true){
-      this.isRecordStarted = false;
-      this.qusEndDate = new Date();
+  // previousQus(previousQus,status){
+  //   if(this.isRecordStarted == true){
+  //     this.isRecordStarted = false;
+  //     this.qusEndDate = new Date();
 
-      }else{
-        this.qusStartDate = '';
-      }
-    this.isStartbtn = true; 
-    if(previousQus > 0){
-      this.qusDetails = this.qusInfo[previousQus].questionDetails._id;
-      this.nextQusId = this.qusInfo[previousQus - 1].questionDetails._id;
-      this.qusDuration = this.qusInfo[previousQus - 1].questionDetails.duration * 60;
-      this.activequs = previousQus - 1;
-      this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
-      this.actions(status,false, this.activequs);
-    }else {
-      this.toast.warning('No question to previous..')
-    }
-  }
+  //     }else{
+  //       this.qusStartDate = '';
+  //     }
+  //   this.isStartbtn = true; 
+  //   if(previousQus > 0){
+  //     this.qusDetails = this.qusInfo[previousQus].questionDetails._id;
+  //     this.nextQusId = this.qusInfo[previousQus - 1].questionDetails._id;
+  //     this.qusDuration = this.qusInfo[previousQus - 1].questionDetails.duration * 60;
+  //     this.activequs = previousQus - 1;
+  //     this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+  //     this.actions(status,false, this.activequs);
+  //   }else {
+  //     this.toast.warning('No question to previous..')
+  //   }
+  // }
 
 
   // Ans record timer event
@@ -194,14 +191,18 @@ export class VideoInterviewComponent implements OnInit {
         if(this.qusInfo.length -1 > index){
           alert('Please press ok to move next question');
             this.isStartbtn = true; 
+            this.isNextBtn = false;
             // this.timeLeft = 0;
             // this.countdownStart = 1;
-            this.activequs = index + 1;
-            this.timeLeft =  this.qusInfo[index +1].questionDetails.duration * 60;
-            this.nextQusId = this.qusInfo[index+ 1].questionDetails._id;
-            this.qusDuration = this.qusInfo[index + 1].questionDetails.duration * 60;
+           
+            this.activequs = parseInt(this.activequs) + 1;
+            sessionStorage.setItem('activequs', this.activequs)
+            this.displayQus = this.qusInfo[this.activequs].questionDetails.questionDes
+            this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+            this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
+            this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
             this.qusEndTime = new Date();
-            this.actions('next',false,'')
+            // this.actions('next',false,'')
           }else {
             this.actions('submit',false,'')
             this.toast.warning('No Next question..')
@@ -282,8 +283,6 @@ onSubmit(activequs,stauts){
                 }
                 this.isStartEnable = false;
               }
-
-
           }else{
           }
 

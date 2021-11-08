@@ -10,13 +10,13 @@ div {
 
 .container1 {
     display: flex;
-    padding: 68px 0px 0px 0px;
-    height: 89vh;
+    padding: 52px 0px 0px 0px;
+    // height: 89vh;
     .left-half {
         background-color: #F2F2F2;
         flex: 1;
-        max-width: 40%;
-        height: 589px;
+        // max-width: 40%;
+        // height: 589px;
         .qus {
             width: 70px;
             height: 16px;
@@ -43,8 +43,8 @@ div {
     .right-half {
         background-color: #fff;
         flex: 1;
-        max-width: 60%;
-        height: 589px;
+        // max-width: 60%;
+        // height: 589px;
         .right-con {
             margin-left: 20px;
             .alert {
@@ -98,7 +98,7 @@ div {
         }
         .playpause {
             background-repeat: no-repeat;
-            width: 98%;
+            width: 100%;
             height: 100%;
             position: absolute;
             left: 0%;
@@ -220,6 +220,25 @@ div {
 .color {
     color: #808080;
     margin-bottom: 7%;
+}
+
+:host ::ng-deep .btn-next.disabled,
+.btn-next.disabled.mat-button.mat-button-disabled.mat-button-disabled {
+    opacity: .35 !important;
+    background-color: gray !important;
+    pointer-events: none;
+    color: #fff !important;
+    border-radius: .25rem;
+    font-size: 16px;
+}
+
+:host ::ng-deep .mat-button.mat-button-disabled.mat-button-disabled {
+    opacity: .35 !important;
+    background-color: gray !important;
+    pointer-events: none;
+    color: #fff !important;
+    border-radius: .25rem;
+    font-size: 16px;
 }
 
 // }

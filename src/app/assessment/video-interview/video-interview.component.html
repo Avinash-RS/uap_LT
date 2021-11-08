@@ -6,9 +6,11 @@
                 Questions
             </div>
             <!-- (click)="getTime(qus.questionDetails.duration,i,qusInfo.length,activequs);" -->
-            <div *ngFor="let qus of qusInfo;let i=index">
-                <div class="qusCard" [ngClass]="{ blue : i == activequs}">
-                    <div class="qus-align">Q{{i+1}} {{qus.questionDetails.questionDes}}</div>
+            <!-- *ngFor="let qus of qusInfo;let i=index" -->
+            <!-- [ngClass]="{ blue : i == activequs}" -->
+            <div>
+                <div class="qusCard blue">
+                    <div class="qus-align">Q{{activequs + 1}} {{this.displayQus}}</div>
                 </div>
             </div>
         </div>
@@ -55,10 +57,10 @@
                 </div>
 
                 <div class="button-grid">
-                    <button *ngIf="activequs > 0" class="btn-previous" mat-button (click)="previousQus(activequs,'previous')">Previous</button>
-                    <button *ngIf="activequs != qusInfo.length -1" class="btn-next" mat-button (click)="nextQus(activequs,'next')">Next</button>
+                    <!-- <button *ngIf="activequs > 0" class="btn-previous" mat-button (click)="previousQus(activequs,'previous')">Previous</button> -->
+                    <button *ngIf="activequs != qusInfo.length -1" [disabled]="isNextBtn" class="btn-next" mat-button (click)="nextQus(activequs,'next')">Next</button>
                     <button *ngIf="activequs == qusInfo.length -1" class="btn-next" mat-button (click)="onSubmit(activequs,'submit')">Submit</button>
-                    <button *ngIf="activequs != qusInfo.length -1" class="btn-skip" mat-button (click)="nextQus(activequs,'skip')">Skip</button>
+                    <!-- <button *ngIf="activequs != qusInfo.length -1" class="btn-skip" mat-button (click)="nextQus(activequs,'skip')">Skip</button> -->
                 </div>
             </div>
         </div>
