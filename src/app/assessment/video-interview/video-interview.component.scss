@@ -222,4 +222,23 @@ div {
     margin-bottom: 7%;
 }
 
+:host ::ng-deep .btn-next.disabled,
+.btn-next.disabled.mat-button.mat-button-disabled.mat-button-disabled {
+    opacity: .35 !important;
+    background-color: gray !important;
+    pointer-events: none;
+    color: #fff !important;
+    border-radius: .25rem;
+    font-size: 16px;
+}
+
+:host ::ng-deep .mat-button.mat-button-disabled.mat-button-disabled {
+    opacity: .35 !important;
+    background-color: gray !important;
+    pointer-events: none;
+    color: #fff !important;
+    border-radius: .25rem;
+    font-size: 16px;
+}
+
 // }
