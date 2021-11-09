@@ -1,13 +1,4 @@
-<html>
 
-<head>
-    <style>
-        #bowlerList {
-            width: 100%;
-        }
-    </style>
-
-    <script>
         !(function(e, t) {
 
             "object" == typeof exports && "object" == typeof module ? (module.exports = t()) : "function" == typeof define && define.amd ? define("Supervisor", [], t) : "object" == typeof exports ? (exports.Supervisor = t()) : (e.Supervisor = t());
@@ -4763,7 +4754,6 @@
                                     super(e), this.mount(e.el);
                                 }
                                 render() {
-                                    sessionStorage.setItem('smallScreen', 'true');
                                     const e = document.createElement("DIV");
                                     return (
                                         (e.className = Ur.passport),
@@ -5384,7 +5374,6 @@
                                     var t = this.$(en.body),
                                         r = t.firstChild;
                                     f("/api/chat/".concat(He.get("id"), "?filter[type]=message&limit=20&skip=").concat(e)).then((n) => {
-                                        sessionStorage.setItem("smallScreen", 'true')
                                         if (n.length) {
                                             if (
                                                 ((function(e) {
@@ -6574,7 +6563,7 @@
                                 d = s()(a.Z);
                             c.push([
                                     e.id,
-                                    "._19Xk8-2HxtQ_csPgTiLjO9{display:flex;visibility:visible;align-items:center;width:100%;height:100%;box-shadow:0 0 3px 0 rgba(0,0,0,.5);bottom:10px;left:10px;border:2px solid var(--primary-color);background-color:var(--background-color);z-index:2147483647}._19Xk8-2HxtQ_csPgTiLjO9 video{top:0;bottom:0;left:0;right:0;width:100%;height:405px;overflow:hidden;object-fit:cover}._19Xk8-2HxtQ_csPgTiLjO9._3zEH3pxKm15jZnB2xuXrHh{cursor:pointer}._19Xk8-2HxtQ_csPgTiLjO9._3zEH3pxKm15jZnB2xuXrHh:hover{background:50%/60% var(--background-color) url(" +
+                                    "._19Xk8-2HxtQ_csPgTiLjO9{display:flex;visibility:visible;align-items:center;width:100%;height:100%;box-shadow:0 0 3px 0 rgba(0,0,0,.5);bottom:10px;left:10px;border:2px solid var(--primary-color);background-color:var(--background-color);z-index:2147483647}._19Xk8-2HxtQ_csPgTiLjO9 video{top:0;bottom:0;left:0;right:0;width:100%;height:100%;overflow:hidden;object-fit:cover}._19Xk8-2HxtQ_csPgTiLjO9._3zEH3pxKm15jZnB2xuXrHh{cursor:pointer}._19Xk8-2HxtQ_csPgTiLjO9._3zEH3pxKm15jZnB2xuXrHh:hover{background:50%/60% var(--background-color) url(" +
                                     d +
                                     ') no-repeat}._19Xk8-2HxtQ_csPgTiLjO9._3zEH3pxKm15jZnB2xuXrHh video{opacity:1;transition:opacity .4s}._19Xk8-2HxtQ_csPgTiLjO9._3zEH3pxKm15jZnB2xuXrHh video:hover{opacity:0}._20F8W9bzzGX2adVk5mVbeF{display:block;position:absolute;visibility:visible;top:50%;transform:perspective(1px) translateY(-50%);border-radius:10px;color:#000;background-color:var(--warning-color);box-shadow:0 0 3px 0 rgba(0,0,0,.5);text-shadow:0 0 20px hsla(0,0%,100%,.5);padding:12px;line-height:1em;-webkit-user-select:none;-moz-user-select:none;user-select:none;width:-moz-max-content;width:max-content;max-width:50vw;font-weight:600}._20F8W9bzzGX2adVk5mVbeF._3jXwOc2tK3U_-z8NEzCvQI{background-color:var(--danger-color)}._1j1cX_dJg-VP5QhmGFZyOi{left:115%}._1aPlDhzZAK3P9nTrK8B9Rp{right:115%}._1j1cX_dJg-VP5QhmGFZyOi:after{content:" ";position:absolute;visibility:visible;top:50%;right:100%;margin-top:-5px;border:5px solid transparent;border-right:5px solid var(--warning-color)}._1j1cX_dJg-VP5QhmGFZyOi._3jXwOc2tK3U_-z8NEzCvQI:after{border-left-color:transparent;border-bottom-color:transparent;border-right-color:var(--danger-color);border-top-color:transparent}._1aPlDhzZAK3P9nTrK8B9Rp:after{content:" ";position:absolute;visibility:visible;top:50%;left:100%;margin-top:-5px;border:5px solid transparent;border-left:5px solid var(--warning-color)}._1aPlDhzZAK3P9nTrK8B9Rp._3jXwOc2tK3U_-z8NEzCvQI:after{border-left-color:var(--danger-color);border-bottom-color:transparent;border-right-color:transparent;border-top-color:transparent}',
                                     "",
@@ -6590,8 +6579,6 @@
                             const l = c;
                         },
                         3500: (e, t, r) => {
-                            // var screenSize = sessionStorage.getItem('smallScreen')
-                            // console.log(screenSize, 'test htnl screen size')
                             "use strict";
                             r.d(t, {
                                 Z: () => y
@@ -7467,7 +7454,7 @@
                                     const r = this;
                                     let n;
                                     if (!this.form) {
-                                        var table = document.getElementById("bowlerList");
+                                        // var table = document.getElementById("bowlerList");
                                         const e = document.createElement("form"),
                                             t = document.createElement("textarea"),
                                             r = (this.iframeId = "eio_iframe_" + this.index);
@@ -10675,77 +10662,4 @@
                 );
             })().default;
         });
-    </script>
-
-
-    <script>
-        //   require(['Supervisor'], function(Supervisor) {
-
-        var supervisor = new Supervisor({
-            url: 'https://lntproctordev.lntedutech.com'
-        });
-        // log in and initialize the session
-        // console.log(window.sessionStorage.getItem('videotoken'))
-
-        supervisor.init({
-            provider: 'jwt',
-            // get JWT string from our server
-            token: window.sessionStorage.getItem('videotoken') //'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaWNrbmFtZSI6ImNhbmRpZGF0ZS1lbWFpbDEzIiwiaWQiOiI0NzBiZTc4Ni03YzhlLTQ0ZWItYTQzNS00ZjIwZjljNjUxZWIiLCJ0YWdzIjpbImNhbmRpZGF0ZS1lbWFpbDEzIixudWxsLG51bGxdLCJ1c2VybmFtZSI6ImNhbmRpZGF0ZS1lbWFpbDEzIiwidGVtcGxhdGUiOiJkZWZhdWx0Iiwic3ViamVjdCI6IlRlc3QxMyBBcHRpdHVkZSBBc3Nlc3NtZW50IiwidGltZW91dCI6OTAsImlhdCI6MTYzNDY0NDE2NCwiZXhwIjoxNjQwMDQ0MTY0fQ.Ndmb0CFRBWXoKkvUMzr9T5lBcLscAWZtN-G_9TKavrc'
-        }).then(function() {
-            // start proctoring session
-            return supervisor.start();
-        }).catch(function(err) {
-            // show alert with an error
-            // alert();
-            // console.log(err.toString())
-            // redirect to home page
-            location.href = '/';
-        });
-
-        // });
-    </script>
-    <style>
-        .loader {
-            border: 16px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 16px solid #3498db;
-            width: 120px;
-            height: 120px;
-            -webkit-animation: spin 2s linear infinite;
-            /* Safari */
-            animation: spin 2s linear infinite;
-        }
-        /* Safari */
-        
-        @-webkit-keyframes spin {
-            0% {
-                -webkit-transform: rotate(0deg);
-            }
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
-        
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-
-</head>
-
-<body>
-    <!-- <div class="loader"></div> -->
-    <div id="bowlerList">
-
-
-    </div>
-
-
-</body>
-
-</html>
+ 
