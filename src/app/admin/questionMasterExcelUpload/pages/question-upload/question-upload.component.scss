@@ -27,12 +27,41 @@
         margin: 10px;
         font-weight: 500;
     }
+    .border-box {
+        border: 2px dotted #999999 !important;
+        border-radius: 5px !important;
+        height: 200px !important;
+        width: 500px !important;
+        margin: auto;
+    }
+    .uploaded-heading {
+        text-align: center;
+    }
 }
 
 ::ng-deep .ngx-file-drop__drop-zone {
-    border: 2px dotted #999999 !important;
-    border-radius: 5px !important;
-    height: 200px !important;
-    width: 500px !important;
-    margin: auto;
+    border: none !important;
+}
+
+.delete-file-button__style {
+    background: #be2020;
+    color: #fff;
+    text-align: center;
+    width: 60px;
+    padding: 2px;
+    border: none;
+}
+
+.submit {
+    height: 27px;
+    width: 125px;
+    border-radius: 5px;
+    background: #004c86;
+    border: none;
+    color: #fff;
+}
+
+.btn-align {
+    text-align: center;
+    padding: 30px;
 }
