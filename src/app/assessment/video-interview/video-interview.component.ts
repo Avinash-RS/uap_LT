@@ -118,6 +118,7 @@ export class VideoInterviewComponent implements OnInit {
 
  
   nextQus(nextqus,status){
+    this.isNextBtn = true;
       if(this.isRecordStarted == true){
             this.isRecordStarted = false;
             this.qusEndDate = new Date();
@@ -196,13 +197,13 @@ export class VideoInterviewComponent implements OnInit {
             // this.countdownStart = 1;
            
             this.activequs = parseInt(this.activequs) + 1;
-            sessionStorage.setItem('activequs', this.activequs)
+            sessionStorage.setItem('activequs', this.activequs + 1)
             this.displayQus = this.qusInfo[this.activequs].questionDetails.questionDes
             this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
             this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
             this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
             this.qusEndTime = new Date();
-            // this.actions('next',false,'')
+            this.actions('next',false,'')
           }else {
             this.actions('submit',false,'')
             this.toast.warning('No Next question..')
