@@ -5,6 +5,13 @@ div {
     flex-direction: column;
 }
 
+ ::ng-deep body {
+    background-color: #fff !important;
+    margin: 0 !important;
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+}
+
 
 /* Pattern styles */
 
@@ -36,7 +43,7 @@ div {
             margin-bottom: 10px;
             cursor: pointer;
             .qus-align {
-                margin: 12px;
+                font-size: 17px;
             }
         }
     }
@@ -46,7 +53,7 @@ div {
         // max-width: 60%;
         // height: 589px;
         .right-con {
-            margin-left: 20px;
+            // margin-left: 20px;
             .alert {
                 padding: 20px;
                 font-size: 11px;
@@ -65,7 +72,8 @@ div {
             }
             .sub-head {
                 flex-direction: row;
-                justify-content: space-between;
+                justify-content: space-around;
+                margin-top: 3%;
             }
             .flex-dir {
                 flex-direction: row;
@@ -85,29 +93,37 @@ div {
             .m-l-25 {
                 margin-left: 25px;
             }
+            .m-l-33 {
+                margin-left: 33px;
+            }
         }
         .video {
             width: 100%;
             border: 1px solid black;
         }
         .wrapper {
-            display: table;
-            width: auto;
+            // display: table;
+            // width: auto;
             position: relative;
+            // justify-content: center;m
             width: 100%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            flex-direction: initial;
         }
         .playpause {
             background-repeat: no-repeat;
-            width: 100%;
+            width: 62.5%;
             height: 100%;
             position: absolute;
-            left: 0%;
+            display: flex;
+            justify-content: space-between;
+            left: 18.8%;
             right: 0%;
             top: 0%;
             background: #030303b3;
             bottom: 0%;
-            background-size: contain;
-            background-position: center;
         }
         .btn {
             background: #1B4E9B 0% 0% no-repeat padding-box;
@@ -152,13 +168,16 @@ div {
             line-height: 1.4;
         }
         .button-grid {
-            display: block;
             margin-top: 3%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            flex-direction: revert;
         }
         .recordCount {
             position: absolute;
             top: 4%;
-            left: 1%;
+            left: 20%;
             color: #fff;
             line-height: 17px;
             font-weight: 500;
@@ -181,8 +200,7 @@ div {
             padding: 0px;
         }
         .timer {
-            margin-left: 21px;
-            margin-top: -1px;
+            margin-left: -22px;
         }
     }
 }
@@ -191,9 +209,13 @@ div {
     height: auto;
 }
 
+.qus-align {
+    font-size: 17px;
+}
+
 .blue {
-    border-left: 1px solid #27BBEE;
-    border-left-width: 5px;
+    // border-left: 1px solid #27BBEE;
+    // border-left-width: 5px;
 }
 
 .tick {

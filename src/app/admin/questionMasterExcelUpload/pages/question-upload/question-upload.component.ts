@@ -12,6 +12,7 @@ export class QuestionUploadComponent implements OnInit {
   csvFileName: string;
   csvRows: Array<any[]> = [];
   showCsvFileInformation: boolean;
+
   constructor(private http : AssessmentAPIService) { }
 
   ngOnInit(): void {
@@ -60,12 +61,19 @@ export class QuestionUploadComponent implements OnInit {
               createdBy: rowData[3] ? rowData[3].trim() : '',
               updatedBy: rowData[4] ? rowData[4].trim() : '',
               duration: rowData[5] ? rowData[5].trim() : '',
+              mark:rowData[6] ? rowData[6].trim() : '',
+              categoryId: rowData[7] ? rowData[7].trim() : '',
+              categoryName:  rowData[8] ? rowData[8].trim() : '',
             });
           }
         }
         this.csvRows.push(rows);
+        console.log(this.csvRows)
         // Check for valid emails, update if valid,invalid email exists
-        rows.forEach((candidateInfo: any) => {
+        rows.forEach((qusInfo: any) => {
+            console.log(qusInfo)
+            const isEmpty = Object.values(qusInfo).every(x => (x === null || x === ""));
+            console.log(isEmpty,'asdasd')
           // this.validateEmailAndUpdateValidInvalidEmailList(candidateInfo);
           // this.disableCreateButton = this.validEmailsList.length ? false : true;
         });
@@ -75,11 +83,26 @@ export class QuestionUploadComponent implements OnInit {
     console.log(this.csvRows)
   }
 
+  deleteCsvFile(): void {
+    // Empty file contents
+    this.csvRows = [];
+    // Hide Csv file information
+    this.showCsvFileInformation = false;
+    // Show upload csv file and add candidate information button
+  }
+
+  exitUploadMode(): void {
+    // this.toogleAddCandidateInfoButton = true;
+    // this.toogleUploadCsvButton = true;
+    // this.switchToAddEmailView = false;
+  }
+
 
   questionbulkUpload(){
     const fd = new FormData();
+    fd.append('file', this.selectedCSVFile);
     this.http.questionupload(fd).subscribe((response: any) => {
-
+        console.log(response)
     })
   }
 }
