@@ -63,8 +63,9 @@
                 </div>
 
                 <div class="button-grid">
+                    <!-- [disabled]="isNextBtn" -->
                     <!-- <button *ngIf="activequs > 0" class="btn-previous" mat-button (click)="previousQus(activequs,'previous')">Previous</button> -->
-                    <button *ngIf="activequs != qusInfo.length -1" [disabled]="isNextBtn" class="btn-next" mat-button (click)="nextQus(activequs,'next')">Next</button>
+                    <button *ngIf="activequs != qusInfo.length -1" class="btn-next" mat-button (click)="nextQus(activequs,'next')">Next</button>
                     <button *ngIf="activequs == qusInfo.length -1" class="btn-next" mat-button (click)="onSubmit(activequs,'submit')">Submit</button>
                     <!-- <button *ngIf="activequs != qusInfo.length -1" class="btn-skip" mat-button (click)="nextQus(activequs,'skip')">Skip</button> -->
                 </div>
