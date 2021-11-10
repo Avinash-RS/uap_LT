@@ -118,6 +118,7 @@ export class VideoInterviewComponent implements OnInit {
 
  
   nextQus(nextqus,status){
+    console.log(this.activequs,'this.activequs')
     // this.isNextBtn = true;
       if(this.isRecordStarted == true){
             this.isRecordStarted = false;
@@ -126,19 +127,20 @@ export class VideoInterviewComponent implements OnInit {
       }else{
         this.qusStartDate = '';
       }
-    this.qusDetails = this.qusInfo[this.activequs].questionDetails._id;
-    this.nextQusId = this.qusInfo[this.activequs+ 1].questionDetails._id;
-    this.qusDuration = this.qusInfo[this.activequs + 1].questionDetails.duration * 60;
-   
+
     this.isStartbtn = true; 
     if(this.qusInfo.length > this.activequs){
-      this.activequs = this.activequs + 1;
+
+      this.activequs = parseInt(this.activequs + 1) ;
+      this.qusDetails = this.qusInfo[this.activequs].questionDetails._id;
+      this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
+      this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
       sessionStorage.setItem('activequs',this.activequs)
       this.displayQus = this.qusInfo[this.activequs].questionDetails.questionDes
       this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
       
     }else {
-      this.toast.warning('No'+status+'question..')
+      this.toast.warning('No '+status+' question..')
     }
     this.actions(status, false,this.activequs);
   }
@@ -190,7 +192,8 @@ export class VideoInterviewComponent implements OnInit {
   onComplete($event,index){
       if($event){
         if(this.qusInfo.length -1 > index){
-          alert('Please press ok to move next question');
+          // alert('Please press ok to move next question');
+          this.toast.success('Question time expired moving to next question')
             this.isStartbtn = true; 
             // this.isNextBtn = false;
             // this.timeLeft = 0;

@@ -73,7 +73,7 @@ div {
             .sub-head {
                 flex-direction: row;
                 justify-content: space-around;
-                margin-top: 3%;
+                // margin-top: 3%;
             }
             .flex-dir {
                 flex-direction: row;
@@ -203,6 +203,12 @@ div {
             margin-left: -22px;
         }
     }
+}
+
+.note {
+    margin-top: 2%;
+    text-align: center;
+    color: red;
 }
 
 .wrapword {
