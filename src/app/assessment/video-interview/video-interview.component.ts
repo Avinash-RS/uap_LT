@@ -105,7 +105,7 @@ export class VideoInterviewComponent implements OnInit {
 
   startRecord(activequs,stauts,isStart){
     this.isRecordStarted = isStart;
-    this.isNextBtn = true;
+    // this.isNextBtn = true;
     if(this.isRecordStarted == true){
       this.qusStartDate = new Date();
     }else {
@@ -118,7 +118,7 @@ export class VideoInterviewComponent implements OnInit {
 
  
   nextQus(nextqus,status){
-    this.isNextBtn = true;
+    // this.isNextBtn = true;
       if(this.isRecordStarted == true){
             this.isRecordStarted = false;
             this.qusEndDate = new Date();
@@ -192,7 +192,7 @@ export class VideoInterviewComponent implements OnInit {
         if(this.qusInfo.length -1 > index){
           alert('Please press ok to move next question');
             this.isStartbtn = true; 
-            this.isNextBtn = false;
+            // this.isNextBtn = false;
             // this.timeLeft = 0;
             // this.countdownStart = 1;
            
