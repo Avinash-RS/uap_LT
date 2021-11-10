@@ -24,12 +24,16 @@
                     <mat-icon class="alert-color">info</mat-icon>
                     <span class="alertInfo">a video-based question, you will be presented with a question in video form and be given several minutes to respond to each question</span>
                 </div> -->
-
+                <div class="note">
+                    <span>
+                        <b>Note :</b> If you press next then you cannot able to attent previous question
+                    </span>
+                </div>
                 <!-- Questions duration -->
                 <div class="sub-head">
                     <div style="margin-left: 10px;">
                         <div class="qusCard blue">
-                            <div class="qus-align" *ngIf="displayQus">Q{{activequs + 1}} {{displayQus}}</div>
+                            <div class="qus-align" *ngIf="displayQus">Q{{activequs + 1}}. {{displayQus}}</div>
                         </div>
                     </div>
                     <!-- <div class="">Video Response</div> -->
