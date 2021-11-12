@@ -1,8 +1,12 @@
 <div class="reports-wrapper">
     <div class="">
-        <h2>
-            Questions Master For Video Assesments
-        </h2>
+        <div class="d-flex">
+            <h2>
+                Questions Master For Video Assesments
+            </h2>
+            <button class="downloadtemplate" (click)="downloadTemplate()">Download template</button>
+        </div>
+
         <div class="border-box">
             <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="fileDropped($event)" accept=".csv" contentClassName="ngx-file-drop" [multiple]="false">
                 <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
