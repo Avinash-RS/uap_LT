@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
+import { ToastrService } from 'ngx-toastr';
 import { AssessmentAPIService } from 'src/app/rest-api/assessments-api/assessments-api.service';
 @Component({
   selector: 'uap-question-upload',
@@ -13,7 +14,7 @@ export class QuestionUploadComponent implements OnInit {
   csvRows: Array<any[]> = [];
   showCsvFileInformation: boolean;
 
-  constructor(private http : AssessmentAPIService) { }
+  constructor(private http : AssessmentAPIService,private toaster: ToastrService,) { }
 
   ngOnInit(): void {
   }
@@ -68,16 +69,6 @@ export class QuestionUploadComponent implements OnInit {
           }
         }
         this.csvRows.push(rows);
-        console.log(this.csvRows)
-        // Check for valid emails, update if valid,invalid email exists
-        rows.forEach((qusInfo: any) => {
-            console.log(qusInfo)
-            const isEmpty = Object.values(qusInfo).every(x => (x === null || x === ""));
-            console.log(isEmpty,'asdasd')
-          // this.validateEmailAndUpdateValidInvalidEmailList(candidateInfo);
-          // this.disableCreateButton = this.validEmailsList.length ? false : true;
-        });
-        // this.findAndUpdateDuplicateEmailsList(rows);
       };
     }
     console.log(this.csvRows)
@@ -97,12 +88,29 @@ export class QuestionUploadComponent implements OnInit {
     // this.switchToAddEmailView = false;
   }
 
+  downloadTemplate() {
+    const excel = `assets/templates/QuestionsUpload.xlsx`;
+    window.open(excel, '_blank');
+  }
+
 
   questionbulkUpload(){
-    const fd = new FormData();
-    fd.append('file', this.selectedCSVFile);
-    this.http.questionupload(fd).subscribe((response: any) => {
-        console.log(response)
+    // const fd = new FormData();
+    // fd.append('file', this.selectedCSVFile);
+    let data = {
+      "quesetionDetails":[
+        this.csvRows[0]
+      ]
+    }
+    this.http.questionupload(data).subscribe((response: any) => {
+      if(response.success == true){
+          this.csvFileName = '';
+          this.showCsvFileInformation = false;
+          this.csvRows = [];
+          this.toaster.success(response.message);
+      }else{
+        this.toaster.error(response.message);
+      }
     })
   }
 }
