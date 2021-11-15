@@ -88,7 +88,9 @@ export class UapHttpService {
      !url.includes('/questionMasterExcelUpload') &&
     //  !url.includes('/packages/') &&
     //  !url.includes('/packages') &&
-     !url.includes('/scheduledQuestionDetails')
+     !url.includes('/scheduledQuestionDetails') &&
+     !url.includes('/reference') &&
+     !url.includes('/profile')
      ) {
     return `${this.apiBaseUrl}${url}`;
     } else {
