@@ -20,7 +20,7 @@ export class UserAPIService {
     private toastr: ToastrService, private route: Router, private store: Store<AppState>
     ) {}
   getUserProfile(): Observable<UserProfileResponseModel> {
-    return this.httpClient.get<UserProfileResponseModel>(`/profile`);
+    return this.httpClient.post<UserProfileResponseModel>(`/profile`,'');
   }
 
   login(data: any) {
@@ -39,9 +39,9 @@ export class UserAPIService {
   isValidUser(data: any) {
     if (data && data.data && data.token) {
       sessionStorage.setItem('user', JSON.stringify(data.data));
-      sessionStorage.setItem('token', data.token.access_token);
-      sessionStorage.setItem('refresh_token', data.token.refresh_token);
-      sessionStorage.setItem('loginId', data.loginId);
+      sessionStorage.setItem('token', data.token.access_token ? data.token.access_token : '');
+      sessionStorage.setItem('refresh_token', data.token.refresh_token ? data.token.refresh_token : '');
+      sessionStorage.setItem('loginId', data.data.loginId);
       return true;
     } else {
       this.mulitpleUserLoginToast(data);
