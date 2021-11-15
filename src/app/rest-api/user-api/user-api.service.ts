@@ -20,7 +20,11 @@ export class UserAPIService {
     private toastr: ToastrService, private route: Router, private store: Store<AppState>
     ) {}
   getUserProfile(): Observable<UserProfileResponseModel> {
-    return this.httpClient.post<UserProfileResponseModel>(`/profile`,'');
+    const userProfile = JSON.parse(sessionStorage.getItem('user'));
+    let data = {
+      email : userProfile && userProfile.attributes && userProfile.attributes.email
+    }
+    return this.httpClient.post<UserProfileResponseModel>(`/profile`,data);
   }
 
   login(data: any) {
@@ -37,6 +41,7 @@ export class UserAPIService {
 
 
   isValidUser(data: any) {
+    debugger
     if (data && data.data && data.token) {
       sessionStorage.setItem('user', JSON.stringify(data.data));
       sessionStorage.setItem('token', data.token.access_token ? data.token.access_token : '');
