@@ -18,9 +18,9 @@ export class ReferenceEffects {
         mergeMap(() => {
           this._loading.setLoading(true, 'request.url');
           return this.referenceAPIService.getReferenceData().pipe(
-            map((reference: ReferenceResponseModel) => {
-              sessionStorage.setItem('reference', JSON.stringify(reference));
-              return referenceDataActions.getReferenceDataSuccess({ payload: reference });
+            map((reference: any) => {
+              sessionStorage.setItem('reference', JSON.stringify(reference.data));
+              return referenceDataActions.getReferenceDataSuccess({ payload: reference.data });
             }),
             catchError((error: ErrorResponse) => {
               this._loading.setLoading(false, 'request.url');

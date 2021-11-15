@@ -90,7 +90,8 @@ export class UapHttpService {
     //  !url.includes('/packages') &&
      !url.includes('/scheduledQuestionDetails') &&
      !url.includes('/reference') &&
-     !url.includes('/profile')
+     !url.includes('/profile') &&
+     !url.includes('/packages') 
      ) {
     return `${this.apiBaseUrl}${url}`;
     } else {
