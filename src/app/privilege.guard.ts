@@ -63,14 +63,16 @@ export class PrivilegeGuard implements CanActivate {
     let responseData;
     this._loading.setLoading(true, 'request.url');
     this.userAPIService.getTokenFromParamForLogin(apiData).subscribe((res: any) => {
-      if (res && res.data && res.data.data && res.data.token) {
+      if (res && res.data && res.data && res.data.token) {
+        console.log('res',res)
         responseData = {
-          data: res.data.data,
+          data: res.data,
           token: res.data.token
         }
         this.userAPIService.isValidUser(responseData);
         this.store.dispatch(loginSuccess({ payload: responseData }));
       } else {
+        console.log('else',res)
         this._loading.setLoading(false, 'request.url');
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('user');
