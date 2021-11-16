@@ -71,7 +71,7 @@ export class QuestionUploadComponent implements OnInit {
         this.csvRows.push(rows);
       };
     }
-    console.log(this.csvRows)
+    // console.log(this.csvRows)
   }
 
   deleteCsvFile(): void {
@@ -98,9 +98,7 @@ export class QuestionUploadComponent implements OnInit {
     // const fd = new FormData();
     // fd.append('file', this.selectedCSVFile);
     let data = {
-      "quesetionDetails":[
-        this.csvRows[0]
-      ]
+      "quesetionDetails": this.csvRows[0]
     }
     this.http.questionupload(data).subscribe((response: any) => {
       if(response.success == true){
