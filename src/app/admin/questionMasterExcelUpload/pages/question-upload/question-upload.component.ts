@@ -92,7 +92,7 @@ export class QuestionUploadComponent implements OnInit {
   }
 
   downloadTemplate() {
-    const excel = `assets/templates/QuestionsUpload.xlsx`;
+    const excel = `assets/templates/questonmaster.csv`;
     window.open(excel, '_blank');
   }
 
