@@ -41,7 +41,6 @@ export class UserAPIService {
 
 
   isValidUser(data: any) {
-    debugger
     if (data && data.data && data.token) {
       sessionStorage.setItem('user', JSON.stringify(data.data));
       sessionStorage.setItem('token', data.token.access_token ? data.token.access_token : '');

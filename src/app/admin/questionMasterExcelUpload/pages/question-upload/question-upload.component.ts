@@ -13,8 +13,14 @@ export class QuestionUploadComponent implements OnInit {
   csvFileName: string;
   csvRows: Array<any[]> = [];
   showCsvFileInformation: boolean;
+  userInfo:any
 
-  constructor(private http : AssessmentAPIService,private toaster: ToastrService,) { }
+  constructor(private http : AssessmentAPIService,private toaster: ToastrService,) {
+    const userProfile = JSON.parse(sessionStorage.getItem('user'));
+   this.userInfo = {
+      firstName : userProfile && userProfile.attributes && userProfile.attributes.firstName
+    }
+   }
 
   ngOnInit(): void {
   }
@@ -56,15 +62,12 @@ export class QuestionUploadComponent implements OnInit {
           const rowData = allTextLines[i].split(';')[0].split(',');
           if (rowData.length > 1 && rowData[0]) {
             rows.push({
-              quesCode: rowData[0] ? rowData[0].trim() : '',
-              quesType: rowData[1] ? rowData[1].trim() : '',
-              questionDes: rowData[2] ? rowData[2].trim() : '',
-              createdBy: rowData[3] ? rowData[3].trim() : '',
-              updatedBy: rowData[4] ? rowData[4].trim() : '',
-              duration: rowData[5] ? rowData[5].trim() : '',
-              mark:rowData[6] ? rowData[6].trim() : '',
-              categoryId: rowData[7] ? rowData[7].trim() : '',
-              categoryName:  rowData[8] ? rowData[8].trim() : '',
+              questionDes: rowData[0] ? rowData[0].trim() : '',
+              duration: rowData[1] ? rowData[1].trim() : '',
+              mark:rowData[2] ? rowData[2].trim() : '',
+              categoryName:  rowData[3] ? rowData[3].trim() : '',
+              createdBy: this.userInfo.firstName ? this.userInfo.firstName : '',
+              updatedBy: this.userInfo.firstName ? this.userInfo.firstName : '',
             });
           }
         }
@@ -89,7 +92,7 @@ export class QuestionUploadComponent implements OnInit {
   }
 
   downloadTemplate() {
-    const excel = `assets/templates/QuestionsUpload.xlsx`;
+    const excel = `assets/templates/questonmaster.csv`;
     window.open(excel, '_blank');
   }
 
