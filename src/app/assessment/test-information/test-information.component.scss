@@ -10,9 +10,8 @@
     }
     .testname {
         width: 230px;
-        height: 43px;
         font-size: 26px;
-        margin-top: 12px;
+        margin-top: 6px;
         text-align: left;
         letter-spacing: 0.64px;
         color: #000000;
@@ -32,6 +31,7 @@
     .similarImg {
         .container {
             display: flex;
+            width: 70%;
             justify-content: flex-start;
             align-items: flex-start;
             // flex-wrap: wrap;
@@ -42,13 +42,7 @@
             justify-content: flex-start;
             align-items: flex-start;
             width: 32%;
-            margin-bottom: 20px;
-            // figure {
-            //     border-radius: 4px;
-            //     overflow: hidden;
-            //     display: inline-flex;
-            //     width: 17%;
-            //     margin-right: 2%;
+            // margin-bottom: 20px;
             img {
                 width: 52%;
                 height: 19px;
@@ -66,7 +60,7 @@
             }
             .box {
                 background: url("../../../assets/images/Instructions_icon.svg") no-repeat 0 6px;
-                width: 46px;
+                width: 66px;
                 height: 50px;
                 background-size: 288px;
                 position: relative;
@@ -74,7 +68,7 @@
             }
             .hand {
                 background: url("../../../assets/images/Instructions_icon.svg") no-repeat -61px;
-                width: 46px;
+                width: 66px;
                 height: 50px;
                 background-size: 288px;
                 position: relative;
@@ -82,7 +76,7 @@
             }
             .flov {
                 background: url("../../../assets/images/Instructions_icon.svg") no-repeat -121px;
-                width: 46px;
+                width: 66px;
                 height: 50px;
                 background-size: 288px;
                 position: relative;
@@ -90,7 +84,7 @@
             }
             .round {
                 background: url("../../../assets/images/Instructions_icon.svg") no-repeat -182px;
-                width: 46px;
+                width: 66px;
                 height: 50px;
                 background-size: 288px;
                 position: relative;
@@ -98,7 +92,7 @@
             }
             .clock {
                 background: url("../../../assets/images/Instructions_icon.svg") no-repeat -242px;
-                width: 46px;
+                width: 66px;
                 height: 50px;
                 background-size: 288px;
                 position: relative;
@@ -152,7 +146,7 @@
         padding: 8px;
     }
     table {
-        width: 1026px;
+        width: 844px;
         border-collapse: collapse;
         background: #FFFFFF 0% 0% no-repeat padding-box;
         box-shadow: 2px 2px 5px #0000001a;
@@ -220,14 +214,42 @@
     height: 131px;
 }
 
-.small {
-    height: 254px;
-    width: 254px;
-    overflow: hidden;
+ ::ng-deep .small {
+    // height: 422px;\
+    // width: 254px;
+    overflow: hidden !important;
+    position: fixed !important;
 }
 
 .big {
     width: 100%;
     height: 626px;
     overflow: hidden;
+}
+
+::ng-deep ._19Xk8-2HxtQ_csPgTiLjO9 {
+    // height: 258px !important;
+    overflow: hidden !important;
+    position: fixed !important;
+}
+
+::ng-deep .SX065LLhcSQmGnFQ17AtD video[data-mirror] {
+    transform: rotateY( 180deg);
+    height: 134px !important;
+}
+
+.smScreen {
+    height: 195px;
+    width: 275px;
+    border-radius: 10px;
+}
+
+:host ::ng-deep .btn.disabled,
+.btn:disabled {
+    opacity: .35 !important;
+    background-color: gray !important;
+    pointer-events: none;
+    color: #fff !important;
+    border-radius: .25rem;
+    font-size: 16px;
 }

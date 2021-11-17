@@ -3,8 +3,8 @@
     <div class="test">
         TEST NAME
     </div>
-    <div class="testname">
-        Video Interview
+    <div class="testname" *ngIf="testname">
+        {{testname}}
     </div>
 
 
@@ -56,7 +56,7 @@
                 <span class="clock">
                 </span>
                 <div>
-                    <span class="userName">Druation</span>
+                    <span class="userName">Duration</span>
                     <span class="nickName">{{testInfo ? testInfo?.totalDuration : '-'}} Mins</span>
                 </div>
             </div>
@@ -92,33 +92,33 @@
 
     <div>
         <ul class="a">
-            <li>Provide the best answer; then click <b>"Next"</b> to proceed to the next item. Click <b>"Previous"</b> to return to the previous item. </li>
-            <li>You can change your answer selection at any time by returning to the item. </li>
-            <li>Complete the test by answering each item before closing the window.</li>
-            <li>After answering all of the items, click <b>"Submit"</b> to review your Test summary. </li>
-            <li>If your assessment is timed, please note the clock in the upper right corner. It displays the remaining time. </li>
-            <li>If your time elapses, your Test will be automatically submitted.</li>
+            <li>Provide the best answer; then click <b>"Next"</b> to proceed to the next item.
+                <li>You can change your answer selection at any time by returning to the item. </li>
+                <li>Complete the test by answering each item before closing the window.</li>
+                <li>After answering all of the items, click <b>"Submit"</b> to review your Test summary. </li>
+                <li>If your assessment is timed, please note the clock in the upper right corner. It displays the remaining time. </li>
+                <li>If your time elapses, your Test will be automatically submitted.</li>
         </ul>
     </div>
 
     <div>
         <div class="tacbox">
-            <input id="checkbox" type="checkbox" />
+            <input id="checkbox" type="checkbox" (change)="checkvalue($event)" />
             <label for="checkbox"> I have read and Agree to the Privacy Policy and proceed to the test.</label>
         </div>
     </div>
 
 
     <div class="m-t-10">
-        <button class="btn" mat-button (click)="NavToVideo()">Start Test</button>
+        <button class="btn" [disabled]="isStartenable" mat-button (click)="NavToVideo()">Start Test</button>
     </div>
     <div *ngIf="proctorScreen == 'true'">
-        <iframe class="frame small" src="../../../assets/templates/test.html" title="description"></iframe>
+        <iframe class="frame _19Xk8-2HxtQ_csPgTiLjO9 smScreen" src="../../../assets/templates/smallVideo.html" title="description"></iframe>
     </div>
 
-    <div *ngIf="proctorScreen == 'false'">
+    <!-- <div *ngIf="proctorScreen == 'false'">
         <iframe class="frame big" src="../../../assets/templates/test.html" title="description"></iframe>
-    </div>
+    </div> -->
 
 
 

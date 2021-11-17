@@ -20,10 +20,9 @@ div {
     padding: 52px 0px 0px 0px;
     // height: 89vh;
     .left-half {
-        background-color: #F2F2F2;
+        background-color: #fff;
         flex: 1;
-        // max-width: 40%;
-        // height: 589px;
+        max-width: 10%;
         .qus {
             width: 70px;
             height: 16px;
@@ -44,6 +43,7 @@ div {
             cursor: pointer;
             .qus-align {
                 font-size: 17px;
+                padding: 5px;
             }
         }
     }
@@ -53,6 +53,7 @@ div {
         // max-width: 60%;
         // height: 589px;
         .right-con {
+            margin-top: 4.5%;
             // margin-left: 20px;
             .alert {
                 padding: 20px;
@@ -71,8 +72,9 @@ div {
                 }
             }
             .sub-head {
+                width: 70%;
                 flex-direction: row;
-                justify-content: space-around;
+                justify-content: space-between;
                 // margin-top: 3%;
             }
             .flex-dir {
@@ -102,24 +104,21 @@ div {
             border: 1px solid black;
         }
         .wrapper {
-            // display: table;
-            // width: auto;
             position: relative;
-            // justify-content: center;m
             width: 100%;
-            text-align: center;
+            text-align: right;
             display: flex;
-            justify-content: center;
+            justify-content: left;
             flex-direction: initial;
         }
         .playpause {
             background-repeat: no-repeat;
-            width: 62.5%;
+            width: 69.5%;
             height: 100%;
             position: absolute;
             display: flex;
             justify-content: space-between;
-            left: 18.8%;
+            left: 0%;
             right: 0%;
             top: 0%;
             background: #030303b3;
@@ -168,16 +167,16 @@ div {
             line-height: 1.4;
         }
         .button-grid {
-            margin-top: 3%;
+            margin-top: 1%;
             position: relative;
             display: flex;
-            justify-content: center;
+            justify-content: left;
             flex-direction: revert;
         }
         .recordCount {
             position: absolute;
             top: 4%;
-            left: 20%;
+            left: 1%;
             color: #fff;
             line-height: 17px;
             font-weight: 500;
@@ -200,15 +199,17 @@ div {
             padding: 0px;
         }
         .timer {
-            margin-left: -22px;
+            margin-left: -64px;
+            position: absolute;
         }
     }
 }
 
 .note {
-    margin-top: 2%;
-    text-align: center;
+    text-align: left;
     color: red;
+    margin-left: 10px;
+    margin-bottom: 13px;
 }
 
 .wrapword {
@@ -220,8 +221,8 @@ div {
 }
 
 .blue {
-    // border-left: 1px solid #27BBEE;
-    // border-left-width: 5px;
+    border-left: 1px solid #27BBEE;
+    border-left-width: 5px;
 }
 
 .tick {
