@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { AssessmentAPIService } from 'src/app/rest-api/assessments-api/assessments-api.service';
 import _ from 'lodash';
 import { AssessmentTaskUrlModel } from 'src/app/rest-api/assessments-api/models/assessment-task-url-response-model';
+import { LoadingService } from 'src/app/rest-api/loading.service';
 @Component({
   selector: 'uap-video-interview',
   templateUrl: './video-interview.component.html',
@@ -38,10 +39,10 @@ export class VideoInterviewComponent implements OnInit {
   isNextBtn = true;
   taskUrlData: AssessmentTaskUrlModel;
   displayQus: any;
-  constructor(private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
+  constructor(private _loading: LoadingService,private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
     this.userProfile = JSON.parse(sessionStorage.getItem('user'));
     sessionStorage.setItem('activequs',this.activequs)
-    this.activequs = sessionStorage.getItem('activequs') ? sessionStorage.getItem('activequs') : 0;
+    this.activequs = sessionStorage.getItem('activequs');
 
   }
 
@@ -56,8 +57,9 @@ export class VideoInterviewComponent implements OnInit {
     }
     this.http.getTestInformation(data).subscribe((response: any) => {
       if(response.success == true){
+        this._loading.setLoading(false, 'request.url');
         this.qusInfo = response.data[this.activequs].questionDetailsArray;
-        this.displayQus =  this.qusInfo[this.activequs].questionDetails.questionDes;
+        this.displayQus =  this.qusInfo[this.activequs].questionDetails.question;
         if(Object.getOwnPropertyNames(this.lastQusDetails).length > 0){
           this.findLastQusDetails(response.data[0].questionDetailsArray)
         } else {
@@ -66,6 +68,7 @@ export class VideoInterviewComponent implements OnInit {
         }
       }else {
         this.toast.warning('Please try after sometime...')
+        this._loading.setLoading(false, 'request.url');
       }
     })
   }
@@ -80,7 +83,7 @@ export class VideoInterviewComponent implements OnInit {
    this.countdownStart = parseInt(this.lastQusDetails.duration);
    this.timeLeft = parseInt(val[0].duration) * 60 - this.countdownStart;
   //  console.log(val[0])
-   this.displayQus =  val[0].questionDes;
+   this.displayQus =  val[0].question;
    let index = matchLastQus.findIndex(item => item._id === this.lastQusDetails.id); // find qus index
   //  console.log(index,'index')
    this.activequs = index;
@@ -136,7 +139,7 @@ export class VideoInterviewComponent implements OnInit {
       this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
       this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
       sessionStorage.setItem('activequs',this.activequs)
-      this.displayQus = this.qusInfo[this.activequs].questionDetails.questionDes
+      this.displayQus = this.qusInfo[this.activequs].questionDetails.question
       this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
       
     }else {
@@ -194,19 +197,19 @@ export class VideoInterviewComponent implements OnInit {
         if(this.qusInfo.length -1 > index){
           // alert('Please press ok to move next question');
           this.toast.success('Question time expired moving to next question')
-            this.isStartbtn = true; 
+            // this.isStartbtn = true; 
             // this.isNextBtn = false;
             // this.timeLeft = 0;
             // this.countdownStart = 1;
            
             this.activequs = parseInt(this.activequs) + 1;
             sessionStorage.setItem('activequs', this.activequs + 1)
-            this.displayQus = this.qusInfo[this.activequs].questionDetails.questionDes
+            this.displayQus = this.qusInfo[this.activequs].questionDetails.question
             this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
             this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
             this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
             this.qusEndTime = new Date();
-            this.actions('next',false,'')
+            this.actions('next',true,'')
           }else {
             this.actions('submit',false,'')
             this.toast.warning('No Next question..')
@@ -239,6 +242,9 @@ onSubmit(activequs,stauts){
         "nextQuestionId":  this.nextQusId ? this.nextQusId : '',
         "emailId" : this.userProfile && this.userProfile.attributes && this.userProfile.attributes.email ? this.userProfile.attributes.email : null,
         "action": status,
+        "question":  this.displayQus,
+        "questionNo":this.activequs,
+        "candidateId": this.userProfile && this.userProfile.attributes && this.userProfile.attributes.id ? this.userProfile.attributes.id : null
       }
     } else if(status == 'submit'){
       request = {
@@ -250,7 +256,10 @@ onSubmit(activequs,stauts){
         "emailId" : this.userProfile && this.userProfile.attributes && this.userProfile.attributes.email ? this.userProfile.attributes.email : null,
         "action": status,
         "existDuration":  this.qusDuration,
-        "assessmentId":sessionStorage.getItem('assessmentId')
+        "assessmentId":sessionStorage.getItem('assessmentId'),
+        "question":  this.displayQus,
+        "questionNo":this.activequs,
+        "candidateId": this.userProfile && this.userProfile.attributes && this.userProfile.attributes.id ? this.userProfile.attributes.id : null
       }
     } else{
       request = {
@@ -262,6 +271,9 @@ onSubmit(activequs,stauts){
         "emailId" : this.userProfile && this.userProfile.attributes && this.userProfile.attributes.email ? this.userProfile.attributes.email : null,
         "action": status,
         "existDuration":  this.qusDuration,
+        "question":  this.displayQus,
+        "questionNo":this.activequs,
+        "candidateId": this.userProfile && this.userProfile.attributes && this.userProfile.attributes.id ? this.userProfile.attributes.id : null
       }
 
     }
@@ -275,7 +287,7 @@ onSubmit(activequs,stauts){
                 this.timeLeft = 0;
                 this.countdownStart = 0;
                 this.counterStart.stop();
-                this.toast.warning('Question time expired')
+                this.toast.warning('Question time expired');
                 this.isStartEnable = true;
               }else{
                 this.countdownStart = response.data.duration ? response.data.duration : 1;
