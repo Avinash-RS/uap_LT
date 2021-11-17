@@ -60,7 +60,7 @@ export class QuestionUploadComponent implements OnInit {
         const rows: any[] = [];
         for (let i = 1; i < arrayLength - 1; i++) {
           const rowData = allTextLines[i].split(';')[0].split(',');
-          if (rowData.length > 1 && rowData[0]) {
+          if (rowData.length > 1) {
             rows.push({
               question: rowData[0] ? rowData[0].trim() : "",
               duration: rowData[1] ? rowData[1].trim() : "",
@@ -74,7 +74,7 @@ export class QuestionUploadComponent implements OnInit {
         this.csvRows.push(rows);
       };
     }
-    console.log(this.csvRows)
+   
   }
 
   deleteCsvFile(): void {
