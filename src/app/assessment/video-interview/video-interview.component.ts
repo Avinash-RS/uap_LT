@@ -197,7 +197,7 @@ export class VideoInterviewComponent implements OnInit {
         if(this.qusInfo.length -1 > index){
           // alert('Please press ok to move next question');
           this.toast.success('Question time expired moving to next question')
-            // this.isStartbtn = true; 
+            this.isStartbtn = true; 
             // this.isNextBtn = false;
             // this.timeLeft = 0;
             // this.countdownStart = 1;
@@ -209,7 +209,7 @@ export class VideoInterviewComponent implements OnInit {
             this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
             this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
             this.qusEndTime = new Date();
-            this.actions('next',true,'')
+            this.actions('auto complete',true,'')
           }else {
             this.actions('submit',false,'')
             this.toast.warning('No Next question..')
@@ -243,7 +243,7 @@ onSubmit(activequs,stauts){
         "emailId" : this.userProfile && this.userProfile.attributes && this.userProfile.attributes.email ? this.userProfile.attributes.email : null,
         "action": status,
         "question":  this.displayQus,
-        "questionNo":this.activequs,
+        "questionNo":parseInt(this.activequs + 1) ,
         "candidateId": this.userProfile && this.userProfile.attributes && this.userProfile.attributes.id ? this.userProfile.attributes.id : null
       }
     } else if(status == 'submit'){
@@ -258,7 +258,7 @@ onSubmit(activequs,stauts){
         "existDuration":  this.qusDuration,
         "assessmentId":sessionStorage.getItem('assessmentId'),
         "question":  this.displayQus,
-        "questionNo":this.activequs,
+        "questionNo":parseInt(this.activequs + 1) ,
         "candidateId": this.userProfile && this.userProfile.attributes && this.userProfile.attributes.id ? this.userProfile.attributes.id : null
       }
     } else{
@@ -272,7 +272,7 @@ onSubmit(activequs,stauts){
         "action": status,
         "existDuration":  this.qusDuration,
         "question":  this.displayQus,
-        "questionNo":this.activequs,
+        "questionNo":parseInt(this.activequs + 1),
         "candidateId": this.userProfile && this.userProfile.attributes && this.userProfile.attributes.id ? this.userProfile.attributes.id : null
       }
 
