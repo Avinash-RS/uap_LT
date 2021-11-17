@@ -61,15 +61,24 @@ export class QuestionUploadComponent implements OnInit {
         for (let i = 1; i < arrayLength - 1; i++) {
           const rowData = allTextLines[i].split(';')[0].split(',');
           if (rowData.length > 1) {
-            rows.push({
-              question: rowData[0] ? rowData[0].trim() : "",
-              duration: rowData[1] ? rowData[1].trim() : "",
-              mark:rowData[2] ? rowData[2].trim() : "",
-              categoryName:  rowData[3] ? rowData[3].trim() : "",
-              createdBy: this.userInfo.firstName ? this.userInfo.firstName : "",
-              updatedBy: this.userInfo.firstName ? this.userInfo.firstName : "",
-            });
+
+             if(rowData[0] == 'question' && rowData[1] == 'duration' && rowData[2] == 'mark' && rowData[3] == 'categoryName'){
+              rows.push({
+                question: rowData[0] ? rowData[0].trim() : "",
+                duration: rowData[1] ? rowData[1].trim() : "",
+                mark:rowData[2] ? rowData[2].trim() : "",
+                categoryName:  rowData[3] ? rowData[3].trim() : "",
+                createdBy: this.userInfo.firstName ? this.userInfo.firstName : "",
+                updatedBy: this.userInfo.firstName ? this.userInfo.firstName : "",
+              });
+             }else {
+                this.toaster.error('Please upload valid excel file')
+             }
+
           }
+          // else {
+          //   this.toaster.warning('File too large')
+          // }
         }
         this.csvRows.push(rows);
       };
@@ -92,7 +101,7 @@ export class QuestionUploadComponent implements OnInit {
   }
 
   downloadTemplate() {
-    const excel = `assets/templates/questonmaster.csv`;
+    const excel = `assets/templates/questionmaster.csv`;
     window.open(excel, '_blank');
   }
 
