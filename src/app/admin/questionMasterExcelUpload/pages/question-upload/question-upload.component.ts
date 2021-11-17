@@ -62,19 +62,19 @@ export class QuestionUploadComponent implements OnInit {
           const rowData = allTextLines[i].split(';')[0].split(',');
           if (rowData.length > 1 && rowData[0]) {
             rows.push({
-              questionDes: rowData[0] ? rowData[0].trim() : '',
-              duration: rowData[1] ? rowData[1].trim() : '',
-              mark:rowData[2] ? rowData[2].trim() : '',
-              categoryName:  rowData[3] ? rowData[3].trim() : '',
-              createdBy: this.userInfo.firstName ? this.userInfo.firstName : '',
-              updatedBy: this.userInfo.firstName ? this.userInfo.firstName : '',
+              question: rowData[0] ? rowData[0].trim() : "",
+              duration: rowData[1] ? rowData[1].trim() : "",
+              mark:rowData[2] ? rowData[2].trim() : "",
+              categoryName:  rowData[3] ? rowData[3].trim() : "",
+              createdBy: this.userInfo.firstName ? this.userInfo.firstName : "",
+              updatedBy: this.userInfo.firstName ? this.userInfo.firstName : "",
             });
           }
         }
         this.csvRows.push(rows);
       };
     }
-    // console.log(this.csvRows)
+    console.log(this.csvRows)
   }
 
   deleteCsvFile(): void {
