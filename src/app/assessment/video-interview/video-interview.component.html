@@ -32,8 +32,8 @@
                     </div>
 
                     <div class="flex-dir m-l-33">
-                        <mat-icon class="clock-color">access_alarms</mat-icon><span class="time">Time left: <b>  
-                            <countdown #cd  (event)="handleEvent($event)" [config]="{ leftTime: timeLeft, demand: true, format: 'HH:mm:ss' }"></countdown>
+                        <mat-icon class="clock-color">access_alarms</mat-icon><span class="time">Question duration : <b>{{qusTime}}  
+                            <!-- <countdown #cd  (event)="handleEvent($event)" [config]="{ leftTime: timeLeft, demand: true, format: 'HH:mm:ss' }"></countdown> -->
                         </b></span>
                     </div>
                 </div>
@@ -45,7 +45,8 @@
                         <div class="d-flex record-bx">
                             <span class="reddot"></span>
                             <span class="recordCount">
-                                <cd-timer  class="timer" (onStart)="onStart($event)"
+                                <countdown #cd class="timer"  (event)="handleEvent($event)" [config]="{ leftTime: timeLeft, demand: true, format: 'HH:mm:ss' }"></countdown>
+                                <cd-timer style="display: none;"  class="timer" (onStart)="onStart($event)"
                                 [startTime]="countdownStart" [endTime]="timeLeft"  (onComplete)="onComplete($event,activequs)"  format="hms"></cd-timer>
                             </span>
                         </div>
