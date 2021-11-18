@@ -7,7 +7,7 @@ export const environment = {
   dev: true,
   local: false,
   ADFBASEURL: 'https://uap-uat.azurewebsites.net',
-  MICROCERTREDIRECT: 'https://certification.lntiggnite.com/myAssessment',
+  MICROCERTREDIRECT: 'https://portaldev.lntiggnite.com/myAssessment',
   API_URL: 'https://uapdev-api.lntiggnite.com',
   NODE_URL: 'https://edgeservice.lntiggnite.com'
 //   OIDC_CONFIG: {
