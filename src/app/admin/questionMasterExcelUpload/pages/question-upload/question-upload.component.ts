@@ -13,14 +13,14 @@ export class QuestionUploadComponent implements OnInit {
   csvFileName: string;
   csvRows: Array<any[]> = [];
   showCsvFileInformation: boolean;
-  userInfo:any
+  userInfo: any
 
-  constructor(private http : AssessmentAPIService,private toaster: ToastrService,) {
+  constructor(private http: AssessmentAPIService, private toaster: ToastrService, ) {
     const userProfile = JSON.parse(sessionStorage.getItem('user'));
-   this.userInfo = {
-      firstName : userProfile && userProfile.attributes && userProfile.attributes.firstName
+    this.userInfo = {
+      firstName: userProfile && userProfile.attributes && userProfile.attributes.firstName
     }
-   }
+  }
 
   ngOnInit(): void {
   }
@@ -58,32 +58,36 @@ export class QuestionUploadComponent implements OnInit {
         const arrayLength = allTextLines.length;
         // Reading and createing table rows
         const rows: any[] = [];
-        for (let i = 1; i < arrayLength - 1; i++) {
-          const rowData = allTextLines[i].split(';')[0].split(',');
-          if (rowData.length > 1) {
-
-             if(rowData[0] == 'question' && rowData[1] == 'duration' && rowData[2] == 'mark' && rowData[3] == 'categoryName'){
-              rows.push({
-                question: rowData[0] ? rowData[0].trim() : "",
-                duration: rowData[1] ? rowData[1].trim() : "",
-                mark:rowData[2] ? rowData[2].trim() : "",
-                categoryName:  rowData[3] ? rowData[3].trim() : "",
-                createdBy: this.userInfo.firstName ? this.userInfo.firstName : "",
-                updatedBy: this.userInfo.firstName ? this.userInfo.firstName : "",
-              });
-             }else {
-                this.toaster.error('Please upload valid excel file')
-             }
-
+        const firstRow = allTextLines[0].split(',');
+        const validRows = allTextLines.filter(ele => ele);
+        // 1001 with headers
+        if (validRows && validRows.length <= 1001) {
+        if (firstRow[0] == 'question' && firstRow[1] == 'duration' && firstRow[2] == 'mark' && firstRow[3] == 'categoryName') {
+          for (let i = 1; i < arrayLength - 1; i++) {
+            const rowData = allTextLines[i].split(';')[0].split(',');
+            if (rowData.length > 1) {
+                rows.push({
+                  question: rowData[0] ? rowData[0].trim() : "",
+                  duration: rowData[1] ? rowData[1].trim() : "",
+                  mark: rowData[2] ? rowData[2].trim() : "",
+                  categoryName: rowData[3] ? rowData[3].trim() : "",
+                  createdBy: this.userInfo.firstName ? this.userInfo.firstName : "",
+                  updatedBy: this.userInfo.firstName ? this.userInfo.firstName : "",
+                });
+            }
           }
-          // else {
-          //   this.toaster.warning('File too large')
-          // }
+        } else {
+          this.toaster.warning('Please upload valid excel file');
+          this.deleteCsvFile();
         }
+      } else {
+        this.toaster.warning('Cannot upload more than 1000 questions');
+        this.deleteCsvFile();
+      }
         this.csvRows.push(rows);
       };
     }
-   
+
   }
 
   deleteCsvFile(): void {
@@ -106,19 +110,19 @@ export class QuestionUploadComponent implements OnInit {
   }
 
 
-  questionbulkUpload(){
+  questionbulkUpload() {
     // const fd = new FormData();
     // fd.append('file', this.selectedCSVFile);
     let data = {
       "quesetionDetails": this.csvRows[0]
     }
     this.http.questionupload(data).subscribe((response: any) => {
-      if(response.success == true){
-          this.csvFileName = '';
-          this.showCsvFileInformation = false;
-          this.csvRows = [];
-          this.toaster.success(response.message);
-      }else{
+      if (response.success == true) {
+        this.csvFileName = '';
+        this.showCsvFileInformation = false;
+        this.csvRows = [];
+        this.toaster.success(response.message);
+      } else {
         this.toaster.error(response.message);
       }
     })
