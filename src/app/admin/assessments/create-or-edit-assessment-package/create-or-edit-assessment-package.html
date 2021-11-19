@@ -90,7 +90,7 @@
     <!-- TODO: Use material UI select -->
     <select class="test-items-block__select-field__width" formControlName="testTypeSelectOption" (change)="onSelectChange(i, $event)">
                   <option *ngFor="let testTypeOption of testTypes" [ngValue]="testTypeOption">
-                    {{testTypeOption && testTypeOption.includes('Behaviour') ? 'Personality & Behaviour' : testTypeOption}}
+                    {{testTypeOption && testTypeOption.includes('Behaviour') ? 'Behavioural Assessment' : testTypeOption}}
                   </option>
                   
                 </select>
