@@ -17,12 +17,12 @@ div {
 
 .container1 {
     display: flex;
-    padding: 52px 0px 0px 0px;
-    // height: 89vh;
-    .left-half {
-        background-color: #fff;
-        flex: 1;
-        max-width: 10%;
+    padding: 65px 0px 0px 0px;
+    min-height: calc(100vh - 65px);
+    .leftHalf {
+        width: 500px;
+        background-color: #F2F2F2;
+        padding: 20px;
         .qus {
             width: 70px;
             height: 16px;
@@ -47,14 +47,12 @@ div {
             }
         }
     }
-    .right-half {
+    .rightHalf {
         background-color: #fff;
-        flex: 1;
-        // max-width: 60%;
-        // height: 589px;
+        width: calc(100% - 500px);
+        padding: 20px;
         .right-con {
             margin-top: 4.5%;
-            // margin-left: 20px;
             .alert {
                 padding: 20px;
                 font-size: 11px;

@@ -1,88 +1,116 @@
 <div class="assessments">
-
-    <div class="test">
+    <div class="header">
+        <span>Test Name</span>
+        <h2 *ngIf="testname">{{testname}}</h2>
+    </div>
+    <!-- <div class="test">
         TEST NAME
     </div>
-    <div class="testname" *ngIf="testname">
-        {{testname}}
-    </div>
+    <div class="testname">
+        
+    </div> -->
 
 
     <div class="testInfo">
-        Test Information
-    </div>
-
-    <div class="similarImg">
-        <div class="container">
-            <div class="wrapper">
-                <span class="box"></span>
-                <div>
-                    <span class="userName">Sections</span>
-                    <span class="nickName">{{testInfo ? testInfo?.section : '-'}}</span>
+        <h3>Test Information</h3>
+        <div class="similarImg">
+            <div class="container">
+                <div class="wrapper">
+                    <div class="icon">
+                        <span class="box"></span>
+                    </div>
+                    <div class="content">
+                        <span class="userName">Sections</span>
+                        <span class="nickName">{{testInfo ? testInfo?.section : '-'}}</span>
+                    </div>
                 </div>
-            </div>
-
-            <div class="wrapper">
-                <span class="hand">
-                </span>
-                <div>
-                    <span class="userName">No. Attempts</span>
-                    <span class="nickName">{{testInfo ? testInfo?.noOfAttempt : '-'}}</span>
+    
+                <div class="wrapper">
+                    <div class="icon">
+                        <span class="hand"></span>
+                    </div>
+                    <div class="content">
+                        <span class="userName">No. Attempts</span>
+                        <span class="nickName">{{testInfo ? testInfo?.noOfAttempt : '-'}}</span>
+                    </div>
                 </div>
-            </div>
-
-
-            <div class="wrapper">
-                <span class="flov">
-                </span>
-                <div>
-                    <span class="userName">Questions</span>
-                    <span class="nickName">{{testInfo ? testInfo?.totalNoquestions : '-'}}</span>
+    
+    
+                <div class="wrapper">
+                    <div class="icon">
+                        <span class="flov"></span>
+                    </div>
+                    <div class="content">
+                        <span class="userName">Questions</span>
+                        <span class="nickName">{{testInfo ? testInfo?.totalNoquestions : '-'}}</span>
+                    </div>
                 </div>
-            </div>
-
-
-            <div class="wrapper">
-                <span class="round">
-                </span>
-                <div>
-                    <span class="userName">Proctoing</span>
-                    <span class="nickName">{{testInfo?.is_proctor == "1" ? 'YES' : 'NO'}}</span>
+    
+    
+                <div class="wrapper">
+                    <div class="icon">
+                        <span class="round"></span>
+                    </div>
+                    <div class="content">
+                        <span class="userName">Proctoing</span>
+                        <span class="nickName">{{testInfo?.is_proctor == "1" ? 'Yes' : 'No'}}</span>
+                    </div>
                 </div>
-            </div>
-
-
-            <div class="wrapper">
-                <span class="clock">
-                </span>
-                <div>
-                    <span class="userName">Duration</span>
-                    <span class="nickName">{{testInfo ? testInfo?.totalDuration : '-'}} Mins</span>
+    
+    
+                <div class="wrapper">
+                    <div class="icon">
+                        <span class="clock"></span>
+                    </div>
+                    <div class="content">
+                        <span class="userName">Duration</span>
+                        <span class="nickName">{{testInfo ? testInfo?.totalDuration : '-'}} <span>min</span></span>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="tableContent">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sections</th>
+                        <th>Questions</th>
+                        <th>Duration</th>
+                        <th>Marks</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{testInfo ? testInfo?.section : '-'}}</td>
+                        <td>{{testInfo ? testInfo?.totalNoquestions : '-'}}</td>
+                        <td>{{testInfo ? testInfo?.totalDuration : '-'}} mins</td>
+                        <td>{{testInfo ? testInfo?.totalMarks : '-'}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div>
-        <table>
-            <tr>
-                <th>Sections</th>
-                <th>Questions</th>
-                <th>Druation</th>
-                <th>Marks</th>
-            </tr>
-            <tr>
-                <td>{{testInfo ? testInfo?.section : '-'}}</td>
-                <td>{{testInfo ? testInfo?.totalNoquestions : '-'}}</td>
-                <td>{{testInfo ? testInfo?.totalDuration : '-'}} Mins</td>
-                <td>{{testInfo ? testInfo?.totalMarks : '-'}}</td>
-            </tr>
-        </table>
-    </div>
-
-
-    <div class="testInfo p-30">
-        Test Instructions
+    <div class="testInstruction">
+        <h3>Test Instructions</h3>
+        <ul class="a">
+            <li>Provide the best answer; then click <strong>"Next"</strong> to proceed to the next item.
+            <li>You can change your answer selection at any time by returning to the item. </li>
+            <li>Complete the test by answering each item before closing the window.</li>
+            <li>After answering all of the items, click <strong>"Submit"</strong> to review your Test summary. </li>
+            <li>If your assessment is timed, please note the clock in the upper right corner. It displays the remaining time. </li>
+            <li>If your time elapses, your Test will be automatically submitted.</li>
+        </ul>
+        <div class="tacbox">
+            <input id="checkbox" type="checkbox" (change)="checkvalue($event)" />
+            <label for="checkbox"> I have read and Agree to the <a href="#">Privacy Policy</a> and proceed to the test.</label>
+        </div>
+        <div class="m-t-10">
+            <button class="btn" [disabled]="isStartenable" mat-button (click)="NavToVideo()">Start Test</button>
+        </div>
+        <div *ngIf="proctorScreen == 'true'">
+            <iframe class="frame _19Xk8-2HxtQ_csPgTiLjO9 smScreen" src="../../../assets/templates/smallVideo.html" title="description"></iframe>
+        </div>
     </div>
     <!-- 
     <div class="desc">
@@ -90,37 +118,8 @@
             tempor consectetuer. Etiam vitae nisl. In dignissim lacus ut ante. Cras elit lectus,</p>
     </div> -->
 
-    <div>
-        <ul class="a">
-            <li>Provide the best answer; then click <b>"Next"</b> to proceed to the next item.
-                <li>You can change your answer selection at any time by returning to the item. </li>
-                <li>Complete the test by answering each item before closing the window.</li>
-                <li>After answering all of the items, click <b>"Submit"</b> to review your Test summary. </li>
-                <li>If your assessment is timed, please note the clock in the upper right corner. It displays the remaining time. </li>
-                <li>If your time elapses, your Test will be automatically submitted.</li>
-        </ul>
-    </div>
-
-    <div>
-        <div class="tacbox">
-            <input id="checkbox" type="checkbox" (change)="checkvalue($event)" />
-            <label for="checkbox"> I have read and Agree to the Privacy Policy and proceed to the test.</label>
-        </div>
-    </div>
-
-
-    <div class="m-t-10">
-        <button class="btn" [disabled]="isStartenable" mat-button (click)="NavToVideo()">Start Test</button>
-    </div>
-    <div *ngIf="proctorScreen == 'true'">
-        <iframe class="frame _19Xk8-2HxtQ_csPgTiLjO9 smScreen" src="../../../assets/templates/smallVideo.html" title="description"></iframe>
-    </div>
-
     <!-- <div *ngIf="proctorScreen == 'false'">
         <iframe class="frame big" src="../../../assets/templates/test.html" title="description"></iframe>
     </div> -->
-
-
-
 
 </div>
