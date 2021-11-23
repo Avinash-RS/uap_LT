@@ -1,23 +1,56 @@
 <!-- <div class="Videoassessments"> -->
 <section class="container1">
     <div class="leftHalf">
-        <div class="wrapword">
-            <div class="qus">
-                Questions
-            </div>
-            <!-- (click)="getTime(qus.questionDetails.duration,i,qusInfo.length,activequs);" *ngFor="let qus of qusInfo;let i=index" [ngClass]="{ blue : i == activequs}" -->
-            <div>
-                <div class="qusCard ">
-                    <div class="qus-align blue" *ngFor="let qus of qusInfo;let i=index" [ngClass]="{ blue : i == activequs}">Q{{i + 1}}</div>
-                </div>
+        <h5>Questions</h5>
+        <!-- (click)="getTime(qus.questionDetails.duration,i,qusInfo.length,activequs);" *ngFor="let qus of qusInfo;let i=index" [ngClass]="{ blue : i == activequs}" -->
+        <div class="qusCard">
+            <div class="qusAlign" *ngFor="let qus of qusInfo; let i=index" [ngClass]="{ blue : i == activequs}">
+                <span>Q{{i + 1}}.</span> <span>{{displayQus}}</span>
             </div>
         </div>
     </div>
 
 
     <div class="rightHalf">
+        <div class="info">
+            <p><span class="material-icons-outlined">info</span> In a video-based question, you will be presented with a question in video form and be given several minutes to respond to each question</p>
+        </div>
+        <div class="duration">
+            <div class="note">
+                <h4>Video Response</h4>
+                <p><strong>Note :</strong> If you press next then you cannot able to attend previous question</p>
+            </div>
+            <div class="clock">
+                <span class="material-icons-outlined timer">timer</span>
+                <span class="time">Time Left : <strong>{{qusTime}}</strong></span>
+            </div>
+        </div>
+        <div class="wrapper">
+            <!-- <span style="color:#000">{{countdownStart}}{{timeLeft}}</span> -->
+            <div class="recordCount" *ngIf="!isStartbtn">
+                <div class="d-flex record-bx">
+                    <span class="reddot"></span>
+                    <span class="recordCount">
+                        <countdown #cd class="timer" (event)="handleEvent($event)" [config]="{ leftTime: timeLeft, demand: true, format: 'HH:mm:ss' }"></countdown>
+                        <cd-timer style="display: none;"  class="timer" (onStart)="onStart($event)" [startTime]="countdownStart" [endTime]="timeLeft"  (onComplete)="onComplete($event,activequs)" format="hms"></cd-timer>
+                    </span>
+                </div>
+            </div>
+
+            <div class="videoFrame">
+                <iframe class="frame" src="../../../assets/templates/test.html" title="description" height="auto"></iframe>
+                <div class="playpause" *ngIf="isStartbtn">
+                    <button class="btn" [disabled]="isStartEnable" mat-button (click)="startRecord(activequs,'start',true);">
+                        <mat-icon class="video-color" >videocam</mat-icon>Start Recording</button>
+                </div>
+            </div>
+
+        </div>
         <div class="wrapword">
             <div class="right-con">
+                <!-- <mat-icon class="clock-color">access_alarms</mat-icon><span class="time">Question duration : <b>{{qusTime}}   -->
+                <!-- <countdown #cd  (event)="handleEvent($event)" [config]="{ leftTime: timeLeft, demand: true, format: 'HH:mm:ss' }"></countdown> -->
+                <!-- </b></span> -->
                 <!-- <div class="alert">
                     <mat-icon class="alert-color">info</mat-icon>
                     <span class="alertInfo">a video-based question, you will be presented with a question in video form and be given several minutes to respond to each question</span>
@@ -25,46 +58,15 @@
 
                 <!-- Questions duration -->
                 <div class="sub-head">
-                    <div>
+                    <!-- <div>
                         <div class="qusCard">
-                            <div class="qus-align" *ngIf="displayQus">{{displayQus}}</div>
+                            <div class="qusAlign" *ngIf="displayQus">
+                                <span>{{displayQus}}</span>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="flex-dir m-l-33">
-                        <mat-icon class="clock-color">access_alarms</mat-icon><span class="time">Question duration : <b>{{qusTime}}  
-                            <!-- <countdown #cd  (event)="handleEvent($event)" [config]="{ leftTime: timeLeft, demand: true, format: 'HH:mm:ss' }"></countdown> -->
-                        </b></span>
-                    </div>
+                    </div> -->
                 </div>
 
-                <!--  Recording time -->
-                <div class="wrapper">
-                    <!-- <span style="color:#000">{{countdownStart}}{{timeLeft}}</span> -->
-                    <div class="recordCount" *ngIf="!isStartbtn">
-                        <div class="d-flex record-bx">
-                            <span class="reddot"></span>
-                            <span class="recordCount">
-                                <countdown #cd class="timer"  (event)="handleEvent($event)" [config]="{ leftTime: timeLeft, demand: true, format: 'HH:mm:ss' }"></countdown>
-                                <cd-timer style="display: none;"  class="timer" (onStart)="onStart($event)"
-                                [startTime]="countdownStart" [endTime]="timeLeft"  (onComplete)="onComplete($event,activequs)"  format="hms"></cd-timer>
-                            </span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <iframe class="frame" style="border:none" src="../../../assets/templates/test.html" title="description" height="421" width="850"></iframe>
-                    </div>
-                    <div class="note">
-                        <span>
-                            <b>Note :</b> If you press next then you cannot able to attend previous question
-                        </span>
-                    </div>
-
-                    <div class="playpause" *ngIf="isStartbtn">
-                        <button class="btn" [disabled]="isStartEnable" mat-button (click)="startRecord(activequs,'start',true);"><mat-icon class="video-color" >videocam</mat-icon>Start Recording</button>
-                    </div>
-                </div>
 
                 <div class="button-grid">
                     <!-- [disabled]="isNextBtn" -->
@@ -81,14 +83,12 @@
 
 <ng-template #matDialog1>
     <div class="tick">
-        <mat-icon class="f-50">check_circle</mat-icon>
+        <span class="material-icons-outlined">task_alt</span>
     </div>
 
-    <h1 mat-dialog-title class="center">Thank you for taking video assessment</h1>
-    <div mat-dialog-content>
-        <p class="center color">HR will contact you for next process.</p>
-    </div>
-    <div mat-dialog-actions>
-        <button class="close" mat-button mat-dialog-close (click)="navToLanding()">Close</button>
+    <h2>Thank you for taking video assessment</h2>
+    <p>HR will contact you for next process.</p>
+    <div class="close">
+        <button mat-button mat-dialog-close (click)="navToLanding()">Close</button>
     </div>
 </ng-template>
