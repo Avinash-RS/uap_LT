@@ -256,7 +256,8 @@ onSubmit(activequs,stauts){
       const dialogRef = this.dialog.open(this.matDialogRef1,{
         width: '572px',
         height: '286px',
-        disableClose: true
+        disableClose: true,
+        panelClass: 'popupClass'
       });
     }
 
