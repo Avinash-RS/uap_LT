@@ -59,7 +59,7 @@ export class VideoInterviewComponent implements OnInit {
     this.http.getTestInformation(data).subscribe((response: any) => {
       if(response.success == true){
         this._loading.setLoading(false, 'request.url');
-        this.qusInfo = response.data[this.activequs].questionDetailsArray;
+        this.qusInfo = response.data[0].questionDetailsArray;
         this.displayQus =  this.qusInfo[this.activequs].questionDetails.question;
         if(Object.getOwnPropertyNames(this.lastQusDetails).length > 0){
           this.findLastQusDetails(response.data[0].questionDetailsArray)
@@ -137,37 +137,39 @@ export class VideoInterviewComponent implements OnInit {
 
     // Ans record timer event
     onComplete($event,index){
-      if($event){
-        if(this.qusInfo.length -1 > index){
-          this.toast.success('Question time expired moving to next question')
-            this.isStartbtn = false; 
-            this.activequs = parseInt(this.activequs) + 1;
-            sessionStorage.setItem('activequs', this.activequs + 1)
-            this.displayQus = this.qusInfo[this.activequs].questionDetails.question
-            this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
-            this.getQusDuration(this.timeLeft)
-            this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
-            this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
-            this.qusEndTime = new Date();
-            this.actions('auto complete',true,'');
-            this.countdownStart = null;
-            setTimeout(() => {
-              this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
-              this.getQusDuration(this.timeLeft)
-              this.counterStart.begin();
-             }, 0);
-          }else {
-            this.actions('submit',false,'')
-            this.toast.warning('No Next question..')
-          }
-      }
+  //     debugger
+  //     if($event){
+  //       if(this.qusInfo.length >  parseInt(index)){
+  //         this.toast.success('Question time expired moving to next question')
+  //           this.isStartbtn = false; 
+  //           this.activequs = parseInt(this.activequs) + 1;
+  //           sessionStorage.setItem('activequs', this.activequs + 1)
+  //           this.displayQus = this.qusInfo[this.activequs].questionDetails.question
+  //           this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+  //           this.getQusDuration(this.timeLeft)
+  //           this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
+  //           this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
+  //           this.qusEndTime = new Date();
+  //           this.actions('auto complete',true,'');
+  //           this.countdownStart = null;
+  //           setTimeout(() => {
+  //             this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+  //             this.getQusDuration(this.timeLeft)
+  //             this.counterStart.begin();
+  //            }, 0);
+  //         }else {
+  //           this.actions('submit',false,'')
+  //           this.toast.warning('No Next question..')
+  //         }
+  //     }
   }
 
   onTick($event){}
 
   onStart($event){
-    console.log($event)
+    // console.log($event)
   }
+
 onSubmit(activequs,stauts){
   this.qusDetails = this.qusInfo[activequs].questionDetails._id;
   this.qusDuration = this.qusInfo[activequs].questionDetails.duration * 60;
@@ -266,9 +268,32 @@ onSubmit(activequs,stauts){
     }
 
 
-    handleEvent(event:any) {
-        console.log(event)
-    }
+    handleEvent(event:any,index) {
+        if(event.left == 0){
+          if(this.qusInfo.length - 1 >  this.activequs){
+            this.toast.success('Question time expired moving to next question')
+              this.isStartbtn = false; 
+              this.activequs = parseInt(this.activequs) + 1;
+              sessionStorage.setItem('activequs', this.activequs + 1)
+              this.displayQus = this.qusInfo[this.activequs].questionDetails.question
+              this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+              this.getQusDuration(this.timeLeft)
+              this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
+              this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
+              this.qusEndTime = new Date();
+              this.actions('auto complete',true,'');
+              this.countdownStart = null;
+              setTimeout(() => {
+                this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+                this.getQusDuration(this.timeLeft)
+                this.counterStart.begin();
+               }, 0);
+            }else {
+              this.actions('submit',false,'')
+              this.toast.warning('No Next question..')
+            }
+        }
+        }
 
 
     getQusDuration(qustime){

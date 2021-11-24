@@ -5,7 +5,7 @@
         <!-- (click)="getTime(qus.questionDetails.duration,i,qusInfo.length,activequs);" *ngFor="let qus of qusInfo;let i=index" [ngClass]="{ blue : i == activequs}" -->
         <div class="qusCard">
             <div class="qusAlign" *ngFor="let qus of qusInfo; let i=index" [ngClass]="{ blue : i == activequs}">
-                <span>Q{{i + 1}}.</span> <span>{{displayQus}}</span>
+                <span>Q{{i + 1}}.</span> <span [ngClass]="{ blur : i > activequs}">{{i > activequs ? 'XXXXXXX XXXXX XXXXX' :qus.questionDetails.question}}</span>
             </div>
         </div>
     </div>
@@ -31,7 +31,7 @@
                 <div class="d-flex record-bx">
                     <span class="reddot"></span>
                     <span class="recordCount">
-                        <countdown #cd class="timer" (event)="handleEvent($event)" [config]="{ leftTime: timeLeft, demand: true, format: 'HH:mm:ss' }"></countdown>
+                        <countdown #cd class="timer" (event)="handleEvent($event,activequs)" [config]="{ leftTime: timeLeft, demand: true, format: 'HH:mm:ss' }"></countdown>
                         <cd-timer style="display: none;"  class="timer" (onStart)="onStart($event)" [startTime]="countdownStart" [endTime]="timeLeft"  (onComplete)="onComplete($event,activequs)" format="hms"></cd-timer>
                     </span>
                 </div>
