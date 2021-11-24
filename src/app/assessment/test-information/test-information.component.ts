@@ -17,9 +17,11 @@ export class TestInformationComponent implements OnInit {
   testname: any;
   isChecked:any;
   isStartenable = true;
+  activequs: any;
   constructor(private _loading: LoadingService,private router: Router,private httpClient: UapHttpService,private toast: ToastrService,private http : AssessmentAPIService) {
     this.checkToken();
     this.proctorScreen = sessionStorage.getItem('smallScreen');
+    this.activequs = sessionStorage.getItem('activequs');
     // console.log(typeof(this.proctorScreen) )
   }
 
@@ -49,6 +51,7 @@ export class TestInformationComponent implements OnInit {
   }
 
   NavToVideo() {
+    sessionStorage.setItem('activequs','0')
     this.router.navigateByUrl('/landing/VideoAssesment');
   }
 

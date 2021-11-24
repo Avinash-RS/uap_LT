@@ -32,7 +32,7 @@
                     <span class="reddot"></span>
                     <span class="recordCount">
                         <countdown #cd class="timer" (event)="handleEvent($event,activequs)" [config]="{ leftTime: timeLeft, demand: true, format: 'HH:mm:ss' }"></countdown>
-                        <cd-timer style="display: none;"  class="timer" (onStart)="onStart($event)" [startTime]="countdownStart" [endTime]="timeLeft"  (onComplete)="onComplete($event,activequs)" format="hms"></cd-timer>
+                        <!-- <cd-timer style="display: none;"  class="timer" (onStart)="onStart($event)" [startTime]="countdownStart" [endTime]="timeLeft"  (onComplete)="onComplete($event,activequs)" format="hms"></cd-timer> -->
                     </span>
                 </div>
             </div>
