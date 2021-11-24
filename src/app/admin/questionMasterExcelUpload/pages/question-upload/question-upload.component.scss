@@ -13,7 +13,7 @@
         cursor: pointer;
         text-align: center;
         vertical-align: middle;
-        margin-top: 65px;
+        margin-top: 35px;
     }
     .btn {
         background: #be2020;
@@ -41,6 +41,9 @@
 
 ::ng-deep .ngx-file-drop__drop-zone {
     border: none !important;
+    height: 132px !important;
+    width: 100% !important;
+    background: transparent !important;
 }
 
 .delete-file-button__style {
@@ -77,4 +80,5 @@
     border: none;
     color: #fff;
     border-radius: 5px;
+    padding: 6px;
 }
