@@ -136,7 +136,7 @@ export class VideoInterviewComponent implements OnInit {
 
 
     // Ans record timer event
-  //   onComplete($event,index){
+    onComplete($event,index){
   //     debugger
   //     if($event){
   //       if(this.qusInfo.length >  parseInt(index)){
@@ -162,12 +162,12 @@ export class VideoInterviewComponent implements OnInit {
   //           this.toast.warning('No Next question..')
   //         }
   //     }
-  // }
+  }
 
   onTick($event){}
 
   onStart($event){
-    console.log($event)
+    // console.log($event)
   }
 
 onSubmit(activequs,stauts){
