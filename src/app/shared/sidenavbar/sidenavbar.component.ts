@@ -36,12 +36,17 @@ export class SideNavBarComponent implements OnInit {
     {
       option: 'Force logout',
       routePath: '/admin/logout',
-      iconPath: '../../../assets/images/sync_black_24dp.svg'
+      iconPath: '../../../assets/images/logout1.svg'
     },
     {
       option: 'Questions Master',
       routePath: '/admin/Questions',
-      iconPath: '../../../assets/images/sync_black_24dp.svg'
+      iconPath: '../../../assets/images/qustionupload.svg'
+    },
+    {
+      option: 'Bulk Schedule',
+      routePath: '/admin/bulk',
+      iconPath: '../../../assets/images/upload.svg'
     }
   ];
   constructor() {}

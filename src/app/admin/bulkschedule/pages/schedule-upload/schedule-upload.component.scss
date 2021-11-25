@@ -1,0 +1,218 @@
+@import 'index';
+%header-block__common-styles {
+    font-weight: 700;
+    font-style: normal;
+    font-family: $uap-roboto-condensed;
+}
+
+%no-outline {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    outline: none;
+}
+
+.header-block {
+    // max-width: 645px;
+    height: 10px;
+    &__title-font-size {
+        @extend %header-block__common-styles;
+        color: $uap-black;
+        font-size: 26px;
+        position: relative;
+        top: 6px;
+        left: 18px;
+    }
+    &__buttons-align {
+        float: right;
+        position: relative;
+        // left: 136px;
+    }
+    &__button {
+        @extend %header-block__common-styles;
+        width: 112px;
+        height: 34px;
+        border: none;
+        color: $white;
+        cursor: pointer;
+        outline: none;
+        font-size: 18px;
+        background-color: $uap-lapalma;
+        margin-right: 6px;
+    }
+    &__exit-button {
+        @extend %header-block__common-styles;
+        width: 112px;
+        height: 34px;
+        border: none;
+        color: $white;
+        cursor: pointer;
+        outline: none;
+        font-size: 18px;
+        background-color: $uap-monza;
+        margin-right: 6px;
+    }
+}
+
+%custom-input-field-placeholder__text {
+    font-weight: 400;
+    font-style: normal;
+    font-size: 16px;
+    letter-spacing: normal;
+    color: $uap-light-black;
+    font-family: $uap-roboto-condensed;
+}
+
+%no-outline {
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    outline: none;
+    border-bottom: 1px solid;
+}
+
+.create-form__overflow {
+    width: 100% !important;
+}
+
+.custom-label__font {
+    display: block;
+    width: 192px;
+    color: $uap-light-black;
+    font-weight: 500;
+    font-style: normal;
+    font-size: 18px;
+    margin-top: 20px;
+    font-family: $uap-roboto-condensed;
+    position: relative;
+}
+
+.schedule-assessment-block {
+    &__align {
+        padding: 30px;
+    }
+    &__text-area-width {
+        @extend %custom-input-field-placeholder__text;
+        margin-top: 16px;
+        width: 511px;
+        outline: none;
+    }
+    &__custom-input-field {
+        @extend %custom-input-field-placeholder__text;
+        @extend %no-outline;
+        height: 30px;
+        width: 511px;
+    }
+    &__select-field__width {
+        @extend %custom-input-field-placeholder__text;
+        margin-top: 16px;
+        width: 511px;
+        height: 45px;
+    }
+}
+
+.input-field__error,
+.mat-input-field__error {
+    color: $uap-red;
+    font-size: 14px;
+    position: absolute;
+}
+
+.mat-input-field__error {
+    top: 40px;
+}
+
+.reports-wrapper {
+    position: relative;
+    padding: 4px 1em;
+    margin-left: 1.25em;
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    // justify-content: center;
+    background-color: #fafafa;
+    box-shadow: 2px 2px 5px #0000001A;
+    margin-right: 1.25em;
+    .upload {
+        cursor: pointer;
+        text-align: center;
+        vertical-align: middle;
+        margin-top: 35px;
+    }
+    .btn {
+        background: #be2020;
+        color: #fff;
+        text-align: center;
+        width: 100px;
+        margin-left: 39%;
+        padding: 4px;
+    }
+    .front {
+        margin: 10px;
+        font-weight: 500;
+    }
+    .border-box {
+        border: 2px dotted #999999 !important;
+        border-radius: 5px !important;
+        height: 200px !important;
+        width: 500px !important;
+        margin: auto;
+    }
+    .uploaded-heading {
+        text-align: center;
+    }
+}
+
+::ng-deep .ngx-file-drop__drop-zone {
+    border: none !important;
+    height: 132px !important;
+    width: 100% !important;
+    background: transparent !important;
+}
+
+.delete-file-button__style {
+    background: #be2020;
+    color: #fff;
+    text-align: center;
+    width: 60px;
+    padding: 2px;
+    border: none;
+}
+
+.submit {
+    height: 27px;
+    width: 125px;
+    border-radius: 5px;
+    background: #004c86;
+    border: none;
+    color: #fff;
+}
+
+.btn-align {
+    text-align: center;
+    padding: 30px;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.downloadtemplate {
+    margin-left: 10px;
+    height: 28px;
+    background: #be2020;
+    border: none;
+    color: #fff;
+    border-radius: 5px;
+    padding: 6px;
+}
+
+.form {
+    height: 327px;
+}
+
+::ng-deep .mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex {
+    cursor: pointer;
+    width: 511px !important;
+    background: transparent !important;
+}

@@ -42,8 +42,8 @@ export class VideoInterviewComponent implements OnInit {
   qusTime: string;
   constructor(private _loading: LoadingService,private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
     this.userProfile = JSON.parse(sessionStorage.getItem('user'));
-    sessionStorage.setItem('activequs',this.activequs)
-    this.activequs = sessionStorage.getItem('activequs');
+    // sessionStorage.setItem('activequs',this.activequs)
+    this.activequs = sessionStorage.getItem('activequs') ? sessionStorage.getItem('activequs') : 0;
 
   }
 
@@ -64,7 +64,7 @@ export class VideoInterviewComponent implements OnInit {
         if(Object.getOwnPropertyNames(this.lastQusDetails).length > 0){
           this.findLastQusDetails(response.data[0].questionDetailsArray)
         } else {
-          this.firstQusTime =  this.qusInfo[0].questionDetails.duration;
+          this.firstQusTime =  this.qusInfo[this.activequs].questionDetails.duration;
           this.timeLeft = this.firstQusTime * 60;
           this.getQusDuration(this.timeLeft)
         }
@@ -121,7 +121,7 @@ export class VideoInterviewComponent implements OnInit {
       this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
       this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
       sessionStorage.setItem('activequs',this.activequs)
-      this.displayQus = this.qusInfo[this.activequs].questionDetails.question
+      this.displayQus = this.qusInfo[this.activequs].questionDetails.question;
       this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
       this.getQusDuration(this.timeLeft)
       setTimeout(() => {
@@ -136,7 +136,7 @@ export class VideoInterviewComponent implements OnInit {
 
 
     // Ans record timer event
-    onComplete($event,index){
+    // onComplete($event,index){
   //     debugger
   //     if($event){
   //       if(this.qusInfo.length >  parseInt(index)){
@@ -162,13 +162,13 @@ export class VideoInterviewComponent implements OnInit {
   //           this.toast.warning('No Next question..')
   //         }
   //     }
-  }
+  // }
 
-  onTick($event){}
+  // onTick($event){}
 
-  onStart($event){
+  // onStart($event){
     // console.log($event)
-  }
+  // }
 
 onSubmit(activequs,stauts){
   this.qusDetails = this.qusInfo[activequs].questionDetails._id;

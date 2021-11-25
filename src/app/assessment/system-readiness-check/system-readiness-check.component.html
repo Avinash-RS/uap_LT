@@ -1,11 +1,14 @@
 <main class="main">
-    <div class="assessments">
-        <iframe class="system" src="../../../assets/templates/test.html" title="description" height="80vh" width="100%"></iframe>
+    <ng-template #matDialog>
 
-    </div>
-    <div class="align">
-        <button class="btn-next" mat-button (click)="navtoVideo()">Finish</button>
-    </div>
-
-
+        <div class="assessments">
+            <button mat-icon-button class="close-button" (click)="navtoVideo()">
+                <mat-icon class="close-icon" color="warn">close</mat-icon>
+              </button>
+            <iframe class="system" src="../../../assets/templates/test.html" title="description" height="80vh" width="100%"></iframe>
+        </div>
+        <!-- <div class="align">
+            <button class="btn-next" mat-button >Finish</button>
+        </div> -->
+    </ng-template>
 </main>
