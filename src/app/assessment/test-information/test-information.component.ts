@@ -51,7 +51,7 @@ export class TestInformationComponent implements OnInit {
   }
 
   NavToVideo() {
-    sessionStorage.setItem('activequs','0')
+    sessionStorage.setItem('activequs',this.activequs ? this.activequs : 0)
     this.router.navigateByUrl('/landing/VideoAssesment');
   }
 

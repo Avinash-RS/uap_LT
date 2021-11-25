@@ -43,7 +43,7 @@ export class VideoInterviewComponent implements OnInit {
   constructor(private _loading: LoadingService,private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
     this.userProfile = JSON.parse(sessionStorage.getItem('user'));
     // sessionStorage.setItem('activequs',this.activequs)
-    this.activequs = sessionStorage.getItem('activequs');
+    this.activequs = sessionStorage.getItem('activequs') ? sessionStorage.getItem('activequs') : 0;
 
   }
 

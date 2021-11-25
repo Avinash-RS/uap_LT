@@ -40,6 +40,11 @@ const AdminRoutes: Routes = [
         // canActivate: [AdminPrivilegeGuard]
       },
       {
+        path: 'bulk',
+        loadChildren: () => import('./bulkschedule/bulkschedule.module').then((module) => module.ScheduleMasterModule),
+        // canActivate: [AdminPrivilegeGuard]
+      },
+      {
         path: '',
         // TODO: redirect it to home once home screen is available
         //redirectTo: 'assessments',

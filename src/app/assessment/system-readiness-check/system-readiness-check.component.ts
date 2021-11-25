@@ -11,9 +11,12 @@ import { ToastrService } from 'ngx-toastr';
 export class SystemReadinessCheckComponent implements OnInit {
   checkSystemCheck:any;
   constructor( private http:HttpClient, private router: Router, private toast: ToastrService,) { 
+    this.checkSystemCheck = sessionStorage.getItem('smallScreen');
   }
 
   ngOnInit(): void {
+    this.checkSystemCheck = sessionStorage.getItem('smallScreen');
+    
   }
 
   navtoVideo(){
