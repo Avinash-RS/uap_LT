@@ -8,15 +8,32 @@
 }
 
 .limiter {
-    min-height: 100vh;
-    background-color: $uap-white;
+    height: 100vh;
+    // background-color: $uap-white;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-image: url("https://assets.lntedutech.com/EntryBackground.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 1em;
+    @media only screen and (min-width: 568px) {
+        padding: 2em;
+    }
+    @media only screen and (min-width: 720px) {
+        padding: 3em;
+    }
+    @media only screen and (min-width: 1140px) {
+        padding: 4em;
+    }
+}
+
+.container-reg200 {
+    height: 100%;
 }
 
 :host ::ng-deep .container-reg200 {
-    padding-top: 5em;
+    padding-top: 0;
     margin: 0;
     width: 100%;
     height: 100%;
@@ -116,12 +133,27 @@
 #footer {
     font-size: 13px;
     width: 100%;
-    padding: 1em 0;
-    text-align: right;
+    position: absolute;
+    right: 0;
+    bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1em;
+    @media only screen and (min-width: 568px) {
+        padding: 0 2em;
+    }
+    @media only screen and (min-width: 720px) {
+        padding: 0 3em;
+    }
+    @media only screen and (min-width: 1140px) {
+        padding: 0 4.5em;
+    }
     .forgot1 {
-        margin-right: 5em;
         color: $uap-button-grey;
     }
+    .message {
+        color: #1b4e9b;
+    }    
 }
 
 .mat-toolbar {
@@ -253,16 +285,12 @@
 
 .box {
     width: 65%;
-    height: 47px;
-    bottom: 0;
-    position: fixed;
+    height: auto;
+    // height: 47px;
+    // bottom: 0;
+    position: relative;
+    // position: fixed;
     // background: linear-gradient(to right, #00b0ed 0%, #53aa34 100%);
-}
-
-.message {
-    padding-top: 14px;
-    padding-right: 41px;
-    color: #1b4e9b;
 }
 
 .link {
