@@ -140,8 +140,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     this.assessmentTasksList.forEach((element) => {
       if (
         element.taskName &&
-        (element.status == 'InProgress' || element.status == 'YetToStart') &&
-        (element.taskType == 'Coding' || element.taskType == 'English')
+        (element.status == 'InProgress' || element.status == 'YetToStart')
       ) {
         let custom = moment(element.endTime).diff(moment.now(), 'minutes');
         if (custom > 0) {
