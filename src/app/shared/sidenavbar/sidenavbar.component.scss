@@ -6,7 +6,7 @@
 }
 
 .sidenavbar-content__align {
-    width: 180px;
+    width: 250px;
     position: relative;
     top: 72px;
     cursor: pointer;
@@ -20,8 +20,9 @@
         display: flex;
         align-items: center;
         color: $uap-nav-grey;
-        height: 40px;
+        height: auto;
         padding: 10px 12px;
+        margin-bottom: 10px;
     }
     &__aligntext {
         line-height: 1.5;
@@ -38,6 +39,6 @@
 
 .side-nav-wrap {
     background-color: $uap-pampas;
-    max-width: 180px;
+    // max-width: 200px;
     overflow: hidden !important;
 }
