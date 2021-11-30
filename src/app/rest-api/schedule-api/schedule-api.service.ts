@@ -95,4 +95,9 @@ export class ScheduleAPIService {
     return this.httpClient.post(`/updateScheduleEndtime`, request);
   }
 
+
+  bulkschedule(request:any){
+    return this.httpClient.postWithMultipartDataHeaders(`/bulkSchedules`, request);
+  }
+
 }
