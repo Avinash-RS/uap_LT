@@ -4,7 +4,7 @@
     <div class="sidenavbar-content__align">
       <ng-container *ngFor="let navbarContent of navbarContents">
         <div  class="sidenavbar-menu-item__align" routerLink="{{ navbarContent.routePath }}" [routerLinkActive]="['is-active']" >
-          <img [src]="navbarContent.iconPath" width="20" height="20">
+          <img [src]="navbarContent.iconPath" width="20" height="20" alt="">
           <span class="sidenavbar-menu-item__aligntext">  {{ navbarContent.option }}</span>
         </div>
       </ng-container>
