@@ -21,7 +21,6 @@ export class ScheduleUploadComponent implements OnInit {
     this.bulkscheduleForm = this.fb.group({
       batchName: ['', Validators.required],
       scheduleDescription: ['', Validators.required],
-      assessmentName: ['', Validators.required],
       orgId:['', Validators.required],
     });
     this.getWEPCOrganizationList();
@@ -133,6 +132,10 @@ export class ScheduleUploadComponent implements OnInit {
     }
   }
 
+  isAssessmentPackageInvalid(): boolean {
+    return !(this.bulkscheduleForm.valid);
+  }
+
   getWEPCOrganizationList(){
     this.scheduleService.getWEPCOrganization({}).subscribe((response: any)=> {
       if(response.success){
@@ -146,13 +149,6 @@ export class ScheduleUploadComponent implements OnInit {
 
 
   bulkSchedule(){
-    // const fd = new FormData();
-    //   fd.append('candidateFile',  this.selectedCSVFile);
-    //   fd.append('scheduleName', this.bulkscheduleForm.get('batchName')?.value,);
-    //   fd.append('description',  this.bulkscheduleForm.get('scheduleDescription')?.value);
-    //   fd.append('orgId', this.bulkscheduleForm.get('orgId')?.value);
-    //   fd.append('mimetype',  this.selectedCSVFile.type);
- 
     let data = {
       "scheduleName" : this.bulkscheduleForm.get('batchName')?.value,
       "description" : this.bulkscheduleForm.get('scheduleDescription')?.value,

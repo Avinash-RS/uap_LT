@@ -180,12 +180,23 @@
 }
 
 .submit {
-    height: 27px;
-    width: 125px;
+    height: 37px;
+    font-size: 15px;
+    width: 164px;
     border-radius: 5px;
     background: #004c86;
     border: none;
     color: #fff;
+}
+
+:host ::ng-deep .submit.disabled,
+.submit:disabled {
+    opacity: .35 !important;
+    background-color: gray !important;
+    pointer-events: none;
+    color: $uap-white !important;
+    border-radius: .25rem;
+    font-size: 16px;
 }
 
 .btn-align {

@@ -24,7 +24,7 @@
                 <label class="custom-label__font">
               Schedule Name
               <input
-                formControlName="batchName"
+                formControlName="batchName" required
                 type="text"
                 class="schedule-assessment-block__custom-input-field"
               />
@@ -33,7 +33,7 @@
                 <label class="custom-label__font">
               Description
               <textarea
-                formControlName="scheduleDescription"
+                formControlName="scheduleDescription" required
                 cols="62"
                 rows="4"
                 class="schedule-assessment-block__text-area-width"
@@ -81,7 +81,7 @@
         </div>
 
         <div class="btn-align" *ngIf="csvFileName">
-            <button class="submit" (click)="bulkSchedule()">
+            <button class="submit" [disabled]="isAssessmentPackageInvalid()" (click)="bulkSchedule()">
                 Submit
               </button>
         </div>
