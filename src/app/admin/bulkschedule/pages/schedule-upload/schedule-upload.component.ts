@@ -146,17 +146,25 @@ export class ScheduleUploadComponent implements OnInit {
 
 
   bulkSchedule(){
-    const fd = new FormData();
-      fd.append('candidateFile',  this.selectedCSVFile);
-      fd.append('scheduleName', this.bulkscheduleForm.get('batchName')?.value,);
-      fd.append('description',  this.bulkscheduleForm.get('scheduleDescription')?.value);
-      fd.append('orgId', this.bulkscheduleForm.get('orgId')?.value);
-      fd.append('mimetype',  this.selectedCSVFile.type);
-    this.scheduleService.bulkschedule(fd).subscribe((response: any)=> {
+    // const fd = new FormData();
+    //   fd.append('candidateFile',  this.selectedCSVFile);
+    //   fd.append('scheduleName', this.bulkscheduleForm.get('batchName')?.value,);
+    //   fd.append('description',  this.bulkscheduleForm.get('scheduleDescription')?.value);
+    //   fd.append('orgId', this.bulkscheduleForm.get('orgId')?.value);
+    //   fd.append('mimetype',  this.selectedCSVFile.type);
+ 
+    let data = {
+      "scheduleName" : this.bulkscheduleForm.get('batchName')?.value,
+      "description" : this.bulkscheduleForm.get('scheduleDescription')?.value,
+      "orgId" :this.bulkscheduleForm.get('orgId')?.value,
+      "scheduleDetails" : this.csvRows[0]
+    }
+    this.scheduleService.bulkschedule(data).subscribe((response: any)=> {
      if(response.success){
       this.csvFileName = '';
       this.showCsvFileInformation = false;
       this.csvRows = [];
+      this.bulkscheduleForm.reset();
         this.toaster.success(response.message);
      }else{
         this.toaster.warning(response.message);
