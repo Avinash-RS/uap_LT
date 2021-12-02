@@ -38,7 +38,7 @@ export class ScheduleUploadComponent implements OnInit {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
           this.selectedCSVFile = file;
-          console.log(this.selectedCSVFile)
+          // console.log(this.selectedCSVFile)
           // this.switchToAddEmailView = false;
           this.showCsvFileInformation = true;
           this.parseCsvFile(file);
@@ -58,7 +58,7 @@ export class ScheduleUploadComponent implements OnInit {
       reader.readAsText(file);
       reader.onload = () => {
         const csv: any = reader.result;
-        console.log(csv)
+        // console.log(csv)
         let allTextLines = [];
         allTextLines = csv.split(/\r|\n|\r/);
         const arrayLength = allTextLines.length;
@@ -163,7 +163,7 @@ export class ScheduleUploadComponent implements OnInit {
       this.bulkscheduleForm.reset();
         this.toaster.success(response.message);
      }else{
-        this.toaster.warning(response.message);
+        this.toaster.warning('Please try after sometimes');
      }
     })
 
