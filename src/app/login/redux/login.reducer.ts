@@ -6,7 +6,6 @@ import * as loginActions from './login.actions';
 export const loginReducer = createReducer(
   initialState,
   on(loginActions.loginSuccess, (state, action) => {
-    console.log('ac', state, action)
     return {
       ...state,
       user: action.payload
