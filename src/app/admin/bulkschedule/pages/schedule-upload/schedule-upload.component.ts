@@ -21,7 +21,6 @@ export class ScheduleUploadComponent implements OnInit {
     this.bulkscheduleForm = this.fb.group({
       batchName: ['', Validators.required],
       scheduleDescription: ['', Validators.required],
-      assessmentName: ['', Validators.required],
       orgId:['', Validators.required],
     });
     this.getWEPCOrganizationList();
@@ -39,7 +38,7 @@ export class ScheduleUploadComponent implements OnInit {
         const fileEntry = droppedFile.fileEntry as FileSystemFileEntry;
         fileEntry.file((file: File) => {
           this.selectedCSVFile = file;
-          console.log(this.selectedCSVFile)
+          // console.log(this.selectedCSVFile)
           // this.switchToAddEmailView = false;
           this.showCsvFileInformation = true;
           this.parseCsvFile(file);
@@ -59,7 +58,7 @@ export class ScheduleUploadComponent implements OnInit {
       reader.readAsText(file);
       reader.onload = () => {
         const csv: any = reader.result;
-        console.log(csv)
+        // console.log(csv)
         let allTextLines = [];
         allTextLines = csv.split(/\r|\n|\r/);
         const arrayLength = allTextLines.length;
@@ -133,6 +132,10 @@ export class ScheduleUploadComponent implements OnInit {
     }
   }
 
+  isAssessmentPackageInvalid(): boolean {
+    return !(this.bulkscheduleForm.valid);
+  }
+
   getWEPCOrganizationList(){
     this.scheduleService.getWEPCOrganization({}).subscribe((response: any)=> {
       if(response.success){
@@ -146,20 +149,21 @@ export class ScheduleUploadComponent implements OnInit {
 
 
   bulkSchedule(){
-    const fd = new FormData();
-      fd.append('candidateFile',  this.selectedCSVFile);
-      fd.append('scheduleName', this.bulkscheduleForm.get('batchName')?.value,);
-      fd.append('description',  this.bulkscheduleForm.get('scheduleDescription')?.value);
-      fd.append('orgId', this.bulkscheduleForm.get('orgId')?.value);
-      fd.append('mimetype',  this.selectedCSVFile.type);
-    this.scheduleService.bulkschedule(fd).subscribe((response: any)=> {
+    let data = {
+      "scheduleName" : this.bulkscheduleForm.get('batchName')?.value,
+      "description" : this.bulkscheduleForm.get('scheduleDescription')?.value,
+      "orgId" :this.bulkscheduleForm.get('orgId')?.value,
+      "scheduleDetails" : this.csvRows[0]
+    }
+    this.scheduleService.bulkschedule(data).subscribe((response: any)=> {
      if(response.success){
       this.csvFileName = '';
       this.showCsvFileInformation = false;
       this.csvRows = [];
+      this.bulkscheduleForm.reset();
         this.toaster.success(response.message);
      }else{
-        this.toaster.warning(response.message);
+        this.toaster.warning('Please try after sometimes');
      }
     })
 
