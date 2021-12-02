@@ -13,17 +13,35 @@ import { LoadingService } from 'src/app/rest-api/loading.service';
 export class SystemReadinessCheckComponent implements OnInit {
   checkSystemCheck:any;
   @ViewChild('matDialog', {static: false}) matDialogRef: TemplateRef<any>;
-  constructor(private _loading: LoadingService, private http:HttpClient,public matDialog: MatDialog, private router: Router, private toast: ToastrService,) { 
+  isfinish: string;
+  isSystemCheckDone: any;
+  constructor( private route: Router,private _loading: LoadingService, private http:HttpClient,public matDialog: MatDialog, private router: Router, private toast: ToastrService,) { 
     this.checkSystemCheck = sessionStorage.getItem('smallScreen');
-    
+    this.isfinish = sessionStorage.getItem('enableFinish');
+    this.isSystemCheckDone = sessionStorage.getItem('SCfinish') ? sessionStorage.getItem('SCfinish') : 'false';
   }
 
   ngOnInit(): void {
     this.checkSystemCheck = sessionStorage.getItem('smallScreen');
       setTimeout(() => {
-        this.open();
-        this._loading.setLoading(false, 'request.url');
+        if(this.isSystemCheckDone == 'false'){
+          this.open();
+        }else{
+          this._loading.setLoading(false, 'request.url');
+          this.route.navigate(['/landing/assessment', sessionStorage.getItem('assessmentId')]);
+        }
+        
+       
       }, 100);
+  }
+
+  ngOnChanges(){
+    
+  }
+
+  checklocalstorage(){
+    this.isfinish = sessionStorage.getItem('enableFinish');
+    console.log(this.isfinish, typeof(this.isfinish))
   }
 
   navtoVideo(){
@@ -31,8 +49,10 @@ export class SystemReadinessCheckComponent implements OnInit {
     if(this.checkSystemCheck == 'true'){
       this.matDialog.closeAll();
       this.router.navigate(['/landing/TestInformation']);
+      sessionStorage.setItem('SCfinish','ture');
     }else {
-      this.toast.warning('Please wait while the system check your computer and the network')
+      this.toast.warning('Please wait while the system check your computer and the network');
+      sessionStorage.setItem('SCfinish','false');
     }
   
   }

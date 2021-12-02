@@ -18,10 +18,12 @@ export class TestInformationComponent implements OnInit {
   isChecked:any;
   isStartenable = true;
   activequs: any;
+  isresume: any;
   constructor(private _loading: LoadingService,private router: Router,private httpClient: UapHttpService,private toast: ToastrService,private http : AssessmentAPIService) {
     this.checkToken();
     this.proctorScreen = sessionStorage.getItem('smallScreen');
     this.activequs = sessionStorage.getItem('activequs');
+    this.isresume =  sessionStorage.getItem('resumeTest') ? sessionStorage.getItem('resumeTest') : 'false'
     // console.log(typeof(this.proctorScreen) )
   }
 
@@ -58,9 +60,11 @@ export class TestInformationComponent implements OnInit {
   checkvalue(event){
     if(event.target.checked == true){
         this.isStartenable = false;
+        sessionStorage.setItem('resumeTest','ture')
 
     }else {
       this.isStartenable = true;
+      sessionStorage.setItem('resumeTest','false')
     }
   }
 }

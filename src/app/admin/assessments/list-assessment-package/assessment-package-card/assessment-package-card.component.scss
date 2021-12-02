@@ -1,6 +1,6 @@
 @import 'index';
 .package {
-    background-color: $uap-pampas;
+    background-color: #fff;
     padding-top: 30px;
     padding-right: 5px;
     padding-bottom: 20px;
@@ -11,7 +11,9 @@
     justify-content: space-between;
     position: relative;
     color: $uap-mine-shaft;
-    border: 1px solid $uap-boulder;
+    box-shadow: 5px 4px 2px 2px #ccccccd1;
+    border: 1px solid #fff;
+    // border: 1px solid $uap-boulder;
     &__info {
         width: 60%;
         &-name {

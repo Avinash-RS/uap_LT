@@ -2,13 +2,13 @@
     <ng-template #matDialog>
 
         <div class="assessments">
-            <button mat-icon-button class="close-button" (click)="navtoVideo()">
+            <!-- <button mat-icon-button class="close-button" (click)="navtoVideo()">
                 <mat-icon class="close-icon" color="warn">close</mat-icon>
-              </button>
+              </button> -->
             <iframe class="system" src="../../../assets/templates/test.html" title="description" height="80vh" width="100%"></iframe>
         </div>
-        <!-- <div class="align">
-            <button class="btn-next" mat-button >Finish</button>
-        </div> -->
+        <div class="align">
+            <button class="btn-next" (click)="navtoVideo()" mat-button>Finish </button>
+        </div>
     </ng-template>
 </main>

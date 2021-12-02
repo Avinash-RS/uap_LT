@@ -105,10 +105,10 @@
             <input id="checkbox" type="checkbox" (change)="checkvalue($event)" />
             <label for="checkbox"> I have read and Agree to the <a href="#">Privacy Policy</a> and proceed to the test.</label>
         </div>
-        <div class="m-t-10" *ngIf="activequs <= 0">
+        <div class="m-t-10" *ngIf="isresume == 'false'">
             <button class="btn" [disabled]="isStartenable" mat-button (click)="NavToVideo()">Start Test</button>
         </div>
-        <div class="m-t-10" *ngIf="activequs > 0">
+        <div class="m-t-10" *ngIf="isresume == 'ture'">
             <button class="btn" [disabled]="isStartenable" mat-button (click)="NavToVideo()">Resume Test</button>
         </div>
         <div *ngIf="proctorScreen == 'true'">
