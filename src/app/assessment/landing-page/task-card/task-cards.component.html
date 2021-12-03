@@ -3,7 +3,7 @@
     <div class="assessment-list" *ngFor="let task of assessmentTasksList; let i = index" [ngClass]="taskStatus[i]">
         <div *ngIf="taskStatus[i] == 'completed'" class="tickMark">&#160;</div>
         <div class="leftborder">
-            <div class="assessment-list__number" [ngClass]="{ 'apicon' : task.taskType == 'Aptitude',  'video' : task.taskType == 'Video' ,'cdicon' : task.taskType == 'Coding', 'english' : task.taskType == 'English', 'psych' : task.taskType.includes('Behaviour')}">
+            <div class="assessment-list__number" [ngClass]="{ 'apicon' : task.taskType == 'Aptitude',  'video' : task.taskType == 'Video Assessment' ,'cdicon' : task.taskType == 'Coding', 'english' : task.taskType == 'English', 'psych' : task.taskType.includes('Behaviour')}">
                 <!-- <span *ngIf="task.status !== 'completed'; else notCompleted">{{ i + 1 }}</span> -->
                 <ng-template #notCompleted><span class="material-icons">done</span></ng-template>
             </div>

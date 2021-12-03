@@ -78,7 +78,7 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
   }
 
   navigateToTask(taskId: number, taskType: any, taskstatus: any): void {
-    if (taskType == 'Video') {
+    if (taskType == 'Video Assessment') {
       this.store.dispatch(
         assessmentTasksActions.getAssessmentTaskUrl({
           payload: {
