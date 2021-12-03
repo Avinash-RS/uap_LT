@@ -84,6 +84,7 @@ export class LoginPageComponent implements OnInit {
         browserinfo: ipInfo,
       }
       this.store.dispatch(loginAttempt({payload: apiData}));
+      sessionStorage.setItem('enableFinish',"false")
     } else {
     }
   }

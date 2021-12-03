@@ -2,9 +2,10 @@
 .assessment-panel {
     display: flex;
     justify-content: space-between;
-    background-color: $uap-pampas1;
+    background-color: #fafafa;
     padding: 15px;
-    border: 1px solid $uap-boulder;
+    box-shadow: 5px 4px 2px 2px #ccccccd1;
+    border: 1px solid #fff;
     .batch-id {
         display: flex;
         flex-direction: column;

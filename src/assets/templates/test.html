@@ -5385,6 +5385,7 @@
                                         r = t.firstChild;
                                     f("/api/chat/".concat(He.get("id"), "?filter[type]=message&limit=20&skip=").concat(e)).then((n) => {
                                         sessionStorage.setItem("smallScreen", 'true')
+                                        sessionStorage.setItem("enableFinish", "true")
                                         if (n.length) {
                                             if (
                                                 ((function(e) {

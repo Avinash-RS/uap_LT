@@ -78,7 +78,7 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
   }
 
   navigateToTask(taskId: number, taskType: any, taskstatus: any): void {
-    if (taskType == 'Video') {
+    if (taskType == 'Video Assessment') {
       this.store.dispatch(
         assessmentTasksActions.getAssessmentTaskUrl({
           payload: {
@@ -98,8 +98,10 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
             sessionStorage.setItem('schuduleId',this.taskUrlData.attributes.scheduleId);
             if(taskstatus != "inprogress" || sessionStorage.getItem('smallScreen') != 'true'){
               this.router.navigate(['/landing/SystemReadinessCheck']);
+              sessionStorage.setItem('SCfinish','false');
             } else {
               this.router.navigate(['/landing/VideoAssesment']);
+              sessionStorage.setItem('SCfinish','ture');
             }
            
           }else {
