@@ -118,7 +118,6 @@ export class VideoInterviewComponent implements OnInit {
       }
     // this.isStartbtn = true; 
     if(this.qusInfo.length > parseInt(this.activequs) ){
-      debugger
       this.activequs = parseInt(this.activequs + 1) ;
       this.qusDetails = this.qusInfo[this.activequs].questionDetails._id;
       this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
