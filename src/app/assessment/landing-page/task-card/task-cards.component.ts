@@ -86,13 +86,13 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
   }
 
   navigateToTask(taskId: number, taskType: any, taskstatus: any): void {
+    console.log(taskstatus)
     if (taskType == 'Video Assessment') {
       if(this.taskStatus[0] == 'completed'){
         localStorage.removeItem("currentqustime");
         localStorage.removeItem("activequs");
         localStorage.removeItem("SCfinish");
         localStorage.removeItem("resumeTest");
-        
       }
       this.store.dispatch(
         assessmentTasksActions.getAssessmentTaskUrl({
@@ -111,7 +111,7 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
             sessionStorage.setItem('lastQus',JSON.stringify(this.taskUrlData.attributes.lastVideoQuestionDetails))
             sessionStorage.setItem('videotoken', this.taskUrlData.proctorToken);
             sessionStorage.setItem('schuduleId',this.taskUrlData.attributes.scheduleId);
-            if(taskstatus != "inprogress" || sessionStorage.getItem('smallScreen') != 'true'){
+            if(taskstatus != "inprogress"){
               this.router.navigate(['/landing/SystemReadinessCheck']);
               localStorage.setItem('SCfinish','false');
             } else {

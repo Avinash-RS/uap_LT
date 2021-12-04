@@ -21,7 +21,7 @@ export class TestInformationComponent implements OnInit {
   isresume: any;
   constructor(private _loading: LoadingService,private router: Router,private httpClient: UapHttpService,private toast: ToastrService,private http : AssessmentAPIService) {
     this.checkToken();
-    this.proctorScreen = sessionStorage.getItem('smallScreen');
+    this.proctorScreen = localStorage.getItem('smallScreen');
     this.activequs = localStorage.getItem('activequs');
     this.isresume =  localStorage.getItem('resumeTest') ? localStorage.getItem('resumeTest') : 'false'
     // console.log(typeof(this.proctorScreen) )

@@ -4782,7 +4782,7 @@
                                     super(e), this.mount(e.el);
                                 }
                                 render() {
-                                    sessionStorage.setItem('smallScreen', 'true');
+                                    localStorage.setItem('smallScreen', 'true');
                                     const e = document.createElement("DIV");
                                     return (
                                         (e.className = Ur.passport),
@@ -5403,7 +5403,7 @@
                                     var t = this.$(en.body),
                                         r = t.firstChild;
                                     f("/api/chat/".concat(He.get("id"), "?filter[type]=message&limit=20&skip=").concat(e)).then((n) => {
-                                        sessionStorage.setItem("smallScreen", 'true')
+                                        localStorage.setItem("smallScreen", 'true')
                                         if (n.length) {
                                             if (
                                                 ((function(e) {

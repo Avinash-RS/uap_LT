@@ -16,13 +16,13 @@ export class SystemReadinessCheckComponent implements OnInit {
   isfinish: string;
   isSystemCheckDone: any;
   constructor( private route: Router,private _loading: LoadingService, private http:HttpClient,public matDialog: MatDialog, private router: Router, private toast: ToastrService,) { 
-    this.checkSystemCheck = sessionStorage.getItem('smallScreen');
+    this.checkSystemCheck = localStorage.getItem('smallScreen');
     this.isfinish = sessionStorage.getItem('enableFinish');
-    this.isSystemCheckDone = localStorage.getItem('SCfinish') ? localStorage.getItem('SCfinish') : 'false';
+    this.isSystemCheckDone = localStorage.getItem('SCfinish');
   }
 
   ngOnInit(): void {
-    this.checkSystemCheck = sessionStorage.getItem('smallScreen');
+    this.checkSystemCheck = localStorage.getItem('smallScreen');
       setTimeout(() => {
         if(this.isSystemCheckDone == 'false'){
           this.open();
@@ -45,7 +45,7 @@ export class SystemReadinessCheckComponent implements OnInit {
   }
 
   navtoVideo(){
-    this.checkSystemCheck = sessionStorage.getItem('smallScreen');
+    this.checkSystemCheck = localStorage.getItem('smallScreen');
     if(this.checkSystemCheck == 'true'){
       this.matDialog.closeAll();
       this.router.navigate(['/landing/TestInformation']);

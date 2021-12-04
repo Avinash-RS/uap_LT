@@ -40,11 +40,12 @@ export class VideoInterviewComponent implements OnInit {
   isNextBtn = true;
   displayQus: any;
   qusTime: string;
+  qusremainTimer:any;
   constructor(private _loading: LoadingService,private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
     this.userProfile = JSON.parse(sessionStorage.getItem('user'));
     // sessionStorage.setItem('activequs',this.activequs)
-    this.activequs = sessionStorage.getItem('activequs') ? sessionStorage.getItem('activequs') : 0;
-
+    this.activequs = localStorage.getItem('activequs') ? localStorage.getItem('activequs') : 0;
+    this.activequs = parseInt(this.activequs);
   }
 
   ngOnInit(): void {
@@ -66,6 +67,7 @@ export class VideoInterviewComponent implements OnInit {
         } else {
           this.firstQusTime =  this.qusInfo[this.activequs].questionDetails.duration;
           this.timeLeft = this.firstQusTime * 60;
+          this.qusremainTimer = localStorage.getItem('qusremaintime') ? localStorage.getItem('qusremaintime') : this.timeLeft;
           this.getQusDuration(this.timeLeft)
         }
       }else {
@@ -87,7 +89,7 @@ export class VideoInterviewComponent implements OnInit {
    this.displayQus =  val[0].question;
    let index = matchLastQus.findIndex(item => item._id === this.lastQusDetails.id); // find qus index
    this.activequs = index;
-   sessionStorage.setItem('activequs',this.activequs)
+   localStorage.setItem('activequs',this.activequs)
   }
 
 
@@ -101,7 +103,7 @@ export class VideoInterviewComponent implements OnInit {
     }
     this.qusDetails = this.qusInfo[activequs].questionDetails._id;
     this.isStartbtn = false;  // disable start button
-    sessionStorage.setItem('activequs',this.activequs)
+    localStorage.setItem('activequs',this.activequs)
     this.actions(stauts,true,activequs);
 }
 
@@ -115,17 +117,20 @@ export class VideoInterviewComponent implements OnInit {
         this.qusStartDate = '';
       }
     // this.isStartbtn = true; 
-    if(this.qusInfo.length > this.activequs){
+    if(this.qusInfo.length > parseInt(this.activequs) ){
+      debugger
       this.activequs = parseInt(this.activequs + 1) ;
       this.qusDetails = this.qusInfo[this.activequs].questionDetails._id;
       this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
       this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
-      sessionStorage.setItem('activequs',this.activequs)
+      localStorage.setItem('activequs',this.activequs)
       this.displayQus = this.qusInfo[this.activequs].questionDetails.question;
       this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+      this.qusremainTimer =  this.timeLeft;
       this.getQusDuration(this.timeLeft)
       setTimeout(() => {
         this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+        this.qusremainTimer =  this.timeLeft;
         this.counterStart.begin();
        }, 0);
     }else {
@@ -134,41 +139,6 @@ export class VideoInterviewComponent implements OnInit {
     this.actions(status, false,this.activequs);
   }
 
-
-    // Ans record timer event
-    // onComplete($event,index){
-  //     debugger
-  //     if($event){
-  //       if(this.qusInfo.length >  parseInt(index)){
-  //         this.toast.success('Question time expired moving to next question')
-  //           this.isStartbtn = false; 
-  //           this.activequs = parseInt(this.activequs) + 1;
-  //           sessionStorage.setItem('activequs', this.activequs + 1)
-  //           this.displayQus = this.qusInfo[this.activequs].questionDetails.question
-  //           this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
-  //           this.getQusDuration(this.timeLeft)
-  //           this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
-  //           this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
-  //           this.qusEndTime = new Date();
-  //           this.actions('auto complete',true,'');
-  //           this.countdownStart = null;
-  //           setTimeout(() => {
-  //             this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
-  //             this.getQusDuration(this.timeLeft)
-  //             this.counterStart.begin();
-  //            }, 0);
-  //         }else {
-  //           this.actions('submit',false,'')
-  //           this.toast.warning('No Next question..')
-  //         }
-  //     }
-  // }
-
-  // onTick($event){}
-
-  // onStart($event){
-    // console.log($event)
-  // }
 
 onSubmit(activequs,stauts){
   this.qusDetails = this.qusInfo[activequs].questionDetails._id;
@@ -229,6 +199,7 @@ onSubmit(activequs,stauts){
               // this.timeLeft = response.data.timeLeft ? response.data.timeLeft : this.timeLeft;
               if(response.data.timeLeft <=0){
                 this.timeLeft = 0;
+                this.qusremainTimer =  this.timeLeft;
                 this.countdownStart = 1;
                 this.counterStart.stop();
                 this.toast.warning('Question time expired');
@@ -238,6 +209,7 @@ onSubmit(activequs,stauts){
                 // this.countdownStart = 1;
                 this.countdownStart = response.data.duration ? response.data.duration : 1;
                 this.timeLeft = response.data.timeLeft ? response.data.timeLeft : this.timeLeft;
+                this.qusremainTimer = localStorage.getItem('qusremaintime') ? localStorage.getItem('qusremaintime') : this.timeLeft;
                 this.getQusDuration(this.timeLeft)
                 if(restart){
                   this.counterStart.begin();
@@ -269,14 +241,19 @@ onSubmit(activequs,stauts){
 
 
     handleEvent(event:any,index) {
+      if (event.action === 'notify') {
+        // Save current value
+        localStorage.setItem('qusremaintime', `${event.left / 1000}`);
+      }
         if(event.left == 0){
           if(this.qusInfo.length - 1 >  this.activequs){
             this.toast.success('Question time expired moving to next question')
               this.isStartbtn = false; 
               this.activequs = parseInt(this.activequs) + 1;
-              sessionStorage.setItem('activequs', this.activequs + 1)
+              localStorage.setItem('activequs', this.activequs)
               this.displayQus = this.qusInfo[this.activequs].questionDetails.question
               this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+              this.qusremainTimer =  this.timeLeft;
               this.getQusDuration(this.timeLeft)
               this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
               this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
@@ -285,6 +262,7 @@ onSubmit(activequs,stauts){
               this.countdownStart = null;
               setTimeout(() => {
                 this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+                this.qusremainTimer =  this.timeLeft;
                 this.getQusDuration(this.timeLeft)
                 this.counterStart.begin();
                }, 0);
@@ -301,7 +279,46 @@ onSubmit(activequs,stauts){
       const resultstring = moment.utc(duration.asMilliseconds()).format('HH:mm:ss');
       this.qusTime = resultstring;
     }
+
+
 }
+
+
+
+    // Ans record timer event
+    // onComplete($event,index){
+  //     debugger
+  //     if($event){
+  //       if(this.qusInfo.length >  parseInt(index)){
+  //         this.toast.success('Question time expired moving to next question')
+  //           this.isStartbtn = false; 
+  //           this.activequs = parseInt(this.activequs) + 1;
+  //           sessionStorage.setItem('activequs', this.activequs + 1)
+  //           this.displayQus = this.qusInfo[this.activequs].questionDetails.question
+  //           this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+  //           this.getQusDuration(this.timeLeft)
+  //           this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
+  //           this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
+  //           this.qusEndTime = new Date();
+  //           this.actions('auto complete',true,'');
+  //           this.countdownStart = null;
+  //           setTimeout(() => {
+  //             this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+  //             this.getQusDuration(this.timeLeft)
+  //             this.counterStart.begin();
+  //            }, 0);
+  //         }else {
+  //           this.actions('submit',false,'')
+  //           this.toast.warning('No Next question..')
+  //         }
+  //     }
+  // }
+
+  // onTick($event){}
+
+  // onStart($event){
+    // console.log($event)
+  // }
 
 
 
