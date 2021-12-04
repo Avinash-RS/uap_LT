@@ -16,13 +16,13 @@ export class SystemReadinessCheckComponent implements OnInit {
   isfinish: string;
   isSystemCheckDone: any;
   constructor( private route: Router,private _loading: LoadingService, private http:HttpClient,public matDialog: MatDialog, private router: Router, private toast: ToastrService,) { 
-    this.checkSystemCheck = sessionStorage.getItem('smallScreen');
+    this.checkSystemCheck = localStorage.getItem('smallScreen');
     this.isfinish = sessionStorage.getItem('enableFinish');
-    this.isSystemCheckDone = sessionStorage.getItem('SCfinish') ? sessionStorage.getItem('SCfinish') : 'false';
+    this.isSystemCheckDone = localStorage.getItem('SCfinish');
   }
 
   ngOnInit(): void {
-    this.checkSystemCheck = sessionStorage.getItem('smallScreen');
+    this.checkSystemCheck = localStorage.getItem('smallScreen');
       setTimeout(() => {
         if(this.isSystemCheckDone == 'false'){
           this.open();
@@ -45,14 +45,14 @@ export class SystemReadinessCheckComponent implements OnInit {
   }
 
   navtoVideo(){
-    this.checkSystemCheck = sessionStorage.getItem('smallScreen');
+    this.checkSystemCheck = localStorage.getItem('smallScreen');
     if(this.checkSystemCheck == 'true'){
       this.matDialog.closeAll();
       this.router.navigate(['/landing/TestInformation']);
-      sessionStorage.setItem('SCfinish','ture');
+      localStorage.setItem('SCfinish','ture');
     }else {
       this.toast.warning('Please wait while the system check your computer and the network');
-      sessionStorage.setItem('SCfinish','false');
+      localStorage.setItem('SCfinish','false');
     }
   
   }

@@ -21,9 +21,9 @@ export class TestInformationComponent implements OnInit {
   isresume: any;
   constructor(private _loading: LoadingService,private router: Router,private httpClient: UapHttpService,private toast: ToastrService,private http : AssessmentAPIService) {
     this.checkToken();
-    this.proctorScreen = sessionStorage.getItem('smallScreen');
-    this.activequs = sessionStorage.getItem('activequs');
-    this.isresume =  sessionStorage.getItem('resumeTest') ? sessionStorage.getItem('resumeTest') : 'false'
+    this.proctorScreen = localStorage.getItem('smallScreen');
+    this.activequs = localStorage.getItem('activequs');
+    this.isresume =  localStorage.getItem('resumeTest') ? localStorage.getItem('resumeTest') : 'false'
     // console.log(typeof(this.proctorScreen) )
   }
 
@@ -53,18 +53,18 @@ export class TestInformationComponent implements OnInit {
   }
 
   NavToVideo() {
-    sessionStorage.setItem('activequs',this.activequs ? this.activequs : 0)
+    localStorage.setItem('activequs',this.activequs ? this.activequs : 0)
     this.router.navigateByUrl('/landing/VideoAssesment');
   }
 
   checkvalue(event){
     if(event.target.checked == true){
         this.isStartenable = false;
-        sessionStorage.setItem('resumeTest','ture')
+        localStorage.setItem('resumeTest','ture')
 
     }else {
       this.isStartenable = true;
-      sessionStorage.setItem('resumeTest','false')
+      localStorage.setItem('resumeTest','false')
     }
   }
 }
