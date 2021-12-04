@@ -18,7 +18,7 @@ export class SystemReadinessCheckComponent implements OnInit {
   constructor( private route: Router,private _loading: LoadingService, private http:HttpClient,public matDialog: MatDialog, private router: Router, private toast: ToastrService,) { 
     this.checkSystemCheck = sessionStorage.getItem('smallScreen');
     this.isfinish = sessionStorage.getItem('enableFinish');
-    this.isSystemCheckDone = sessionStorage.getItem('SCfinish') ? sessionStorage.getItem('SCfinish') : 'false';
+    this.isSystemCheckDone = localStorage.getItem('SCfinish') ? localStorage.getItem('SCfinish') : 'false';
   }
 
   ngOnInit(): void {
@@ -49,10 +49,10 @@ export class SystemReadinessCheckComponent implements OnInit {
     if(this.checkSystemCheck == 'true'){
       this.matDialog.closeAll();
       this.router.navigate(['/landing/TestInformation']);
-      sessionStorage.setItem('SCfinish','ture');
+      localStorage.setItem('SCfinish','ture');
     }else {
       this.toast.warning('Please wait while the system check your computer and the network');
-      sessionStorage.setItem('SCfinish','false');
+      localStorage.setItem('SCfinish','false');
     }
   
   }

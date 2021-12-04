@@ -52,6 +52,14 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
       this.startTime1 = new Date(startTime);
       this.taskDuration.push(this.getTaskDuration(task.duration));
       this.taskStatus.push(task.status.toLowerCase());
+      if( this.taskStatus && this.taskStatus[0] == 'completed'){
+        if(localStorage.getItem("currentqustime"))
+        localStorage.removeItem("currentqustime");
+        localStorage.removeItem("activequs");
+        localStorage.removeItem("SCfinish");
+        localStorage.removeItem("resumeTest");
+        
+      }
       // const currentTime = new Date();
       let currentTime: any = new Date(task.currentDateTime).toLocaleString('en-US', {
         timeZone: 'Asia/Kolkata'
@@ -79,6 +87,13 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
 
   navigateToTask(taskId: number, taskType: any, taskstatus: any): void {
     if (taskType == 'Video Assessment') {
+      if(this.taskStatus[0] == 'completed'){
+        localStorage.removeItem("currentqustime");
+        localStorage.removeItem("activequs");
+        localStorage.removeItem("SCfinish");
+        localStorage.removeItem("resumeTest");
+        
+      }
       this.store.dispatch(
         assessmentTasksActions.getAssessmentTaskUrl({
           payload: {
@@ -98,10 +113,10 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
             sessionStorage.setItem('schuduleId',this.taskUrlData.attributes.scheduleId);
             if(taskstatus != "inprogress" || sessionStorage.getItem('smallScreen') != 'true'){
               this.router.navigate(['/landing/SystemReadinessCheck']);
-              sessionStorage.setItem('SCfinish','false');
+              localStorage.setItem('SCfinish','false');
             } else {
               this.router.navigate(['/landing/VideoAssesment']);
-              sessionStorage.setItem('SCfinish','ture');
+              localStorage.setItem('SCfinish','ture');
             }
            
           }else {
