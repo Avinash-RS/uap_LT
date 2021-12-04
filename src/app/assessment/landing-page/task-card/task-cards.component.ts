@@ -86,7 +86,6 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
   }
 
   navigateToTask(taskId: number, taskType: any, taskstatus: any): void {
-    console.log(taskstatus)
     if (taskType == 'Video Assessment') {
       if(this.taskStatus[0] == 'completed'){
         localStorage.removeItem("currentqustime");
