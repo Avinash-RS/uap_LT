@@ -53,8 +53,8 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
       this.taskDuration.push(this.getTaskDuration(task.duration));
       this.taskStatus.push(task.status.toLowerCase());
       if( this.taskStatus && this.taskStatus[0] == 'completed'){
-        if(localStorage.getItem("currentqustime"))
-        localStorage.removeItem("currentqustime");
+        if(localStorage.getItem("qusremaintime"))
+        localStorage.removeItem("qusremaintime");
         localStorage.removeItem("activequs");
         localStorage.removeItem("SCfinish");
         localStorage.removeItem("resumeTest");
@@ -88,7 +88,7 @@ export class TaskCardsComponent implements OnInit, OnDestroy {
   navigateToTask(taskId: number, taskType: any, taskstatus: any): void {
     if (taskType == 'Video Assessment') {
       if(this.taskStatus[0] == 'completed'){
-        localStorage.removeItem("currentqustime");
+        localStorage.removeItem("qusremaintime");
         localStorage.removeItem("activequs");
         localStorage.removeItem("SCfinish");
         localStorage.removeItem("resumeTest");

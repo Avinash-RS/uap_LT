@@ -31,7 +31,7 @@
                 <div class="d-flex record-bx">
                     <span class="reddot"></span>
                     <span class="recordCount">
-                        <countdown #cd class="timer" (event)="handleEvent($event,activequs)" [config]="{ leftTime: qusremainTimer, demand: true, format: 'HH:mm:ss' ,notify: 0}"></countdown>
+                        <countdown #cd class="timer" (event)="handleEvent($event,activequs)" [config]="config"></countdown>
                         <!-- <cd-timer style="display: none;"  class="timer" (onStart)="onStart($event)" [startTime]="countdownStart" [endTime]="timeLeft"  (onComplete)="onComplete($event,activequs)" format="hms"></cd-timer> -->
                     </span>
                 </div>
