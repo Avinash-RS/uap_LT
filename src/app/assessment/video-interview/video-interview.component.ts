@@ -312,7 +312,15 @@ onSubmit(activequs,stauts){
                 this.counterStart.begin();
                }, 1000);
 
-              }}
+              }
+              else {
+                if(this.qusInfo.length > this.activequs){
+                  this.actions('submit',false,'')
+                  this.toast.warning('No Next question..')
+                }
+              
+                }
+            }
 }
 
 
