@@ -169,7 +169,7 @@ export class ScheduleUploadComponent implements OnInit {
       this.bulkscheduleForm.reset();
         this.toaster.success(response.message);
      }else{
-        this.toaster.warning('Please try after sometimes');
+        this.toaster.warning(response.message);
      }
     })
 
