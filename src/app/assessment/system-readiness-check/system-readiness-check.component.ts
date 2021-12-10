@@ -26,6 +26,7 @@ export class SystemReadinessCheckComponent implements OnInit {
       setTimeout(() => {
         if(this.isSystemCheckDone == 'false'){
           this.open();
+          this._loading.setLoading(false, 'request.url');
         }else{
           this._loading.setLoading(false, 'request.url');
           this.route.navigate(['/landing/assessment', sessionStorage.getItem('assessmentId')]);
@@ -59,7 +60,7 @@ export class SystemReadinessCheckComponent implements OnInit {
 
   open(){
     const dialogRef = this.matDialog.open(this.matDialogRef, {
-      width: '200vh',
+      width: '89vw',
       height: '550px',
       disableClose: true,
     });
