@@ -92,7 +92,9 @@ export class UapHttpService {
      !url.includes('/reference') &&
      !url.includes('/profile') &&
      !url.includes('/packages') &&
-     !url.includes('/task')
+     !url.includes('/task') &&
+     !url.includes('/updateScheduleEndtime')
+     
      ) {
     return `${this.apiBaseUrl}${url}`;
     } else {
