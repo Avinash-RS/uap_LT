@@ -29,6 +29,7 @@
 ::ng-deep .mat-dialog-container {
     padding: 0px !important;
     overflow: hidden !important;
+    margin-top: 3%;
 }
 
 .close-button {
@@ -37,4 +38,8 @@
     top: 32px !important;
     right: 138px !important;
     background-color: transparent !important;
+}
+
+::ng-deep .cdk-overlay-pane {
+    max-width: 88vw !important;
 }
