@@ -49,6 +49,7 @@ export interface loginState {
   export interface Organisation {
     orgId: number;
     orgName: string;
+    logoUrl:string;
     roles: Array<Role>;
   }
   
