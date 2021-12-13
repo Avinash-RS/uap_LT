@@ -16,11 +16,20 @@ import  * as loginAction from 'src/app/login/redux/login.actions';
 export class NavBarComponent {
   assessmentData: any;
   displayName = '';
+  dynamicLogo: any;
+  userDetails:any
   constructor(private router: Router,
     private store: Store<AssessmentTasksReducerState>, private userService: UserAPIService) {
   }
 
   ngOnInit(): void {
+      this.userDetails = this.userService.getUserFromLocalStorage();
+      if(this.userDetails && this.userDetails.attributes && this.userDetails.attributes.organisations && this.userDetails.attributes.organisations[0].logoUrl ){
+          this.dynamicLogo = this.userDetails.attributes.organisations[0].logoUrl;
+      }else {
+        this.dynamicLogo = 'https://assets.lntedutech.com/edutech_logo.svg';
+      }
+
     this.store.select(selectAssessmentTasksListState).subscribe((response) => {
       this.assessmentData = response;
       if (this.assessmentData) {

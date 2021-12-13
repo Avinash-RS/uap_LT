@@ -17,6 +17,7 @@ export const initialState: loginState = {
           {
             orgId: 0,
             orgName: '',
+            logoUrl:'',
             roles: [
               {
                 roleCode: '',
