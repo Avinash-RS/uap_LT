@@ -3,7 +3,7 @@
         <a routerLink="/">
             <img alt="iGGnite Logo" class="navbar-img__resize" [src]="dynamicLogo" ng-reflect-router-link="/" />
         </a>
-        <span class="user_info">Hello, {{ displayName }}</span>
+        <span class="user_info">Hello, {{ assessmentData ? assessmentData.data.attributes.firstName : '' }} {{assessmentData ? assessmentData.data.attributes.lastName : ''}}</span>
         <span class="material-icons" [matMenuTriggerFor]="menu">account_circle</span>
         <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="navigateToProfile()">Profile</button>
