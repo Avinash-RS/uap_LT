@@ -24,6 +24,7 @@ export class NavBarComponent {
 
   ngOnInit(): void {
       this.userDetails = this.userService.getUserFromLocalStorage();
+
       if(this.userDetails && this.userDetails.attributes && this.userDetails.attributes.organisations && this.userDetails.attributes.organisations[0].logoUrl ){
           this.dynamicLogo = this.userDetails.attributes.organisations[0].logoUrl;
       }else {
@@ -33,7 +34,7 @@ export class NavBarComponent {
     this.store.select(selectAssessmentTasksListState).subscribe((response) => {
       this.assessmentData = response;
       if (this.assessmentData) {
-        this.displayName = this.assessmentData.data.attributes.firstName + ' ' + this.assessmentData.data.attributes.lastName ? this.assessmentData.data.attributes.lastName : '';
+        this.displayName = this.assessmentData.data.attributes.firstName + ' ' + this.assessmentData.data.attributes.lastName;
       }
     });
   }
