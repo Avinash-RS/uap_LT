@@ -34,6 +34,7 @@ export class NavBarComponent {
     this.store.select(selectAssessmentTasksListState).subscribe((response) => {
       this.assessmentData = response;
       if (this.assessmentData) {
+            
         this.displayName = this.assessmentData.data.attributes.firstName + ' ' + this.assessmentData.data.attributes.lastName;
       }
     });

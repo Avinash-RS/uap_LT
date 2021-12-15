@@ -67,7 +67,7 @@ export class ScheduleUploadComponent implements OnInit {
         const firstRow = allTextLines[0].split(',');
         const validRows = allTextLines.filter(ele => ele);
         // 1001 with headers
-        if (validRows && validRows.length <= 1001) {
+        // if (validRows && validRows.length <= 1001) {
         if (firstRow[0] == 'emailId' && firstRow[1] == 'firstName' && firstRow[2] == 'lastName' && firstRow[3] == 'assessmentPackName') {
           for (let i = 1; i < arrayLength - 1; i++) {
             const rowData = allTextLines[i].split(';')[0].split(',');
@@ -93,10 +93,10 @@ export class ScheduleUploadComponent implements OnInit {
           this.toaster.warning('Please upload valid excel file');
           this.deleteCsvFile();
         }
-      } else {
-        this.toaster.warning('Cannot upload more than 1000 candidate');
-        this.deleteCsvFile();
-      }
+      // } else {
+      //   this.toaster.warning('Cannot upload more than 1000 candidate');
+      //   this.deleteCsvFile();
+      // }
         this.csvRows.push(rows);
       };
     }
