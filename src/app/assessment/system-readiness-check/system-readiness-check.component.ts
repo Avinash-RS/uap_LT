@@ -31,18 +31,15 @@ export class SystemReadinessCheckComponent implements OnInit {
           this._loading.setLoading(false, 'request.url');
           this.route.navigate(['/landing/assessment', sessionStorage.getItem('assessmentId')]);
         }
-        
-       
       }, 100);
   }
 
   ngOnChanges(){
-    
   }
 
   checklocalstorage(){
     this.isfinish = sessionStorage.getItem('enableFinish');
-    console.log(this.isfinish, typeof(this.isfinish))
+    // console.log(this.isfinish, typeof(this.isfinish))
   }
 
   navtoVideo(){

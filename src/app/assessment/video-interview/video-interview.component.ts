@@ -41,6 +41,7 @@ export class VideoInterviewComponent implements OnInit {
   displayQus: any;
   qusTime: string;
   qusremainTimer:any;
+  count = 0;
   config: CountdownConfig = {  format: 'HH:mm:ss', leftTime: 0, notify: 0 };
   constructor(private _loading: LoadingService,private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
     this.userProfile = JSON.parse(sessionStorage.getItem('user'));
@@ -198,20 +199,19 @@ onSubmit(activequs,stauts){
         this.http.submitTestDetails(request).subscribe((response: any) => {
           if(response.success == true){
               if(request.action == 'submit'){
-                  this.openDialog()
-              }
-              // this.timeLeft = response.data.timeLeft ? response.data.timeLeft : this.timeLeft;
-              if(response.data.timeLeft <=0){
-                this.timeLeft = 0;
-                this.config = { ...this.config, leftTime: this.timeLeft };
-                this.qusremainTimer =  this.timeLeft;
-                this.countdownStart = 1;
-                this.counterStart.stop();
-                this.toast.warning('Question time expired');
-                this.isStartEnable = true;
-              }else{
-                // this.timeLeft = 0;
-                // this.countdownStart = 1;
+                  this.openDialog();
+              }        
+              // if(response.data.timeLeft <=0){
+              //   this.timeLeft = 0;
+              //   this.config = { ...this.config, leftTime: this.timeLeft };
+              //   this.qusremainTimer =  this.timeLeft;
+              //   this.countdownStart = 1;
+              //   this.counterStart.stop();
+              //   this.toast.warning('Question time expired');
+              //   this.isStartEnable = true;
+              // }
+              // else{
+               
                 this.countdownStart = response.data.duration ? response.data.duration : 1;
                 this.timeLeft = response.data.timeLeft ? response.data.timeLeft : this.timeLeft;
                 this.qusremainTimer = localStorage.getItem('qusremaintime') ? localStorage.getItem('qusremaintime') : this.timeLeft;
@@ -221,12 +221,13 @@ onSubmit(activequs,stauts){
                   this.counterStart.begin();
                   setTimeout(() => {
                     this.countdownStart = 1;
-                   this.counterStart.begin();
+                  //  this.counterStart.begin();
                   }, 0);
                 }
                 this.isStartEnable = false;
-              }
+              // }
           }else{
+
           }
 
         })
@@ -244,6 +245,62 @@ onSubmit(activequs,stauts){
     navToLanding(){
       this.route.navigate(['/landing/assessment', sessionStorage.getItem('assessmentId')])
     }
+
+
+    handleEvent(event:any,index) {
+
+      // console.log(index,event)
+      if (event.action === 'notify') {
+        // Save current value
+        localStorage.setItem('qusremaintime', `${event.left / 1000}`);
+      }
+        if(event.left == 0){
+          if( this.qusInfo.length - 1 >  this.activequs){
+            this.toast.success('Question time expired moving to next question')
+              this.isStartbtn = false; 
+              this.activequs = parseInt(this.activequs) + 1;
+              sessionStorage.setItem('activequs', this.activequs + 1)
+              localStorage.setItem('activequs', this.activequs)
+              this.displayQus = this.qusInfo[this.activequs].questionDetails.question
+              this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+              this.config = { ...this.config, leftTime: this.timeLeft };
+              this.qusremainTimer =  this.timeLeft;
+              this.getQusDuration(this.timeLeft)
+              this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
+              this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
+              setTimeout(() => {
+                this.counterStart.begin();
+                // this.timeLeft = null;
+                this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
+                this.config = { ...this.config, leftTime: this.timeLeft };
+                this.qusremainTimer =  this.timeLeft;
+                this.getQusDuration(this.timeLeft);
+                // this.counterStart.begin();
+               }, 0);
+              }else {
+                    if(this.qusInfo.length - 1 ==  this.activequs){
+                      this.count =  this.count + 1;
+                        if(this.count == 1){
+                          this.actions('submit',false,'')
+                        }
+                      
+                    }
+                  }
+              
+                }
+          }
+
+
+    getQusDuration(qustime){
+      const duration = moment.duration(qustime, 'seconds');
+      const resultstring = moment.utc(duration.asMilliseconds()).format('HH:mm:ss');
+      this.qusTime = resultstring;
+    }
+
+
+}
+
+
 
 
     // handleEvent(event:any,index) {
@@ -282,57 +339,6 @@ onSubmit(activequs,stauts){
     //         }
     //     }
     //     }
-
-    handleEvent(event:any,index) {
-      if (event.action === 'notify') {
-        // Save current value
-        localStorage.setItem('qusremaintime', `${event.left / 1000}`);
-      }
-        if(event.left == 0){
-          if(this.qusInfo.length - 1 >  this.activequs){
-            this.toast.success('Question time expired moving to next question')
-              this.isStartbtn = false; 
-              this.activequs = parseInt(this.activequs) + 1;
-              sessionStorage.setItem('activequs', this.activequs + 1)
-              localStorage.setItem('activequs', this.activequs)
-              this.displayQus = this.qusInfo[this.activequs].questionDetails.question
-              this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
-              this.config = { ...this.config, leftTime: this.timeLeft };
-              this.qusremainTimer =  this.timeLeft;
-              this.getQusDuration(this.timeLeft)
-              this.nextQusId = this.qusInfo[this.activequs].questionDetails._id;
-              this.qusDuration = this.qusInfo[this.activequs].questionDetails.duration * 60;
-              setTimeout(() => {
-                this.counterStart.begin();
-                // this.timeLeft = null;
-                this.timeLeft =  this.qusInfo[this.activequs].questionDetails.duration * 60;
-                this.config = { ...this.config, leftTime: this.timeLeft };
-                this.qusremainTimer =  this.timeLeft;
-                this.getQusDuration(this.timeLeft);
-                this.counterStart.begin();
-               }, 1000);
-
-              }
-              else {
-                if(this.qusInfo.length > this.activequs){
-                  this.actions('submit',false,'')
-                  this.toast.warning('No Next question..')
-                }
-              
-                }
-            }
-}
-
-
-    getQusDuration(qustime){
-      const duration = moment.duration(qustime, 'seconds');
-      const resultstring = moment.utc(duration.asMilliseconds()).format('HH:mm:ss');
-      this.qusTime = resultstring;
-    }
-
-
-}
-
 
 
     // Ans record timer event
