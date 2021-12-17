@@ -13,12 +13,14 @@ import { LoadingService } from 'src/app/rest-api/loading.service';
 export class SystemReadinessCheckComponent implements OnInit {
   checkSystemCheck:any;
   @ViewChild('matDialog', {static: false}) matDialogRef: TemplateRef<any>;
-  isfinish: string;
+  isfinish: any;
   isSystemCheckDone: any;
+  showFinish:any;
   constructor( private route: Router,private _loading: LoadingService, private http:HttpClient,public matDialog: MatDialog, private router: Router, private toast: ToastrService,) { 
     this.checkSystemCheck = localStorage.getItem('smallScreen');
     this.isfinish = sessionStorage.getItem('enableFinish');
     this.isSystemCheckDone = localStorage.getItem('SCfinish');
+    this.checkSystemcheckStatus();
   }
 
   ngOnInit(): void {
@@ -34,13 +36,17 @@ export class SystemReadinessCheckComponent implements OnInit {
       }, 100);
   }
 
-  ngOnChanges(){
+
+  checkSystemcheckStatus(){
+    return  setInterval(()=>{
+      this.isfinish = sessionStorage.getItem('enableFinish');
+    },1000)
   }
 
-  checklocalstorage(){
-    this.isfinish = sessionStorage.getItem('enableFinish');
-    // console.log(this.isfinish, typeof(this.isfinish))
-  }
+  ngOnDestroy() {
+    if (this.isfinish == true || this.isfinish == 'true') {
+      clearInterval(this.isfinish);
+    }}
 
   navtoVideo(){
     this.checkSystemCheck = localStorage.getItem('smallScreen');
