@@ -84,7 +84,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   duration: any;
   subscription: any;
   batchDetails:any;
-  orgName: any;
+  orginfo: any = [];
   constructor(
     private fb: FormBuilder,
     private store: Store<SchedulerReducerState>,
@@ -462,9 +462,9 @@ GetMinutes(d) {
   }
 
 
-  orgChange(orgname:any){
-      if(orgname.name){
-        this.orgName = orgname.name;
+  orgChange(orgInfo:any){
+      if(orgInfo){
+        this.orginfo = orgInfo;
       }
   }
   createScheduleFromEdgeService(request) {
@@ -521,7 +521,8 @@ GetMinutes(d) {
           endDateTime: request.data.attributes.endDateTime,
           duration: request.data.attributes.duration,
           orgId: this.schedulePackageForm.get('orgId')?.value,
-          orgName : this.orgName,
+          orgName : this.orginfo.name,
+         
           scheduledAtTestLevel: request.data.attributes.scheduledAtTestLevel,
           candidateDetails: this.csvRows[0],
           is_proctor:this.is_proctor.value ? '1' : '0',
@@ -560,7 +561,9 @@ GetMinutes(d) {
           endDateTime: this.scheduleEndDateTimeTimeStamp,
           duration: this.packageDetails.attributes.duration,
           orgId: this.schedulePackageForm.get('orgId')?.value,
-          orgName : this.orgName,
+          orgName : this.orginfo.name,
+          supportEmail: this.orginfo.supportEmail,
+          supportPhone:this.orginfo.supportPhone,
           scheduledAtTestLevel: false,
           candidateDetails: clearCandidateDetails
             ? []
