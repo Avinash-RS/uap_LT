@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { ToastrService } from 'ngx-toastr';
 import { AssessmentAPIService } from 'src/app/rest-api/assessments-api/assessments-api.service';
+import { Papa } from 'ngx-papaparse';
 @Component({
   selector: 'uap-question-upload',
   templateUrl: './question-upload.component.html',
@@ -11,11 +12,11 @@ export class QuestionUploadComponent implements OnInit {
   files: NgxFileDropEntry[] = [];
   selectedCSVFile: File;
   csvFileName: string;
-  csvRows: Array<any[]> = [];
+  csvRows: any= [];
   showCsvFileInformation: boolean;
   userInfo: any
 
-  constructor(private http: AssessmentAPIService, private toaster: ToastrService, ) {
+  constructor(private http: AssessmentAPIService, private toaster: ToastrService, private papa: Papa) {
     const userProfile = JSON.parse(sessionStorage.getItem('user'));
     this.userInfo = {
       firstName: userProfile && userProfile.attributes && userProfile.attributes.firstName
@@ -36,7 +37,7 @@ export class QuestionUploadComponent implements OnInit {
           this.selectedCSVFile = file;
           // this.switchToAddEmailView = false;
           this.showCsvFileInformation = true;
-          this.parseCsvFile(file);
+          this.handleFileSelect(file);
           this.csvFileName = file.name;
         });
       } else {
@@ -45,49 +46,39 @@ export class QuestionUploadComponent implements OnInit {
     }
   }
 
-  parseCsvFile(csvFile: File): void {
-    if (csvFile) {
-      const file: File = csvFile;
-      // File reader method
-      const reader: FileReader = new FileReader();
-      reader.readAsText(file);
-      reader.onload = () => {
-        const csv: any = reader.result;
-        let allTextLines = [];
-        allTextLines = csv.split(/\r|\n|\r/);
-        const arrayLength = allTextLines.length;
-        // Reading and createing table rows
-        const rows: any[] = [];
-        const firstRow = allTextLines[0].split(',');
-        const validRows = allTextLines.filter(ele => ele);
-        // 1001 with headers
-        if (validRows && validRows.length <= 1001) {
-        if (firstRow[0] == 'question' && firstRow[1] == 'duration' && firstRow[2] == 'mark' && firstRow[3] == 'categoryName') {
-          for (let i = 1; i < arrayLength - 1; i++) {
-            const rowData = allTextLines[i].split(';')[0].split(',');
-            if (rowData.length > 1) {
-                rows.push({
-                  question: rowData[0] ? rowData[0].trim() : "",
-                  duration: rowData[1] ? rowData[1].trim() : "",
-                  mark: rowData[2] ? rowData[2].trim() : "",
-                  categoryName: rowData[3] ? rowData[3].trim() : "",
-                  createdBy: this.userInfo.firstName ? this.userInfo.firstName : "",
-                  updatedBy: this.userInfo.firstName ? this.userInfo.firstName : "",
-                });
-            }
-          }
-        } else {
-          this.toaster.warning('Please upload valid excel file');
-          this.deleteCsvFile();
+  handleFileSelect(evt : File) {
+    console.log(evt,'evt asdadadasdasdsad')
+    var files = evt; // FileList object
+    var file = files;
+    var reader = new FileReader();
+    reader.readAsText(file);
+    reader.onload = (event: any) => {
+      var csv = event.target.result; // Content of CSV file
+      console.log(csv)
+      this.papa.parse(csv, {
+        skipEmptyLines: true,
+        header: true,
+        complete: (results) => {
+          if (results && results.data.length <= 1001) {
+          // for (let i = 0; i < results.data.length; i++) {
+            // let orderDetails = {
+            //   question: results ? results.data[i].question.trim() : "",
+            //   duration: results ? results.data[i].duration.trim() : "",
+            //   mark: results ? results.data[i].mark.trim() : "",
+            //   categoryName: results ? results.data[i].categoryName.trim() : "",
+            //   createdBy: this.userInfo.firstName ? this.userInfo.firstName : "",
+            //   updatedBy: this.userInfo.firstName ? this.userInfo.firstName : "",
+            // };
+            // this.csvRows.push(orderDetails);
+          // } 
+        }else{
+          this.toaster.warning('Cannot upload more than 1000 questions');
+              this.deleteCsvFile();
         }
-      } else {
-        this.toaster.warning('Cannot upload more than 1000 questions');
-        this.deleteCsvFile();
-      }
-        this.csvRows.push(rows);
-      };
+          this.csvRows.push(results.data);
+        }
+      });
     }
-
   }
 
   deleteCsvFile(): void {
