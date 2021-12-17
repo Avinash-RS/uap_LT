@@ -37,6 +37,7 @@
     "ngx-file-drop": "^11.0.2",
     "ngx-infinite-scroll": "^10.0.1",
     "ngx-material-timepicker": "^5.5.3",
+    "ngx-papaparse": "^5.0.0",
     "ngx-printer": "0.9.1",
     "ngx-spinner": "^10.0.1",
     "ngx-toastr": "^14.0.0",
