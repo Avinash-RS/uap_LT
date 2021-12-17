@@ -36,6 +36,7 @@ export interface ScheduleRequestDataAttributes {
    * List of Canidates to be invited
    */
   orgId?:string;
+  orgName?:string;
   candidateDetails: Array<object>;
   testDetails: Array<object>;
 }

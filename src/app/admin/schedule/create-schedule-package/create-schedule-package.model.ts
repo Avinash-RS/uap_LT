@@ -8,7 +8,8 @@ export interface CreateSchedulePackageFormModel {
   scheduleEndDate: Date;
   scheduleEndTime: string;
   assessmentName: string;
-  orgId:string
+  orgId:string;
+  orgName:string;
 }
 
 export interface CandidateInforamtion {
