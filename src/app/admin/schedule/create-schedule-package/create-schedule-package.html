@@ -26,7 +26,7 @@
           <mat-form-field appearance="fill">
             <mat-label>Organization</mat-label>
             <mat-select  required formControlName="orgId">
-              <mat-option *ngFor="let org of listOfOrg" [value]="org?.id" > {{org?.name}}</mat-option>
+              <mat-option (click)="orgChange(org)" *ngFor="let org of listOfOrg" [value]="org?.id" > {{org?.name}}</mat-option>
             </mat-select>
             <div class="mat-input-field__error" *ngIf="validateFormField('orgId')">
               Required
