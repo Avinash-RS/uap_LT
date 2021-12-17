@@ -37,6 +37,8 @@ export interface ScheduleRequestDataAttributes {
    */
   orgId?:string;
   orgName?:string;
+  supportEmail?:string;
+  supportPhone?:string;
   candidateDetails: Array<object>;
   testDetails: Array<object>;
 }
