@@ -51,6 +51,7 @@ export class ScheduleUploadComponent implements OnInit {
   }
 
   parseCsvFile(csvFile: File): void {
+    debugger
     if (csvFile) {
       const file: File = csvFile;
       // File reader method
@@ -68,29 +69,30 @@ export class ScheduleUploadComponent implements OnInit {
         const validRows = allTextLines.filter(ele => ele);
         // 1001 with headers
         // if (validRows && validRows.length <= 1001) {
-        if (firstRow[0] == 'emailId' && firstRow[1] == 'firstName' && firstRow[2] == 'lastName' && firstRow[3] == 'assessmentPackName') {
+        if (firstRow[0] == 'emailId' && firstRow[2] == 'firstName' && firstRow[3] == 'lastName' && firstRow[4] == 'assessmentPackName' && firstRow[5] == 'startDateTime' && firstRow[6] == 'endDateTime' && firstRow[7] == 'instanceId') {
           for (let i = 1; i < arrayLength - 1; i++) {
             const rowData = allTextLines[i].split(';')[0].split(',');
             if (rowData.length > 1) {
                 rows.push({
                   emailId: rowData[0] ? rowData[0].trim() : "",
-                  firstName: rowData[1] ? rowData[1].trim() : "",
-                  lastName: rowData[2] ? rowData[2].trim() : "",
-                  assessmentPackName: rowData[3] ? rowData[3].trim() : "",
-                  startDateTime: rowData[4] ? rowData[4].trim() : "",
-                  endDateTime: rowData[5] ? rowData[5].trim() : "",
-                  instanceId: rowData[6] ? rowData[6].trim() : "",
-                  driveName: rowData[7] ? rowData[7].trim() : "",
-                  shortListName: rowData[8] ? rowData[8].trim() : "",
-                  discipline: rowData[9] ? rowData[9].trim() : "",
-                  specialization: rowData[10] ? rowData[10].trim() : "",
-                  isProctor: rowData[11] ? rowData[11].trim() : "",
+                  password:rowData[1] ? rowData[1].trim() : "",
+                  firstName: rowData[2] ? rowData[2].trim() : "",
+                  lastName: rowData[3] ? rowData[3].trim() : "",
+                  assessmentPackName: rowData[4] ? rowData[4].trim() : "",
+                  startDateTime: rowData[5] ? rowData[5].trim() : "",
+                  endDateTime: rowData[6] ? rowData[6].trim() : "",
+                  instanceId: rowData[7] ? rowData[7].trim() : "",
+                  driveName: rowData[8] ? rowData[8].trim() : "",
+                  shortListName: rowData[9] ? rowData[9].trim() : "",
+                  discipline: rowData[10] ? rowData[10].trim() : "",
+                  specialization: rowData[11] ? rowData[11].trim() : "",
+                  isProctor: rowData[12] ? rowData[12].trim() : "",
 
                 });
             }
           }
         } else {
-          this.toaster.warning('Please upload valid excel file');
+          this.toaster.warning('Please fill all mandatory fields');
           this.deleteCsvFile();
         }
       // } else {
@@ -98,6 +100,7 @@ export class ScheduleUploadComponent implements OnInit {
       //   this.deleteCsvFile();
       // }
         this.csvRows.push(rows);
+        // console.
       };
     }
 

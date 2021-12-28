@@ -81,7 +81,8 @@
         </div>
 
         <div class="btn-align" *ngIf="csvFileName">
-            <button class="submit" [disabled]="isAssessmentPackageInvalid()" (click)="bulkSchedule()">
+            <!-- [disabled]="isAssessmentPackageInvalid()" -->
+            <button class="submit" (click)="bulkSchedule()">
                 Submit
               </button>
         </div>
