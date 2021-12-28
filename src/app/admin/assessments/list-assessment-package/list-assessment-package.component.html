@@ -1,39 +1,29 @@
 <div class="container">
-  <main>
-    <h2>Assessments</h2>
-    <section class="main-actions">
-      <div class="search-field">
-        <app-search [searchPlaceHolder]="'Search'" (searchEvent)="onSearch($event)"></app-search>
-      </div>
-      <div class="filter-field">
-        <mat-form-field>
-          <mat-select
-            [(value)]="selectedFilterValue"
-            (selectionChange)="onFilterValueChange(selectedFilterValue)"
-          >
-            <mat-option *ngFor="let filterValue of filterValues" [value]="filterValue.value">
-              {{ filterValue.viewValue }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div class="create-action">
-        <button mat-flat-button routerLink="/admin/assessments/create">Create</button>
-      </div>
-    </section>
-    <div>
-      <ng-container>
-        <div class="package-list">
-          <app-infinite-scroll-list
-            [packageTemplates]="packageContents.data"
-            [pageMetadata]="packageContents.meta"
-            [searchString]="searchString"
-            [status]="selectedFilterValue"
-            [canViewPackage]="!canViewPackage"
-            [showLazyLoading]="showLazyLoading"
-          ></app-infinite-scroll-list>
+    <main>
+        <h2>Assessments</h2>
+        <section class="main-actions">
+            <div class="search-field">
+                <app-search [searchPlaceHolder]="'Search'" (searchEvent)="onSearch($event)"></app-search>
+            </div>
+            <div class="filter-field">
+                <mat-form-field>
+                    <mat-select [(value)]="selectedFilterValue" (selectionChange)="onFilterValueChange(selectedFilterValue)">
+                        <mat-option *ngFor="let filterValue of filterValues" [value]="filterValue.viewValue">
+                            {{ filterValue.viewValue }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="create-action">
+                <button mat-flat-button routerLink="/admin/assessments/create">Create</button>
+            </div>
+        </section>
+        <div>
+            <ng-container>
+                <div class="package-list">
+                    <app-infinite-scroll-list [packageTemplates]="packageContents.data" [pageMetadata]="packageContents.meta" [searchString]="searchString" [status]="selectedFilterValue" [canViewPackage]="!canViewPackage" [showLazyLoading]="showLazyLoading"></app-infinite-scroll-list>
+                </div>
+            </ng-container>
         </div>
-      </ng-container>
-    </div>
-  </main>
+    </main>
 </div>
