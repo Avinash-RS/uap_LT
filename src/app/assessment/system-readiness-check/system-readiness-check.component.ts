@@ -12,6 +12,7 @@ import { LoadingService } from 'src/app/rest-api/loading.service';
 })
 export class SystemReadinessCheckComponent implements OnInit {
   checkSystemCheck:any;
+  interval;
   @ViewChild('matDialog', {static: false}) matDialogRef: TemplateRef<any>;
   isfinish: any;
   isSystemCheckDone: any;
@@ -38,21 +39,24 @@ export class SystemReadinessCheckComponent implements OnInit {
 
 
   checkSystemcheckStatus(){
-    return  setInterval(()=>{
+    this.interval =   setInterval(()=>{
       this.isfinish = sessionStorage.getItem('enableFinish');
+      if(this.isfinish == 'true'){
+        this.navtoVideo();
+      }
     },1000)
   }
 
   ngOnDestroy() {
-    if (this.isfinish == true || this.isfinish == 'true') {
-      clearInterval(this.isfinish);
-    }}
+    clearInterval(this.interval);
+    }
 
   navtoVideo(){
     this.checkSystemCheck = localStorage.getItem('smallScreen');
     if(this.checkSystemCheck == 'true'){
       this.matDialog.closeAll();
       this.router.navigate(['/landing/TestInformation']);
+      clearInterval(this.interval);
       localStorage.setItem('SCfinish','ture');
     }else {
       this.toast.warning('Please wait while the system check your computer and the network');
