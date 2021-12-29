@@ -51,7 +51,6 @@ export class ScheduleUploadComponent implements OnInit {
   }
 
   parseCsvFile(csvFile: File): void {
-    debugger
     if (csvFile) {
       const file: File = csvFile;
       // File reader method

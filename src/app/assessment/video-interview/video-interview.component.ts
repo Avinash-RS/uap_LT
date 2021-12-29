@@ -43,11 +43,13 @@ export class VideoInterviewComponent implements OnInit {
   qusremainTimer:any;
   count = 0;
   config: CountdownConfig = {  format: 'HH:mm:ss', leftTime: 0, notify: 0 };
+  assessmentInfo: any;
   constructor(private _loading: LoadingService,private route: Router,private dialog: MatDialog, private toast: ToastrService,private http : AssessmentAPIService) {
     this.userProfile = JSON.parse(sessionStorage.getItem('user'));
     // sessionStorage.setItem('activequs',this.activequs)
     this.activequs = localStorage.getItem('activequs') ? localStorage.getItem('activequs') : 0;
     this.activequs = parseInt(this.activequs);
+    this.assessmentInfo = JSON.parse(sessionStorage.getItem('statusCheck'))
   }
 
   ngOnInit(): void {
@@ -243,7 +245,7 @@ onSubmit(activequs,stauts){
     }
 
     navToLanding(){
-      this.route.navigate(['/landing/assessment', sessionStorage.getItem('assessmentId')])
+      this.route.navigate(['/landing/assessment', sessionStorage.getItem('assessmentId') ? sessionStorage.getItem('assessmentId') : this.assessmentInfo[0].assessmentId])
     }
 
 
