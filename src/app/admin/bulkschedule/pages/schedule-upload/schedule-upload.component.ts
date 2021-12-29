@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { ToastrService } from 'ngx-toastr';
 import { ScheduleAPIService } from 'src/app/rest-api/schedule-api/schedule-api.service';
@@ -17,7 +18,7 @@ export class ScheduleUploadComponent implements OnInit {
   csvFileName: string;
   csvRows: Array<any[]> = [];
   showCsvFileInformation: boolean;
-  constructor( private fb: FormBuilder,  private scheduleService: ScheduleAPIService, private toaster: ToastrService,) { 
+  constructor(  private router: Router,private fb: FormBuilder,  private scheduleService: ScheduleAPIService, private toaster: ToastrService,) { 
     this.bulkscheduleForm = this.fb.group({
       batchName: ['', Validators.required],
       scheduleDescription: ['', Validators.required],
@@ -169,6 +170,7 @@ export class ScheduleUploadComponent implements OnInit {
       this.showCsvFileInformation = false;
       this.csvRows = [];
       this.bulkscheduleForm.reset();
+      this.router.navigate(['/admin/schedule/list']);
         this.toaster.success(response.message);
      }else{
         this.toaster.warning(response.message);
