@@ -137,6 +137,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
       userProfile && userProfile.attributes && userProfile.attributes.email
         ? userProfile.attributes.email
         : '';
+    let orgId = userProfile && userProfile.attributes && userProfile.attributes.organisations && userProfile.attributes.organisations[0] ? userProfile.attributes.organisations[0].orgId : '';   
     this.assessmentTasksList.forEach((element) => {
       if (
         element.taskName &&
@@ -147,6 +148,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
           let apiData = {
             testIds: Number(element.id),
             email,
+            orgId,
             type: element.taskType,
             deliveryId: element.deliveryId ? element.deliveryId : '',
             assessmentId: this.assessmentID
