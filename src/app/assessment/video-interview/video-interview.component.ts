@@ -177,7 +177,7 @@ onSubmit(activequs,stauts){
         "emailId" : this.userProfile && this.userProfile.attributes && this.userProfile.attributes.email ? this.userProfile.attributes.email : null,
         "action": status,
         "existDuration":  this.qusDuration,
-        "assessmentId":sessionStorage.getItem('assessmentId'),
+        "assessmentId":sessionStorage.getItem('assessmentId') ? sessionStorage.getItem('assessmentId') : this.assessmentInfo[0].assessmentId,
         "question":  this.displayQus,
         "questionNo":parseInt(this.activequs + 1) ,
         "candidateId": this.userProfile && this.userProfile.attributes && this.userProfile.attributes.id ? this.userProfile.attributes.id : null
