@@ -8,6 +8,7 @@ import { assessmentIDAction, loginAttempt, logoutAction } from '../redux/login.a
 import { ActivatedRoute } from '@angular/router';
 import browser from 'browser-detect';
 import { HttpClient } from '@angular/common/http';
+import * as publicIp from 'public-ip';
 @Component({
   selector: 'uap-login-page',
   templateUrl: './login-page.component.html',
@@ -99,15 +100,10 @@ export class LoginPageComponent implements OnInit {
   }
 
   loadIp() {
-    this.httpClient.get('https://jsonip.com').subscribe(
-      (value:any) => {
-        this.browserDetails = browser();
-        this.userIP = value.ip;
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    publicIp.v4().then((ip) => {
+      this.userIP = ip ?  ip : '';
+      this.browserDetails = browser();
+    });
   }
 
 
