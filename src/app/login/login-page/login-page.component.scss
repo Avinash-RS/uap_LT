@@ -77,7 +77,7 @@
     .beforeloginimg {
         height: auto;
         padding: 0;
-        width: 30%;
+        width: 74%;
     }
 }
 
@@ -114,11 +114,15 @@
 .btn {
     font-size: 16px;
     // background: $uap-crimson !important;
-    background: #00b0ed; /* Old browsers */
-    background: -moz-linear-gradient(left, #27bbee 0%, #88ba2f 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(left, #27bbee 0%,#88ba2f 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to right, #27bbee 0%,#88ba2f 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#27bbee', endColorstr='#88ba2f',GradientType=1 );
+    background: #00b0ed;
+    /* Old browsers */
+    background: -moz-linear-gradient(left, #27bbee 0%, #88ba2f 100%);
+    /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, #27bbee 0%, #88ba2f 100%);
+    /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, #27bbee 0%, #88ba2f 100%);
+    /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    // filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#27bbee', endColorstr='#88ba2f', GradientType=1);
     color: $uap-white;
     border-radius: 50px !important;
     width: 54%;
@@ -161,7 +165,7 @@
     }
     .message {
         color: #1b4e9b;
-    }    
+    }
 }
 
 .mat-toolbar {
@@ -207,11 +211,15 @@
     .mat-raised-button[disabled]:not([class*=mat-elevation-z]) {
         color: #d2d1d1;
         // background: #C02222 !important;
-        background: #00b0ed; /* Old browsers */
-        background: -moz-linear-gradient(left, #27bbee 0%, #88ba2f 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(left, #27bbee 0%,#88ba2f 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to right, #27bbee 0%,#88ba2f 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#27bbee', endColorstr='#88ba2f',GradientType=1 );
+        background: #00b0ed;
+        /* Old browsers */
+        background: -moz-linear-gradient(left, #27bbee 0%, #88ba2f 100%);
+        /* FF3.6-15 */
+        background: -webkit-linear-gradient(left, #27bbee 0%, #88ba2f 100%);
+        /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to right, #27bbee 0%, #88ba2f 100%);
+        /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        // filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#27bbee', endColorstr='#88ba2f', GradientType=1);
         box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%) !important;
     }
     mat-label,
@@ -221,8 +229,8 @@
     .tacbox {
         display: block;
         padding: 1em;
-        border: 2px solid rgba(0,0,0,0.05);
-        background-color: rgba(0,0,0,0.03);
+        border: 2px solid rgba(0, 0, 0, 0.05);
+        background-color: rgba(0, 0, 0, 0.03);
         width: 100%;
         label {
             font-size: 14px;
