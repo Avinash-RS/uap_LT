@@ -522,7 +522,8 @@ GetMinutes(d) {
           duration: request.data.attributes.duration,
           orgId: this.schedulePackageForm.get('orgId')?.value,
           orgName : this.orginfo.name,
-         
+          supportEmail: this.orginfo.supportEmail,
+          supportPhone:this.orginfo.supportPhone,
           scheduledAtTestLevel: request.data.attributes.scheduledAtTestLevel,
           candidateDetails: this.csvRows[0],
           is_proctor:this.is_proctor.value ? '1' : '0',
