@@ -18,6 +18,7 @@ export class ScheduleUploadComponent implements OnInit {
   csvFileName: string;
   csvRows: Array<any[]> = [];
   showCsvFileInformation: boolean;
+  orginfo: any = [];
   constructor(  private router: Router,private fb: FormBuilder,  private scheduleService: ScheduleAPIService, private toaster: ToastrService,) { 
     this.bulkscheduleForm = this.fb.group({
       batchName: ['', Validators.required],
@@ -150,6 +151,11 @@ export class ScheduleUploadComponent implements OnInit {
   }
 
 
+  orgChange(orgInfo:any){
+    if(orgInfo){
+      this.orginfo = orgInfo;
+    }
+}
 
   bulkSchedule(){
       const fd = new FormData();
@@ -158,6 +164,9 @@ export class ScheduleUploadComponent implements OnInit {
       fd.append('description',  this.bulkscheduleForm.get('scheduleDescription')?.value);
       fd.append('orgId', this.bulkscheduleForm.get('orgId')?.value);
       fd.append('mimetype',  this.selectedCSVFile.type);
+      fd.append('orgName',  this.orginfo.name ? this.orginfo.name : '');
+      fd.append('supportEmail',  this.orginfo.supportEmail ? this.orginfo.supportEmail : '');
+      fd.append('supportPhone',  this.orginfo.supportPhone ? this.orginfo.supportPhone : '');
     // let data = {
     //   "scheduleName" : this.bulkscheduleForm.get('batchName')?.value,
     //   "description" : this.bulkscheduleForm.get('scheduleDescription')?.value,
