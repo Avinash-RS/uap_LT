@@ -41,6 +41,8 @@ export interface ScheduleRequestDataAttributes {
   supportPhone?:string;
   candidateDetails: Array<object>;
   testDetails: Array<object>;
+  is_published:string;
+  publishDate:string;
 }
 
 export interface ScheduleRequestData {
