@@ -43,6 +43,7 @@ export interface ScheduleRequestDataAttributes {
   testDetails: Array<object>;
   is_published:string;
   publishDate:string;
+  // publishTime:string
 }
 
 export interface ScheduleRequestData {

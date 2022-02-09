@@ -7,6 +7,7 @@ export interface CreateSchedulePackageFormModel {
   scheduleTime: string;
   scheduleEndDate: Date;
   publishDate:Date;
+  publishTime:string;
   scheduleEndTime: string;
   assessmentName: string;
   orgId:string;

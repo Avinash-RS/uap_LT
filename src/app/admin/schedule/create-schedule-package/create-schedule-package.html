@@ -159,7 +159,7 @@
         </div>
 
         <span *ngIf="showpublishDate">
-          <label class="custom-label__font"> Publish date </label>
+          <label class="custom-label__font"> Publish On </label>
           <div class="date-time-block__align">
               <span class="date-block">
               <mat-form-field appearance="fill" class="date-block__input">
@@ -175,6 +175,17 @@
                 <mat-datepicker #dp5 disabled="false"></mat-datepicker>
               </mat-form-field>
               
+            </span>
+
+        <span class="time-block">
+              <div class="ngx-timepicker-field-example">
+                <ngx-timepicker-field
+                  [format]="12"
+                  formControlName="publishTime"
+                  [defaultTime]="'12:01 pm'"
+                  (timeChanged)="onPublishTimeChanged($event,packageDetails.attributes.duration)"
+                ></ngx-timepicker-field>
+              </div>
             </span>
     </div>
     </span>

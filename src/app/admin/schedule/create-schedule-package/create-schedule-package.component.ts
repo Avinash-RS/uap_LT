@@ -70,6 +70,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   files: NgxFileDropEntry[] = [];
   scheduleDateTimeTimeStamp: string;
   scheduleEndDateTimeTimeStamp: string;
+  publishDateTime:string;
   // Snackbar
   displayMessage: string | undefined;
   requestPackageId: string | undefined;
@@ -89,7 +90,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   batchDetails:any;
   orginfo: any = [];
   showpublishDate = false;
-  publishDate1:string
+  publishDate1:string;
   constructor(
     private fb: FormBuilder,
     private store: Store<SchedulerReducerState>,
@@ -112,6 +113,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       // schedul end Date and time
       scheduleEndDate:[new Date(), Validators.required],
       publishDate:[new Date()],
+      publishTime:[this.currentTime],
       scheduleEndTime: [this.currentTime, Validators.required], 
       assessmentName: ['', Validators.required],
       orgId:['', Validators.required],
@@ -130,7 +132,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
         this.scheduleEndDateTime = selectedEndDate.toString().substring(4, 15).replace(/\s/g, '-') +'  ' +
         this.schedulePackageForm.get('scheduleEndTime')?.value;
 
-        this.publishDate1 = selectedEndDate.toString().substring(4, 15).replace(/\s/g, '-') +'  ' +
+        this.publishDate1 = selectpublishData.toString().substring(4, 15).replace(/\s/g, '-') +'  ' +
         this.schedulePackageForm.get('publishDate')?.value;
 
 
@@ -140,6 +142,9 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
 
         const concatedEndDateTime = this.getConcatedDateTime(selectedEndDate,getSchedulePackageForm.scheduleEndTime);
         this.scheduleEndDateTimeTimeStamp = new Date(concatedEndDateTime).toISOString();
+
+        const concatpublishDateTime = this.getConcatedDateTime(selectpublishData, getSchedulePackageForm.publishTime);
+        this.publishDateTime = new Date(concatpublishDateTime).toISOString();
       }
     );
     // this.subscription = this.sendData.getMessage().subscribe(batchData => {
@@ -271,6 +276,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
 
   onEndDateChanged(event: MatDatepickerInputEvent<Date>): void {
     this.maxDate = event.value;
+    console.log(this.maxDate,'max date')
     this.schedulePackageForm.patchValue({ scheduleEndDate: event.value });
   }
 
@@ -287,6 +293,12 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       this.canCreateSchedule = true;
       this.schedulePackageForm.patchValue({ scheduleEndTime: time });
   }
+
+  onPublishTimeChanged(time: any,){
+    this.canCreateSchedule = true;
+    this.schedulePackageForm.patchValue({ publishTime: time });
+  }
+
 
   onpublishDateChanged(event: MatDatepickerInputEvent<Date>): void{
     // this.minDate1 = event.value;
@@ -559,6 +571,7 @@ GetMinutes(d) {
           is_proctor:this.is_proctor.value ? '1' : '0',
           is_published : this.is_published.value ? '1' : '0',
           publishDate: request.data.attributes.publishDate,
+          // publishTime: request.data.attributes.publishTime
            
         }
       }
@@ -599,7 +612,7 @@ GetMinutes(d) {
           supportPhone:this.orginfo.supportPhone,
           scheduledAtTestLevel: false,
           is_published : this.schedulePackageForm.get('is_published')?.value,
-          publishDate :this.schedulePackageForm.get('publishDate')?.value,
+          publishDate : this.publishDateTime,
           candidateDetails: clearCandidateDetails
             ? []
             : this.csvRows.length > 0
