@@ -40,6 +40,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { SentData } from 'src/app/rest-api/sendData';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-create-schedule-package',
@@ -69,15 +70,18 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   files: NgxFileDropEntry[] = [];
   scheduleDateTimeTimeStamp: string;
   scheduleEndDateTimeTimeStamp: string;
+  publishDateTime:string;
   // Snackbar
   displayMessage: string | undefined;
   requestPackageId: string | undefined;
   canCreateSchedule = false;
   selectedCSVFile: File;
   is_proctor = new FormControl(false);
+  is_published = new FormControl(false);
   listOfOrg: any;
   minDate: Date;
   maxDate: Date;
+  minDate1:Date;
   startTime: any;
   endTime: any;
   currentTime:any;
@@ -85,6 +89,8 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   subscription: any;
   batchDetails:any;
   orginfo: any = [];
+  showpublishDate = false;
+  publishDate1:string;
   constructor(
     private fb: FormBuilder,
     private store: Store<SchedulerReducerState>,
@@ -106,6 +112,8 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       scheduleTime: [this.currentTime, Validators.required],
       // schedul end Date and time
       scheduleEndDate:[new Date(), Validators.required],
+      publishDate:[new Date()],
+      publishTime:[this.currentTime],
       scheduleEndTime: [this.currentTime, Validators.required], 
       assessmentName: ['', Validators.required],
       orgId:['', Validators.required],
@@ -116,18 +124,27 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       (getSchedulePackageForm: CreateSchedulePackageFormModel) => {
         const selectedDate: Date = getSchedulePackageForm.scheduleDate;
         const selectedEndDate: Date = getSchedulePackageForm.scheduleEndDate;
+        const selectpublishData: Date = getSchedulePackageForm.publishDate;
 
-        this.scheduleDateTime = selectedDate.toString().substring(4, 15).replace(/\s/g, '-') +'  ' +
         this.schedulePackageForm.get('scheduleTime')?.value;
+        // this.schedulePackageForm.get('publishDate')?.value;
 
         this.scheduleEndDateTime = selectedEndDate.toString().substring(4, 15).replace(/\s/g, '-') +'  ' +
         this.schedulePackageForm.get('scheduleEndTime')?.value;
+
+        this.publishDate1 = selectpublishData.toString().substring(4, 15).replace(/\s/g, '-') +'  ' +
+        this.schedulePackageForm.get('publishDate')?.value;
+
+
 
         const concatedDateTime = this.getConcatedDateTime(selectedDate,getSchedulePackageForm.scheduleTime);
         this.scheduleDateTimeTimeStamp = new Date(concatedDateTime).toISOString();
 
         const concatedEndDateTime = this.getConcatedDateTime(selectedEndDate,getSchedulePackageForm.scheduleEndTime);
         this.scheduleEndDateTimeTimeStamp = new Date(concatedEndDateTime).toISOString();
+
+        const concatpublishDateTime = this.getConcatedDateTime(selectpublishData, getSchedulePackageForm.publishTime);
+        this.publishDateTime = new Date(concatpublishDateTime).toISOString();
       }
     );
     // this.subscription = this.sendData.getMessage().subscribe(batchData => {
@@ -259,6 +276,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
 
   onEndDateChanged(event: MatDatepickerInputEvent<Date>): void {
     this.maxDate = event.value;
+    console.log(this.maxDate,'max date')
     this.schedulePackageForm.patchValue({ scheduleEndDate: event.value });
   }
 
@@ -275,6 +293,28 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       this.canCreateSchedule = true;
       this.schedulePackageForm.patchValue({ scheduleEndTime: time });
   }
+
+  onPublishTimeChanged(time: any,){
+    this.canCreateSchedule = true;
+    this.schedulePackageForm.patchValue({ publishTime: time });
+  }
+
+
+  onpublishDateChanged(event: MatDatepickerInputEvent<Date>): void{
+    // this.minDate1 = event.value;
+    this.canCreateSchedule = true;
+    this.schedulePackageForm.patchValue({ publishDate: event.value });
+  }
+
+  showOptions(event:MatCheckboxChange): void {
+    console.log(event.checked);
+    if(event.checked == true){
+       this.showpublishDate = true;
+    }else{
+      this.showpublishDate = false;
+    }
+}
+
 
   GetHours(d) {
     var h = parseInt(d.split(':')[0]);
@@ -450,6 +490,7 @@ GetMinutes(d) {
   }
 
   createSchedulePackage(): void {
+
     // this.openSnackBar(ScheduleModuleEnum.CreatingScheduleAssessmentStatus);
     this.createScheduleFromEdgeService(this.getCreateSchedulePackageRequestPayload());
     // this.store.dispatch(
@@ -470,6 +511,7 @@ GetMinutes(d) {
   createScheduleFromEdgeService(request) {
     if (request.data.attributes.candidateDetails.length > 0) {
       request.data.attributes.is_proctor = this.is_proctor.value ? '1' : '0';
+      request.data.attributes.is_published = this.is_published.value ? '1' : '0';
         this.store.dispatch(
         initCreateScheduleAssessmentPackage({
           payload: {
@@ -527,6 +569,9 @@ GetMinutes(d) {
           scheduledAtTestLevel: request.data.attributes.scheduledAtTestLevel,
           candidateDetails: this.csvRows[0],
           is_proctor:this.is_proctor.value ? '1' : '0',
+          is_published : this.is_published.value ? '1' : '0',
+          publishDate: request.data.attributes.publishDate,
+          // publishTime: request.data.attributes.publishTime
            
         }
       }
@@ -566,6 +611,8 @@ GetMinutes(d) {
           supportEmail: this.orginfo.supportEmail,
           supportPhone:this.orginfo.supportPhone,
           scheduledAtTestLevel: false,
+          is_published : this.schedulePackageForm.get('is_published')?.value,
+          publishDate : this.publishDateTime,
           candidateDetails: clearCandidateDetails
             ? []
             : this.csvRows.length > 0

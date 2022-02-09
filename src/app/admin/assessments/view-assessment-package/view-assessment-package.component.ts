@@ -34,7 +34,7 @@ export class ViewAssessmentPackageComponent implements OnInit, OnDestroy {
   alive: boolean;
   showSnackBar: boolean;
   packageDetails: PackageDetailsData;
-  testTypes: string[] = ['English', 'Coding', 'Aptitude','Video'];
+  testTypes: string[] = ['English', 'Coding', 'Aptitude','Video','Personality and Behaviour'];
   assessmentLevels: string[] = ['Professional', 'Practitioner', 'Beginner'];
   toogleView = false;
   assessmentPackageForm: FormGroup;

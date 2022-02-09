@@ -151,65 +151,103 @@
             <mat-checkbox [formControl]="is_proctor" class="example-margin"
               >Is Proctor</mat-checkbox>
           </span>
+
+            <span style="margin-left: 2em;" class="schedule-block__align">
+            <mat-checkbox (change)="showOptions($event)" [formControl]="is_published" class="example-margin"
+              >Results publish</mat-checkbox>
+          </span>
         </div>
-        <div class="package-details-block" *ngIf=" packageDetails.attributes.tasks.length > 0">
-            <table class="schedule-table">
-                <tr class="schedule-table-tr">
-                    <th class="schedule-table-th">Test Name</th>
-                    <th class="schedule-table-type">Type</th>
-                    <th class="schedule-table-duration">Duration</th>
-                    <th>Schedule On</th>
+
+        <span *ngIf="showpublishDate">
+          <label class="custom-label__font"> Publish On </label>
+          <div class="date-time-block__align">
+              <span class="date-block">
+              <mat-form-field appearance="fill" class="date-block__input">
+                <mat-label>Select Date</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="dp5"
+                   [min]="maxDate"
+                  (dateChange)="onpublishDateChanged($event)"
+                  formControlName="publishDate"
+                />
+                <mat-datepicker-toggle matSuffix [for]="dp5"></mat-datepicker-toggle>
+                <mat-datepicker #dp5 disabled="false"></mat-datepicker>
+              </mat-form-field>
+              
+            </span>
+
+        <span class="time-block">
+              <div class="ngx-timepicker-field-example">
+                <ngx-timepicker-field
+                  [format]="12"
+                  formControlName="publishTime"
+                  [defaultTime]="'12:01 pm'"
+                  (timeChanged)="onPublishTimeChanged($event,packageDetails.attributes.duration)"
+                ></ngx-timepicker-field>
+              </div>
+            </span>
+    </div>
+    </span>
+
+    <div class="package-details-block" *ngIf=" packageDetails.attributes.tasks.length > 0">
+        <table class="schedule-table">
+            <tr class="schedule-table-tr">
+                <th class="schedule-table-th">Test Name</th>
+                <th class="schedule-table-type">Type</th>
+                <th class="schedule-table-duration">Duration</th>
+                <th>Schedule On</th>
+            </tr>
+            <ng-container *ngFor="let item of packageDetails.attributes.tasks;">
+                <tr class="schedule-table-body">
+                    <th class="schedule-table-data">{{item.name}}</th>
+                    <th class="schedule-table-data">{{item.type}}</th>
+                    <th class="schedule-table-data">{{item.duration}}</th>
+                    <th class="schedule-table-data">
+                        <input type="text" disabled value="{{scheduleDateTime}}" class="custom-date-time-input__border" />
+                    </th>
                 </tr>
-                <ng-container *ngFor="let item of packageDetails.attributes.tasks;">
-                    <tr class="schedule-table-body">
-                        <th class="schedule-table-data">{{item.name}}</th>
-                        <th class="schedule-table-data">{{item.type}}</th>
-                        <th class="schedule-table-data">{{item.duration}}</th>
-                        <th class="schedule-table-data">
-                            <input type="text" disabled value="{{scheduleDateTime}}" class="custom-date-time-input__border" />
-                        </th>
-                    </tr>
-                </ng-container>
-            </table>
-            <p class="add-candidate-heading__align">
-                Candidates
-                <span *ngIf="toogleUploadCsvButton"><button
+            </ng-container>
+        </table>
+        <p class="add-candidate-heading__align">
+            Candidates
+            <span *ngIf="toogleUploadCsvButton"><button
                 class="upload-csv-button__align"
                 (click)="onCsvButtonClick()"
                 [disabled]="schedulePackageForm.invalid"
               >
                 Upload CSV
               </button></span>
-                <span><button
+            <span><button
                 class="upload-csv-button__align width_150"
                 (click)="downloadTemplate()"
               >
                 Download Template
               </button></span>
 
-            </p>
-            <p>
-                <button class="package-details-block__add-candidate-button-align" (click)="addNewCandidateInformation()" *ngIf="toogleAddCandidateInfoButton" [disabled]="schedulePackageForm.invalid">
+        </p>
+        <p>
+            <button class="package-details-block__add-candidate-button-align" (click)="addNewCandidateInformation()" *ngIf="toogleAddCandidateInfoButton" [disabled]="schedulePackageForm.invalid">
               Add Candidate
             </button>
-            </p>
-            <!-- directory=Boolean("false") [showBrowseBtn]="true" multiple="false" -->
-            <div class="drag-drop-zone__align" *ngIf="switchToAddEmailView">
-                <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="fileDropped($event)" accept=".csv" contentClassName="ngx-file-drop" [multiple]="false">
-                    <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                        <div style="cursor: pointer;" (click)="openFileSelector()">
-                            <div> Click to Browse </div>
-                            <div> Or </div>
-                            <div> Drag & Drop CSV File </div>
-                        </div>
-                    </ng-template>
-                </ngx-file-drop>
-                <span class="exit-upload-mode__align" (click)="exitUploadMode()">Cancel</span>
-            </div>
-            <div *ngIf="showCsvFileInformation">
-                <p class="uploaded-heading">
-                    Uploaded{{csvFileName}}
-                    <span><button class="delete-file-button__style" (click)="deleteCsvFile()">
+        </p>
+        <!-- directory=Boolean("false") [showBrowseBtn]="true" multiple="false" -->
+        <div class="drag-drop-zone__align" *ngIf="switchToAddEmailView">
+            <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="fileDropped($event)" accept=".csv" contentClassName="ngx-file-drop" [multiple]="false">
+                <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+                    <div style="cursor: pointer;" (click)="openFileSelector()">
+                        <div> Click to Browse </div>
+                        <div> Or </div>
+                        <div> Drag & Drop CSV File </div>
+                    </div>
+                </ng-template>
+            </ngx-file-drop>
+            <span class="exit-upload-mode__align" (click)="exitUploadMode()">Cancel</span>
+        </div>
+        <div *ngIf="showCsvFileInformation">
+            <p class="uploaded-heading">
+                Uploaded{{csvFileName}}
+                <span><button class="delete-file-button__style" (click)="deleteCsvFile()">
                   Delete
                 </button></span
               >
@@ -217,8 +255,8 @@
             <p class="candidate-info-block">{{csvRows && csvRows[0] ? csvRows[0].length : ''}} candidates found!</p>
             <p class="candidate-info-block">
               <span class="total-email-count">Total Emails Entered : {{csvRows && csvRows[0] ? csvRows[0].length : ''}}</span> |
-                    <span class="total-valid-email-count">Valid Emails : {{validEmailsList.length}}</span> |
-                    <span class="total-invalid-email-count">Invalid Emails : {{invalidEmailsList.length}}</span
+                <span class="total-valid-email-count">Valid Emails : {{validEmailsList.length}}</span> |
+                <span class="total-invalid-email-count">Invalid Emails : {{invalidEmailsList.length}}</span
               >
               |
               <span class="total-duplicate-email-count"
