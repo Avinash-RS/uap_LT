@@ -9,10 +9,14 @@ import { AssessmentRequest } from './models/assessment-request.model';
 import { UpdateAssessmentRequest } from './models/update-assessment-request.model';
 import { AssessmentTaskUrlModel } from './models/assessment-task-url-response-model';
 import { CandidateReportResponseModel } from '../schedule-api/models/candidate-report-response.model';
-
+import * as CryptoJS from 'crypto-js';
+import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 @Injectable()
 export class AssessmentAPIService {
-  constructor(private httpClient: UapHttpService) {}
+  EncryptKEY = environment.encryptionKey;
+
+  constructor(private httpClient: UapHttpService,private route: Router) {}
   getAssessments(request: AssessmentRequest): Observable<Array<AssessmentResponse>> {
     return this.httpClient.get<Array<AssessmentResponse>>(
       // tslint:disable-next-line:max-line-length
@@ -68,6 +72,32 @@ export class AssessmentAPIService {
 
   questionupload(request:any){
     return this.httpClient.post(`/questionMasterExcelUpload`, request);
+  }
+
+  encrypt(data) {
+    try {
+      return CryptoJS.AES.encrypt(JSON.stringify(data), this.EncryptKEY).toString();
+    } catch (e) {
+      console.log(e);
+      return data;
+    }
+  }
+
+  decrypt(data) {
+    try {
+      const bytes = CryptoJS.AES.decrypt(data, this.EncryptKEY);
+      if (bytes.toString()) {
+        return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      }
+      return data;
+    } catch (e) {
+      console.log(e);
+      return data;
+    }
+  }
+  // Navigations with Param only
+  routeNavigationWithParam(path: any, param: any) {
+    return this.route.navigate([path, param]);
   }
 
 }

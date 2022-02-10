@@ -10,10 +10,12 @@ export const environment = {
   qa: false,
   dev: false,
   local: true,
+  encryptionKey: 'unifiedReports',
   ADFBASEURL: 'https://uap-uat.azurewebsites.net',
   MICROCERTREDIRECT: 'https://certification.lntiggnite.com/myAssessment',
   API_URL: 'https://uapdev-api.lntiggnite.com',
   NODE_URL: 'https://uapedgeservice.lntiggnite.com',
+  UNIFIED_REPORT : 'https://unifiedreport-dev.lntedutech.com/auth/reports/viewreport/'
   // VideoAssementToken: 'https://uapcoreservice.lntedutech.com'
 //   OIDC_CONFIG: {
 //     issuer: 'https://uap-iam.lntiggnite.com/auth/realms/uap',
