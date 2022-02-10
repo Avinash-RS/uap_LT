@@ -41,6 +41,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   backToCertificationPortal: boolean;
   taskIds: any = [];
   KisshtHtml;
+  NODEBASEURL = environment.UNIFIED_REPORT;
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -48,7 +49,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     private store: Store<AssessmentTasksReducerState>,
     private toast: ToastrService,
     private assessmentApiService: AssessmentAPIService,
-    private _loading: LoadingService
+    private _loading: LoadingService,
   ) {
     this._loading.setLoading(false, 'request.url');
     this.candidateDetailsForm = this.formBuilder.group({
@@ -246,4 +247,21 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {}
+
+  // nav to unified report
+  viewresult(){
+    const userProfile = JSON.parse(sessionStorage.getItem('user'));
+    let email = userProfile && userProfile.attributes && userProfile.attributes.email ? userProfile.attributes.email : '';
+    let details = {
+      type: 'microcert',
+      email: email,
+      assessmentId:this.assessmentID
+    };
+    var emailEncrypt = this.assessmentApiService.encrypt(details.email);
+    var encryptDetail = this.assessmentApiService.encrypt(details);
+    let redirectionLink = this.NODEBASEURL+ encodeURIComponent(emailEncrypt)+"?details="+ encodeURIComponent(encryptDetail);
+    window.open(redirectionLink, 'redirection');
+  }
 }
+
+

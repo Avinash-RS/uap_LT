@@ -36,6 +36,7 @@ export class EditSchedulePackageComponent implements OnInit {
   constructor(private toaster: ToastrService,private scheduleService: ScheduleAPIService,private router: Router,private store: Store<SchedulerReducerState>,private adminUtils: AdminUtils,) {
           if(this.router.getCurrentNavigation() !== null && this.router.getCurrentNavigation().extras !== undefined  && this.router.getCurrentNavigation().extras.state !== undefined && this.router.getCurrentNavigation().extras.state.data !== undefined ){
             this.batchDetails = this.router.getCurrentNavigation().extras.state.data;
+            console.log( this.batchDetails)
             const selectedDate: Date =  this.batchDetails.attributes.startDateTime;
             const selectedEndDate: Date =  this.batchDetails.attributes.endDateTime;
             const duration = this.batchDetails.attributes.duration

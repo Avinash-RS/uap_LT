@@ -88,6 +88,8 @@ export class ScheduleUploadComponent implements OnInit {
                   discipline: rowData[10] ? rowData[10].trim() : "",
                   specialization: rowData[11] ? rowData[11].trim() : "",
                   isProctor: rowData[12] ? rowData[12].trim() : "",
+                  publishDate: rowData[13] ? rowData[13].trim():"",
+                  is_published : rowData[14] ? rowData[14].trim():"",
 
                 });
             }

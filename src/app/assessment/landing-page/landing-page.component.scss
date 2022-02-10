@@ -279,4 +279,15 @@ app-task-cards {
     align-items: center;
 }
 
+.result {
+    color: $uap-white;
+    border: 1px solid;
+}
+
+.mat-stroked-button {
+    padding: 0 15px;
+    line-height: 34px;
+    border: 1px solid #ffffff !important;
+}
+
 //////////  Test Information css

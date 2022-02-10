@@ -51,24 +51,14 @@
             <div class="header_info">
                 <div class="_htxt">
                     <div class="assessment-summary__heading">My Tests </div>
-                    <span class="assessment-summary__text">
-                        <!-- This assessment has <strong>{{ tasksCount }} Tasks</strong> with a total duration of
-                        <strong>{{ totalHours }}</strong>. Each task is time-bound and can be taken in any order, but
-                        can be
-                        submitted one at a time. -->
-                        <!-- {{assessmentData?.data?.attributes?.packageDes}} -->
-                        <!-- <div class="htxt">
-                            <p></p>
-                            <p>There are three types of Tests: {{assessmentData?.data?.attributes?.packageName}}. In multiple choice tasks, there is a question followed by possible answers, programming test with programming question & adaptive test for listening, reading, speaking & writing skills. Please make sure all test are completed to view the report. </p>
-                        </div> -->
+                    <button (click)="viewresult()" *ngIf="assessmentData?.data?.attributes?.result_published == true" class="result" mat-stroked-button>View result</button>
+                    <span class="assessment-summary__text" *ngIf="assessmentData?.data?.attributes?.result_published != true">
                         <div class="htxt">
                             <p></p>
                             <p class="desc-para"><span class="material-icons info-icon">
                                 info
                                 </span> {{assessmentData?.data?.attributes?.packageDes}}</p>
                 </div>
-
-                <!-- Hello Candidate, -->
                 </span>
 
 
