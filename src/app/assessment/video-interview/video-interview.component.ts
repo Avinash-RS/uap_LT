@@ -250,8 +250,6 @@ onSubmit(activequs,stauts){
 
 
     handleEvent(event:any,index) {
-
-      // console.log(index,event)
       if (event.action === 'notify') {
         // Save current value
         localStorage.setItem('qusremaintime', `${event.left / 1000}`);

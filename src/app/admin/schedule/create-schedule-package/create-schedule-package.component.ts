@@ -276,7 +276,6 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
 
   onEndDateChanged(event: MatDatepickerInputEvent<Date>): void {
     this.maxDate = event.value;
-    console.log(this.maxDate,'max date')
     this.schedulePackageForm.patchValue({ scheduleEndDate: event.value });
   }
 
@@ -307,7 +306,6 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   }
 
   showOptions(event:MatCheckboxChange): void {
-    console.log(event.checked);
     if(event.checked == true){
        this.showpublishDate = true;
     }else{

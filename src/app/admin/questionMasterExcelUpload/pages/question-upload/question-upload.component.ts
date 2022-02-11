@@ -47,14 +47,12 @@ export class QuestionUploadComponent implements OnInit {
   }
 
   handleFileSelect(evt : File) {
-    console.log(evt,'evt asdadadasdasdsad')
     var files = evt; // FileList object
     var file = files;
     var reader = new FileReader();
     reader.readAsText(file);
     reader.onload = (event: any) => {
       var csv = event.target.result; // Content of CSV file
-      console.log(csv)
       this.papa.parse(csv, {
         skipEmptyLines: true,
         header: true,

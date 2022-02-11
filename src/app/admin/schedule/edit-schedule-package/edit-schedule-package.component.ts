@@ -14,9 +14,9 @@ import * as moment from 'moment';
   styleUrls: ['./edit-schedule-package.component.scss']
 })
 export class EditSchedulePackageComponent implements OnInit {
-  scheduleData:any;
+  scheduleData: any;
   subscription: any;
-  batchDetails:any;
+  batchDetails: any;
   maxDate: Date;
   minDate: Date;
   selectedbatchId: string;
@@ -31,86 +31,134 @@ export class EditSchedulePackageComponent implements OnInit {
   selectedTime: any;
   scheduleDateTimeTimeStamp: string;
   startDateWithDurations: string;
+  is_proctor: any;
+  is_published: any;
+  publishDate: Date;
+  publishTime: string;
+  publishDateTimeStamp: string;
+  constructor(
+    private toaster: ToastrService,
+    private scheduleService: ScheduleAPIService,
+    private router: Router,
+    private store: Store<SchedulerReducerState>,
+    private adminUtils: AdminUtils
+  ) {
+    if (
+      this.router.getCurrentNavigation() !== null &&
+      this.router.getCurrentNavigation().extras !== undefined &&
+      this.router.getCurrentNavigation().extras.state !== undefined &&
+      this.router.getCurrentNavigation().extras.state.data !== undefined
+    ) {
+      this.batchDetails = this.router.getCurrentNavigation().extras.state.data;
+      this.is_proctor = this.batchDetails.attributes.is_proctor;
+      this.is_published = this.batchDetails.attributes.is_published;
+      const selectedDate: Date = this.batchDetails.attributes.startDateTime;
+      const selectedEndDate: Date = this.batchDetails.attributes.endDateTime;
+      const duration = this.batchDetails.attributes.duration;
+      const publishdate = this.batchDetails.attributes.publishDate;
 
+      this.startDateWithDurations = moment(selectedDate).add(duration, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
 
-  constructor(private toaster: ToastrService,private scheduleService: ScheduleAPIService,private router: Router,private store: Store<SchedulerReducerState>,private adminUtils: AdminUtils,) {
-          if(this.router.getCurrentNavigation() !== null && this.router.getCurrentNavigation().extras !== undefined  && this.router.getCurrentNavigation().extras.state !== undefined && this.router.getCurrentNavigation().extras.state.data !== undefined ){
-            this.batchDetails = this.router.getCurrentNavigation().extras.state.data;
-            console.log( this.batchDetails)
-            const selectedDate: Date =  this.batchDetails.attributes.startDateTime;
-            const selectedEndDate: Date =  this.batchDetails.attributes.endDateTime;
-            const duration = this.batchDetails.attributes.duration
+      // Start date and time
+      this.scheduleStartDate = new Date(selectedDate);
+      this.batchStartTime = this.formatAMPM(this.scheduleStartDate);
+      // End date and time
+      this.scheduleEndDate = new Date(selectedEndDate);
+      this.batchEndTime = this.formatAMPM(this.scheduleEndDate);
 
-            this.startDateWithDurations = moment(selectedDate).add(duration,'minutes').format('YYYY-MM-DDTHH:mm:ss');
-            // this.startDateWithDurations = new Date(startWithDuration).toISOString();
+      this.publishDate = new Date(publishdate);
+      this.publishTime = this.formatAMPM(this.publishDate);
 
-            // Start date and time
-            this.scheduleStartDate = new Date(selectedDate);
-            this.batchStartTime = this.formatAMPM(this.scheduleStartDate)
-            // End date and time
-            this.scheduleEndDate = new Date(selectedEndDate)
-            this.batchEndTime = this.formatAMPM(this.scheduleEndDate)
-      
-            this.maxDate =  this.scheduleStartDate;
-            this.minDate =   this.scheduleEndDate;
-          }else {
-          this.router.navigate(['/admin/schedule/list'])
-        }
-   }
-
-  ngOnInit(): void {
-
-}
-
- formatAMPM(date) {
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var ampm = hours >= 12 ? 'pm' : 'am';
-  hours = hours % 12;
-  hours = hours ? hours : 12; // the hour '0' should be '12'
-  minutes = minutes < 10 ? '0'+minutes : minutes;
-  var strTime = hours + ':' + minutes + ' ' + ampm;
-  return strTime;
-}
-
-
-onEndDateChanged(event: MatDatepickerInputEvent<Date>): void {
-   this.scheduleEndDate = event.value;
-}
-
-onEndTimeChanged(time: any): void {
-  this.batchEndTime = time;
-}
-
-
-updateSchedule(){
-  const concatedDateTime = this.getConcatedDateTime(this.scheduleEndDate, this.batchEndTime)
-  this.scheduleDateTimeTimeStamp = new Date(concatedDateTime).toISOString();
-  // this.scheduleDateTimeTimeStamp = moment(concatedDateTime).format('YYYY-MM-DDTHH:mm:ss');
-  const dateIsBefore = moment(this.startDateWithDurations).isBefore(moment(this.scheduleDateTimeTimeStamp));
-   if(dateIsBefore){
-    let data = {
-      "scheduleId":this.batchDetails.id,
-      "endTime":this.scheduleDateTimeTimeStamp
+      this.maxDate = this.scheduleStartDate;
+      this.minDate = this.scheduleEndDate;
+    } else {
+      this.router.navigate(['/admin/schedule/list']);
     }
-    this.scheduleService.updateScheduleEndDate(data).subscribe((response: any)=> {
-        if(response.success = true){
+  }
+
+  ngOnInit(): void {}
+
+  formatAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+
+  onEndDateChanged(event: MatDatepickerInputEvent<Date>): void {
+    this.scheduleEndDate = event.value;
+  }
+
+  onEndTimeChanged(time: any): void {
+    this.batchEndTime = time;
+  }
+
+  onpublishDateChanged(event: MatDatepickerInputEvent<Date>): void{
+    this.publishDate = event.value;
+  }
+
+  onpublishTimeChanged(time: any): void{
+    this.publishTime = time;
+  }
+
+  updateSchedule() {
+    const concatedDateTime = this.getConcatedDateTime(this.scheduleEndDate, this.batchEndTime);
+    this.scheduleDateTimeTimeStamp = new Date(concatedDateTime).toISOString();
+    const concatedpublishDateTime = this.getConcatedDateTime(this.publishDate, this.publishTime);
+    this.publishDateTimeStamp = new Date(concatedpublishDateTime).toISOString();
+    const dateIsBefore = moment(this.startDateWithDurations).isBefore(
+      moment(this.scheduleDateTimeTimeStamp)
+    );
+
+    if (dateIsBefore) {
+      this.isproctorChange();
+      this.ispublishChange();
+      let data = {
+        scheduleId: this.batchDetails.id,
+        startTime: this.batchDetails.attributes.startDateTime,
+        endTime: this.scheduleDateTimeTimeStamp,
+        publishDate: this.publishDateTimeStamp,
+        is_published: this.is_published,
+        is_proctor: this.is_proctor
+      };
+      this.scheduleService.updateScheduleEndDate(data).subscribe((response: any) => {
+        if ((response.success = true)) {
           this.toaster.success(response.message);
-          this.router.navigate(['/admin/schedule/list'])
-        }else {
+          this.router.navigate(['/admin/schedule/list']);
+        } else {
           this.toaster.warning('Please Try again...', 'Something went wrong');
         }
-    })
-   }else {
-     this.toaster.warning('End date should be greater than start date and test durations ')
-   }
+      });
+    } else {
+      this.toaster.warning('End date should be greater than start date and test durations ');
+    }
+  }
 
-}
+  getConcatedDateTime(selectedEndDate: Date, scheduleEndTime: string): string {
+    return (
+      selectedEndDate.toString().substring(0, 15) +
+      ' ' +
+      this.adminUtils.timeConversion(scheduleEndTime)
+    );
+  }
 
-getConcatedDateTime(selectedEndDate: Date, scheduleEndTime: string): string {
-  return (
-    selectedEndDate.toString().substring(0, 15) + ' ' + this.adminUtils.timeConversion(scheduleEndTime)
-  );
-}
+  isproctorChange() {
+    if (this.is_proctor == false) {
+      this.is_proctor = 0;
+    } else {
+      this.is_proctor = 1;
+    }
+  }
 
+  ispublishChange() {
+    if (this.is_published == false) {
+      this.is_published = 0;
+    } else {
+      this.is_published = 1;
+    }
+  }
 }
