@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SchedulerReducerState } from '../redux/schedule.model';
-import { Store } from '@ngrx/store';
 import { AdminUtils } from '../../admin.utils';
 import { ScheduleAPIService } from 'src/app/rest-api/schedule-api/schedule-api.service';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
@@ -33,14 +31,13 @@ export class EditSchedulePackageComponent implements OnInit {
   startDateWithDurations: string;
   is_proctor: any;
   is_published: any;
-  publishDate: Date;
+  publishDate: any;
   publishTime: string;
   publishDateTimeStamp: string;
   constructor(
     private toaster: ToastrService,
     private scheduleService: ScheduleAPIService,
     private router: Router,
-    private store: Store<SchedulerReducerState>,
     private adminUtils: AdminUtils
   ) {
     if (
@@ -55,7 +52,7 @@ export class EditSchedulePackageComponent implements OnInit {
       const selectedDate: Date = this.batchDetails.attributes.startDateTime;
       const selectedEndDate: Date = this.batchDetails.attributes.endDateTime;
       const duration = this.batchDetails.attributes.duration;
-      const publishdate = this.batchDetails.attributes.publishDate;
+      const publishdate: Date = this.batchDetails.attributes.publishDate ? this.batchDetails.attributes.publishDate :  new Date();;
 
       this.startDateWithDurations = moment(selectedDate).add(duration, 'minutes').format('YYYY-MM-DDTHH:mm:ss');
 
