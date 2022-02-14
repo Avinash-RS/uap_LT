@@ -76,7 +76,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   requestPackageId: string | undefined;
   canCreateSchedule = false;
   selectedCSVFile: File;
-  is_proctor = new FormControl(false);
+  is_proctor = new FormControl(true);
   is_published = new FormControl(false);
   listOfOrg: any;
   minDate: Date;
