@@ -129,6 +129,9 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
         this.schedulePackageForm.get('scheduleTime')?.value;
         // this.schedulePackageForm.get('publishDate')?.value;
 
+        this.scheduleDateTime = selectedDate.toString().substring(4, 15).replace(/\s/g, '-') +'  ' +
+        this.schedulePackageForm.get('scheduleTime')?.value;
+
         this.scheduleEndDateTime = selectedEndDate.toString().substring(4, 15).replace(/\s/g, '-') +'  ' +
         this.schedulePackageForm.get('scheduleEndTime')?.value;
 
@@ -179,6 +182,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     });
     this.store.select(selectPackageDetailsState).subscribe((getPackageDetail: PackageDetailResponse) => {
         this.packageDetails = getPackageDetail.data;
+        console.log(this.packageDetails,'packageDetails')
       });
 
     this.filteredOptions = this.schedulePackageForm.get('assessmentName')?.valueChanges.pipe(
@@ -188,6 +192,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
 
     this.store.select(selectCreateScheduleAssessmentSnackBarMessage).subscribe((message: string | undefined) => {
         this.displayMessage = message;
+        console.log(message,'message')
         if (this.getSavedOrFailedStatus(this.displayMessage)) {
           this.openSnackBar(this.displayMessage);
         }
@@ -488,6 +493,7 @@ GetMinutes(d) {
   }
 
   createSchedulePackage(): void {
+ 
 
     // this.openSnackBar(ScheduleModuleEnum.CreatingScheduleAssessmentStatus);
     this.createScheduleFromEdgeService(this.getCreateSchedulePackageRequestPayload());
@@ -673,9 +679,9 @@ GetMinutes(d) {
   }
 
   getSavedOrFailedStatus(meesage: string | undefined): boolean | undefined {
-    // console.log(meesage)
+    console.log(meesage)
     if (
-      this.displayMessage?.includes(ScheduleModuleEnum.FailedScheduleAssessmentStatus) ||
+      this.displayMessage?.includes(meesage) ||
       this.displayMessage?.includes(ScheduleModuleEnum.CreatedScheduleAssessmentStatus)
     ) {
       return true;
