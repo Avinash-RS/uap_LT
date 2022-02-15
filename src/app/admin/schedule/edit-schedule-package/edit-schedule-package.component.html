@@ -107,16 +107,16 @@
               </span>
 
                 <span style="margin-left: 2em;" class="schedule-block__align">
-                <mat-checkbox (change)="showOptions($event)"  [(ngModel)]="is_published" class="example-margin"
+                <mat-checkbox   [(ngModel)]="is_published" class="example-margin"
                   >Results publish</mat-checkbox>
               </span>
             </div>
 
 
-
-            <label class="custom-label__font">Publish On </label>
-            <div class="date-time-block__align">
-                <span class="date-block">
+            <div *ngIf="is_published">
+                <label class="custom-label__font">Publish On </label>
+                <div class="date-time-block__align">
+                    <span class="date-block">
             <mat-form-field appearance="fill" class="date-block__input">
               <mat-label>Select Date</mat-label>
               <input
@@ -131,7 +131,7 @@
             </mat-form-field>
             
           </span>
-                <span class="time-block">
+                    <span class="time-block">
             <div class="ngx-timepicker-field-example">
               <ngx-timepicker-field 
               matInput
@@ -142,7 +142,9 @@
               ></ngx-timepicker-field>
             </div>
           </span>
+                </div>
             </div>
+
         </div>
     </div>
 </div>

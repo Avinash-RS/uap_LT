@@ -5,6 +5,7 @@ import { ScheduleAPIService } from 'src/app/rest-api/schedule-api/schedule-api.s
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { ToastrService } from 'ngx-toastr';
 import * as moment from 'moment';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-edit-schedule-package',
@@ -34,6 +35,7 @@ export class EditSchedulePackageComponent implements OnInit {
   publishDate: any;
   publishTime: string;
   publishDateTimeStamp: string;
+  showpublishDate = false;
   constructor(
     private toaster: ToastrService,
     private scheduleService: ScheduleAPIService,
@@ -158,4 +160,5 @@ export class EditSchedulePackageComponent implements OnInit {
       this.is_published = 1;
     }
   }
+
 }
