@@ -138,6 +138,7 @@ export class ScheduleEffects {
       map((action) => action.payload),exhaustMap((scheduleAssessmentPackageData: InitScheduleCreateAssessmentModel) =>
         this.scheduleAPIService.createSchedulePackage(scheduleAssessmentPackageData.data).pipe(
           mergeMap((response :any) => {
+    
               if(response.success){
                 return [ ScheduleActions.createScheduleAssessmentPackageSuccess({ payload: response }),
                   go({ payload: { path: ['/admin/schedule/list'] } })]

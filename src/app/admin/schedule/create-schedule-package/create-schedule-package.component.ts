@@ -150,30 +150,9 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
         this.publishDateTime = new Date(concatpublishDateTime).toISOString();
       }
     );
-    // this.subscription = this.sendData.getMessage().subscribe(batchData => {
-    //   // alert('2')
-    //   this.batchDetails = batchData;
-
-    //   this.getBatchDetails(batchData);
-    //   // console.log(this.batchDetails?.attributes?.batchName,'this.batchDetails.batchName')
-     
-    // });
-
   }
 
   ngOnInit(): void {
-    // this.subscription = this.sendData.getMessage().subscribe(batchData => {
-    //   // alert('2')
-    //   this.batchDetails = batchData;
-    //   this.getBatchDetails(batchData);
-    //   this.schedulePackageForm.patchValue({
-    //     'batchName':  this.batchDetails?.attributes?.batchName
-    //   })
-     
-    // });
-
- 
-
     this.initializeCandidateInformatinView();
     this.packageListActionDispatcher();
     this.checkScheduleAccessStatus();
@@ -182,7 +161,6 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     });
     this.store.select(selectPackageDetailsState).subscribe((getPackageDetail: PackageDetailResponse) => {
         this.packageDetails = getPackageDetail.data;
-        console.log(this.packageDetails,'packageDetails')
       });
 
     this.filteredOptions = this.schedulePackageForm.get('assessmentName')?.valueChanges.pipe(
@@ -192,7 +170,6 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
 
     this.store.select(selectCreateScheduleAssessmentSnackBarMessage).subscribe((message: string | undefined) => {
         this.displayMessage = message;
-        console.log(message,'message')
         if (this.getSavedOrFailedStatus(this.displayMessage)) {
           this.openSnackBar(this.displayMessage);
         }
@@ -206,15 +183,6 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       }
     });
   }
-
-
-  // getBatchDetails(batachDetails){
-  //   // alert('1')
-  //   console.log(batachDetails,'dadadddadads',batachDetails.attributes.batchName)
-
-  //   console.log(this.schedulePackageForm)
-  //   // this.schedulePackageForm.get('batchName').patchValue(batachDetails.attributes.batchName);
-  // }
 
   get getCandidatesInformation(): FormArray {
     return this.schedulePackageForm.get('candidatesInformation') as FormArray;
@@ -257,26 +225,8 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
    }
 
   onTimeChanged(time: any,duration:any): void {
-    // this.startTime = '';
-    // this.startTime = time;
-
-    // var h = parseInt(this.startTime.split(':')[0]) * 60;
-    // var m =  h + parseInt(this.startTime.split(':')[1]) + duration
-    // if (this.startTime.split(':')[1].split(' ')[1] == "PM") {
-    //     h = h + 12;
-    // }
-    // console.log(m)
-    // this.startTime = m;
- 
-    // if(this.endTime < this.startTime){
       this.disableCreateButton = false;
       this.schedulePackageForm.patchValue({ scheduleTime: time });
- 
-    // }else {
-    //   this.disableCreateButton = true;
-    //   this.toaster.warning('Start time should be less than end time')
-    // }
-   
   }
 
   onEndDateChanged(event: MatDatepickerInputEvent<Date>): void {
@@ -285,15 +235,6 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   }
 
   onEndTimeChanged(time: any,duration:any): void {
-    // this.endTime = time;
-
-    // var hr = parseInt(this.endTime.split(':')[0]) * 60;
-    // var mins =  hr + parseInt(this.endTime.split(':')[1])
-    // if (this.endTime.split(':')[1].split(' ')[1] == "PM") {
-    //     hr = hr + 12;
-    // }
-
-    //     this.endTime = mins;
       this.canCreateSchedule = true;
       this.schedulePackageForm.patchValue({ scheduleEndTime: time });
   }
@@ -305,7 +246,6 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
 
 
   onpublishDateChanged(event: MatDatepickerInputEvent<Date>): void{
-    // this.minDate1 = event.value;
     this.canCreateSchedule = true;
     this.schedulePackageForm.patchValue({ publishDate: event.value });
   }
@@ -493,17 +433,7 @@ GetMinutes(d) {
   }
 
   createSchedulePackage(): void {
- 
-
-    // this.openSnackBar(ScheduleModuleEnum.CreatingScheduleAssessmentStatus);
     this.createScheduleFromEdgeService(this.getCreateSchedulePackageRequestPayload());
-    // this.store.dispatch(
-    //   initCreateScheduleAssessmentPackage({
-    //     payload: {
-    //       data: this.getCreateSchedulePackageRequestPayload()
-    //     }
-    //   })
-    // );
   }
 
 
@@ -679,9 +609,11 @@ GetMinutes(d) {
   }
 
   getSavedOrFailedStatus(meesage: string | undefined): boolean | undefined {
-    console.log(meesage)
+    if (meesage.includes('Published Date and Time')) {
+      return true;
+    }
     if (
-      this.displayMessage?.includes(meesage) ||
+      this.displayMessage?.includes(ScheduleModuleEnum.FailedScheduleAssessmentStatus) ||
       this.displayMessage?.includes(ScheduleModuleEnum.CreatedScheduleAssessmentStatus)
     ) {
       return true;

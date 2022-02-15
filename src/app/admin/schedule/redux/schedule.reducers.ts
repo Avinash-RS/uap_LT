@@ -166,13 +166,32 @@ export const scheduleReducer = createReducer(
       snackBarMessage: ScheduleModuleEnum.CreatedScheduleAssessmentStatus
     }
   })),
-  on(ScheduleActions.createScheduleAssessmentPackageFailure, (state, action) => ({
-    ...state,
-    createScheduleAssessmentPackage: {
-      snackBarMessage: ScheduleModuleEnum.FailedScheduleAssessmentStatus,
-      failureMessage: action.payload
+  // on(ScheduleActions.createScheduleAssessmentPackageFailure, (state, action) => ({
+  //   ...state,
+  //   createScheduleAssessmentPackage: {
+  //     snackBarMessage: ScheduleModuleEnum.FailedScheduleAssessmentStatus,
+  //     failureMessage: action.payload
+  //   }
+  // })),
+  on(ScheduleActions.createScheduleAssessmentPackageFailure, (state, action: any) => {
+    if (action.payload.error.errors[0].includes('Published Date and Time')) {
+        return { 
+        ...state,
+        createScheduleAssessmentPackage: {
+          snackBarMessage: action.payload.error.errors[0],
+          failureMessage: action.payload
+        }
+      }    
+    } else {
+      return { 
+        ...state,
+        createScheduleAssessmentPackage: {
+          snackBarMessage: ScheduleModuleEnum.FailedScheduleAssessmentStatus,
+          failureMessage: action.payload
+        }
+      }    
     }
-  })),
+  }),
   on(ScheduleActions.resetCreateScheduleAsessmentPackageSnackBarMessage, (state, action) => ({
     ...state,
     createScheduleAssessmentPackage: {
