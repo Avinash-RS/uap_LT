@@ -123,11 +123,11 @@ export class EditSchedulePackageComponent implements OnInit {
         is_proctor: this.is_proctor
       };
       this.scheduleService.updateScheduleEndDate(data).subscribe((response: any) => {
-        if ((response.success = true)) {
+        if (response.success) {
           this.toaster.success(response.message);
           this.router.navigate(['/admin/schedule/list']);
         } else {
-          this.toaster.warning('Please Try again...', 'Something went wrong');
+          this.toaster.warning(response.message);
         }
       });
     } else {
