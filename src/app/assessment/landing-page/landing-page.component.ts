@@ -42,6 +42,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   taskIds: any = [];
   KisshtHtml;
   NODEBASEURL = environment.UNIFIED_REPORT;
+  batchId: string;
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
@@ -81,6 +82,7 @@ export class LandingPageComponent implements OnInit, OnDestroy {
         this.router.navigateByUrl('/unauthorized');
       }
       this.assessmentTasksList = this.assessmentData.data.attributes.assessmentTasks;
+      this.batchId = this.assessmentData.data ? this.assessmentData.data.attributes.batchId : '';
       this.getTaskIds();
       const completedAssessmentTasksLength = this.assessmentTasksList.filter(
         (task) =>
@@ -252,10 +254,12 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   viewresult(){
     const userProfile = JSON.parse(sessionStorage.getItem('user'));
     let email = userProfile && userProfile.attributes && userProfile.attributes.email ? userProfile.attributes.email : '';
+    // let driveId = userProfile && userProfile.attributes && userProfile.attributes.batchId ? userProfile.attributes.batchId : '';
     let details = {
       type: 'microcert',
       email: email,
-      assessmentId:this.assessmentID
+      assessmentId:this.assessmentID,
+      driveId:this.batchId
     };
     var emailEncrypt = this.assessmentApiService.encrypt(details.email);
     var encryptDetail = this.assessmentApiService.encrypt(details);
