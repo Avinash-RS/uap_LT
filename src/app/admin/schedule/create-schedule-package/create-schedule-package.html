@@ -24,7 +24,7 @@
 
         <span class="auto-complete-block__align">
           <mat-form-field appearance="fill">
-            <mat-label>Organization</mat-label>
+            <mat-label>Select Organization</mat-label>
             <mat-select  required formControlName="orgId">
               <mat-option (click)="orgChange(org)" *ngFor="let org of listOfOrg" [value]="org?.id" > {{org?.name}}</mat-option>
             </mat-select>
@@ -32,7 +32,19 @@
               Required
             </div>
           </mat-form-field>
-         
+
+          <span class="m-l-20" *ngIf="showProctorTemplate">
+            <mat-form-field appearance="fill">
+              <mat-label>Select Proctor template</mat-label>
+              <mat-select  required formControlName="templateId">
+                <mat-option (click)="selectTemplate(template)" *ngFor="let template of proctorTemplateList" [value]="template?.templateId" > {{template?.tempname }}</mat-option>
+              </mat-select>
+              <div class="mat-input-field__error" *ngIf="validateFormField('templateId')">
+                Required
+              </div>
+            </mat-form-field>
+          </span>
+
         </span>
         <label class="custom-label__font">
           Schedule Name

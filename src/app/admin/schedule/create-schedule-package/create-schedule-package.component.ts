@@ -90,7 +90,10 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   batchDetails:any;
   orginfo: any = [];
   showpublishDate = false;
+  showProctorTemplate = false;
   publishDate1:string;
+  proctorTemplateList: any;
+  selectedTemplateName: any;
   constructor(
     private fb: FormBuilder,
     private store: Store<SchedulerReducerState>,
@@ -117,6 +120,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
       scheduleEndTime: [this.currentTime, Validators.required], 
       assessmentName: ['', Validators.required],
       orgId:['', Validators.required],
+      templateId:['', Validators.required],
       candidatesInformation: this.fb.array([])
     });
     this.getWEPCOrganizationList();
@@ -440,6 +444,10 @@ GetMinutes(d) {
   orgChange(orgInfo:any){
       if(orgInfo){
         this.orginfo = orgInfo;
+        this.showProctorTemplate = true;
+        this.getProctorTemplate(this.orginfo.id)
+      }else{
+        this.showProctorTemplate = false;
       }
   }
   createScheduleFromEdgeService(request) {
@@ -542,6 +550,8 @@ GetMinutes(d) {
           duration: this.packageDetails.attributes.duration,
           orgId: this.schedulePackageForm.get('orgId')?.value,
           orgName : this.orginfo.name,
+          templateId:this.schedulePackageForm.get('templateId')?.value,
+          tempname : this.selectedTemplateName,
           supportEmail: this.orginfo.supportEmail,
           supportPhone:this.orginfo.supportPhone,
           scheduledAtTestLevel: false,
@@ -696,5 +706,21 @@ GetMinutes(d) {
         this.toaster.warning('Please Try again...', 'Something went wrong');
       }
     })
+  }
+
+  getProctorTemplate(orgId){
+    this.scheduleService.getProctorTemplateName(orgId).subscribe((response: any)=> {
+        if(response.success){
+          this.proctorTemplateList = response.data;
+        }else {
+          this.toaster.warning('Please Try again...', 'Something went wrong');
+        }
+     
+    })
+  }
+
+  selectTemplate(templateDetails){
+        this.selectedTemplateName = templateDetails.tempname;
+     
   }
 }
