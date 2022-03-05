@@ -93,7 +93,8 @@ export class UapHttpService {
      !url.includes('/profile') &&
      !url.includes('/packages') &&
      !url.includes('/task') &&
-     !url.includes('/updateScheduleEndtime')
+     !url.includes('/updateScheduleEndtime')&&
+     !url.includes('/getproctorTemplate')
      
      ) {
     return `${this.apiBaseUrl}${url}`;

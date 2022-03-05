@@ -100,4 +100,8 @@ export class ScheduleAPIService {
     return this.httpClient.postWithMultipartDataHeaders(`/bulkSchedules`, request);
   }
 
+  getProctorTemplateName(orgId: any){
+    return this.httpClient.get(`/getproctorTemplate?orgId=`+orgId);
+  }
+
 }
