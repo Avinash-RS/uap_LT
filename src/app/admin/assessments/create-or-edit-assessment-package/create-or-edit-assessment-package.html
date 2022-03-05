@@ -37,11 +37,14 @@
             class="create-assessment-block__custom-input-field"
           />
           <div
-            *ngIf="validateFormField('assessmentName')"
+            *ngIf="validateFormField('assessmentName') && !f.assessmentName.errors?.pattern"
             class="create-assessment-block__custom-input-field__error"
           >
             Required
           </div>
+          <div  class="input-field__error" *ngIf="f.assessmentName.errors?.pattern">
+            Assessment name not valid.
+       </div> 
         </label>
         <label class="custom-label__font">
           Description

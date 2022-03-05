@@ -53,13 +53,15 @@ export class CreateOrEditAssessmentPackageComponent implements OnInit, OnDestroy
   requestPackageId: string | undefined;
   saveButtonClickCountTracker = 0;
   collectTestIdsAndTestNames = new Map<number, string>();
+  alphaNumericwithCommonSpecialCharacters: RegExp = /^([a-zA-Z0-9_ \-,.@&*(:)\r\n])*$/;
+  alphaWithDots: any = Validators.pattern(this.alphaNumericwithCommonSpecialCharacters);
   constructor(
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private store: Store<AssessmentsReducerState>
   ) {
     this.assessmentPackageForm = this.fb.group({
-      assessmentName: ['', Validators.required],
+      assessmentName: ['', [Validators.required,this.alphaWithDots]],
       assessmentDescription: ['', Validators.required],
       assessmentLevelSelectOption: [this.defaultAssessmentLevel],
       testItems: this.fb.array([]),
@@ -353,4 +355,9 @@ export class CreateOrEditAssessmentPackageComponent implements OnInit, OnDestroy
   isAssessmentPackageInvalid(): boolean {
     return !(this.assessmentPackageForm.valid && this.getTestItems.value.length > 0);
   }
+
+  get f() {
+    return this.assessmentPackageForm.controls;
+  }
+
 }

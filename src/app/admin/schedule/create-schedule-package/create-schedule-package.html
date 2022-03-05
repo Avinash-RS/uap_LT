@@ -53,7 +53,10 @@
             type="text"
             class="schedule-assessment-block__custom-input-field"
           />
-          <div class="input-field__error" *ngIf="validateFormField('batchName')">Required</div>
+          <div class="input-field__error" *ngIf="validateFormField('batchName')&& !f.batchName.errors?.pattern">Required</div>
+          <div  class="input-field__error" *ngIf="f.batchName.errors?.pattern">
+            Schedule name not valid.
+       </div> 
         </label>
         <label class="custom-label__font">
           Description
@@ -66,6 +69,8 @@
           <div class="input-field__error" *ngIf="validateFormField('scheduleDescription')">
             Required
           </div>
+         
+
         </label>
         <label class="custom-label__font"> Schedule On </label>
         <div class="date-time-block__align">
