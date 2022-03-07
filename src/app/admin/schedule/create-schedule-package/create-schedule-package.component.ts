@@ -49,6 +49,8 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
   encapsulation: ViewEncapsulation.None
 })
 export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
+  alphaNumericwithCommonSpecialCharacters: RegExp = /^([a-zA-Z0-9_ \-,.@&*(:)\r\n])*$/;
+  alphaWithDots: any = Validators.pattern(this.alphaNumericwithCommonSpecialCharacters);
   packageList: PackageResponse;
   // Form Fields
   schedulePackageForm: FormGroup;
@@ -109,7 +111,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
      this.currentTime = `${today.getHours() % 12 || 12}:${today.getMinutes()} ${timeFormat}`;
      this.startTime = this.convertHourstoMinute(this.currentTime);
     this.schedulePackageForm = this.fb.group({
-      batchName: ['', Validators.required],
+      batchName: ['', [Validators.required,this.alphaWithDots]],
       scheduleDescription: ['', Validators.required],
       scheduleDate: [new Date(), Validators.required],
       scheduleTime: [this.currentTime, Validators.required],
@@ -154,6 +156,10 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
         this.publishDateTime = new Date(concatpublishDateTime).toISOString();
       }
     );
+  }
+
+  get f() {
+    return this.schedulePackageForm.controls;
   }
 
   ngOnInit(): void {
