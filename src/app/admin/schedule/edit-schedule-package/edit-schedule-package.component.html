@@ -13,27 +13,23 @@
         <div class="schedule-assessment-block__align">
 
             <span class="auto-complete-block__align">
-          <!-- <mat-form-field appearance="fill">
-            <mat-label>Organization</mat-label>
-            <mat-select  required formControlName="orgId">
-              <mat-option *ngFor="let org of listOfOrg" [value]="org?.id" > {{org?.name}}</mat-option>
-            </mat-select>
-            <div class="mat-input-field__error" *ngIf="validateFormField('orgId')">
-              Required
-            </div>
-          </mat-form-field> -->
-
-
           <span class="m-l-20">
+            <label class="custom-label__font">Organization
+            <input readonly  class="schedule-assessment-block__custom-input-field" [(ngModel)]="batchDetails?.attributes.orgName" type="text" />
+          </label>
+        </span>
+
+
+            <span class="m-l-20">
               <label class="custom-label__font">Proctor template
-              <input readonly  class="schedule-assessment-block__custom-input-field" [(ngModel)]="batchDetails.attributes.proctor_tempName" type="text" />
+              <input readonly  class="schedule-assessment-block__custom-input-field" [(ngModel)]="batchDetails?.attributes.proctor_tempName" type="text" />
             </label>
           </span>
             </span>
 
             <label class="custom-label__font">
           Batch Id
-        <input readonly  class="schedule-assessment-block__custom-input-field" [(ngModel)]="batchDetails.attributes.batchName" type="text" />
+        <input readonly  class="schedule-assessment-block__custom-input-field" [(ngModel)]="batchDetails?.attributes.batchName" type="text" />
         <!-- <div class="input-field__error" *ngIf="validateFormField('batchName')">Required</div> -->
     </label>
             <label class="custom-label__font">
@@ -42,7 +38,7 @@
             cols="62"
             rows="4"
             class="schedule-assessment-block__text-area-width"
-            [(ngModel)]="batchDetails.attributes.description"
+            [(ngModel)]="batchDetails?.attributes.description"
           ></textarea>
           <!-- <div class="input-field__error">
             Required
