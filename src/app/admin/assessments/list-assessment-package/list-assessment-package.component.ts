@@ -27,7 +27,7 @@ export class ListAssessmentPackageComponent implements OnInit {
   packageContents: PackageResponse;
   searchString = '';
   filterValues: FilterValueModel[] = [
-    { value: '', viewValue: AssessmentsModuleEnum.AllAssessmentStatus }
+    { value: 'All', viewValue: AssessmentsModuleEnum.AllAssessmentStatus }
   ];
   selectedFilterValue: string = this.filterValues[0].value;
   showLazyLoading: boolean;
