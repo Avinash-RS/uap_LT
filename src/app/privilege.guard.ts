@@ -58,7 +58,8 @@ export class PrivilegeGuard implements CanActivate {
 
   loginApi(data: any) {
     let apiData = {
-      email: data
+      email: data,
+      assessmentId: sessionStorage.getItem('assessmentId') || sessionStorage.getItem('routeTo')
     }
     let responseData;
     this._loading.setLoading(true, 'request.url');
