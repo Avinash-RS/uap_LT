@@ -54,6 +54,7 @@ export class LoginEffects {
         tap(async (action: any)=> { 
           await this.store.dispatch(getReferenceData());
           await this.store.dispatch(getUserProfile());
+          await this.store.dispatch(UserActions.getUserProfileSuccess({ payload: action.payload }));
          const permsission  = await this.redirectTo();
           if (permsission && permsission == 'ADM') {
             sessionStorage.removeItem('routeTo');
