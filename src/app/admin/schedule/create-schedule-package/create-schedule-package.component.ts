@@ -510,6 +510,8 @@ GetMinutes(d) {
           startDateTime: request.data.attributes.startDateTime,
           endDateTime: request.data.attributes.endDateTime,
           duration: request.data.attributes.duration,
+          templateId:this.schedulePackageForm.get('templateId')?.value,
+          tempname : this.selectedTemplateName,
           orgId: this.schedulePackageForm.get('orgId')?.value,
           orgName : this.orginfo.name,
           supportEmail: this.orginfo.supportEmail,
@@ -718,7 +720,9 @@ GetMinutes(d) {
     this.scheduleService.getProctorTemplateName(orgId).subscribe((response: any)=> {
         if(response.success){
           this.proctorTemplateList = response.data;
+          this.schedulePackageForm.get('templateId').setValue(response.data ? response.data[0].templateId : '');
         }else {
+          this.schedulePackageForm.get('templateId').setValue('');
           this.toaster.warning('Please Try again...', 'Something went wrong');
         }
      
