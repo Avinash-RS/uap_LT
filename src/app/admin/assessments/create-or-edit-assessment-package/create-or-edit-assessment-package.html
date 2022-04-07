@@ -105,27 +105,21 @@
                 <mat-autocomplete #auto="matAutocomplete">
                     <mat-option *ngFor="let option of listOfAutoCompleteFilteredOptions[i]" [value]="option.attributes.name">
                         {{option.attributes.name}}
-                        <span class="level" *ngIf="option.attributes.hasOwnProperty('level') && option.attributes.level.length">[{{option.attributes.level}}]</span
-                          >
-                        </mat-option>
-                      </mat-autocomplete>
-                    </mat-form-field>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </ng-container>
-        </div>
-        <button class="add-button__color" (click)="addTest()">Add Test</button>
-        <div
-          class="test-sequence-block__align"
-          *ngIf="listOfAutoCompleteFilteredOptions.length > 1"
-        >
-          <mat-checkbox class="example-margin" [disabled]="true"
-            >Enforce Test Sequence</mat-checkbox
-          >
-        </div>
-      </div>
+                        <span class="level" *ngIf="option.attributes.hasOwnProperty('level') && option.attributes.level.length">[{{option.attributes.level}}] <span *ngIf="option.attributes.instance_name">[{{option.attributes.instance_name}}]</span></span>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </form>
     </div>
-  </div>
+</div>
+</div>
+</ng-container>
+</div>
+<button class="add-button__color" (click)="addTest()">Add Test</button>
+<div class="test-sequence-block__align" *ngIf="listOfAutoCompleteFilteredOptions.length > 1">
+    <mat-checkbox class="example-margin" [disabled]="true">Enforce Test Sequence</mat-checkbox>
+</div>
+</div>
+</div>
+</div>
 </form>
