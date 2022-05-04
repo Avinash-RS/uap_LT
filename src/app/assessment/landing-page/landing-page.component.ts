@@ -255,15 +255,18 @@ export class LandingPageComponent implements OnInit, OnDestroy {
     const userProfile = JSON.parse(sessionStorage.getItem('user'));
     let email = userProfile && userProfile.attributes && userProfile.attributes.email ? userProfile.attributes.email : '';
     // let driveId = userProfile && userProfile.attributes && userProfile.attributes.batchId ? userProfile.attributes.batchId : '';
+   let roles = JSON.parse(localStorage.getItem('role'))
     let details = {
       type: 'microcert',
       email: email,
       assessmentId:this.assessmentID,
-      driveId:this.batchId
+      driveId:this.batchId,
+      role:roles
     };
     var emailEncrypt = this.assessmentApiService.encrypt(details.email);
     var encryptDetail = this.assessmentApiService.encrypt(details);
-    let redirectionLink = this.NODEBASEURL+ encodeURIComponent(emailEncrypt)+"?details="+ encodeURIComponent(encryptDetail);
+    var encryptRoleDetails = this.assessmentApiService.encrypt(roles);
+    let redirectionLink = this.NODEBASEURL+ encodeURIComponent(emailEncrypt)+"?details="+ encodeURIComponent(encryptDetail)+"?role="+encodeURIComponent(encryptRoleDetails);
     window.open(redirectionLink, 'redirection');
   }
 }
