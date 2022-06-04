@@ -45,6 +45,11 @@ const AdminRoutes: Routes = [
         // canActivate: [AdminPrivilegeGuard]
       },
       {
+        path: 'wecpsync',
+        loadChildren: () => import('./wecpsync/sync.module').then((module) => module.WecpSyncModule),
+        // canActivate: [AdminPrivilegeGuard]
+      },
+      {
         path: '',
         // TODO: redirect it to home once home screen is available
         //redirectTo: 'assessments',

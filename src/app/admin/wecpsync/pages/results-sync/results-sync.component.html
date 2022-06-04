@@ -1,0 +1,67 @@
+<div class="reports-wrapper">
+    <div class="">
+        <h2>
+            Data Sync
+        </h2>
+        <form [formGroup]="dbForm" *ngIf="this.dbForm" (ngSubmit)="dbFormSubmit()">
+            <div class="query-wrapper">
+                <div class="fields-wrapper">
+                    <label class="label">Choose a Action to be Performed</label>
+                    <mat-form-field class="label input-wt w-100" appearance="outline">
+                        <mat-select (selectionChange)="dbChange($event)" formControlName="label" disableOptionCentering placeholder="Data Source">
+                            <!-- <mat-option value="mysql">MySQL</mat-option> -->
+                            <mat-option *ngFor="let source of masterCollector" [value]="source">{{source.label}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="label && label.hasError('required')">
+                            Please select the Action
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <ng-container *ngIf="datasource && datasource.value">
+                    <div class="fields-wrapper">
+                    <label class="label">Data Source</label>
+                    <mat-form-field class="label input-wt w-100" appearance="outline">
+                        <mat-select formControlName="datasource" disableOptionCentering placeholder="Data Source">
+                            <!-- <mat-option value="mysql">MySQL</mat-option> -->
+                            <mat-option *ngFor="let source of masterCollector" [value]="source.datasource">{{source.datasource}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="datasource && datasource.hasError('required')">
+                            Please select the Data Source
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div *ngIf="datatarget && datatarget.value" class="fields-wrapper">
+                    <label class="label">Data Target</label>
+                    <mat-form-field class="label input-wt w-100" appearance="outline">
+                        <mat-select formControlName="datatarget" disableOptionCentering placeholder="Data Target">
+                            <!-- <mat-option value="mysql">MySQL</mat-option> -->
+                            <mat-option *ngFor="let source of masterCollector" [value]="source.datatarget">{{source.datatarget}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="datatarget && datatarget.hasError('required')">
+                            Please select the Data Target
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <!-- db name -->
+                <div *ngIf="false" class="fields-wrapper">
+                    <label class="label">Description</label>
+                    <mat-form-field class="input-wt w-100" appearance="outline">
+                        <input type="text" matInput formControlName="description" placeholder="Description">
+                        <mat-error *ngIf="description && description.hasError('required')">
+                            Description is required
+                        </mat-error>
+                        <mat-error *ngIf="description && description.hasError('maxlength')">
+                            Max length of characters is 255
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+</ng-container>
+                <button class="btnConnect" [disabled]="!dbForm.valid" type="submit" mat-raised-button> <img src="assets/images/sync_white_24dp.svg" alt="" srcset=""> Sync</button>
+                <button type="button" class="btnConnect" (click)="reset()" mat-raised-button>Reset</button>
+            </div>
+        </form>
+    </div>
+</div>

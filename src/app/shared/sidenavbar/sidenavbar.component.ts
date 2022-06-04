@@ -50,7 +50,7 @@ export class SideNavBarComponent implements OnInit {
     },
     {
       option: 'WECP Sync',
-      routePath: '/admin/sync',
+      routePath: '/admin/wecpsync',
       iconPath: '../../../assets/images/sync_black_24dp.svg'
     }
   ];
