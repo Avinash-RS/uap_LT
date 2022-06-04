@@ -10,14 +10,13 @@ h2 {
 .reports-wrapper {
     position: relative;
     padding: 4px 1em;
-    margin-left: 1.25em;
-    box-sizing: border-box;
-    width: 97%;
-    display: flex;
+    margin-left: 1.7em;
+    width: 99%;
+    // display: flex;
     justify-content: flex-start;
     background-color: #fafafa;
-    box-shadow: 2px 2px 5px #0000001A;
-    margin-right: 1.25em;
+   
+    margin-right: 1.7em;
     .query-wrapper {
         display: flex;
         flex-direction: row;
