@@ -47,6 +47,11 @@ export class SideNavBarComponent implements OnInit {
       option: 'Bulk Schedule',
       routePath: '/admin/bulk',
       iconPath: '../../../assets/images/upload.svg'
+    },
+    {
+      option: 'WECP Sync',
+      routePath: '/admin/sync',
+      iconPath: '../../../assets/images/sync_black_24dp.svg'
     }
   ];
   constructor() {}
