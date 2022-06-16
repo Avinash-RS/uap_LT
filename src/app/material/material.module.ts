@@ -16,7 +16,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 // import { MatSliderModule } from '@angular/material/slider';
 // import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 // Material Navigation
 // ----------------------------------------------------------------
 import { MatMenuModule } from '@angular/material/menu';
@@ -88,7 +88,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatToolbarModule,
     MatSidenavModule,
     MatSlideToggleModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     MatMenuModule,
@@ -113,6 +114,7 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSidenavModule,
     MatSlideToggleModule,
     MatSnackBarModule,
+    MatProgressSpinnerModule
   ]
 })
 export class MaterialModule { }

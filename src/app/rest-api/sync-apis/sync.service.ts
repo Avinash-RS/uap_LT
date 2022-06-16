@@ -32,13 +32,25 @@ export class SyncService {
     return this.httpClient.post(`/wecpToUapTestImport`, data)
   }
 
-  groupMasterImport() {
-    return this.httpClient.get(`/groupmasterImport`);
-  }
+  // groupMasterImport() {
+  //   return this.httpClient.get(`/groupmasterImport`);
+  // }
 
 
   forcelogout(data){
     return this.httpClient.post(`/exitOtherSystem`, data)
+  }
+
+
+  // WECP Sync Apis
+
+
+  getUapOrganizations(){
+    return this.httpClient.get(`/getUapOrganizations`);
+  }
+
+  groupmasterImportApi(data){
+    return this.httpClient.post(`/groupmasterImport`,data);
   }
 
 

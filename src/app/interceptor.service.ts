@@ -27,7 +27,7 @@ export class InterceptorService implements HttpInterceptor {
     const clone = request.clone({
       headers: request.headers.set('Accept', 'application/json'),
     });
-    if (!request.url.includes('/packages') && !request.url.includes('/schedules?') && !request.url.includes('/assessments?batchId=')) {
+    if (!request.url.includes('/packages') && !request.url.includes('/schedules?') && !request.url.includes('/assessments?batchId=') && !request.url.includes('/groupmasterImport')) {
       this._loading.setLoading(true, request.url);
     }
     return next.handle(clone).pipe(

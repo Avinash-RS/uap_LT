@@ -130,7 +130,7 @@ export class ResultsSyncComponent implements OnInit {
   dbFormSubmit() {
   if (this.dbForm.valid) {    
     if (this.dbForm.value.label.apiCall == 'groupMasterImport') {
-      return this.groupMasterImport();
+      // return this.groupMasterImport();
     }
 
     if (this.dbForm.value.label.apiCall == 'testImport') {
@@ -201,17 +201,17 @@ adfSyncResults() {
     });
   }
 
-  groupMasterImport() {
-    this.syncService.groupMasterImport().subscribe((response: any)=> {
-      if (response && response.success) {
-        this.toaster.success(response && response.message ? response.message : 'Synced Successfully');
-      } else {
-        this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
-      }
-    }, (err)=> {
-      this.toaster.warning('Having trouble on syncing data...');
-    });
-  }
+  // groupMasterImport() {
+  //   this.syncService.groupMasterImport().subscribe((response: any)=> {
+  //     if (response && response.success) {
+  //       this.toaster.success(response && response.message ? response.message : 'Synced Successfully');
+  //     } else {
+  //       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
+  //     }
+  //   }, (err)=> {
+  //     this.toaster.warning('Having trouble on syncing data...');
+  //   });
+  // }
   testDetailsImport() {
     let apiData = {
       "querylimit":4,
