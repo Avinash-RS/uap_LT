@@ -20,9 +20,9 @@ export class SyncService {
     return this.httpClient.getADF(`/api/HttpTrigger1?code=dB2jpO0PFS1gWYmsPYzoD7qpoem3lEOYmx3thCsjrcBtG7VvsMlfJA==&name=syncresults`)
   }
 
-  testImport(data) {
-    return this.httpClient.post(`/testImport`, data)
-  }
+  // testImport(data) {
+  //   return this.httpClient.post(`/testImport`, data)
+  // }
 
   testDetailsImport(data) {
     return this.httpClient.post(`/testDetailsImport`, data)
@@ -45,13 +45,21 @@ export class SyncService {
   // WECP Sync Apis
 
 
-  getUapOrganizations(){
-    return this.httpClient.get(`/getUapOrganizations`);
+  getUapOrganizations(data){
+    return this.httpClient.post(`/getWecpSyncList`,data);
   }
 
   groupmasterImportApi(data){
     return this.httpClient.post(`/groupmasterImport`,data);
   }
+
+  testImport(data){
+    return this.httpClient.post(`/testImport`,data);
+  }
+  testQuestionDetailsImport(data){
+    return this.httpClient.post(`/testQuestionDetailsImport`,data);
+  }
+
 
 
   // VideoAssesment(data){

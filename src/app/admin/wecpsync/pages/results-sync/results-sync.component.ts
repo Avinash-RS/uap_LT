@@ -18,6 +18,8 @@ export class ResultsSyncComponent implements OnInit {
   WECPScheduleDetailsForm:FormGroup;
   CheckSyncDetailsForm:FormGroup;
   orgName:any;
+  groupId:any;
+  testId:any;
   filter = false;
 
   constructor(
@@ -28,20 +30,53 @@ export class ResultsSyncComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.formInitialize();
-    this.getOrgName();
+    this.gmformInitialize();
+    this.TestMasterInitialize();
+    this.TestDetailsInitialize();
+    this.TestQuestionDetailsInitalize();
+    this.TestUAPImportInitalize();
+    this.getOrgName({});
   }
 
-  formInitialize() {
+  gmformInitialize() {
     this.groupMasterForm = this.fb.group({
       'gmOrgName': ['',[Validators.required]],
     })
   }
 
-  getOrgName(){
-    this.syncService.getUapOrganizations().subscribe((response:any)=>{
+  
+  TestMasterInitialize() {
+    this.testMasterForm = this.fb.group({
+      'tmOrgName': ['',[Validators.required]],
+      'tmGroupId': ['',[Validators.required]],
+    })
+  }
+
+  TestDetailsInitialize(){
+    this.testDetailsForm = this.fb.group({
+      'tdOrgName': ['',[Validators.required]],
+      'tdGroupId': ['',[Validators.required]],
+      'tdTestId': ['',[Validators.required]]
+    })
+  }
+
+  TestQuestionDetailsInitalize(){
+    this.testQuestionDetailsForm = this.fb.group({
+      'tqOrgName': ['',[Validators.required]],
+      'tqGroupId': ['',[Validators.required]],
+      'tqTestId': ['',[Validators.required]],
+      'tqLimit': ['',[Validators.required]],
+    })
+  }
+
+
+  // common for all org name
+  getOrgName(data){
+    this.syncService.getUapOrganizations(data ? data : {}).subscribe((response:any)=>{
       if (response && response.success) {
-          this.orgName = response.data;
+          this.orgName = response.data.orgDetails;
+          this.groupId = response.data.groupDetails;
+          this.testId = response.data.testDetails;
       } else {
         this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
       }
@@ -50,14 +85,15 @@ export class ResultsSyncComponent implements OnInit {
     })
   }
 
+  // sync group master
   groupmasterImports(){
     this.filter = true;
-    let data = {
-      orgId:this.groupMasterForm.value.gmOrgName
-    }
+    let data ={
+      wecpOrgId:this.groupMasterForm ? this.groupMasterForm.value.gmOrgName : '',
+    } 
     this.syncService.groupmasterImportApi(data).subscribe((response:any)=>{
       if (response && response.success) {
-          this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
+          this.toaster.success(response && response.message ? response.message : 'Having trouble on syncing data...');
           this.filter = false;
       } else {
         this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
@@ -66,73 +102,209 @@ export class ResultsSyncComponent implements OnInit {
     },(err)=>{
       this.toaster.warning('Having trouble on syncing data...');
     })
-
   }
 
-   
+
+ // Test Master start
+ testMasterOrg(orgId){
+   let data = {
+    wecpOrgId : orgId
+   }
+   this.getOrgName(data)
+ }
+
+  testDetailsOrg(){
+    this.filter = true;
+    let data ={
+      wecpOrgId:this.testMasterForm ? this.testMasterForm.value.tmOrgName : '',
+      groupIds: this.testMasterForm ? this.testMasterForm.value.tmGroupId : '',
+      groupLimt: 10,
+      limit: 50,
+      groupOffset:0
+    }
+    this.syncService.testImport(data).subscribe((response:any)=>{
+      if (response && response.success) {
+        this.toaster.success(response && response.message ? response.message : 'Having trouble on syncing data...');
+        this.filter = false;
+    } else {
+      this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
+      this.filter = false;
+    }
+  },(err)=>{
+    this.toaster.warning('Having trouble on syncing data...');
+  })
+  }
+  // Test Master End
+
+  // Test Details start
+  getTestDetailsOrg(orgId){
+    let data = {
+      wecpOrgId : orgId
+     }
+     this.getOrgName(data)
+  }
+
+  getTestId($event){
+    let data = {
+      wecpOrgId : this.testDetailsForm ? this.testDetailsForm.value.tdOrgName : '',
+      groupIds: $event ? $event.value : ''
+     }
+     this.getOrgName(data)
+  }
+
+
+  testDetailsImport(){
+    this.filter = true;
+    let data ={
+      orgId:this.testDetailsForm ? this.testDetailsForm.value.tdOrgName : '',
+      groupIds: this.testDetailsForm ? this.testDetailsForm.value.tdGroupId : '',
+      testId: this.testDetailsForm ? this.testDetailsForm.value.tdTestId : '',
+      querylimit: 100,
+      questionInsertLimit: 100,
+      isFailed: true
+    }
+    this.syncService.testDetailsImport(data).subscribe((response:any)=>{
+      if (response && response.success) {
+        this.toaster.success(response && response.message ? response.message : 'Having trouble on syncing data...');
+        this.filter = false;
+    } else {
+      this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
+      this.filter = false;
+    }
+  },(err)=>{
+    this.toaster.warning('Having trouble on syncing data...');
+  })
+  }
+  // test Details End
+
+
+  // Start Test Question Details
+  getTestQuestionDetailsOrg(orgId){
+    let data = {
+      wecpOrgId : orgId
+     }
+     this.getOrgName(data)
+  }
+
+  getTestQuestionId($event){
+    let data = {
+      wecpOrgId : this.testQuestionDetailsForm ? this.testQuestionDetailsForm.value.tqOrgName : '',
+      groupIds: [$event ? $event.value : '']
+     }
+     this.getOrgName(data)
+  }
+
+  TestQuestionDetailsImport(){
+    this.filter = true;
+    let data ={
+      orgId:this.testQuestionDetailsForm ? this.testQuestionDetailsForm.value.tqOrgName : '',
+      groupId: this.testQuestionDetailsForm ? this.testQuestionDetailsForm.value.tqGroupId : '',
+      testId: this.testQuestionDetailsForm ? this.testQuestionDetailsForm.value.tqTestId : '',
+      limit: this.testQuestionDetailsForm ? this.testQuestionDetailsForm.value.tqLimit : ''
+    }
+    this.syncService.testQuestionDetailsImport(data).subscribe((response:any)=>{
+      if (response && response.success) {
+        this.toaster.success(response && response.message ? response.message : 'Having trouble on syncing data...');
+        this.filter = false;
+    } else {
+      this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
+      this.filter = false;
+    }
+  },(err)=>{
+    this.toaster.warning('Having trouble on syncing data...');
+  })
+  }
+
+  // End Test Question Details
+
+
+  // Start WECP to UAP Import
+
+  
+  TestUAPImportInitalize(){
+    this.wecpDetailsForm = this.fb.group({
+      'uapOrgName': ['',[Validators.required]],
+      'uapGroupId': ['',[Validators.required]],
+      'uapTestId': ['',[Validators.required]],
+      'uapLimit': ['',[Validators.required]],
+    })
+  }
+  getUAPImportOrg(orgId){
+    let data = {
+      wecpOrgId : orgId
+     }
+     this.getOrgName(data)
+  }
+
+  getUAPImportId($event){
+    let data = {
+      wecpOrgId : this.wecpDetailsForm ? this.wecpDetailsForm.value.uapOrgName : '',
+      groupIds: [$event ? $event.value : '']
+     }
+     this.getOrgName(data)
+  }
+
+  WECPToUAPImport(){
+    this.filter = true;
+    let data ={
+      orgId:this.wecpDetailsForm ? this.wecpDetailsForm.value.uapOrgName : '',
+      groupId: this.wecpDetailsForm ? this.wecpDetailsForm.value.uapGroupId : '',
+      testId: this.wecpDetailsForm ? this.wecpDetailsForm.value.uapTestId : '',
+      limit: this.wecpDetailsForm ? this.wecpDetailsForm.value.uapLimit : ''
+    }
+    this.syncService.wecpToUapTestImport(data).subscribe((response:any)=>{
+      if (response && response.success) {
+        this.toaster.success(response && response.message ? response.message : 'Having trouble on syncing data...');
+        this.filter = false;
+    } else {
+      this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
+      this.filter = false;
+    }
+  },(err)=>{
+    this.toaster.warning('Having trouble on syncing data...');
+  })
+  }
+  // End WECP to UAP Import
+
+
+
   //Form getters
   get gmOrgName() {
     return this.groupMasterForm.get('gmOrgName');
   }
+  get tmOrgName() {
+    return this.testMasterForm.get('tmOrgName');
+  }
+  get tmGroupId() {
+    return this.testMasterForm.get('tmGroupId');
+  }
+  get tdOrgName() {
+    return this.testDetailsForm.get('tdOrgName');
+  }
+  get tdGroupId() {
+    return this.testDetailsForm.get('tdGroupId');
+  }
+  get tdTestId() {
+    return this.testDetailsForm.get('tdTestId');
+  }
 
-  // testImport() {
-  //   let apiData = {
-  //     "groupLimt": 5,
-  //     "limit" : 200
-  // }
-  //   this.syncService.testImport(apiData).subscribe((response: any)=> {
-  //     if (response && response.success) {
-  //       this.toaster.success(response && response.message ? response.message : 'Synced Successfully');
-  //     } else {
-  //       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
-  //     }
-  //   }, (err)=> {
-  //     this.toaster.warning('Having trouble on syncing data...');
-  //   });
-  // }
-
-  // groupMasterImport() {
-  //   this.syncService.groupMasterImport().subscribe((response: any)=> {
-  //     if (response && response.success) {
-  //       this.toaster.success(response && response.message ? response.message : 'Synced Successfully');
-  //     } else {
-  //       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
-  //     }
-  //   }, (err)=> {
-  //     this.toaster.warning('Having trouble on syncing data...');
-  //   });
-  // }
-  // testDetailsImport() {
-  //   let apiData = {
-  //     "querylimit":4,
-  //     "questionInsertLimit":100,
-  //     "isFailed": false  
-  // }  
-  // this.syncService.testDetailsImport(apiData).subscribe((response: any)=> {
-  //   if (response && response.success) {
-  //     this.toaster.success(response && response.message ? response.message : 'Synced Successfully');
-  //   } else {
-  //     this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
-  //   }
-  // }, (err)=> {
-  //   this.toaster.warning('Having trouble on syncing data...');
-  // });
-  // }
-
-  // wecpToUapTestImport() {
-  //   let apiData = {
-  //     "limit" : 50
-  // }  
-  // this.syncService.wecpToUapTestImport(apiData).subscribe((response: any)=> {
-  //   if (response && response.success) {
-  //     this.toaster.success(response && response.message ? response.message : 'Synced Successfully');
-  //   } else {
-  //     this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
-  //   }
-  // }, (err)=> {
-  //   this.toaster.warning('Having trouble on syncing data...');
-  // });
-  // }
+  get tqOrgName() {
+    return this.testQuestionDetailsForm.get('tqOrgName');
+  }
+  get tqGroupId() {
+    return this.testQuestionDetailsForm.get('tqGroupId');
+  }
+  get tqTestId() {
+    return this.testQuestionDetailsForm.get('tqTestId');
+  }
+  get tqLimit() {
+    return this.testQuestionDetailsForm.get('tqLimit');
+  }
 
 
+  get uapOrgName(){
+    return this.testQuestionDetailsForm.get('uapOrgName');
+  }
+
+  
 }
