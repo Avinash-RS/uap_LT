@@ -95,7 +95,7 @@ export class UapHttpService {
      !url.includes('/task') &&
      !url.includes('/updateScheduleEndtime')&&
      !url.includes('/testQuestionDetailsImport')&&
-     
+     !url.includes('/getUapOrganizations')&&
      !url.includes('/getproctorTemplate')
      
      ) {
