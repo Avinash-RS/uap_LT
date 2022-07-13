@@ -1,366 +1,295 @@
 <div class="header-block">
-    <span class="header-block__title-font-size">Schedule/Create</span>
-    <div class="header-block__buttons-align">
-        <span>
-      <button
-        class="header-block__button"
-        (click)="createSchedulePackage()"
-        [disabled]="disableCreateButton || !canCreateSchedule"
-      >
-        Create
-      </button></span
-    >
-    <span
-      ><button class="header-block__exit-button" routerLink="/admin/schedule/list">
-        Exit
-      </button></span
-    >
-  </div>
+	<span class="header-block__title-font-size">Schedule/Create</span>
+	<div class="header-block__buttons-align">
+		<span>
+			<button class="header-block__button" (click)="createSchedulePackage()"
+				[disabled]="disableCreateButton || !canCreateSchedule">
+				Create
+			</button></span>
+		<span><button class="header-block__exit-button" routerLink="/admin/schedule/list">
+				Exit
+			</button></span>
+	</div>
 </div>
 <form [formGroup]="schedulePackageForm" novalidate>
-  <div class="create-form__overflow">
-    <div class="schedule-assessment-block">
-      <div class="schedule-assessment-block__align">
-
-        <span class="auto-complete-block__align">
-          <mat-form-field appearance="fill">
-            <mat-label>Select Organization</mat-label>
-            <mat-select  required formControlName="orgId">
-              <mat-option (click)="orgChange(org)" *ngFor="let org of listOfOrg" [value]="org?.id" > {{org?.name}}</mat-option>
-            </mat-select>
-            <div class="mat-input-field__error" *ngIf="validateFormField('orgId')">
-              Required
-            </div>
-          </mat-form-field>
-
-          <span class="m-l-20" *ngIf="showProctorTemplate">
-            <mat-form-field appearance="fill">
-              <mat-label>Select Proctor template</mat-label>
-              <mat-select  required formControlName="templateId">
-                <mat-option (click)="selectTemplate(template)" *ngFor="let template of proctorTemplateList" [value]="template?.templateId" > {{template?.tempname }}</mat-option>
-              </mat-select>
-              <div class="mat-input-field__error" *ngIf="validateFormField('templateId')">
-                Required
-              </div>
-            </mat-form-field>
-          </span>
-
-        </span>
-        <label class="custom-label__font">
-          Schedule Name
-          <input
-            formControlName="batchName"
-            type="text"
-            class="schedule-assessment-block__custom-input-field"
-          />
-          <div class="input-field__error" *ngIf="validateFormField('batchName')&& !f.batchName.errors?.pattern">Required</div>
-          <div  class="input-field__error" *ngIf="f.batchName.errors?.pattern">
-            Schedule name not valid.
-       </div> 
-        </label>
-        <label class="custom-label__font">
-          Description
-          <textarea
-            formControlName="scheduleDescription"
-            cols="62"
-            rows="4"
-            class="schedule-assessment-block__text-area-width"
-          ></textarea>
-          <div class="input-field__error" *ngIf="validateFormField('scheduleDescription')">
-            Required
-          </div>
-         
-
-        </label>
-        <label class="custom-label__font"> Schedule On </label>
-        <div class="date-time-block__align">
-            <span class="date-block">
-            <mat-form-field appearance="fill" class="date-block__input">
-              <mat-label>Select Date</mat-label>
-              <input
-                matInput
-                [max]="maxDate"
-                [matDatepicker]="dp3"
-                (dateChange)="onDateChanged($event)"
-                formControlName="scheduleDate"
-              />
-              <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-              <mat-datepicker #dp3 disabled="false"></mat-datepicker>
-            </mat-form-field>
-          </span>
-            <span class="time-block">
-            <div class="ngx-timepicker-field-example">
-              <ngx-timepicker-field
-                [format]="12"
-                formControlName="scheduleTime"
-                [defaultTime]="'12:01 pm'"
-                (timeChanged)="onTimeChanged($event,packageDetails.attributes.duration)"
-              ></ngx-timepicker-field>
-            </div>
-          </span>
-        </div>
-
-        <label class="custom-label__font"> Schedule End </label>
-        <div class="date-time-block__align">
-            <span class="date-block">
-            <mat-form-field appearance="fill" class="date-block__input">
-              <mat-label>Select Date</mat-label>
-              <input
-                matInput
-                [matDatepicker]="dp4"
-                 [min]="minDate"
-                (dateChange)="onEndDateChanged($event)"
-                formControlName="scheduleEndDate"
-              />
-              <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
-              <mat-datepicker #dp4 disabled="false"></mat-datepicker>
-            </mat-form-field>
-            
-          </span>
-            <span class="time-block">
-            <div class="ngx-timepicker-field-example">
-              <ngx-timepicker-field
-                [format]="12"
-                formControlName="scheduleEndTime"
-                [defaultTime]="'12:01 pm'"
-                (timeChanged)="onEndTimeChanged($event,packageDetails.attributes.duration)"
-              ></ngx-timepicker-field>
-            </div>
-          </span>
-        </div>
-        <div>
-            <span class="auto-complete-block__align">
-            <mat-form-field class="example-full-width">
-              <mat-label>Assessment Name</mat-label>
-              <input
-                type="text"
-                placeholder="Assessment Name"
-                aria-label="Number"
-                matInput
-                (input)="onSearchChange($event)"
-                formControlName="assessmentName"
-                [matAutocomplete]="auto"
-              />
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option
-                  *ngFor="let option of filteredOptions | async"
-                  [value]="option.attributes.name"
-                  (onSelectionChange)="getOptionSelectedData(option)"
-                >
-                  {{option.attributes.name}}
-                  <span
-                    class="level"
-                    *ngIf="option.attributes.hasOwnProperty('level') && option.attributes.level.length"
-                    >[{{option.attributes.level}}]</span
-                  >
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-            <div class="mat-input-field__error" *ngIf="validateFormField('assessmentName')">
-              Required
-            </div>
-          </span>
-            <span class="schedule-block__align">
-            <mat-checkbox class="example-margin" [disabled]="false"
-              >Schedule at Test Level</mat-checkbox>
-          </span>
-            <span *ngIf=" packageDetails.attributes.tasks.length > 0" style="margin-left: 2em;" class="schedule-block__align">
-            <mat-checkbox [formControl]="is_proctor" class="example-margin"
-              >Is Proctor</mat-checkbox>
-          </span>
-
-            <span style="margin-left: 2em;" class="schedule-block__align">
-            <mat-checkbox (change)="showOptions($event)" [formControl]="is_published" class="example-margin"
-              >Results publish</mat-checkbox>
-          </span>
-        </div>
-
-        <span *ngIf="showpublishDate">
-          <label class="custom-label__font"> Publish On </label>
-          <div class="date-time-block__align">
-              <span class="date-block">
-
-                <mat-form-field appearance="fill" class="date-block__input">
-                  <mat-label>Select Date</mat-label>
-                  <input
-                    matInput
-                    [matDatepicker]="dp4"
-                     [min]="minDate"
-                    (dateChange)="onpublishDateChanged($event)"
-                    formControlName="publishDate"
-                  />
-                  <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
-                  <mat-datepicker #dp4 disabled="false"></mat-datepicker>
-                </mat-form-field>
-              <!-- <mat-form-field appearance="fill" class="">
-                <mat-label>Select Date</mat-label>
-                <input
-                  matInput
-                  [matDatepicker]="dp5"
-                   [min]="maxDate"
-                  (dateChange)="onpublishDateChanged($event)"
-                  formControlName="publishDate"
-                />
-                <mat-datepicker-toggle matSuffix [for]="dp5"></mat-datepicker-toggle>
-                <mat-datepicker #dp5 disabled="false"></mat-datepicker>
-              </mat-form-field> -->
-            
-            </span>
-
-        <span class="time-block">
-              <div class="ngx-timepicker-field-example">
-                <ngx-timepicker-field
-                  [format]="12"
-                  formControlName="publishTime"
-                  [defaultTime]="'12:01 pm'"
-                  (timeChanged)="onPublishTimeChanged($event,packageDetails.attributes.duration)"
-                ></ngx-timepicker-field>
-              </div>
-            </span>
-    </div>
-    </span>
-
-    <div class="package-details-block" *ngIf=" packageDetails.attributes.tasks.length > 0">
-        <table class="schedule-table">
-            <tr class="schedule-table-tr">
-                <th class="schedule-table-th">Test Name</th>
-                <th class="schedule-table-type">Type</th>
-                <th class="schedule-table-duration">Duration</th>
-                <th>Schedule On</th>
-            </tr>
-            <ng-container *ngFor="let item of packageDetails.attributes.tasks;">
-                <tr class="schedule-table-body">
-                    <th class="schedule-table-data">{{item.name}}</th>
-                    <th class="schedule-table-data">{{item.type}}</th>
-                    <th class="schedule-table-data">{{item.duration}}</th>
-                    <th class="schedule-table-data">
-                        <input type="text" disabled value="{{scheduleDateTime}}" class="custom-date-time-input__border" />
-                    </th>
-                </tr>
-            </ng-container>
-        </table>
-        <p class="add-candidate-heading__align">
-            Candidates
-            <span *ngIf="toogleUploadCsvButton"><button
-                class="upload-csv-button__align"
-                (click)="onCsvButtonClick()"
-                [disabled]="schedulePackageForm.invalid"
-              >
-                Upload CSV
-              </button></span>
-            <span><button
-                class="upload-csv-button__align width_150"
-                (click)="downloadTemplate()"
-              >
-                Download Template
-              </button></span>
-
-        </p>
-        <p>
-            <button class="package-details-block__add-candidate-button-align" (click)="addNewCandidateInformation()" *ngIf="toogleAddCandidateInfoButton" [disabled]="schedulePackageForm.invalid">
-              Add Candidate
-            </button>
-        </p>
-        <!-- directory=Boolean("false") [showBrowseBtn]="true" multiple="false" -->
-        <div class="drag-drop-zone__align" *ngIf="switchToAddEmailView">
-            <ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="fileDropped($event)" accept=".csv" contentClassName="ngx-file-drop" [multiple]="false">
-                <ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
-                    <div style="cursor: pointer;" (click)="openFileSelector()">
-                        <div> Click to Browse </div>
-                        <div> Or </div>
-                        <div> Drag & Drop CSV File </div>
-                    </div>
-                </ng-template>
-            </ngx-file-drop>
-            <span class="exit-upload-mode__align" (click)="exitUploadMode()">Cancel</span>
-        </div>
-        <div *ngIf="showCsvFileInformation">
-            <p class="uploaded-heading">
-                Uploaded{{csvFileName}}
-                <span><button class="delete-file-button__style" (click)="deleteCsvFile()">
-                  Delete
-                </button></span
-              >
-            </p>
-            <p class="candidate-info-block">{{csvRows && csvRows[0] ? csvRows[0].length : ''}} candidates found!</p>
-            <p class="candidate-info-block">
-              <span class="total-email-count">Total Emails Entered : {{csvRows && csvRows[0] ? csvRows[0].length : ''}}</span> |
-                <span class="total-valid-email-count">Valid Emails : {{validEmailsList.length}}</span> |
-                <span class="total-invalid-email-count">Invalid Emails : {{invalidEmailsList.length}}</span
-              >
-              |
-              <span class="total-duplicate-email-count"
-                >Duplicate Emails : {{duplicateEmailsListCount}}</span
-              >
-            </p>
-          </div>
-          <div
-            formArrayName="candidatesInformation"
-            *ngIf="getCandidatesInformation.controls.length > 0"
-          >
-            <table class="schedule-table">
-              <tr class="schedule-table-tr">
-                <th class="schedule-table-th">E-Mail</th>
-                <th class="schedule-table-th">First Name</th>
-                <th class="schedule-table-th">Last Name</th>
-                <th class="schedule-table-th"></th>
-              </tr>
-              <ng-container
-                *ngFor="let item of getCandidatesInformation.controls; let i=index"
-                [formGroupName]="i"
-              >
-                <tr class="schedule-table-tr">
-                  <th class="schedule-table-data">
-                    <input
-                      formControlName="emailId"
-                      type="email"
-                      email="true"
-                      placeholder="Email"
-                      class="custom-candidate-input"
-                    />
-                    <div *ngIf="validateCandidateInput(i, 'emailId')" class="input-field__error">
-                      Required
-                    </div>
-                    <div *ngIf="validateCandidateEmailInput(i)" class="input-field__error">
-                      Invalid E-mail
-                    </div>
-                  </th>
-                  <th class="schedule-table-data">
-                    <input
-                      formControlName="firstName"
-                      type="text"
-                      placeholder="First Name"
-                      class="custom-candidate-input"
-                    />
-                    <div *ngIf="validateCandidateInput(i, 'firstName')" class="input-field__error">
-                      Required
-                    </div>
-                  </th>
-                  <th class="schedule-table-data">
-                    <input
-                      formControlName="lastName"
-                      type="text"
-                      placeholder="Last Name"
-                      class="custom-candidate-input"
-                    />
-                    <div *ngIf="validateCandidateInput(i, 'lastName')" class="input-field__error">
-                      Required
-                    </div>
-                  </th>
-                  <th class="schedule-table-data">
-                    <button
-                      class="delete-candidate-button__align"
-                      (click)="deleteCandidateInformation(i)"
-                    >
-                      Delete
-                    </button>
-                  </th>
-                </tr>
-              </ng-container>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+	<div class="create-form__overflow">
+		<div class="schedule-assessment-block">
+			<div class="schedule-assessment-block__align">
+				<span class="auto-complete-block__align">
+					<mat-form-field appearance="fill">
+						<mat-label>Select Organization</mat-label>
+						<mat-select required formControlName="orgId">
+							<mat-option (click)="orgChange(org)" *ngFor="let org of listOfOrg" [value]="org?.id">
+								{{org?.name}}</mat-option>
+						</mat-select>
+						<div class="mat-input-field__error" *ngIf="validateFormField('orgId')">
+							Required
+						</div>
+					</mat-form-field>
+					<span class="m-l-20" *ngIf="showProctorTemplate">
+						<mat-form-field appearance="fill">
+							<mat-label>Select Proctor template</mat-label>
+							<mat-select required formControlName="templateId">
+								<mat-option (click)="selectTemplate(template)"
+									*ngFor="let template of proctorTemplateList" [value]="template?.templateId">
+									{{template?.tempname }}</mat-option>
+							</mat-select>
+							<div class="mat-input-field__error" *ngIf="validateFormField('templateId')">
+								Required
+							</div>
+						</mat-form-field>
+					</span>
+				</span>
+				<label class="custom-label__font">
+					Schedule Name
+					<input formControlName="batchName" type="text"
+						class="schedule-assessment-block__custom-input-field" />
+					<div class="input-field__error"
+						*ngIf="validateFormField('batchName')&& !f.batchName.errors?.pattern">Required</div>
+					<div class="input-field__error" *ngIf="f.batchName.errors?.pattern">
+						Schedule name not valid.
+					</div>
+				</label>
+				<label class="custom-label__font">
+					Description
+					<textarea formControlName="scheduleDescription" cols="62" rows="4"
+						class="schedule-assessment-block__text-area-width"></textarea>
+					<div class="input-field__error" *ngIf="validateFormField('scheduleDescription')">
+						Required
+					</div>
+				</label>
+				<label class="custom-label__font"> Schedule On </label>
+				<div class="date-time-block__align">
+					<span class="date-block">
+						<mat-form-field appearance="fill" class="date-block__input">
+							<mat-label>Select Date</mat-label>
+							<input matInput [max]="maxDate" [matDatepicker]="dp3" (dateChange)="onDateChanged($event)"
+								formControlName="scheduleDate" />
+							<mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+							<mat-datepicker #dp3 disabled="false"></mat-datepicker>
+						</mat-form-field>
+					</span>
+					<span class="time-block">
+						<div class="ngx-timepicker-field-example">
+							<ngx-timepicker-field [format]="12" formControlName="scheduleTime"
+								[defaultTime]="'12:01 pm'"
+								(timeChanged)="onTimeChanged($event,packageDetails.attributes.duration)">
+							</ngx-timepicker-field>
+						</div>
+					</span>
+				</div>
+				<label class="custom-label__font"> Schedule End </label>
+				<div class="date-time-block__align">
+					<span class="date-block">
+						<mat-form-field appearance="fill" class="date-block__input">
+							<mat-label>Select Date</mat-label>
+							<input matInput [matDatepicker]="dp4" [min]="minDate"
+								(dateChange)="onEndDateChanged($event)" formControlName="scheduleEndDate" />
+							<mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+							<mat-datepicker #dp4 disabled="false"></mat-datepicker>
+						</mat-form-field>
+					</span>
+					<span class="time-block">
+						<div class="ngx-timepicker-field-example">
+							<ngx-timepicker-field [format]="12" formControlName="scheduleEndTime"
+								[defaultTime]="'12:01 pm'"
+								(timeChanged)="onEndTimeChanged($event,packageDetails.attributes.duration)">
+							</ngx-timepicker-field>
+						</div>
+					</span>
+				</div>
+				<div>
+					<span class="auto-complete-block__align">
+						<mat-form-field class="example-full-width">
+							<mat-label>Assessment Name</mat-label>
+							<input type="text" placeholder="Assessment Name" aria-label="Number" matInput
+								(input)="onSearchChange($event)" formControlName="assessmentName"
+								[matAutocomplete]="auto" />
+							<mat-autocomplete #auto="matAutocomplete">
+								<mat-option *ngFor="let option of filteredOptions | async"
+									[value]="option.attributes.name"
+									(onSelectionChange)="getOptionSelectedData(option)">
+									{{option.attributes.name}}
+									<span class="level"
+										*ngIf="option.attributes.hasOwnProperty('level') && option.attributes.level.length">[{{option.attributes.level}}]</span>
+								</mat-option>
+							</mat-autocomplete>
+						</mat-form-field>
+						<div class="mat-input-field__error" *ngIf="validateFormField('assessmentName')">
+							Required
+						</div>
+					</span>
+				</div>
+				<div class="date-time-block__align">
+					<span class="schedule-block__align">
+						<mat-checkbox class="example-margin" [disabled]="false">Schedule at Test Level</mat-checkbox>
+					</span>
+					<span style="margin-left: 2em;" class="schedule-block__align">
+						<mat-checkbox [formControl]="is_proctor" class="example-margin">Is Proctor</mat-checkbox>
+					</span>
+					<span style="margin-left: 2em;" class="schedule-block__align">
+						<mat-checkbox (change)="showOptions($event)" [formControl]="is_published"
+							class="example-margin">Results publish</mat-checkbox>
+					</span>
+					<span style="margin-left: 2em;" class="schedule-block__align">
+						<mat-checkbox [formControl]="sendNotification" [disabled]="false" class="example-margin">Send
+							Notification</mat-checkbox>
+					</span>
+				</div>
+				<div>
+					<span *ngIf="showpublishDate">
+						<label class="custom-label__font"> Publish On </label>
+						<div class="date-time-block__align">
+							<span class="date-block">
+								<mat-form-field appearance="fill" class="date-block__input">
+									<mat-label>Select Date</mat-label>
+									<input matInput [matDatepicker]="dp4" [min]="minDate"
+										(dateChange)="onpublishDateChanged($event)" formControlName="publishDate" />
+									<mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+									<mat-datepicker #dp4 disabled="false"></mat-datepicker>
+								</mat-form-field>
+								<!-- <mat-form-field appearance="fill" class="">
+									<mat-label>Select Date</mat-label>
+									<input
+									  matInput
+									  [matDatepicker]="dp5"
+										[min]="maxDate"
+									  (dateChange)="onpublishDateChanged($event)"
+									  formControlName="publishDate"
+									/>
+									<mat-datepicker-toggle matSuffix [for]="dp5"></mat-datepicker-toggle>
+									<mat-datepicker #dp5 disabled="false"></mat-datepicker>
+									</mat-form-field> -->
+							</span>
+							<span class="time-block">
+								<div class="ngx-timepicker-field-example">
+									<ngx-timepicker-field [format]="12" formControlName="publishTime"
+										[defaultTime]="'12:01 pm'"
+										(timeChanged)="onPublishTimeChanged($event,packageDetails.attributes.duration)">
+									</ngx-timepicker-field>
+								</div>
+							</span>
+						</div>
+					</span>
+				</div>
+				<br>
+				<div class="package-details-block" *ngIf=" packageDetails.attributes.tasks.length > 0">
+					<table class="schedule-table">
+						<tr class="schedule-table-tr">
+							<th class="schedule-table-th">Test Name</th>
+							<th class="schedule-table-type">Type</th>
+							<th class="schedule-table-duration">Duration</th>
+							<th>Schedule On</th>
+						</tr>
+						<ng-container *ngFor="let item of packageDetails.attributes.tasks;">
+							<tr class="schedule-table-body">
+								<th class="schedule-table-data">{{item.name}}</th>
+								<th class="schedule-table-data">{{item.type}}</th>
+								<th class="schedule-table-data">{{item.duration}}</th>
+								<th class="schedule-table-data">
+									<input type="text" disabled value="{{scheduleDateTime}}"
+										class="custom-date-time-input__border" />
+								</th>
+							</tr>
+						</ng-container>
+					</table>
+					<p class="add-candidate-heading__align">
+						Candidates
+						<span *ngIf="toogleUploadCsvButton"><button class="upload-csv-button__align"
+								(click)="onCsvButtonClick()" [disabled]="schedulePackageForm.invalid">
+								Upload CSV
+							</button></span>
+						<span><button class="upload-csv-button__align width_150" (click)="downloadTemplate()">
+								Download Template
+							</button></span>
+					</p>
+					<p>
+						<button class="package-details-block__add-candidate-button-align"
+							(click)="addNewCandidateInformation()" *ngIf="toogleAddCandidateInfoButton"
+							[disabled]="schedulePackageForm.invalid">
+							Add Candidate
+						</button>
+					</p>
+					<!-- directory=Boolean("false") [showBrowseBtn]="true" multiple="false" -->
+					<div class="drag-drop-zone__align" *ngIf="switchToAddEmailView">
+						<ngx-file-drop dropZoneLabel="Drop files here" (onFileDrop)="fileDropped($event)" accept=".csv"
+							contentClassName="ngx-file-drop" [multiple]="false">
+							<ng-template ngx-file-drop-content-tmp let-openFileSelector="openFileSelector">
+								<div style="cursor: pointer;" (click)="openFileSelector()">
+									<div> Click to Browse </div>
+									<div> Or </div>
+									<div> Drag & Drop CSV File </div>
+								</div>
+							</ng-template>
+						</ngx-file-drop>
+						<span class="exit-upload-mode__align" (click)="exitUploadMode()">Cancel</span>
+					</div>
+					<div *ngIf="showCsvFileInformation">
+						<p class="uploaded-heading">
+							Uploaded{{csvFileName}}
+							<span><button class="delete-file-button__style" (click)="deleteCsvFile()">
+									Delete
+								</button></span>
+						</p>
+						<p class="candidate-info-block">{{csvRows && csvRows[0] ? csvRows[0].length : ''}} candidates
+							found!</p>
+						<p class="candidate-info-block">
+							<span class="total-email-count">Total Emails Entered :
+								{{csvRows && csvRows[0] ? csvRows[0].length : ''}}</span> |
+							<span class="total-valid-email-count">Valid Emails : {{validEmailsList.length}}</span> |
+							<span class="total-invalid-email-count">Invalid Emails : {{invalidEmailsList.length}}</span>
+							|
+							<span class="total-duplicate-email-count">Duplicate Emails :
+								{{duplicateEmailsListCount}}</span>
+						</p>
+					</div>
+					<div formArrayName="candidatesInformation" *ngIf="getCandidatesInformation.controls.length > 0">
+						<table class="schedule-table">
+							<tr class="schedule-table-tr">
+								<th class="schedule-table-th">E-Mail</th>
+								<th class="schedule-table-th">First Name</th>
+								<th class="schedule-table-th">Last Name</th>
+								<th class="schedule-table-th"></th>
+							</tr>
+							<ng-container *ngFor="let item of getCandidatesInformation.controls; let i=index"
+								[formGroupName]="i">
+								<tr class="schedule-table-tr">
+									<th class="schedule-table-data">
+										<input formControlName="emailId" type="email" email="true" placeholder="Email"
+											class="custom-candidate-input" />
+										<div *ngIf="validateCandidateInput(i, 'emailId')" class="input-field__error">
+											Required
+										</div>
+										<div *ngIf="validateCandidateEmailInput(i)" class="input-field__error">
+											Invalid E-mail
+										</div>
+									</th>
+									<th class="schedule-table-data">
+										<input formControlName="firstName" type="text" placeholder="First Name"
+											class="custom-candidate-input" />
+										<div *ngIf="validateCandidateInput(i, 'firstName')" class="input-field__error">
+											Required
+										</div>
+									</th>
+									<th class="schedule-table-data">
+										<input formControlName="lastName" type="text" placeholder="Last Name"
+											class="custom-candidate-input" />
+										<div *ngIf="validateCandidateInput(i, 'lastName')" class="input-field__error">
+											Required
+										</div>
+									</th>
+									<th class="schedule-table-data">
+										<button class="delete-candidate-button__align"
+											(click)="deleteCandidateInformation(i)">
+											Delete
+										</button>
+									</th>
+								</tr>
+							</ng-container>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </form>
