@@ -80,6 +80,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   selectedCSVFile: File;
   is_proctor = new FormControl(true);
   is_published = new FormControl(false);
+  sendNotification = new FormControl(false);
   listOfOrg: any;
   minDate: Date;
   maxDate: Date;
