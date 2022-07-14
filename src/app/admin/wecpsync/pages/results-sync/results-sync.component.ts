@@ -35,6 +35,8 @@ export class ResultsSyncComponent implements OnInit {
     this.TestDetailsInitialize();
     this.TestQuestionDetailsInitalize();
     this.TestUAPImportInitalize();
+    this.WECPScheduleInitalize();
+    this.CheckSyncStatusInitalize();
     this.getOrgName({});
   }
 
@@ -93,7 +95,7 @@ export class ResultsSyncComponent implements OnInit {
     } 
     this.syncService.groupmasterImportApi(data).subscribe((response:any)=>{
       if (response && response.success) {
-          this.toaster.success(response && response.message ? response.message : 'Having trouble on syncing data...');
+          this.toaster.success(response && response.message ? response.message : 'Syncing data...');
           this.filter = false;
       } else {
         this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
@@ -124,7 +126,7 @@ export class ResultsSyncComponent implements OnInit {
     }
     this.syncService.testImport(data).subscribe((response:any)=>{
       if (response && response.success) {
-        this.toaster.success(response && response.message ? response.message : 'Having trouble on syncing data...');
+        this.toaster.success(response && response.message ? response.message : 'Syncing data...');
         this.filter = false;
     } else {
       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
@@ -165,7 +167,7 @@ export class ResultsSyncComponent implements OnInit {
     }
     this.syncService.testDetailsImport(data).subscribe((response:any)=>{
       if (response && response.success) {
-        this.toaster.success(response && response.message ? response.message : 'Having trouble on syncing data...');
+        this.toaster.success(response && response.message ? response.message : 'Syncing data...');
         this.filter = false;
     } else {
       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
@@ -204,7 +206,7 @@ export class ResultsSyncComponent implements OnInit {
     }
     this.syncService.testQuestionDetailsImport(data).subscribe((response:any)=>{
       if (response && response.success) {
-        this.toaster.success(response && response.message ? response.message : 'Having trouble on syncing data...');
+        this.toaster.success(response && response.message ? response.message : 'Syncing data...');
         this.filter = false;
     } else {
       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
@@ -254,7 +256,7 @@ export class ResultsSyncComponent implements OnInit {
     }
     this.syncService.wecpToUapTestImport(data).subscribe((response:any)=>{
       if (response && response.success) {
-        this.toaster.success(response && response.message ? response.message : 'Having trouble on syncing data...');
+        this.toaster.success(response && response.message ? response.message : 'Syncing data...');
         this.filter = false;
     } else {
       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
@@ -266,7 +268,100 @@ export class ResultsSyncComponent implements OnInit {
   }
   // End WECP to UAP Import
 
+  // Start WECP Schedule sycn (Candidate)
+  WECPScheduleInitalize(){
+    this.WECPScheduleDetailsForm = this.fb.group({
+      'WECPScheduleOrgName': ['',[Validators.required]],
+      'WECPScheduleGroupId': ['',[Validators.required]],
+      'WECPScheduleTestId': ['',[Validators.required]],
+      'WECPScheduleLimit': ['',[Validators.required]],
+    })
+  }
 
+  getWECPScheduleOrg(orgId){
+    let data = {
+      wecpOrgId : orgId
+     }
+     this.getOrgName(data)
+  }
+
+  getWECPScheduleId($event){
+    let data = {
+      wecpOrgId : this.WECPScheduleDetailsForm ? this.WECPScheduleDetailsForm.value.WECPScheduleOrgName : '',
+      groupIds: [$event ? $event.value : '']
+     }
+     this.getOrgName(data)
+  }
+
+  WECPScheduleImport(){
+    this.filter = true;
+    let data ={
+      orgId:this.WECPScheduleDetailsForm ? this.WECPScheduleDetailsForm.value.WECPScheduleOrgName : '',
+      groupId: this.WECPScheduleDetailsForm ? this.WECPScheduleDetailsForm.value.WECPScheduleGroupId : '',
+      testId: this.WECPScheduleDetailsForm ? this.WECPScheduleDetailsForm.value.WECPScheduleTestId : '',
+      limit: this.WECPScheduleDetailsForm ? this.WECPScheduleDetailsForm.value.WECPScheduleLimit : ''
+    }
+    this.syncService.wecpScheduleTestSync(data).subscribe((response:any)=>{
+      if (response && response.success) {
+        this.toaster.success(response && response.message ? response.message : 'Syncing data...');
+        this.filter = false;
+    } else {
+      this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
+      this.filter = false;
+    }
+  },(err)=>{
+    this.toaster.warning('Having trouble on syncing data...');
+  })
+  }
+  
+  // End WECP Schedule sycn (Candidate)
+
+
+  // Start Check Sync Status
+  CheckSyncStatusInitalize(){
+    this.CheckSyncDetailsForm = this.fb.group({
+      'CheckSyncOrgName': ['',[Validators.required]],
+      'CheckSyncGroupId': ['',[Validators.required]],
+      'CheckSyncTestId': ['',[Validators.required]],
+    })
+  }
+
+  getCheckSyncOrg(orgId){
+    let data = {
+      wecpOrgId : orgId
+     }
+     this.getOrgName(data)
+  }
+
+  getCheckSyncId($event){
+    let data = {
+      wecpOrgId : this.CheckSyncDetailsForm ? this.CheckSyncDetailsForm.value.CheckSyncOrgName : '',
+      groupIds: [$event ? $event.value : '']
+     }
+     this.getOrgName(data)
+  }
+
+  CheckSyncStatus(){
+    this.filter = true;
+    let data ={
+      orgId:this.CheckSyncDetailsForm ? this.CheckSyncDetailsForm.value.CheckSyncOrgName : '',
+      groupId: this.CheckSyncDetailsForm ? this.CheckSyncDetailsForm.value.CheckSyncGroupId : '',
+      testId: this.CheckSyncDetailsForm ? this.CheckSyncDetailsForm.value.CheckSyncTestId : '',
+    }
+    this.syncService.checkWECPSyncStatus(data).subscribe((response:any)=>{
+      if (response && response.success) {
+        this.toaster.success(response && response.message ? response.message : 'Syncing data...');
+        this.filter = false;
+    } else {
+      this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
+      this.filter = false;
+    }
+  },(err)=>{
+    this.toaster.warning('Having trouble on syncing data...');
+  })
+  }
+
+  // End Check Sync Status
 
   //Form getters
   get gmOrgName() {

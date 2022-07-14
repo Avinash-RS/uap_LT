@@ -96,7 +96,10 @@ export class UapHttpService {
      !url.includes('/updateScheduleEndtime')&&
      !url.includes('/testQuestionDetailsImport')&&
      !url.includes('/getUapOrganizations')&&
-     !url.includes('/getproctorTemplate')
+     !url.includes('/getemailTemplate')&&
+     !url.includes('/getproctorTemplate')&&
+     !url.includes('/wecpScheduleTestSync')&&
+     !url.includes('/checkWECPSyncStatus')
      
      ) {
     return `${this.apiBaseUrl}${url}`;

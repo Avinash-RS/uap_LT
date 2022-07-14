@@ -32,6 +32,14 @@ export class SyncService {
     return this.httpClient.post(`/wecpToUapTestImport`, data)
   }
 
+  wecpScheduleTestSync(data){
+    return this.httpClient.post(`/wecpScheduleTestSync`, data)
+  }
+
+  checkWECPSyncStatus(data){
+    return this.httpClient.post(`/checkWECPSyncStatus`, data)
+  }
+
   // groupMasterImport() {
   //   return this.httpClient.get(`/groupmasterImport`);
   // }

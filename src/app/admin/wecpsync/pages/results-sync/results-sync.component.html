@@ -219,50 +219,41 @@
                     </div>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <!-- <form [formGroup]="WECPScheduleDetailsForm">
+            <form [formGroup]="WECPScheduleDetailsForm">
                 <div class="query-wrapper">
                     <div class="fields-wrapper">
                         <label class="label">Organization Name<span class="errorSign">*</span></label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
-                            <mat-select placeholder="Select Organization Name">
-                                <mat-option [value]=""></mat-option>
+                            <mat-select formControlName="WECPScheduleOrgName" placeholder="Select Organization Name">
+                                <mat-option (click)="getWECPScheduleOrg(source.wecpOrgId)" *ngFor="let source of orgName" [value]="source.wecpOrgId">{{source.name}}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="datasource && datasource.hasError('required')">
-                                Please select the Organization Name
-                            </mat-error>
                         </mat-form-field>
                     </div>
                     <div class="fields-wrapper">
                         <label class="label">Group Id <span class="errorSign">*</span></label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
-                            <mat-select placeholder="Select Group Id (multiselect)">
-                                <mat-option [value]=""></mat-option>
+                            <mat-select formControlName="WECPScheduleGroupId" (selectionChange)="getWECPScheduleId($event)" placeholder="Select Group Id (multiselect)">
+                                <mat-option *ngFor="let group of groupId" [value]="group.groupId">{{group.groupId}}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="datasource && datasource.hasError('required')">
-                                Please select the Group Id
-                            </mat-error>
                         </mat-form-field>
                     </div>
                     <div class="fields-wrapper">
                         <label class="label">Test Id <span class="errorSign">*</span></label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
-                            <mat-select placeholder="Select Test Id">
-                                <mat-option [value]=""></mat-option>
+                            <mat-select formControlName="WECPScheduleTestId" placeholder="Select Test Id">
+                                <mat-option *ngFor="let testIds of testId" [value]="testIds.TestId">{{testIds.TestId}}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="datasource && datasource.hasError('required')">
-                                Please select the Test Id
-                            </mat-error>
                         </mat-form-field>
                     </div>
                     <div class="fields-wrapper">
                         <label class="label m-t-10">Limit (max 100) </label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
-                            <input type="number" matInput placeholder="Select Limit" matInputs>
+                            <input formControlName="WECPScheduleLimit" type="number" matInput placeholder="Select Limit" matInputs>
                         </mat-form-field>
                     </div>
-                    <button class="btnConnect" type="submit" mat-raised-button> <img src="assets/images/sync_white_24dp.svg" alt="" srcset=""> Sync</button>
+                    <button class="btnConnect" [disabled]="!WECPScheduleDetailsForm.valid" (click)="WECPScheduleImport()" type="submit" mat-raised-button> <img src="assets/images/sync_white_24dp.svg" alt="" srcset=""> Sync</button>
                 </div>
-            </form> -->
+            </form>
         </mat-expansion-panel>
 
 
@@ -278,44 +269,38 @@
                     </div>
                 </mat-panel-description>
             </mat-expansion-panel-header>
-            <!-- <form [formGroup]="CheckSyncDetailsForm">
+            <form [formGroup]="CheckSyncDetailsForm">
                 <div class="query-wrapper">
                     <div class="fields-wrapper">
                         <label class="label">Organization Name<span class="errorSign">*</span></label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
-                            <mat-select placeholder="Select Organization Name">
-                                <mat-option [value]=""></mat-option>
+                            <mat-select formControlName="CheckSyncOrgName" placeholder="Select Organization Name">
+                                <mat-option (click)="getCheckSyncOrg(source.wecpOrgId)" *ngFor="let source of orgName" [value]="source.wecpOrgId">{{source.name}}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="datasource && datasource.hasError('required')">
-                                Please select the Organization Name
-                            </mat-error>
+
                         </mat-form-field>
                     </div>
                     <div class="fields-wrapper">
                         <label class="label">Group Id <span class="errorSign">*</span></label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
-                            <mat-select placeholder="Select Group Id (multiselect)">
-                                <mat-option [value]=""></mat-option>
+                            <mat-select (selectionChange)="getCheckSyncId($event)" formControlName="CheckSyncGroupId" placeholder="Select Group Id (multiselect)">
+                                <mat-option *ngFor="let group of groupId" [value]="group.groupId">{{group.groupId}}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="datasource && datasource.hasError('required')">
-                                Please select the Group Id
-                            </mat-error>
+
                         </mat-form-field>
                     </div>
                     <div class="fields-wrapper">
                         <label class="label">Test Id <span class="errorSign">*</span></label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
-                            <mat-select placeholder="Select Test Id">
-                                <mat-option [value]=""></mat-option>
+                            <mat-select formControlName="CheckSyncTestId" placeholder="Select Test Id">
+                                <mat-option *ngFor="let testIds of testId" [value]="testIds.TestId">{{testIds.TestId}}</mat-option>
                             </mat-select>
-                            <mat-error *ngIf="datasource && datasource.hasError('required')">
-                                Please select the Test Id
-                            </mat-error>
+
                         </mat-form-field>
                     </div>
-                    <button class="btnConnect" type="submit" mat-raised-button> <img src="assets/images/sync_white_24dp.svg" alt="" srcset="">Check Status</button>
+                    <button [disabled]="!CheckSyncDetailsForm.valid" (click)="CheckSyncStatus()" class="btnConnect" type="submit" mat-raised-button> <img src="assets/images/sync_white_24dp.svg" alt="" srcset="">Check Status</button>
                 </div>
-            </form> -->
+            </form>
         </mat-expansion-panel>
     </mat-accordion>
 

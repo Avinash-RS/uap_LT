@@ -104,4 +104,8 @@ export class ScheduleAPIService {
     return this.httpClient.get(`/getproctorTemplate?orgId=`+orgId);
   }
 
+  sendNotifications(data:any){
+    return this.httpClient.post(`/getemailTemplate`, data);
+  }
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild, TemplateRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { Store } from '@ngrx/store';
@@ -41,7 +41,8 @@ import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { SentData } from 'src/app/rest-api/sendData';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-
+import { MatDialog } from '@angular/material/dialog';
+import { Buffer } from 'buffer';
 @Component({
   selector: 'app-create-schedule-package',
   templateUrl: 'create-schedule-package.html',
@@ -49,6 +50,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
   encapsulation: ViewEncapsulation.None
 })
 export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
+  @ViewChild('notifications', {static: false}) notifications: TemplateRef<any>;
   alphaNumericwithCommonSpecialCharacters: RegExp = /^([a-zA-Z0-9_ \-,.@&*(:)\r\n])*$/;
   alphaWithDots: any = Validators.pattern(this.alphaNumericwithCommonSpecialCharacters);
   packageList: PackageResponse;
@@ -97,6 +99,10 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   publishDate1:string;
   proctorTemplateList: any;
   selectedTemplateName: any;
+  notificationsdialogRef:any;
+  bufferData:any;
+  emailtemplate:any;
+  isOrgEnable = false;
   constructor(
     private fb: FormBuilder,
     private store: Store<SchedulerReducerState>,
@@ -105,7 +111,8 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private toaster: ToastrService,
     private router: Router,
-    private sendData: SentData
+    private sendData: SentData,
+    private matDialog: MatDialog
   ) {
     const today = new Date();
     const timeFormat = today.getHours() > 11 ? 'PM' : 'AM';
@@ -717,6 +724,38 @@ GetMinutes(d) {
     })
   }
 
+  openSendNotification(){
+    let data = {
+        username: this.orginfo ? this.orginfo.name : '',
+        useremail: this.orginfo ? this.orginfo.supportEmail : '',
+        orgName: this.orginfo ? this.orginfo.name : '',
+        getEmail: true,
+        supportEmail: this.orginfo ? this.orginfo.supportEmail : '',
+        supportPhone: this.orginfo ? this.orginfo.supportPhone : ''
+    }
+    this.scheduleService.sendNotifications(data).subscribe((response: any)=> {
+      if(response.success){
+          this.bufferData = response.data.data;
+          this.emailtemplate =  Buffer.from(this.bufferData).toString()
+      }else {
+        this.toaster.warning('Please Try again...');
+      }
+    })
+  }
+
+  openNoticationTemplate(event) {
+    if(event.checked == true){
+    this.notificationsdialogRef = this.matDialog.open(this.notifications, {
+      width: '908px',
+      height: '524px',
+      panelClass: 'loginpopover',
+    });
+  
+      this.openSendNotification();
+    }
+  
+  }
+
   getProctorTemplate(orgId){
     this.scheduleService.getProctorTemplateName(orgId).subscribe((response: any)=> {
         if(response.success){
@@ -733,5 +772,9 @@ GetMinutes(d) {
   selectTemplate(templateDetails){
         this.selectedTemplateName = templateDetails.tempname;
      
+  }
+
+  confirm(value){
+    this.isOrgEnable = value;
   }
 }
