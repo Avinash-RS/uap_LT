@@ -32,6 +32,7 @@ export class EditSchedulePackageComponent implements OnInit {
   startDateWithDurations: string;
   is_proctor: any;
   is_published: any;
+  send_Notification:any;
   publishDate: any;
   publishTime: string;
   publishDateTimeStamp: string;
@@ -51,6 +52,7 @@ export class EditSchedulePackageComponent implements OnInit {
       this.batchDetails = this.router.getCurrentNavigation().extras.state.data;
       this.is_proctor = this.batchDetails.attributes.is_proctor;
       this.is_published = this.batchDetails.attributes.is_published;
+      this.send_Notification = this.batchDetails.attributes.send_Notification;
       const selectedDate: Date = this.batchDetails.attributes.startDateTime;
       const selectedEndDate: Date = this.batchDetails.attributes.endDateTime;
       const duration = this.batchDetails.attributes.duration;
