@@ -80,7 +80,7 @@ export class UapHttpService {
      !url.includes('/groupmasterImport') &&
      !url.includes('/testDetailsImport') &&
      !url.includes('/wecpToUapTestImport') &&
-     !url.includes('/getUapOrganizations') && 
+     !url.includes('/getWecpSyncList') && 
      !url.includes('/exitOtherSystem') &&
      !url.includes('/assessments/') &&
      !url.includes('/assessments/') &&
@@ -94,7 +94,12 @@ export class UapHttpService {
      !url.includes('/packages') &&
      !url.includes('/task') &&
      !url.includes('/updateScheduleEndtime')&&
-     !url.includes('/getproctorTemplate')
+     !url.includes('/testQuestionDetailsImport')&&
+     !url.includes('/getUapOrganizations')&&
+     !url.includes('/getemailTemplate')&&
+     !url.includes('/getproctorTemplate')&&
+     !url.includes('/wecpScheduleTestSync')&&
+     !url.includes('/checkWECPSyncStatus')
      
      ) {
     return `${this.apiBaseUrl}${url}`;

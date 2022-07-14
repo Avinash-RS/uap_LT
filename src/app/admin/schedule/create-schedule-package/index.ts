@@ -15,6 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { AdminUtils } from '../../admin.utils';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 @NgModule({
   imports: [
     CreateSchedulePackageRoutingModule,
@@ -31,7 +33,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatNativeDateModule,
     MatIconModule,
     NgxFileDropModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatDialogModule,
+    MatButtonModule
   ],
   exports: [CreateSchedulePackageComponent],
   declarations: [CreateSchedulePackageComponent],
