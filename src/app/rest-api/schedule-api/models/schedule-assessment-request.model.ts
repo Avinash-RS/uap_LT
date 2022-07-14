@@ -45,6 +45,7 @@ export interface ScheduleRequestDataAttributes {
   testDetails: Array<object>;
   is_published:string;
   publishDate:string;
+  send_Notification : string;
   // publishTime:string
 }
 

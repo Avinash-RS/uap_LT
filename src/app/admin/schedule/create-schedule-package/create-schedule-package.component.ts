@@ -468,6 +468,7 @@ GetMinutes(d) {
     if (request.data.attributes.candidateDetails.length > 0) {
       request.data.attributes.is_proctor = this.is_proctor.value ? '1' : '0';
       request.data.attributes.is_published = this.is_published.value ? '1' : '0';
+      request.data.attributes.send_Notification = this.sendNotification.value ? '1' : '0'
         this.store.dispatch(
         initCreateScheduleAssessmentPackage({
           payload: {
@@ -528,6 +529,7 @@ GetMinutes(d) {
           candidateDetails: this.csvRows[0],
           is_proctor:this.is_proctor.value ? '1' : '0',
           is_published : this.is_published.value ? '1' : '0',
+          send_Notification : this.sendNotification.value ? '1' : '0',
           publishDate: request.data.attributes.publishDate,
           // publishTime: request.data.attributes.publishTime
            
@@ -572,6 +574,7 @@ GetMinutes(d) {
           supportPhone:this.orginfo.supportPhone,
           scheduledAtTestLevel: false,
           is_published : this.schedulePackageForm.get('is_published')?.value,
+          send_Notification : this.schedulePackageForm.get('sendNotification')?.value,
           publishDate : this.publishDateTime,
           candidateDetails: clearCandidateDetails
             ? []
@@ -736,7 +739,7 @@ GetMinutes(d) {
     this.scheduleService.sendNotifications(data).subscribe((response: any)=> {
       if(response.success){
           this.bufferData = response.data.data;
-          this.emailtemplate =  Buffer.from(this.bufferData).toString()
+          this.emailtemplate =  Buffer.from(this.bufferData).toString();
       }else {
         this.toaster.warning('Please Try again...');
       }
