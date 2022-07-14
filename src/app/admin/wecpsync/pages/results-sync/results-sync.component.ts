@@ -97,9 +97,11 @@ export class ResultsSyncComponent implements OnInit {
       if (response && response.success) {
           this.toaster.success(response && response.message ? response.message : 'Syncing data...');
           this.filter = false;
+          this.groupMasterForm.reset();
       } else {
         this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
         this.filter = false;
+        this.groupMasterForm.reset();
       }
     },(err)=>{
       this.toaster.warning('Having trouble on syncing data...');
@@ -128,9 +130,11 @@ export class ResultsSyncComponent implements OnInit {
       if (response && response.success) {
         this.toaster.success(response && response.message ? response.message : 'Syncing data...');
         this.filter = false;
+        this.testMasterForm.reset();
     } else {
       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
       this.filter = false;
+      this.testMasterForm.reset();
     }
   },(err)=>{
     this.toaster.warning('Having trouble on syncing data...');
@@ -169,9 +173,11 @@ export class ResultsSyncComponent implements OnInit {
       if (response && response.success) {
         this.toaster.success(response && response.message ? response.message : 'Syncing data...');
         this.filter = false;
+        this.testDetailsForm.reset();
     } else {
       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
       this.filter = false;
+      this.testDetailsForm.reset();
     }
   },(err)=>{
     this.toaster.warning('Having trouble on syncing data...');
@@ -208,9 +214,11 @@ export class ResultsSyncComponent implements OnInit {
       if (response && response.success) {
         this.toaster.success(response && response.message ? response.message : 'Syncing data...');
         this.filter = false;
+        this.testQuestionDetailsForm.reset();
     } else {
       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
       this.filter = false;
+      this.testQuestionDetailsForm.reset();
     }
   },(err)=>{
     this.toaster.warning('Having trouble on syncing data...');
@@ -258,9 +266,11 @@ export class ResultsSyncComponent implements OnInit {
       if (response && response.success) {
         this.toaster.success(response && response.message ? response.message : 'Syncing data...');
         this.filter = false;
+        this.wecpDetailsForm.reset();
     } else {
       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
       this.filter = false;
+      this.wecpDetailsForm.reset();
     }
   },(err)=>{
     this.toaster.warning('Having trouble on syncing data...');
@@ -305,9 +315,11 @@ export class ResultsSyncComponent implements OnInit {
       if (response && response.success) {
         this.toaster.success(response && response.message ? response.message : 'Syncing data...');
         this.filter = false;
+        this.WECPScheduleDetailsForm.reset();
     } else {
       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
       this.filter = false;
+      this.WECPScheduleDetailsForm.reset();
     }
   },(err)=>{
     this.toaster.warning('Having trouble on syncing data...');
@@ -352,9 +364,11 @@ export class ResultsSyncComponent implements OnInit {
       if (response && response.success) {
         this.toaster.success(response && response.message ? response.message : 'Syncing data...');
         this.filter = false;
+        this.CheckSyncDetailsForm.reset();
     } else {
       this.toaster.warning(response && response.message ? response.message : 'Having trouble on syncing data...');
       this.filter = false;
+      this.CheckSyncDetailsForm.reset();
     }
   },(err)=>{
     this.toaster.warning('Having trouble on syncing data...');
