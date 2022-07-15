@@ -103,6 +103,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   bufferData:any;
   emailtemplate:any;
   isOrgEnable = false;
+  isSendNotificationEnable = true;
   constructor(
     private fb: FormBuilder,
     private store: Store<SchedulerReducerState>,
@@ -459,9 +460,11 @@ GetMinutes(d) {
       if(orgInfo){
         this.orginfo = orgInfo;
         this.showProctorTemplate = true;
+        this.isSendNotificationEnable = false;
         this.getProctorTemplate(this.orginfo.id)
       }else{
         this.showProctorTemplate = false;
+        this.isSendNotificationEnable = true;
       }
   }
   createScheduleFromEdgeService(request) {
@@ -750,7 +753,7 @@ GetMinutes(d) {
     if(event.checked == true){
     this.notificationsdialogRef = this.matDialog.open(this.notifications, {
       width: '908px',
-      height: '524px',
+      height: 'auto',
       panelClass: 'loginpopover',
     });
   
