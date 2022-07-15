@@ -132,7 +132,7 @@
 							class="example-margin">Results publish</mat-checkbox>
 					</span>
                     <span style="margin-left: 2em;" class="schedule-block__align">
-						<mat-checkbox (change)="openNoticationTemplate($event)" [formControl]="sendNotification"  class="example-margin">Send
+						<mat-checkbox [disabled]="isSendNotificationEnable" (change)="openNoticationTemplate($event)" [formControl]="sendNotification"  class="example-margin">Send
 							Notification</mat-checkbox>
 					</span>
                 </div>
@@ -285,6 +285,12 @@
 </form>
 
 <ng-template #notifications>
+    <div class="container">
+        <button class="close-button" [mat-dialog-close]="true">
+			<mat-icon class="close-icon">close</mat-icon>
+		  </button>
+
+    </div>
     <mat-dialog-content class="mat-typography">
         <div [innerHTML]="this.emailtemplate"></div>
     </mat-dialog-content>
