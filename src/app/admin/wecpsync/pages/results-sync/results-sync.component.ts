@@ -91,7 +91,7 @@ export class ResultsSyncComponent implements OnInit {
   groupmasterImports(){
     this.filter = true;
     let data ={
-      wecpOrgId:this.groupMasterForm ? this.groupMasterForm.value.gmOrgName : '',
+      orgId:this.groupMasterForm ? this.groupMasterForm.value.gmOrgName : '',
     } 
     this.syncService.groupmasterImportApi(data).subscribe((response:any)=>{
       if (response && response.success) {
@@ -120,7 +120,7 @@ export class ResultsSyncComponent implements OnInit {
   testDetailsOrg(){
     this.filter = true;
     let data ={
-      wecpOrgId:this.testMasterForm ? this.testMasterForm.value.tmOrgName : '',
+      orgId:this.testMasterForm ? this.testMasterForm.value.tmOrgName : '',
       groupIds: this.testMasterForm ? this.testMasterForm.value.tmGroupId : '',
       groupLimt: 10,
       limit: 50,
