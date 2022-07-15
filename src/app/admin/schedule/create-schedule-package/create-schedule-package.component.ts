@@ -731,13 +731,22 @@ GetMinutes(d) {
   }
 
   openSendNotification(){
+   let sampleTestDetails = [
+    {
+        "duration": 60,
+        "name": "Aptitude Assessment",
+    },{
+        "duration": 60,
+        "name": "Coding Assessment"
+    }]
     let data = {
         username: this.orginfo ? this.orginfo.name : '',
         useremail: this.orginfo ? this.orginfo.supportEmail : '',
         orgName: this.orginfo ? this.orginfo.name : '',
         getEmail: true,
         supportEmail: this.orginfo ? this.orginfo.supportEmail : '',
-        supportPhone: this.orginfo ? this.orginfo.supportPhone : ''
+        supportPhone: this.orginfo ? this.orginfo.supportPhone : '',
+        testDetails: this.packageDetails.attributes.tasks.length > 0 ? this.packageDetails.attributes.tasks : sampleTestDetails,
     }
     this.scheduleService.sendNotifications(data).subscribe((response: any)=> {
       if(response.success){
