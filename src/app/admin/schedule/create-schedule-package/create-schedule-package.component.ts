@@ -102,7 +102,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   notificationsdialogRef:any;
   bufferData:any;
   emailtemplate:any;
-  isOrgEnable = false;
+  // isOrgEnable = false;
   isSendNotificationEnable = true;
   constructor(
     private fb: FormBuilder,
@@ -758,17 +758,13 @@ GetMinutes(d) {
     })
   }
 
-  openNoticationTemplate(event) {
-    if(event.checked == true){
+  openNoticationTemplate() {
     this.notificationsdialogRef = this.matDialog.open(this.notifications, {
       width: '908px',
       height: 'auto',
       panelClass: 'loginpopover',
     });
-  
       this.openSendNotification();
-    }
-  
   }
 
   getProctorTemplate(orgId){
@@ -789,7 +785,7 @@ GetMinutes(d) {
      
   }
 
-  confirm(value){
-    this.isOrgEnable = value;
-  }
+  // confirm(value){
+  //   // this.isOrgEnable = value;
+  // }
 }

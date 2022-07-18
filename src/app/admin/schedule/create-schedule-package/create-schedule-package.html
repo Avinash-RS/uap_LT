@@ -18,7 +18,7 @@
                 <span class="auto-complete-block__align">
 					<mat-form-field appearance="fill">
 						<mat-label>Select Organization</mat-label>
-						<mat-select required formControlName="orgId" [disabled]="isOrgEnable">
+						<mat-select required formControlName="orgId">
 							<mat-option (click)="orgChange(org)" *ngFor="let org of listOfOrg" [value]="org?.id">
 								{{org?.name}}</mat-option>
 						</mat-select>
@@ -132,9 +132,12 @@
 							class="example-margin">Results publish</mat-checkbox>
 					</span>
                     <span style="margin-left: 2em;" class="schedule-block__align">
-						<mat-checkbox [disabled]="isSendNotificationEnable" (change)="openNoticationTemplate($event)" [formControl]="sendNotification"  class="example-margin">Send
+						<mat-checkbox [disabled]="isSendNotificationEnable"  [formControl]="sendNotification"  class="example-margin">Send
 							Notification</mat-checkbox>
 					</span>
+                    <div style="margin-left: 2em;" class="schedule-block__align">
+                        <button *ngIf="sendNotification.value" class="preview" (click)="openNoticationTemplate()">Preview</button>
+                    </div>
                 </div>
                 <div>
                     <span *ngIf="showpublishDate">
@@ -296,6 +299,6 @@
     </mat-dialog-content>
     <mat-dialog-actions align="end">
         <button mat-button mat-dialog-close>Cancel</button>
-        <button class="btn" (click)="confirm(true)" mat-button [mat-dialog-close]="true" cdkFocusInitial>Confirm</button>
+        <button class="btn" mat-button [mat-dialog-close]="true" cdkFocusInitial>Confirm</button>
     </mat-dialog-actions>
 </ng-template>
