@@ -125,7 +125,6 @@
                             <mat-select formControlName="tqOrgName" placeholder="Select Organization Name">
                                 <mat-option (click)="getTestQuestionDetailsOrg(source.wecpOrgId)" *ngFor="let source of orgName" [value]="source.wecpOrgId">{{source.name}}</mat-option>
                             </mat-select>
-
                         </mat-form-field>
                     </div>
                     <div class="fields-wrapper">
@@ -134,7 +133,6 @@
                             <mat-select (selectionChange)="getTestQuestionId($event)" formControlName="tqGroupId" placeholder="Select Group Id (multiselect)">
                                 <mat-option *ngFor="let group of groupId" [value]="group.groupId">{{group.groupId}}</mat-option>
                             </mat-select>
-
                         </mat-form-field>
                     </div>
                     <div class="fields-wrapper">
@@ -143,9 +141,11 @@
                             <mat-select formControlName="tqTestId" placeholder="Select Test Id">
                                 <mat-option *ngFor="let testIds of testId" [value]="testIds.TestId">{{testIds.TestId}}</mat-option>
                             </mat-select>
-
                         </mat-form-field>
                     </div>
+
+                </div>
+                <div class="query-wrapper">
                     <div class="fields-wrapper">
                         <label class="label m-t-10">Limit (max 100) </label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
@@ -195,6 +195,10 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
+
+                </div>
+
+                <div class="query-wrapper">
                     <div class="fields-wrapper">
                         <label class="label m-t-10">Limit (max 100) </label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
@@ -245,6 +249,10 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
+
+                </div>
+
+                <div class="query-wrapper">
                     <div class="fields-wrapper">
                         <label class="label m-t-10">Limit (max 100) </label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
