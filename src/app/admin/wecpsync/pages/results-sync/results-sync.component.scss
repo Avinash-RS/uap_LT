@@ -168,7 +168,8 @@ mat-icon.mat-icon {
 }
 
 .w-100 {
-    width: 95% !important;
+    width: 100% !important;
+    padding-right: 23px;
 }
 
 .select1 {
@@ -422,4 +423,8 @@ mat-label {
     background-color: gray !important;
     cursor: not-allowed !important;
     color: #fff !important;
+}
+
+::ng-deep .mat-select-panel {
+    min-width: calc(100% + 40px) !important;
 }
