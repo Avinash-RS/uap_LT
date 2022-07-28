@@ -30,9 +30,9 @@ import { CdTimerModule } from 'angular-cd-timer';
         preventDuplicates: true,
         maxOpened:3,
         autoDismiss:true,
-        // progressBar:true,
-        // progressAnimation:'increasing',
-        closeButton:true
+        progressBar:true,
+        progressAnimation:'increasing',
+        // closeButton:true
       }
     ),
   ],

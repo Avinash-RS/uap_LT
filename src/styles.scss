@@ -165,3 +165,25 @@ uap-login-page {
     display: block;
     height: 100%;
 }
+
+button.toast-close-button {
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    line-height: 0;
+    display: flex;
+    align-items: center;
+    padding-top: 6px;
+}
+
+.toast-container * {
+    box-sizing: border-box;
+    font-size: 17px !important;
+    line-height: normal;
+}
+
+.toast-message {
+    word-wrap: break-word;
+    font-size: 17px !important;
+}

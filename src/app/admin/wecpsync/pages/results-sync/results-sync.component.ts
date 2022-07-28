@@ -26,7 +26,6 @@ export class ResultsSyncComponent implements OnInit {
     private fb: FormBuilder,
     private syncService: SyncService,
     private toaster: ToastrService,
-    private loading: LoadingService
   ) { }
 
   ngOnInit(): void {
@@ -153,7 +152,7 @@ export class ResultsSyncComponent implements OnInit {
   getTestId($event){
     let data = {
       wecpOrgId : this.testDetailsForm ? this.testDetailsForm.value.tdOrgName : '',
-      groupIds: $event ? $event.value : ''
+      groupIds: [$event ? $event.value : '']
      }
      this.getOrgName(data)
   }

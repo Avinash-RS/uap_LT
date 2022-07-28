@@ -1,11 +1,9 @@
 import { UserAPIService } from 'src/app/rest-api/user-api/user-api.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-// import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { Store } from '@ngrx/store';
 import { AssessmentTasksReducerState } from '../../assessment/landing-page/redux/landing-page.model';
 import { selectAssessmentTasksListState } from '../../assessment/landing-page/redux/landing-page.reducers';
-import  * as loginAction from 'src/app/login/redux/login.actions';
 
 @Component({
   selector: 'app-navbar',
@@ -15,7 +13,6 @@ import  * as loginAction from 'src/app/login/redux/login.actions';
 
 export class NavBarComponent {
   assessmentData: any;
-  displayName = '';
   dynamicLogo: any;
   userDetails:any
   constructor(private router: Router,
@@ -24,7 +21,6 @@ export class NavBarComponent {
 
   ngOnInit(): void {
       this.userDetails = this.userService.getUserFromLocalStorage();
-
       if(this.userDetails && this.userDetails.attributes && this.userDetails.attributes.organisations && this.userDetails.attributes.organisations[0].logoUrl ){
           this.dynamicLogo = this.userDetails.attributes.organisations[0].logoUrl;
       }else {
@@ -33,10 +29,6 @@ export class NavBarComponent {
 
     this.store.select(selectAssessmentTasksListState).subscribe((response) => {
       this.assessmentData = response;
-      if (this.assessmentData) {
-            
-        this.displayName = this.assessmentData.data.attributes.firstName + ' ' + this.assessmentData.data.attributes.lastName;
-      }
     });
   }
 

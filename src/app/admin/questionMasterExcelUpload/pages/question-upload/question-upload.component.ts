@@ -113,6 +113,9 @@ export class QuestionUploadComponent implements OnInit {
         this.toaster.success(response.message);
       } else {
         this.toaster.error(response.message);
+        this.csvFileName = '';
+        this.showCsvFileInformation = false;
+        this.csvRows = [];
       }
     })
   }

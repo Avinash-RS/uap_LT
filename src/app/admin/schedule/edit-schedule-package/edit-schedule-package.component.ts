@@ -37,6 +37,7 @@ export class EditSchedulePackageComponent implements OnInit {
   publishTime: string;
   publishDateTimeStamp: string;
   showpublishDate = false;
+  isUpdateEnable = true;
   constructor(
     private toaster: ToastrService,
     private scheduleService: ScheduleAPIService,
@@ -92,18 +93,22 @@ export class EditSchedulePackageComponent implements OnInit {
 
   onEndDateChanged(event: MatDatepickerInputEvent<Date>): void {
     this.scheduleEndDate = event.value;
+    this.isUpdateEnable = false;
   }
 
   onEndTimeChanged(time: any): void {
     this.batchEndTime = time;
+    this.isUpdateEnable = false;
   }
 
   onpublishDateChanged(event: MatDatepickerInputEvent<Date>): void{
     this.publishDate = event.value;
+    this.isUpdateEnable = false;
   }
 
   onpublishTimeChanged(time: any): void{
     this.publishTime = time;
+    this.isUpdateEnable = false;
   }
 
   updateSchedule() {
@@ -162,5 +167,8 @@ export class EditSchedulePackageComponent implements OnInit {
       this.is_published = 1;
     }
   }
-
+  isProctor(){
+    this.isUpdateEnable = false;
+  }
 }
+

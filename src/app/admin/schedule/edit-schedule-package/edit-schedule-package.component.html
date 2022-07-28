@@ -2,7 +2,7 @@
     <span class="header-block__title-font-size">Schedule/Edit</span>
     <div class="header-block__buttons-align">
         <span>
-      <button class="header-block__button" (click)="updateSchedule()">Update</button></span>
+      <button class="header-block__button" [disabled]="isUpdateEnable" (click)="updateSchedule()">Update</button></span>
         <span>
         <button class="header-block__exit-button" routerLink="/admin/schedule/list">Exit</button></span>
     </div>
@@ -105,7 +105,7 @@
 
             <div>
                 <span class="schedule-block__align">
-                <mat-checkbox [(ngModel)]="is_proctor" class="example-margin"
+                <mat-checkbox (change)="isProctor($event)"  [(ngModel)]="is_proctor" class="example-margin"
                   >Is Proctor</mat-checkbox>
               </span>
 
