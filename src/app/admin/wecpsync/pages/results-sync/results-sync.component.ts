@@ -162,7 +162,7 @@ export class ResultsSyncComponent implements OnInit {
     this.filter = true;
     let data ={
       orgId:this.testDetailsForm ? this.testDetailsForm.value.tdOrgName : '',
-      groupIds: this.testDetailsForm ? this.testDetailsForm.value.tdGroupId : '',
+      groupIds: [this.testDetailsForm ? this.testDetailsForm.value.tdGroupId : ''],
       testId: this.testDetailsForm ? this.testDetailsForm.value.tdTestId : '',
       querylimit: 100,
       questionInsertLimit: 100,
