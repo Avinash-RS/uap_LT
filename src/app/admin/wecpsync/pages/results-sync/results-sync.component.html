@@ -87,7 +87,7 @@
                     <div class="fields-wrapper">
                         <label class="label">Group Id <span class="errorSign">*</span></label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
-                            <mat-select (selectionChange)="getTestId($event)" multiple formControlName="tdGroupId" placeholder="Select Group Id (multiselect)">
+                            <mat-select (selectionChange)="getTestId($event)" formControlName="tdGroupId" placeholder="Select Group Id">
                                 <mat-option *ngFor="let group of groupId" [value]="group.groupId">{{group.groupId}}</mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -130,7 +130,7 @@
                     <div class="fields-wrapper">
                         <label class="label">Group Id <span class="errorSign">*</span></label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
-                            <mat-select (selectionChange)="getTestQuestionId($event)" formControlName="tqGroupId" placeholder="Select Group Id (multiselect)">
+                            <mat-select (selectionChange)="getTestQuestionId($event)" formControlName="tqGroupId" placeholder="Select Group Id">
                                 <mat-option *ngFor="let group of groupId" [value]="group.groupId">{{group.groupId}}</mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -182,7 +182,7 @@
                     <div class="fields-wrapper">
                         <label class="label">Group Id <span class="errorSign">*</span></label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
-                            <mat-select (selectionChange)="getUAPImportId($event)" formControlName="uapGroupId" placeholder="Select Group Id (multiselect)">
+                            <mat-select (selectionChange)="getUAPImportId($event)" formControlName="uapGroupId" placeholder="Select Group Id">
                                 <mat-option *ngFor="let group of groupId" [value]="group.groupId">{{group.groupId}}</mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -236,7 +236,7 @@
                     <div class="fields-wrapper">
                         <label class="label">Group Id <span class="errorSign">*</span></label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
-                            <mat-select formControlName="WECPScheduleGroupId" (selectionChange)="getWECPScheduleId($event)" placeholder="Select Group Id (multiselect)">
+                            <mat-select formControlName="WECPScheduleGroupId" (selectionChange)="getWECPScheduleId($event)" placeholder="Select Group Id">
                                 <mat-option *ngFor="let group of groupId" [value]="group.groupId">{{group.groupId}}</mat-option>
                             </mat-select>
                         </mat-form-field>
@@ -291,7 +291,7 @@
                     <div class="fields-wrapper">
                         <label class="label">Group Id <span class="errorSign">*</span></label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
-                            <mat-select (selectionChange)="getCheckSyncId($event)" formControlName="CheckSyncGroupId" placeholder="Select Group Id (multiselect)">
+                            <mat-select (selectionChange)="getCheckSyncId($event)" formControlName="CheckSyncGroupId" placeholder="Select Group Id">
                                 <mat-option *ngFor="let group of groupId" [value]="group.groupId">{{group.groupId}}</mat-option>
                             </mat-select>
 
