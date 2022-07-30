@@ -41,28 +41,28 @@
       >
         View
       </button>
-      <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon>
-      <mat-menu #menu="matMenu">
-        <button
+      <!-- <mat-icon [matMenuTriggerFor]="menu">more_vert</mat-icon> -->
+      <!-- <mat-menu #menu="matMenu"> -->
+        <!-- <button
           mat-menu-item
           *ngIf="packageContent.attributes.status.toLowerCase() === 'published'"
           (click)="archiveAssessmentPackage()"
         >
           Archive
-        </button>
+        </button> -->
         <!-- Enable below button if rquired -->
         <!-- <button mat-menu-item *ngIf="packageContent.attributes.status.toLowerCase() === 'draft'">
           Edit
         </button> -->
         <!-- Enable below button once Api is available -->
-        <button
+        <!-- <button
           mat-menu-item
           *ngIf="packageContent.attributes.status.toLowerCase() === 'draft'"
           (click)="deleteAssessmentPackage()"
         >
           Delete
-        </button>
-      </mat-menu>
+        </button> -->
+      <!-- </mat-menu> -->
     </div>
   </div>
   <div *ngIf="packageContent.attributes.usageCount && packageContent.attributes.status.toLowerCase() === 'published'" class="package__invite-status">
