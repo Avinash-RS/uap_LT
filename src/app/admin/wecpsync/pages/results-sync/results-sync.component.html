@@ -150,6 +150,9 @@
                         <label class="label m-t-10">Limit (max 100) </label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
                             <input formControlName="tqLimit" type="number" placeholder="Select Limit" matInput>
+                            <mat-error *ngIf="tqLimit && tqLimit.touched && tqLimit.invalid">
+                                Maximum limit is 100 only
+                            </mat-error>
                         </mat-form-field>
                     </div>
                     <button class="btnConnect" (click)="TestQuestionDetailsImport()" [disabled]="!testQuestionDetailsForm.valid" type="submit" mat-raised-button> <img src="assets/images/sync_white_24dp.svg" alt="" srcset=""> Sync</button>
@@ -203,7 +206,11 @@
                         <label class="label m-t-10">Limit (max 100) </label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
                             <input formControlName="uapLimit" type="number" matInput placeholder="Select Limit" matInputs>
+                            <mat-error *ngIf="uapLimit && uapLimit.touched && uapLimit.invalid">
+                                Maximum limit is 100 only
+                            </mat-error>
                         </mat-form-field>
+                 
                     </div>
                     <button class="btnConnect" [disabled]="!wecpDetailsForm.valid" (click)="WECPToUAPImport()" type="submit" mat-raised-button> <img src="assets/images/sync_white_24dp.svg" alt="" srcset=""> Sync</button>
                 </div>
@@ -257,7 +264,11 @@
                         <label class="label m-t-10">Limit (max 100) </label>
                         <mat-form-field class="label input-wt w-100" appearance="outline">
                             <input formControlName="WECPScheduleLimit" type="number" matInput placeholder="Select Limit" matInputs>
+                            <mat-error *ngIf="WECPScheduleLimit && WECPScheduleLimit.touched && WECPScheduleLimit.invalid">
+                                Maximum limit is 100 only
+                            </mat-error>
                         </mat-form-field>
+                    
                     </div>
                     <button class="btnConnect" [disabled]="!WECPScheduleDetailsForm.valid" (click)="WECPScheduleImport()" type="submit" mat-raised-button> <img src="assets/images/sync_white_24dp.svg" alt="" srcset=""> Sync</button>
                 </div>

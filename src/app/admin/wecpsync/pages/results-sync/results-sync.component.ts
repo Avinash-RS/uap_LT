@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SyncService } from 'src/app/rest-api/sync-apis/sync.service';
 import { ToastrService } from 'ngx-toastr';
 import { LoadingService } from 'src/app/rest-api/loading.service';
+import { max } from 'moment';
 
 @Component({
   selector: 'uap-results-sync',
@@ -66,7 +67,7 @@ export class ResultsSyncComponent implements OnInit {
       'tqOrgName': ['',[Validators.required]],
       'tqGroupId': ['',[Validators.required]],
       'tqTestId': ['',[Validators.required]],
-      'tqLimit': ['',[Validators.required]],
+      'tqLimit': ['',[Validators.required, Validators.max(100)]],
     })
   }
 
@@ -235,7 +236,7 @@ export class ResultsSyncComponent implements OnInit {
       'uapOrgName': ['',[Validators.required]],
       'uapGroupId': ['',[Validators.required]],
       'uapTestId': ['',[Validators.required]],
-      'uapLimit': ['',[Validators.required]],
+      'uapLimit': ['',[Validators.required,Validators.max(100)]],
     })
   }
   getUAPImportOrg(orgId){
@@ -283,7 +284,7 @@ export class ResultsSyncComponent implements OnInit {
       'WECPScheduleOrgName': ['',[Validators.required]],
       'WECPScheduleGroupId': ['',[Validators.required]],
       'WECPScheduleTestId': ['',[Validators.required]],
-      'WECPScheduleLimit': ['',[Validators.required]],
+      'WECPScheduleLimit': ['',[Validators.required,Validators.max(100)]],
     })
   }
 
@@ -408,6 +409,18 @@ export class ResultsSyncComponent implements OnInit {
   get tqLimit() {
     return this.testQuestionDetailsForm.get('tqLimit');
   }
+
+  get uapLimit() {
+    return this.wecpDetailsForm.get('uapLimit');
+  }
+
+  get WECPScheduleLimit() {
+    return this.WECPScheduleDetailsForm.get('WECPScheduleLimit');
+  }
+
+
+  
+  
 
 
   get uapOrgName(){
