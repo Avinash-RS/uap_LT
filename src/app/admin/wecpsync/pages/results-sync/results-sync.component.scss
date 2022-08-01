@@ -428,3 +428,9 @@ mat-label {
 ::ng-deep .mat-select-panel {
     min-width: calc(100% + 40px) !important;
 }
+
+.mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex {
+    cursor: pointer;
+     width: 0 !important;
+    background: transparent !important;
+}

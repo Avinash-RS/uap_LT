@@ -222,7 +222,7 @@
     height: 327px;
 }
 
-::ng-deep .mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex {
+:host ::ng-deep .mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex {
     cursor: pointer;
     width: 511px !important;
     background: transparent !important;
