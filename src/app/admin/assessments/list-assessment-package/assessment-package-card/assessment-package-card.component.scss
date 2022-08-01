@@ -53,6 +53,7 @@
     }
     &__actions {
         font: 500 16px/1 $uap-roboto-condensed;
+        width: 190px;
         &-status {
             color: $uap-la-palma;
             &-published {
