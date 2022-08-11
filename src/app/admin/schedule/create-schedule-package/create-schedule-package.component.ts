@@ -104,6 +104,9 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   emailtemplate:any;
   // isOrgEnable = false;
   isSendNotificationEnable = true;
+  assessmentCodeCheck = false;
+  assessmentCodeTick = false
+  assessmentError="";
   constructor(
     private fb: FormBuilder,
     private store: Store<SchedulerReducerState>,
@@ -122,6 +125,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
     this.schedulePackageForm = this.fb.group({
       batchName: ['', [Validators.required,this.alphaWithDots]],
       scheduleDescription: ['', Validators.required],
+      assessmentcode:['', Validators.required],
       scheduleDate: [new Date(), Validators.required],
       scheduleTime: [this.currentTime, Validators.required],
       // schedul end Date and time
@@ -172,6 +176,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.assessmentCodeTick = false;
     this.initializeCandidateInformatinView();
     this.packageListActionDispatcher();
     this.checkScheduleAccessStatus();
@@ -783,6 +788,29 @@ GetMinutes(d) {
   selectTemplate(templateDetails){
         this.selectedTemplateName = templateDetails.tempname;
      
+  }
+
+  validateAssessmentCode(){
+    var assessmentCode = this.schedulePackageForm.get('assessmentcode')?.value
+    this.scheduleService.validateAssessmentCode({assessmentCode:assessmentCode}).subscribe((response: any)=> {
+      if(response.success){
+        this.assessmentCodeCheck=false;
+        this.assessmentCodeTick = true;
+        this.assessmentError = " Assessment Code can be added"
+      }else {
+        this.assessmentCodeTick = false;
+        this.assessmentCodeCheck=true;
+        if(response.message == "Assessment Code is mandatory"){
+          this.assessmentError = "This field is mandatory"
+        }else if(response.message == "Invalid AssessmentCode"){
+          this.assessmentError = "Incorrect Format"
+        }else if(response.message == "Assessment Code already exist"){
+          this.assessmentError = " Assessment Code already exists. Please try another code"
+        }
+        this.toaster.warning(response.message);
+      }
+  })
+    
   }
 
   // confirm(value){

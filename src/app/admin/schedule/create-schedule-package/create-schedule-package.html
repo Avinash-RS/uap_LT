@@ -51,6 +51,19 @@
 					</div>
 				</label>
                 <label class="custom-label__font">
+					Assessment Code
+					<input formControlName="assessmentcode" type="text"
+						class="schedule-assessment-block__custom-input-field" />
+                        <button *ngIf="!assessmentCodeTick" (click)="validateAssessmentCode()">validate</button>
+                        <img *ngIf="assessmentCodeTick" src="/assets/greentick.svg" />
+					<div class="schedule-assessment-block__text-area-width fontlable" *ngIf="!assessmentCodeCheck">
+						<span>Note: Assessment Code should be an Alpha-numeric Characters. It should be 7 characters which contains first 3 letters and continues with 4 numbers. <b> Eg: abc2345</b></span>
+					</div>
+                    <div class="schedule-assessment-block__text-area-width redlable" *ngIf="assessmentCodeCheck">
+                        {{assessmentError}}					
+                    </div>
+				</label>
+                <label class="custom-label__font">
 					Description
 					<textarea formControlName="scheduleDescription" cols="62" rows="4"
 						class="schedule-assessment-block__text-area-width"></textarea>
