@@ -46,6 +46,7 @@ export interface ScheduleRequestDataAttributes {
   is_published:string;
   publishDate:string;
   send_Notification : string;
+  assessmentCode:string;
   // publishTime:string
 }
 

@@ -50,14 +50,14 @@
 						Schedule name not valid.
 					</div>
 				</label>
-                <label class="custom-label__font">
+                <label class="custom-label__font width_900">
 					Assessment Code
-					<input formControlName="assessmentcode" type="text"
-						class="schedule-assessment-block__custom-input-field" />
-                        <button *ngIf="!assessmentCodeTick" (click)="validateAssessmentCode()">validate</button>
-                        <img *ngIf="assessmentCodeTick" src="/assets/greentick.svg" />
+					<input formControlName="assessmentcode" [readonly]="assessmentCodeTick" type="text" maxlength="10"
+						class="schedule-assessment-block__custom-input-field disFlex" />
+                        <button class="check-btn" *ngIf="!assessmentCodeTick" (click)="validateAssessmentCode()">CHECK AVAILABILITY</button>
+                        <img class="check-mark" *ngIf="assessmentCodeTick" src="/assets/greentick.svg" />
 					<div class="schedule-assessment-block__text-area-width fontlable" *ngIf="!assessmentCodeCheck">
-						<span>Note: Assessment Code should be an Alpha-numeric Characters. It should be 7 characters which contains first 3 letters and continues with 4 numbers. <b> Eg: abc2345</b></span>
+						<span>Note: Assessment code should be alpha-numeric with 6 -10 characters length. Special characters and spaces are not allowed.</span>
 					</div>
                     <div class="schedule-assessment-block__text-area-width redlable" *ngIf="assessmentCodeCheck">
                         {{assessmentError}}					

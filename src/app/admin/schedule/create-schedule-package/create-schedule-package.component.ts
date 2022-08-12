@@ -568,6 +568,7 @@ GetMinutes(d) {
         type: 'batchSchedule',
         attributes: {
           batchName: this.schedulePackageForm.get('batchName')?.value,
+          assessmentCode: this.schedulePackageForm.get('assessmentcode')?.value,
           description: this.schedulePackageForm.get('scheduleDescription')?.value,
           packageTemplateId: this.packageDetails.id,
           testDetails: this.packageDetails.attributes.tasks,
@@ -800,14 +801,7 @@ GetMinutes(d) {
       }else {
         this.assessmentCodeTick = false;
         this.assessmentCodeCheck=true;
-        if(response.message == "Assessment Code is mandatory"){
-          this.assessmentError = "This field is mandatory"
-        }else if(response.message == "Invalid AssessmentCode"){
-          this.assessmentError = "Incorrect Format"
-        }else if(response.message == "Assessment Code already exist"){
-          this.assessmentError = " Assessment Code already exists. Please try another code"
-        }
-        this.toaster.warning(response.message);
+        this.assessmentError = response.message
       }
   })
     

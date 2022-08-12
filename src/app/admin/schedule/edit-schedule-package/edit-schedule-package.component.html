@@ -32,6 +32,10 @@
         <input readonly  class="schedule-assessment-block__custom-input-field" [(ngModel)]="batchDetails?.attributes.batchName" type="text" />
         <!-- <div class="input-field__error" *ngIf="validateFormField('batchName')">Required</div> -->
     </label>
+        <label class="custom-label__font">
+          Assessment Code
+        <input readonly  class="schedule-assessment-block__custom-input-field" [(ngModel)]="batchDetails?.attributes.assessmentCode" type="text" />
+       </label>
             <label class="custom-label__font">
           Description
           <textarea readonly

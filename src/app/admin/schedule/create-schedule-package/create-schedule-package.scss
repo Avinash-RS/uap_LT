@@ -454,3 +454,31 @@ button:disabled {
     border: none;
     background: #004685;
 }
+
+.check-btn{
+    width: 131px;
+height: 33px;
+background: #08558C 0% 0% no-repeat padding-box;
+border-radius: 4px;
+border: none;
+opacity: 1;
+position: absolute;
+    right: 163px;
+    top: 14px;
+    color: #fff;
+    font-size: 11px;
+}
+.check-mark{
+    position: absolute;
+    background-color: transparent !important;
+    right: 163px;
+    top: 14px;
+    color: #fff;
+    font-size: 11px; 
+}
+.width_900{
+    width: 900px !important;
+}
+.disFlex{
+    display: flex !important;
+}
