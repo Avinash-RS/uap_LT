@@ -37,7 +37,7 @@ export class LoginPageComponent implements OnInit {
     this.loadIp();
     this.getAssessmentParam();
     this.formInitialize();
-    this.getErrorMessage();
+    // this.getErrorMessage();
     localStorage.setItem("smallScreen", 'false')
   }
 
@@ -65,6 +65,7 @@ export class LoginPageComponent implements OnInit {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]],
+      assessmentCode:[''],
     })
   }
 
@@ -82,6 +83,7 @@ export class LoginPageComponent implements OnInit {
       let apiData = {
         email: this.loginForm.value.username.trim(),
         pass: this.loginForm.value.password.trim(),
+        assessmentCode: this.loginForm.value.assessmentCode.trim(),
         assessmentId: sessionStorage.getItem('assessmentId') ? sessionStorage.getItem('assessmentId') : '',
         browserinfo: ipInfo,
       }

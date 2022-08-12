@@ -78,6 +78,7 @@ export class UserAPIService {
   logout() {
     let permission = this.userredirectTo();
     if (permission && permission == 'AST') {
+      sessionStorage.clear();
       let email = sessionStorage.getItem('user') ? (JSON.parse(sessionStorage.getItem('user')) && JSON.parse(sessionStorage.getItem('user')).attributes && JSON.parse(sessionStorage.getItem('user')).attributes.email ? JSON.parse(sessionStorage.getItem('user')).attributes.email : '') : '';
       email ? this.logoutForTestTaker(email) : this.logoutWhenTokenNotPresent();
     } else {

@@ -93,7 +93,7 @@
     .signIn {
         font-weight: 400;
         font-size: 24px;
-        line-height: 32px;
+        line-height: 42px;
         color: $uap-grey;
         text-align: center;
     }
@@ -232,8 +232,9 @@
         border: 2px solid rgba(0, 0, 0, 0.05);
         background-color: rgba(0, 0, 0, 0.03);
         width: 100%;
+        margin-top: 30px;
         label {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 400;
             color: #333333;
             line-height: normal;

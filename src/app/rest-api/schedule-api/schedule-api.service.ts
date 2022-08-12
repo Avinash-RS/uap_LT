@@ -108,4 +108,8 @@ export class ScheduleAPIService {
     return this.httpClient.post(`/getemailTemplate`, data);
   }
 
+  validateAssessmentCode(data:any){
+    return this.httpClient.post(`/validateAssessmentCode`, data);
+  }
+
 }

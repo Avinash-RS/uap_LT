@@ -50,6 +50,19 @@
 						Schedule name not valid.
 					</div>
 				</label>
+                <label class="custom-label__font width_900">
+					Assessment Code
+					<input formControlName="assessmentcode" [readonly]="assessmentCodeTick" type="text" maxlength="10"
+						class="schedule-assessment-block__custom-input-field disFlex" />
+                        <button class="check-btn" *ngIf="!assessmentCodeTick" (click)="validateAssessmentCode()">CHECK AVAILABILITY</button>
+                        <img class="check-mark" *ngIf="assessmentCodeTick" src="/assets/greentick.svg" />
+					<div class="schedule-assessment-block__text-area-width fontlable" *ngIf="!assessmentCodeCheck">
+						<span>Note: Assessment code should be alpha-numeric with 6 -10 characters length. Special characters and spaces are not allowed.</span>
+					</div>
+                    <div class="schedule-assessment-block__text-area-width redlable" *ngIf="assessmentCodeCheck">
+                        {{assessmentError}}					
+                    </div>
+				</label>
                 <label class="custom-label__font">
 					Description
 					<textarea formControlName="scheduleDescription" cols="62" rows="4"

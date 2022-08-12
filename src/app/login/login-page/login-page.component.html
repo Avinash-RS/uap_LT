@@ -66,8 +66,8 @@
         <div class="loginWrapper">
             <form [formGroup]="loginForm" autocomplete="off">
                 <h1 class="animated animatedFadeInUp fadeInUp signIn"> {{'Sign in to your account'}}</h1>
-                <br/><br/>
-                <mat-card-content style="margin-top:10px">
+               
+                <mat-card-content>
 
                     <mat-form-field appearance="outline">
                         <mat-label class="label-color">{{'Username'}}</mat-label>
@@ -82,7 +82,7 @@
                         <mat-error class="error" *ngIf="username.errors?.pattern">{{'Please enter a valid email address'}}</mat-error>
                     </ng-container>
 
-                    <div class="space-20"></div>
+                    <!-- <div class="space-20"></div> -->
 
                     <mat-form-field appearance="outline">
                         <mat-label class="label-color">{{'Password'}}</mat-label>
@@ -92,20 +92,27 @@
                                 <mat-icon class="icon-color">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                             </span>
                     </mat-form-field>
-                    <ng-container *ngIf="password?.invalid && password?.touched">
+                    
+                    <mat-form-field appearance="outline">
+                        <mat-label class="label-color">{{'Assessment Code'}}</mat-label>
+                        <input matInput [placeholder]="'Enter the Assessment Code'" formControlName="assessmentCode" maxlength="10">
+                        <mat-icon matPrefix class="icon-color">library_books</mat-icon>
+                 
+                    </mat-form-field>
+                    <!-- <ng-container *ngIf="password?.invalid && password?.touched">
                         <mat-error class="error" *ngIf="password?.errors?.required">{{'Password is required'}}
                         </mat-error>
-                    </ng-container>
-                    <div class="space-20"></div>
+                    </ng-container> -->
+                    <!-- <div class="space-20"></div>
 
-                    <div class="space-20"></div>
+                    <div class="space-20"></div> -->
 
                     <div class="tacbox">
                         <label for="checkbox">By “Signing In”, I acknowledge to have read, understood and agree with assessment Terms & Conditions. I agree to the Privacy Policy of the assessment processes.</label>
                     </div>
                     <!-- <a target="_blank" href="https://info.lntedutech.com/"></a> -->
                     <!-- <a target="_blank" href="https://lntedutech.com/privacy-policy-2/"></a> -->
-                    <div class="space-20"></div>
+                    <!-- <div class="space-20"></div> -->
 
                     <div class="center">
                         <button class="btn" [disabled]="!loginForm.valid" id="login" mat-raised-button (click)="login()">{{'SIGN IN'}}</button>

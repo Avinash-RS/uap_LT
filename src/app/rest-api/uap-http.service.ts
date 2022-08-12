@@ -99,8 +99,8 @@ export class UapHttpService {
      !url.includes('/getemailTemplate')&&
      !url.includes('/getproctorTemplate')&&
      !url.includes('/wecpScheduleTestSync')&&
-     !url.includes('/checkWECPSyncStatus')
-     
+     !url.includes('/checkWECPSyncStatus')&&
+     !url.includes('/validateAssessmentCode')
      ) {
     return `${this.apiBaseUrl}${url}`;
     } else {
