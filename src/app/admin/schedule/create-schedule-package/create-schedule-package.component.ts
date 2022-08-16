@@ -521,6 +521,7 @@ GetMinutes(d) {
         type: 'batchSchedule',
         attributes: {
           batchName: request.data.attributes.batchName,
+          assessmentCode: this.schedulePackageForm.get('assessmentcode')?.value,
           description: request.data.attributes.description,
           packageTemplateId: request.data.attributes.packageTemplateId,
           testDetails: this.packageDetails.attributes.tasks,
