@@ -176,6 +176,7 @@ export class CreateSchedulePackageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.getAssessmentCode();
     this.assessmentCodeTick = false;
     this.initializeCandidateInformatinView();
     this.packageListActionDispatcher();
@@ -792,21 +793,31 @@ GetMinutes(d) {
      
   }
 
-  validateAssessmentCode(){
-    var assessmentCode = this.schedulePackageForm.get('assessmentcode')?.value
-    this.scheduleService.validateAssessmentCode({assessmentCode:assessmentCode}).subscribe((response: any)=> {
-      if(response.success){
-        this.assessmentCodeCheck=false;
-        this.assessmentCodeTick = true;
-        this.assessmentError = " Assessment Code can be added"
-      }else {
-        this.assessmentCodeTick = false;
-        this.assessmentCodeCheck=true;
-        this.assessmentError = response.message
-      }
-  })
-    
+  getAssessmentCode(){
+      this.scheduleService.getAssessmentCode().subscribe((response:any) =>{
+          if(response.success){
+            this.schedulePackageForm.patchValue({ assessmentcode: response.assessmentCode });
+          }else{
+            this.toaster.warning(response.message)
+          }
+      })
   }
+
+  // validateAssessmentCode(){
+  //   var assessmentCode = this.schedulePackageForm.get('assessmentcode')?.value
+  //   this.scheduleService.validateAssessmentCode({assessmentCode:assessmentCode}).subscribe((response: any)=> {
+  //     if(response.success){
+  //       this.assessmentCodeCheck=false;
+  //       this.assessmentCodeTick = true;
+  //       this.assessmentError = " Assessment Code can be added"
+  //     }else {
+  //       this.assessmentCodeTick = false;
+  //       this.assessmentCodeCheck=true;
+  //       this.assessmentError = response.message
+  //     }
+  // })
+    
+  // }
 
   // confirm(value){
   //   // this.isOrgEnable = value;

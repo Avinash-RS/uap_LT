@@ -112,4 +112,8 @@ export class ScheduleAPIService {
     return this.httpClient.post(`/validateAssessmentCode`, data);
   }
 
+  getAssessmentCode(){
+    return this.httpClient.get(`/generateAssessmentCode`);
+  }
+
 }
