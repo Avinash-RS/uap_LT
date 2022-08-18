@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { assessmentIDAction, loginAttempt, logoutAction } from '../redux/login.actions';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import browser from 'browser-detect';
 import { HttpClient } from '@angular/common/http';
 import * as publicIp from 'public-ip';
@@ -24,6 +24,8 @@ export class LoginPageComponent implements OnInit {
   errorMessage: any;
   assessmentId: any;
   browserDetails: any;
+  checkRouter: string;
+  isAssessCode = false;
   constructor(
     public fb: FormBuilder, 
     public toastr: ToastrService,
@@ -31,14 +33,29 @@ export class LoginPageComponent implements OnInit {
     private router: ActivatedRoute,
     private store: Store<AppState>,
     private httpClient: HttpClient,
-  ) { }
+    private router1: Router
+  ) { 
+
+  }
 
   ngOnInit(): void {
+    this.getRouterUrl();
     this.loadIp();
     this.getAssessmentParam();
     this.formInitialize();
     // this.getErrorMessage();
     localStorage.setItem("smallScreen", 'false')
+  }
+
+  getRouterUrl(){
+    this.checkRouter = this.router1.url;
+    if(this.checkRouter == '/login'){
+        this.isAssessCode = true;
+        localStorage.setItem("Candidate", "true")
+    }else{
+      this.isAssessCode = false;
+      localStorage.setItem("Candidate", "false")
+    }
   }
 
   getAssessmentParam() {

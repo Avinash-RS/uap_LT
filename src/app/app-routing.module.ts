@@ -13,6 +13,11 @@ const routes: Routes = [
         canActivate: [PrivilegeAutoLogoutGuard]
       },
       {
+        path: 'login/admin',
+        loadChildren: () => import('./login/login.module').then((module) => module.LoginModule),
+        canActivate: [PrivilegeAutoLogoutGuard]
+      },
+      {
         path: 'landing',
         loadChildren: () => import('./assessment/index').then((module) => module.AssessmentModule),
         canActivate: [PrivilegeGuard]

@@ -100,12 +100,16 @@ export class UserAPIService {
   }
 
   logoutWhenTokenNotPresent() {
-    let getId = sessionStorage.getItem('assessmentId') || sessionStorage.getItem('routeTo');
-    sessionStorage.clear();
-    if (getId) {
-      this.route.navigate(['/login'], { queryParams: {assessmentId: getId}});      
+    let validateRole = localStorage.getItem('Candidate');
+    if (validateRole === 'true') {
+      this.route.navigate(['/login']); 
+      sessionStorage.clear();
+      localStorage.clear();   
     } else {
-      this.route.navigate(['/login']);
+      this.route.navigate(['/login/admin']);
+      sessionStorage.clear();
+      localStorage.clear();   
+    
     }
     this.store.dispatch(logoutAction());
   }
