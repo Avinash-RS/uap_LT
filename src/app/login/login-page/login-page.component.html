@@ -95,7 +95,7 @@
                     
                     <mat-form-field appearance="outline" *ngIf="isAssessCode">
                         <mat-label class="label-color">{{'Assessment Code'}}</mat-label>
-                        <input matInput [placeholder]="'Enter the Assessment Code'" formControlName="assessmentCode" maxlength="6">
+                        <input matInput [placeholder]="'Enter the Assessment Code'" formControlName="assessmentCode" maxlength="6" required>
                         <mat-icon matPrefix class="icon-color">library_books</mat-icon>
                  
                     </mat-form-field>
